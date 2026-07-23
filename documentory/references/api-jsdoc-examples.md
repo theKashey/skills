@@ -1,0 +1,105 @@
+# Public contracts, JSDoc, and examples
+
+Use this reference for public exports, configuration, API documentation, JS or TS JSDoc, and code examples.
+
+## Contract checklist
+
+For every stable public option, function, class, type, route, command, or error, document the applicable facts:
+
+| Field | Question |
+| --- | --- |
+| Purpose | What reader outcome or capability does it enable? |
+| When to use | Which problem or deployment needs it? |
+| Input | What type, values, format, or preconditions apply? |
+| Default or required state | What happens if it is absent or invalid? |
+| Behavior | What observable effect does it have? |
+| Failure | Which errors, statuses, rejections, or disabled behavior occur? |
+| Interaction | Which options, routes, lifecycle states, or security rules alter it? |
+| Boundary | What does it explicitly not authorize, store, validate, or affect? |
+| Example | Does ambiguity remain after the factual contract? If so, show a minimal verified use. |
+
+Do not give every field equal prose. State the smallest precise contract needed for safe use.
+
+## Code-local documentation
+
+Code, types, names, and nearby tests usually reveal local what and how. Make
+code-local documentation earn its place by preserving public semantics or
+rationale that a selective reader cannot recover reliably. Assume a maintainer
+or coding agent may inspect only one symbol, nearby lines, and search matches
+rather than read every related file.
+
+Public JSDoc has an additional extracted-reference audience. State what the API
+does when generated documentation or IDE help cannot rely on the implementation
+body, but do not paraphrase information already encoded precisely by the
+signature.
+
+Choose the smallest applicable locality:
+
+| Locality | Document | Omit |
+| --- | --- | --- |
+| File or module | Why the module exists, the boundary it owns, and a non-obvious relationship to another subsystem. | A tour of declarations or imports. |
+| Exported symbol JSDoc | Purpose and public semantics the signature cannot encode: runtime defaults, failures, lifecycle, ownership, security boundaries, and important interactions. | Type narration, implementation history, or a duplicate reference page. |
+| Block | Why ordering, duplication, an unusual algorithm, or a guard is necessary; name a tempting alternative when it is likely to recur. | A translation of the following statements. |
+| Inside a function | The external constraint or failure mode immediately before the decision it governs. | Step-by-step control-flow narration. |
+
+Internal symbols need no JSDoc by default. Extractability alone does not justify
+low-value prose.
+
+### Selective-context test
+
+Review code-local documentation as if only the changed symbol, nearby lines,
+and search matches were visible:
+
+1. Identify the important purpose, invariant, ownership boundary, or rejected
+   alternative that disappears from that view.
+2. Name the plausible but incorrect edit its absence could invite.
+3. Place the smallest durable explanation at the decision the fact protects.
+4. Remove the comment when clearer code, a type, or the same local context makes
+   it reliably recoverable.
+
+A comment passes when it exposes information unavailable locally, prevents a
+concrete plausible mistake, sits beside the governed decision, and remains true
+when incidental implementation details change.
+
+Useful rationale connects a constraint to its non-local cause and, when useful,
+the consequence of the apparent alternative. Illustrative contrast:
+
+```ts
+// Canonicalize before hashing: adapters do not guarantee iteration order, but
+// replicas must derive the same digest.
+const digest = hash(canonicalize(entries));
+```
+
+`Sort before hashing` would merely narrate the code. The example preserves the
+cross-adapter reason a local scan would otherwise miss.
+
+## Example integrity
+
+Classify each fenced sample before publication:
+
+| Status | Requirement |
+| --- | --- |
+| Runnable | Validate unchanged with the closest available build, typecheck, test, doctest, or executable example command. |
+| Illustrative | Syntax-check it and state that integration setup is omitted. |
+| Partial | Identify omitted surrounding code and link to a complete source example. |
+| Pseudocode | Identify it as non-executable before the code fence. |
+
+For runnable samples:
+
+- include or show the imports and definitions needed to paste it;
+- use real public names and current option shapes;
+- avoid placeholder secrets, paths, or host APIs unless the setup clearly supplies them;
+- do not bury essential instructions in comments that a reader may delete;
+- state expected behavior and meaningful limitations outside the code fence.
+
+If the repository has no snippet harness, documentation build, or suitable
+example test, do not infer that a sample is runnable. Validate as much as the
+repository permits, then classify the sample Illustrative or Partial unless it
+has been independently executed unchanged. Report the missing harness as an
+open maintenance risk.
+
+## Verification evidence
+
+Treat source, exported types, tests, generated artifacts, and approved decisions as evidence. Record enough source evidence in the task handoff that another maintainer can re-check contested claims.
+
+If behavior, default, error handling, or scope cannot be verified, do not fill the gap with plausible prose. Mark it as needing product or API clarification.

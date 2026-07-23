@@ -1,0 +1,4 @@
+interface:
+  display_name: "Documentory"
+  short_description: "Maintain trustworthy library and code documentation"
+  default_prompt: "Use $documentory to audit and improve this library’s public and code-level documentation."
