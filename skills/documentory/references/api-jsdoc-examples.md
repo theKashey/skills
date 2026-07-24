@@ -36,7 +36,9 @@ rather than read every related file.
 Public JSDoc has an additional extracted-reference audience. State what the API
 does when generated documentation or IDE help cannot rely on the implementation
 body, but do not paraphrase information already encoded precisely by the
-signature.
+signature. Verify the prose on the exposed symbol after barrel re-exports,
+overloads, inheritance, declaration emission, or reference generation; a
+successful build can still lose it.
 
 Read `locality-ladder.md` before choosing placement. The code-specific rungs
 are refined here:

@@ -17,14 +17,14 @@ These apply to every path:
 2. **Verify; never invent.** Check source, exported types, tests, generated
    artifacts, or an explicit product decision. Put evidence beside evaluative
    or comparative claims.
-3. **Describe behavior; do not gesture at it.** State effect, condition, and
-   relevant boundary. Do not publish bare claims such as supports, handles,
-   secure, configure, use, or works.
-4. **Start with the right why.** A top-level public landing surface explains
-   why an outsider would choose or enter the project. Internal technical
-   documentation explains why its unit exists in the containing system.
-   Code-local documentation explains only non-obvious why or why-not hidden by
-   selective reading.
+3. **Mark reefs, not cliffs.** Describe invisible behavior, conditions,
+   boundaries, failures, and interactions a reader can miss at that rung. Do
+   not merely gesture at them, and do not explain mechanics already visible
+   there.
+4. **Make a map, not a transcript.** Select and relate the present truths the
+   reader needs; do not mirror the implementation. Add the different angle
+   appropriate to the rung: outsider relevance, internal responsibility, or
+   non-obvious local why.
 5. **Explain before code.** Treat code as evidence, not the explanation. Keep
    runnable examples copyable, put necessary explanation around them, and label
    deliberately incomplete samples.
@@ -37,10 +37,10 @@ These apply to every path:
 8. **Preserve topology and ownership.** Give each detailed fact one canonical
    owner. Do not create or move pages, folders, or navigation without the
    user's authorization; a README may own every necessary content mode.
-9. **Keep code rationale local and scarce.** Preserve only the non-local
-   purpose, invariant, ownership boundary, or rejected alternative needed to
-   prevent a plausible wrong change, at the smallest scope it governs. Do not
-   narrate visible mechanics.
+9. **Protect Chesterton's fences.** Preserve the verified reason behind a
+   boundary, oddity, duplication, or rejected alternative that invites removal
+   or simplification, at the smallest scope it governs. If the reason cannot be
+   verified, flag the gap; never invent it.
 10. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support.
@@ -59,7 +59,7 @@ them, and do not load every reference before starting.
 | Top-level project or site README or public landing page | [Create or revise current documentation](#create-or-revise-current-documentation) | `references/locality-ladder.md` before classifying the surface; `references/content-architecture.md` before planning the landing path |
 | Internal folder, package, module, domain, or service README or technical overview | [Create or revise current documentation](#create-or-revise-current-documentation) | `references/locality-ladder.md` before classifying the governed scope; `references/content-architecture.md` before structuring the technical reader path |
 | Tutorial, how-to, explanation, or examples within them | [Create or revise current documentation](#create-or-revise-current-documentation) | `references/locality-ladder.md` before choosing the owning surface; `references/content-architecture.md` before planning the reader path; the example section of `references/api-jsdoc-examples.md` only when code examples are in scope |
-| API or configuration reference, or public JSDoc/TSDoc | [Document a public contract](#document-a-public-contract) | `references/api-jsdoc-examples.md` before drafting the contract |
+| API or configuration reference, or public JSDoc/TSDoc | [Document a public contract](#document-a-public-contract) | `references/locality-ladder.md` before choosing the canonical owner; `references/api-jsdoc-examples.md` before drafting the contract |
 | Line, block, or file comments | [Preserve code-local rationale](#preserve-code-local-rationale) | `references/locality-ladder.md` before choosing placement; the code-local section of `references/api-jsdoc-examples.md` after identifying missing context |
 | Documentation audit, review, release check, or maintenance plan | [Audit documentation](#audit-documentation) | `references/quality-maintenance.md` before scoring or reporting completeness |
 | Changelog, migration guide, or release documentation | [Document a change](#document-a-change) | `references/quality-maintenance.md` before the final drift check |
@@ -118,9 +118,12 @@ is also in scope.
 ## Document a public contract
 
 1. Inventory every stable public option, export, route, command, relevant
-   error, and example in scope. Verify each fact against source, exported types,
-   tests, generated artifacts, or an explicit product decision.
-2. Read `references/api-jsdoc-examples.md`. For each public item, document the
+   error, and example in scope. Determine stability from declared package
+   exports, generated interfaces, route or command schemas, tests, support
+   policy, or an explicit product decision. Treat unclear accidental or
+   experimental status as a decision gap, not a silent exclusion.
+2. Read `references/locality-ladder.md` to choose the canonical owner, then
+   `references/api-jsdoc-examples.md`. For each public item, document the
    applicable purpose, use case, inputs, required or default state, observable
    behavior, failures, interactions, and boundary. Use the smallest precise
    contract; do not give every field equal prose.
@@ -132,15 +135,19 @@ is also in scope.
    such as runtime defaults, errors, lifecycle, ownership, security boundaries,
    and important interactions. Do not paraphrase types or duplicate the
    reference manual.
-5. Explain a non-trivial example before its code: state the reader goal,
+5. For public JSDoc or TSDoc, verify that the semantics appear on the actual
+   exported symbol through re-exports, overloads, inheritance, and the
+   repository's generated-reference, emitted-declaration, or IDE-visible
+   surface. A successful code or documentation build alone is not proof.
+6. Explain a non-trivial example before its code: state the reader goal,
    prerequisites, and why its meaningful choices exist. Keep runnable code
    complete and free of commentary readers must delete. After it, state the
    result, relevant limit, and next path.
-6. Classify each sample as Runnable, Illustrative, Partial, or Pseudocode using
+7. Classify each sample as Runnable, Illustrative, Partial, or Pseudocode using
    the reference requirements. Never call a sample Runnable unless it was
    validated unchanged with its imports, setup, public names, options, and
    expected behavior.
-7. Account for every inventoried item or record an explicit, justified
+8. Account for every inventoried item or record an explicit, justified
    exclusion. Then finish with [Verify every completed
    path](#verify-every-completed-path).
 
@@ -166,8 +173,10 @@ is also in scope.
 
 ## Audit documentation
 
-1. Establish current truth and inventory the public contract, existing
-   documentation surfaces, canonical facts, examples, code-local rationale,
+1. State the audit mode and scope. For a change-set audit, inventory every
+   changed public item and affected surface. For a completeness audit, inventory
+   every stable public item and relevant surface in the stated boundary.
+   Establish current truth, canonical facts, examples, code-local rationale,
    and repository-native verification commands.
 2. Read `references/locality-ladder.md` and
    `references/quality-maintenance.md`. Compare the evidence with the
@@ -210,19 +219,22 @@ For every completed path, verify the applicable minimum:
 
 1. Check changed behavior against code, types, tests, generated artifacts, or an
    approved product decision.
-2. Account for every changed public export, option, route, error, command, and
-   relevant documentation surface.
-3. Confirm that each changed unit gives its reader enough relevance, behavior,
+2. Account for every public export, option, route, error, command, and
+   documentation surface in the stated scope. In a change-set scope, this means
+   every changed or affected item.
+3. Confirm that each unit in scope gives its reader enough relevance, behavior,
    evidence, and boundary to act without unsafe inference.
 4. Confirm that code-local prose preserves necessary non-local context without
    narrating visible mechanics.
-5. Build or typecheck examples and documentation when supported. Validate the
+5. Confirm that public JSDoc or TSDoc semantics remain attached to the intended
+   exported symbol in the actual extracted or IDE-visible surface.
+6. Build or typecheck examples and documentation when supported. Validate the
    primary path from its documented starting state: installation and first
    success for a landing surface; entry points and technical workflows for an
    internal surface. Otherwise report the assumptions that remain untested.
-6. Check links, code-fence status, terminology, defaults, historical leakage,
+7. Check links, code-fence status, terminology, defaults, historical leakage,
    and copy-paste integrity.
-7. Report updated surfaces, intentional omissions, validation run, counts,
+8. Report updated surfaces, intentional omissions, validation run, counts,
    remaining risks, and future maintenance triggers.
 
 Prefer repository-native link, documentation-build, typecheck, doctest, and

@@ -16,14 +16,14 @@ Use this reference when planning a README, restructuring documentation, or build
 Start with the reader's question, not the repository's folders. Diátaxis names
 content modes; it does not require separate files, folders, or navigation.
 
-| Reader need | Diátaxis form | A useful success condition |
-| --- | --- | --- |
-| Decide whether a project or published package is relevant | Landing page or explanation | Understand the problem, audience, scope, and first next step. |
-| Understand an internal unit's role | Technical overview | Identify responsibility, boundary, interactions, and the next source or validation path. |
-| Learn a capability | Tutorial | Reach a visible working result by following steps. |
-| Solve a known problem | How-to | Complete the task with stated prerequisites and expected result. |
-| Find an exact fact | Reference | Locate a precise answer quickly without reading a narrative. |
-| Understand a design | Explanation | Understand the mental model, trade-off, and boundary. |
+| Reader need | Diátaxis mode | Likely surface | A useful success condition |
+| --- | --- | --- | --- |
+| Decide whether a project or published package is relevant | Explanation | Landing page | Understand the problem, audience, scope, and first next step. |
+| Understand an internal unit's role | Explanation | Technical overview | Identify responsibility, boundary, interactions, and the next source or validation path. |
+| Learn a capability | Tutorial | Tutorial or guided README section | Reach a visible working result by following steps. |
+| Solve a known problem | How-to | How-to page or procedural README section | Complete the task with stated prerequisites and expected result. |
+| Find an exact fact | Reference | API, configuration, or in-page reference | Locate a precise answer quickly without reading a narrative. |
+| Understand a design | Explanation | Concept or architecture section | Understand the mental model, trade-off, and boundary. |
 
 Apply these modes within the documentation surfaces the repository already
 uses. If the README is the only surface, keep the necessary modes as clear
@@ -138,11 +138,12 @@ needed to interpret a benchmark, size, compatibility, or security claim;
 otherwise replace the adjective with the observable behavior it was meant to
 describe.
 
-Check the scan path according to the surface role. A landing-page reader should
-determine relevance and find first success or deeper detail. An internal-reader
-should determine responsibility, boundary, interactions, and where to inspect
-or validate the unit. This test does not prescribe badges, bold text,
-horizontal rules, a table of contents, or a fixed section order.
+Check the scan path for the named reader and task. For example, a landing reader
+should determine relevance and find first success; a maintainer should find
+responsibility, boundary, and validation; an integrator should find contracts
+and prerequisites; an operator should find state, failure, recovery, and
+escalation paths. This test does not prescribe badges, bold text, horizontal
+rules, a table of contents, or a fixed section order.
 
 Validate the primary reader path from its stated starting state. For a landing
 surface, use a clean supported environment. For an internal technical surface,

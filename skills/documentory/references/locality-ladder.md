@@ -4,6 +4,8 @@ Use this reference to decide where documentation belongs and which context it
 may assume.
 
 - [Placement rule](#placement-rule)
+- [Three heuristics](#three-heuristics)
+- [Overlapping rungs](#overlapping-rungs)
 - [Line-level comment](#1-line-level-comment)
 - [Block-level comment](#2-block-level-comment)
 - [File-level comment](#3-file-level-comment)
@@ -15,21 +17,62 @@ may assume.
 
 Locality answers **where a fact belongs**. Diátaxis answers **which reader
 question it serves**. JSDoc or TSDoc extraction answers **which symbol
-semantics must remain visible outside the implementation**. Do not treat
-content mode or extractability as another locality rung.
+semantics must remain visible outside the implementation**. The rungs are a
+scope vocabulary, not a guaranteed filesystem tree or total ordering.
 
 ## Placement rule
 
 1. Identify the fact and every decision, task, or boundary it governs.
-2. Choose the lowest rung whose surface is encountered by all affected readers.
-3. If the fact governs sibling units, move it to their shared parent rung.
-4. Keep the detailed fact in one canonical place. Higher rungs orient and link;
-   lower rungs contain only the local consequence they must expose.
-5. Choose by governed scope and reader role, not by filename alone. A
+2. Choose the narrowest governed scope whose surface is encountered by all
+   affected readers.
+3. If the fact governs sibling units, move it to their shared logical boundary.
+4. When scopes overlap on one surface, classify each fact or section by its
+   role instead of forcing a split or duplicating it.
+5. Keep the detailed fact in one canonical place. Broader scopes orient and
+   link; narrower scopes contain only the local consequence they must expose.
+6. Choose by governed scope and reader role, not by filename alone. A
    `README.md` can be a folder note, an internal package manual, or a top-level
    landing page.
-6. Do not create a missing surface without authorization. Report the placement
+7. Do not create a missing surface without authorization. Report the placement
    gap and propose the smallest useful surface.
+
+## Three heuristics
+
+### A map is not the territory
+
+Source and runtime behavior are the territory and the evidence. Documentation
+is a selective map for a particular reader and task. It should expose purpose,
+relationships, observable contract, and boundaries from an angle the raw
+implementation does not provide; it should not transcribe the implementation.
+At code-local rungs, that different angle is usually verified why or why-not.
+At a public contract surface, observable behavior may itself be missing because
+the reader cannot inspect the implementation.
+
+### Chesterton's fence
+
+When a boundary, guard, duplication, ordering rule, or unusual structure invites
+removal, preserve its verified reason where the decision is encountered.
+Explain why it exists and the consequence of the tempting alternative. If the
+reason is unknown, report the uncertainty rather than inventing one.
+
+### Mark reefs, not cliffs
+
+Document hazards and constraints hidden below the reader's normal view:
+non-obvious defaults, failure modes, security or ownership boundaries, lifecycle
+coupling, and cross-unit invariants. Do not mark cliffs already visible in code,
+types, names, signatures, or the surrounding surface. Visibility changes by
+rung, so judge from that rung's reader context.
+
+## Overlapping rungs
+
+The line, block, and file rungs usually nest spatially. The upper scopes often
+overlap: a package is also a folder, a language module may be a file, and a
+single-service repository may be both service-level and top-level.
+
+One document may therefore serve multiple rungs. Classify each fact or section,
+make the roles separately scannable, and keep one canonical owner. Co-locate
+when the governed scopes genuinely coincide; do not manufacture files or repeat
+content merely to make the ladder look physically nested.
 
 ## 1. Line-level comment
 
