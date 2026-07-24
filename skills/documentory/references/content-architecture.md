@@ -2,6 +2,15 @@
 
 Use this reference when planning a README, restructuring documentation, or building public documentation-site navigation.
 
+- [Reader paths](#reader-paths)
+- [Detail level](#detail-level)
+- [README roles](#classify-the-readme)
+- [Reader entry point](#reader-entry-point)
+- [Opening and scan path](#opening-and-scan-path)
+- [Progressive disclosure](#progressive-disclosure)
+- [Explain-before-code pattern](#explain-before-code-pattern)
+- [Separation tests](#separation-tests)
+
 ## Reader paths
 
 Start with the reader's question, not the repository's folders. Diátaxis names
@@ -9,7 +18,8 @@ content modes; it does not require separate files, folders, or navigation.
 
 | Reader need | Diátaxis form | A useful success condition |
 | --- | --- | --- |
-| Decide whether the library is relevant | README or explanation | Understand the problem, audience, scope, and first next step. |
+| Decide whether a project or published package is relevant | Landing page or explanation | Understand the problem, audience, scope, and first next step. |
+| Understand an internal unit's role | Technical overview | Identify responsibility, boundary, interactions, and the next source or validation path. |
 | Learn a capability | Tutorial | Reach a visible working result by following steps. |
 | Solve a known problem | How-to | Complete the task with stated prerequisites and expected result. |
 | Find an exact fact | Reference | Locate a precise answer quickly without reading a narrative. |
@@ -32,56 +42,113 @@ Choose Guided, Balanced, or Compressed for the intended reader before writing.
 
 Do not use Compressed to hide a failure mode, security condition, required setup, or public API contract. Do not use Guided to make every page a tutorial. Keep code samples copyable at every level; change surrounding prose, not the amount of commentary inside the code.
 
-## README structure
+## Classify the README
 
-Keep the README as an orientation and first-success document:
+Read `locality-ladder.md` and classify the README by the scope it governs and
+the reader it serves. The filename alone does not determine its role:
 
-1. Why this library exists: reader problem, intended user, outcome, scope, and non-goals.
-2. Installation and compatibility from the consumer's actual entry point.
-3. Smallest honest first success.
-4. Primary concepts needed to adapt the example.
-5. Essential boundaries or security assumptions.
-6. Clear links to existing deeper material as applicable. If none exists, keep essential content in the README and report any worthwhile split as a proposal.
+- A top-level open-source project, public site, or product README is a landing
+  page for outsiders.
+- A folder, internal package, or internal module README is a technical document
+  for people working inside the containing system.
+- An independently published package README may serve both roles. Keep its
+  short external landing path distinct from its technical contract.
 
-When deeper surfaces already exist, avoid duplicating their exhaustive detail in
-the README. When the README is the only public documentation, completeness
-takes precedence; organize necessary reference, procedure, and explanation
-under clear sections.
+Do not apply the landing-page pattern to every README.
+
+## Top-level landing README
+
+Help an outsider decide whether to enter the project and reach first success:
+
+1. Why the project exists: problem, intended audience, supported outcome,
+   scope, and non-goals.
+2. A verifiable reason to choose or explore it, without unsupported promotion.
+3. Installation and compatibility from the outsider's actual entry point.
+4. The smallest honest first success and expected result.
+5. Essential concepts, boundaries, or security assumptions.
+6. Clear routes to deeper technical material, contribution, support, and
+   licensing as applicable.
+
+This surface advertises by demonstrating relevance and usefulness. Keep package
+mechanics in their technical owners instead of turning the landing page into a
+monorepo manual.
+
+## Internal technical README
+
+Help a maintainer or coding agent understand the governed folder, package, or
+module without reconstructing the containing system:
+
+1. Why the unit exists and its responsibility in the parent system.
+2. What it owns, what it deliberately does not own, and its boundary with
+   sibling units.
+3. How it interacts with callers, dependencies, state, lifecycle, or host
+   infrastructure.
+4. Its entry points, configuration, failure behavior, local workflows, and
+   validation commands when those facts belong at this scope.
+5. Routes to source, tests, package reference, domain context, and broader
+   architecture.
+
+This surface is technical documentation. It may assume a checkout, internal
+paths, and repository tooling when those are genuinely available to its reader.
+Do not add project-level sales copy or external installation merely because the
+file is named `README.md`.
+
+## Dual-role package README
+
+When a package is independently published, begin with the shortest external
+landing path needed to establish relevance, installation, and first use. Then
+make the technical package contract separately scannable. Do not let the
+landing introduction displace required defaults, behavior, failures,
+interactions, or boundaries.
+
+When deeper surfaces already exist, avoid duplicating their exhaustive detail.
+When a README is the only documentation at its rung, completeness takes
+precedence; organize necessary reference, procedure, and explanation under
+clear sections.
 
 ## Reader entry point
 
 Model the reader at the surface where they first encounter the documentation.
-A consumer-facing README must assume no checkout, repository-local paths, or
-maintainer context. Name an installation source the reader can reach, such as a
-registry package, repository identifier, or URL. Use `.` only after explicitly
-establishing a clone-and-enter-checkout workflow, and label that as a
-contributor or local-development path rather than the primary consumer path.
+Assume only context available at that rung.
 
-Check commands, links, paths, prerequisites, and first success from that entry
-point. State required authentication or private-source access instead of
-silently relying on the maintainer's credentials.
+For an external landing README, name an installation source the reader can
+reach, such as a registry package, repository identifier, or URL. Use `.` only
+after explicitly establishing a clone-and-enter-checkout workflow. For an
+internal technical README, repository-local paths and commands may be the
+correct primary path.
+
+Check commands, links, paths, prerequisites, and first success from the stated
+entry point. State additional authentication, source access, checkout state, or
+tooling instead of relying on it silently.
 
 ## Opening and scan path
 
-Treat the opening as a decision surface, not mandatory sales copy. In plain,
-current terms, let the intended reader identify the problem, supported outcome,
-scope, and first next step. State a meaningful distinction from alternatives
-only when it matters to that decision and can be verified.
+Treat a landing opening as a decision surface. In plain, current terms, let the
+outsider identify the problem, supported outcome, scope, and first next step.
+State a meaningful distinction from alternatives only when it matters to that
+decision and can be verified.
+
+Treat an internal technical opening as a boundary surface. Let the maintainer
+identify the unit's responsibility, place in the containing system, owned
+boundary, and first route to implementation or validation. Do not force a
+marketing problem statement onto it.
 
 Put evidence beside evaluative or comparative claims. Include the conditions
 needed to interpret a benchmark, size, compatibility, or security claim;
 otherwise replace the adjective with the observable behavior it was meant to
 describe.
 
-Check the scan path: a reader who sees the opening, headings, and descriptive
-links should still be able to determine relevance and find first success or the
-needed detail. This test does not prescribe badges, bold text, horizontal rules,
-a table of contents, or a fixed section order.
+Check the scan path according to the surface role. A landing-page reader should
+determine relevance and find first success or deeper detail. An internal-reader
+should determine responsibility, boundary, interactions, and where to inspect
+or validate the unit. This test does not prescribe badges, bold text,
+horizontal rules, a table of contents, or a fixed section order.
 
-Validate installation and first success from a clean supported environment when
-feasible. Do not silently depend on repository-local caches, global tools,
-credentials, generated files, or maintainer knowledge. If clean-start validation
-is not feasible, state what remained untested.
+Validate the primary reader path from its stated starting state. For a landing
+surface, use a clean supported environment. For an internal technical surface,
+use the documented repository state and repository-native tooling. Do not
+silently depend on unstated caches, global tools, credentials, generated files,
+or maintainer knowledge. State what remained untested.
 
 ## Progressive disclosure
 

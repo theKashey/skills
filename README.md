@@ -28,6 +28,7 @@ Creates, revises, and audits layered software documentation.
   generated artifacts
 - Diátaxis as a reader-needs lens without imposing files or folders
 - Guided, Balanced, and Compressed explanation levels
+- A locality ladder from line-level rationale to top-level landing documentation
 - Public-contract inventory and evidence-based example classification
 - Code-local rationale for context that selective readers and coding agents
   would otherwise miss

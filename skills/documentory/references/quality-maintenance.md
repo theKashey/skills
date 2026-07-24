@@ -12,13 +12,14 @@ Report documentation quality with evidence and counts.
 | Public-contract coverage | Every changed public export, option, route, command, and relevant error is documented in an authorized existing surface or has an explicit justified exclusion. |
 | Minimum sufficient explanation | Each changed unit gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
-| Scan-path usability | A reader scanning the opening, headings, and descriptive links can identify relevance, scope, the first-success route, and the next useful detail without relying on decorative formatting. |
-| Entry-point validity | Commands, links, paths, and prerequisites work from where the intended reader encounters the documentation; consumer instructions do not silently assume a checkout, unpublished files, or maintainer access. |
-| Reader-path usability | A representative intended reader can complete the documented first-success or task path from a clean supported environment without undocumented setup or unsafe inference; any untested assumptions are explicit. |
+| Scan-path usability | A landing reader can identify relevance and first success; an internal technical reader can identify responsibility, boundary, interactions, and validation without relying on decorative formatting. |
+| Locality fit | Each fact lives at the lowest rung that contains everything it governs; top-level landing, internal technical, extracted contract, and code-local rationale roles are not conflated. |
+| Entry-point validity | Commands, links, paths, prerequisites, and assumed context work from the documented starting state; any additional access or knowledge is explicit. |
+| Reader-path usability | A representative intended reader can complete the documented outcome from the stated starting state without undocumented setup or unsafe inference; any untested assumptions are explicit. |
 | Level fit | Guided, Balanced, or Compressed matches the stated reader; explanatory detail is neither withheld from a reader who needs it nor repeated for one who does not. |
 | Example integrity | Every fenced example is runnable and validated, illustrative and syntax-checked, partial with stated omissions, or explicitly pseudocode. |
 | Intent clarity | Different reader questions remain distinguishable within the existing structure; mixed intent may be reported as an optional split candidate. |
-| Progressive disclosure | README provides orientation and first success; detail follows contextual links to existing material or clear in-page sections rather than unexplained link dumps or forced new pages. |
+| Progressive disclosure | A top-level landing surface provides relevance and first success; each internal technical surface explains its own boundary; detailed facts remain at their canonical rung and are reached through contextual links. |
 | Context resilience | A maintainer seeing only the changed symbol, nearby lines, and search matches can identify the non-local purpose, invariant, ownership boundary, or prohibited simplification required for a safe change. |
 | Comment discipline | New code-local documentation preserves public semantics hidden by the signature or non-obvious why and why-not; none narrates mechanically recoverable behavior. |
 | Navigation health | Links resolve; docs build where supported; essential pages are not orphaned. |
@@ -50,10 +51,11 @@ Ask for every changed section:
 4. Does a code block prove a claim only after surrounding prose explains its role?
 5. Is this fact duplicated elsewhere, and which location is canonical?
 6. What source evidence verifies it? For an evaluative or comparative claim, is the evidence adjacent and are its conditions clear?
-7. On a landing page, can a scanning reader determine relevance, scope, the first-success route, and the next detail without reading every paragraph?
-8. From where does the intended reader encounter this document, and do its commands, links, paths, credentials, or prerequisites assume access available only to a maintainer?
-9. If setup or first success changed, was it checked from that entry point in a clean supported environment, and which assumptions remain untested?
-10. For code-local prose, which fact would disappear if the reader saw only the changed symbol and search matches, and what plausible wrong edit does it prevent?
+7. Which ladder rung contains everything this fact governs, and is the current surface serving that role rather than a broader or narrower one?
+8. On a landing page, can an outsider determine relevance, scope, first success, and the next detail? In an internal technical README, can a maintainer determine responsibility, boundary, interactions, and validation?
+9. From where does the intended reader encounter this document, and which context, paths, credentials, tools, or prerequisites are actually available there?
+10. If the primary reader path changed, was it checked from its stated starting state, and which assumptions remain untested?
+11. For code-local prose, which fact would disappear if the reader saw only the changed symbol and search matches, and what plausible wrong edit does it prevent?
 
 Flag bare verbs such as supports, handles, claims, configure, use, secure, or works when nearby text does not supply behavior, condition, and boundary.
 
@@ -78,7 +80,10 @@ Choose one result and record the evidence:
 At release cadence:
 
 1. Compare the public export and configuration inventory with reference coverage.
-2. Revalidate the README first-success path and featured examples from a clean supported environment when feasible; record any untested assumptions.
+2. Revalidate top-level landing first success and featured examples from an
+   outsider's supported environment. For changed internal technical READMEs,
+   revalidate their local entry points and workflows from the stated repository
+   context. Record untested assumptions.
 3. Run repository-native docs builds, link checks, type checks, doctests, or example tests.
 4. Search current documentation for legacy names and historical wording that should be in migration material.
 5. Re-check that public defaults, errors, supported versions, and security boundaries match source.

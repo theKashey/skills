@@ -2,6 +2,11 @@
 
 Use this reference for public exports, configuration, API documentation, JS or TS JSDoc, and code examples.
 
+- [Contract checklist](#contract-checklist)
+- [Code-local documentation](#code-local-documentation)
+- [Example integrity](#example-integrity)
+- [Verification evidence](#verification-evidence)
+
 ## Contract checklist
 
 For every stable public option, function, class, type, route, command, or error, document the applicable facts:
@@ -33,17 +38,19 @@ does when generated documentation or IDE help cannot rely on the implementation
 body, but do not paraphrase information already encoded precisely by the
 signature.
 
-Choose the smallest applicable locality:
+Read `locality-ladder.md` before choosing placement. The code-specific rungs
+are refined here:
 
 | Locality | Document | Omit |
 | --- | --- | --- |
-| File or module | Why the module exists, the boundary it owns, and a non-obvious relationship to another subsystem. | A tour of declarations or imports. |
+| Line | The external constraint, rejected alternative, or failure consequence at the exact decision it governs. | A paraphrase of the expression or branch. |
+| Block | Why ordering, duplication, an unusual algorithm, or a guard is necessary across the statements. | A translation of the statements. |
+| File | Why the file exists, the boundary it owns, and a non-obvious relationship to another subsystem. | A tour of declarations or imports. |
 | Exported symbol JSDoc | Purpose and public semantics the signature cannot encode: runtime defaults, failures, lifecycle, ownership, security boundaries, and important interactions. | Type narration, implementation history, or a duplicate reference page. |
-| Block | Why ordering, duplication, an unusual algorithm, or a guard is necessary; name a tempting alternative when it is likely to recur. | A translation of the following statements. |
-| Inside a function | The external constraint or failure mode immediately before the decision it governs. | Step-by-step control-flow narration. |
 
 Internal symbols need no JSDoc by default. Extractability alone does not justify
-low-value prose.
+low-value prose. Exported-symbol JSDoc is a public-contract surface layered on a
+symbol; it does not sit between file and block in the locality ladder.
 
 ### Selective-context test
 
