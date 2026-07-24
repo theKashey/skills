@@ -1,6 +1,6 @@
 ---
 name: documentory
-description: Create, revise, and audit documentation for open-source libraries and packages. Use when working on README files, documentation sites, tutorials, how-to guides, API or configuration reference, examples, JSDoc/TSDoc, inline rationale comments, code documentation for maintainers or coding agents, changelogs, migration guides, documentation reviews, or maintenance planning.
+description: Create, revise, and audit layered software documentation. Use when working on README files, documentation sites, tutorials, how-to guides, API or configuration reference, examples, JSDoc/TSDoc, inline rationale comments, code documentation for maintainers or coding agents, changelogs, migration guides, documentation reviews, or maintenance planning.
 ---
 
 # Documentory

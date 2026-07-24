@@ -11,8 +11,7 @@ Skills follow the [Agent Skills](https://agentskills.io/) format.
 
 ### documentory
 
-Creates, revises, and audits documentation for open-source libraries and
-packages.
+Creates, revises, and audits layered software documentation.
 
 **Use when:**
 
