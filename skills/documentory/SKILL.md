@@ -28,17 +28,21 @@ These apply to every path:
    deliberately incomplete samples.
 6. **Cover the public contract.** Document every stable public item in an
    existing canonical surface or record an explicit, justified exclusion.
-7. **Preserve topology and ownership.** Give each detailed fact one canonical
+7. **Write for the layer's actual reader.** Identify where the reader
+   encounters the documentation and what context or access they have there. A
+   consumer-facing README must not assume a checkout, repository-local paths,
+   unpublished state, or maintainer knowledge.
+8. **Preserve topology and ownership.** Give each detailed fact one canonical
    owner. Do not create or move pages, folders, or navigation without the
    user's authorization; a README may own every necessary content mode.
-8. **Keep code rationale local and scarce.** Preserve only the non-local
+9. **Keep code rationale local and scarce.** Preserve only the non-local
    purpose, invariant, ownership boundary, or rejected alternative needed to
    prevent a plausible wrong change, at the smallest scope it governs. Do not
    narrate visible mechanics.
-9. **Disclose progressively.** Add material only when it enables a priority
+10. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support.
-10. **Prove completion.** Validate currentness, coverage, examples, links,
+11. **Prove completion.** Validate currentness, coverage, examples, links,
     copy-paste integrity, and the first-success path. Report evidence, counts,
     exclusions, untested assumptions, and remaining risks.
 
@@ -64,8 +68,10 @@ is also in scope.
    configuration, defaults, errors, tests, existing documentation, examples,
    and repository-native documentation tooling. Do not treat an example,
    private helper, or identifier name as proof of public behavior.
-2. Identify the reader, prior knowledge, task or question, smallest successful
-   outcome, prerequisites, dangerous assumptions, and next useful detail.
+2. Identify the reader, where they encounter this documentation, the context
+   and access available there, prior knowledge, task or question, smallest
+   successful outcome, prerequisites, dangerous assumptions, and next useful
+   detail.
 3. Select explanation density at this decision point:
    - **Guided** for a reader new to the domain or library: define unfamiliar
      terms, make prerequisites and results explicit, and show one safe primary
@@ -199,8 +205,9 @@ For every completed path, verify the applicable minimum:
 4. Confirm that code-local prose preserves necessary non-local context without
    narrating visible mechanics.
 5. Build or typecheck examples and documentation when supported. Validate
-   installation and first success from a clean supported environment when
-   feasible; otherwise report the assumptions that remain untested.
+   installation and first success from the documented reader entry point in a
+   clean supported environment when feasible; otherwise report the assumptions
+   that remain untested.
 6. Check links, code-fence status, terminology, defaults, historical leakage,
    and copy-paste integrity.
 7. Report updated surfaces, intentional omissions, validation run, counts,

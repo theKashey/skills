@@ -13,6 +13,7 @@ Report documentation quality with evidence and counts.
 | Minimum sufficient explanation | Each changed unit gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
 | Scan-path usability | A reader scanning the opening, headings, and descriptive links can identify relevance, scope, the first-success route, and the next useful detail without relying on decorative formatting. |
+| Entry-point validity | Commands, links, paths, and prerequisites work from where the intended reader encounters the documentation; consumer instructions do not silently assume a checkout, unpublished files, or maintainer access. |
 | Reader-path usability | A representative intended reader can complete the documented first-success or task path from a clean supported environment without undocumented setup or unsafe inference; any untested assumptions are explicit. |
 | Level fit | Guided, Balanced, or Compressed matches the stated reader; explanatory detail is neither withheld from a reader who needs it nor repeated for one who does not. |
 | Example integrity | Every fenced example is runnable and validated, illustrative and syntax-checked, partial with stated omissions, or explicitly pseudocode. |
@@ -50,8 +51,9 @@ Ask for every changed section:
 5. Is this fact duplicated elsewhere, and which location is canonical?
 6. What source evidence verifies it? For an evaluative or comparative claim, is the evidence adjacent and are its conditions clear?
 7. On a landing page, can a scanning reader determine relevance, scope, the first-success route, and the next detail without reading every paragraph?
-8. If setup or first success changed, was it checked from a clean supported environment, and which assumptions remain untested?
-9. For code-local prose, which fact would disappear if the reader saw only the changed symbol and search matches, and what plausible wrong edit does it prevent?
+8. From where does the intended reader encounter this document, and do its commands, links, paths, credentials, or prerequisites assume access available only to a maintainer?
+9. If setup or first success changed, was it checked from that entry point in a clean supported environment, and which assumptions remain untested?
+10. For code-local prose, which fact would disappear if the reader saw only the changed symbol and search matches, and what plausible wrong edit does it prevent?
 
 Flag bare verbs such as supports, handles, claims, configure, use, secure, or works when nearby text does not supply behavior, condition, and boundary.
 

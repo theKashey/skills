@@ -37,7 +37,7 @@ Do not use Compressed to hide a failure mode, security condition, required setup
 Keep the README as an orientation and first-success document:
 
 1. Why this library exists: reader problem, intended user, outcome, scope, and non-goals.
-2. Installation and compatibility.
+2. Installation and compatibility from the consumer's actual entry point.
 3. Smallest honest first success.
 4. Primary concepts needed to adapt the example.
 5. Essential boundaries or security assumptions.
@@ -47,6 +47,19 @@ When deeper surfaces already exist, avoid duplicating their exhaustive detail in
 the README. When the README is the only public documentation, completeness
 takes precedence; organize necessary reference, procedure, and explanation
 under clear sections.
+
+## Reader entry point
+
+Model the reader at the surface where they first encounter the documentation.
+A consumer-facing README must assume no checkout, repository-local paths, or
+maintainer context. Name an installation source the reader can reach, such as a
+registry package, repository identifier, or URL. Use `.` only after explicitly
+establishing a clone-and-enter-checkout workflow, and label that as a
+contributor or local-development path rather than the primary consumer path.
+
+Check commands, links, paths, prerequisites, and first success from that entry
+point. State required authentication or private-source access instead of
+silently relying on the maintainer's credentials.
 
 ## Opening and scan path
 

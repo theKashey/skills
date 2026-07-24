@@ -34,21 +34,20 @@ Creates, revises, and audits layered software documentation.
 
 ## Installation
 
-From this repository's root, let the `skills` CLI discover the available
-skills:
+Install the skills from GitHub:
 
 ```bash
-npx skills add .
+npx skills add theKashey/skills
 ```
 
 Install only Documentory:
 
 ```bash
-npx skills add . --skill documentory
+npx skills add theKashey/skills --skill documentory
 ```
 
-These commands describe local installation from an existing checkout. This
-README does not declare a public repository source.
+The CLI resolves `theKashey/skills` from GitHub. Access to this repository is
+required while it remains private.
 
 ## Usage
 
