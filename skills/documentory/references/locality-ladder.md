@@ -50,19 +50,14 @@ the reader cannot inspect the implementation.
 
 ### Chesterton's fence
 
-Chesterton's fence is a detection rule for missing rationale, not an instruction
-to preserve or remove code. When a boundary, guard, duplication, ordering rule,
-or unusual structure makes either “delete it” or “do not touch it” seem
-plausible, investigate history, callers, tests, runtime effects, and neighboring
-invariants.
+A Chesterton's fence is code whose reason for existing or taking its present
+form is unknown. It is an island of uncertainty.
 
-If the reason is verified, document the non-local cause and the consequence of
-the tempting change where the decision is encountered. If the reason remains
-unknown and the knowledge gap is accepted, mark it with an explicit `TODO` or
-`FIXME` instead of inventing rationale. The documentation task ends after
-detecting and exposing the fence; its disposition belongs to a separate code
-decision. A warning that merely says “do not touch” leaves the fence unexplained
-and does not pass.
+Search history, callers, tests, runtime effects, and neighboring invariants for
+the missing rationale. If evidence verifies it, document the non-local reason
+where it governs the code. If the reason remains unknown and the gap is
+accepted, record the uncertainty with an explicit `TODO` or `FIXME`. Never
+invent rationale.
 
 ### Mark reefs, not cliffs
 

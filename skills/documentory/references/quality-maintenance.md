@@ -28,7 +28,7 @@ Report documentation quality with evidence and counts.
 | Progressive disclosure | Each surface orients its named reader at its governed scope; detailed facts remain at their canonical owner and are reached through contextual links. |
 | Context resilience | A maintainer seeing only the changed symbol, nearby lines, and search matches can identify the non-local purpose, invariant, ownership boundary, or prohibited simplification required for a safe change. |
 | Comment discipline | New code-local documentation preserves public semantics hidden by the signature or non-obvious why and why-not; none narrates mechanically recoverable behavior. |
-| Fence visibility | Every detected fence candidate in scope has a verified explanation at the governed decision or an explicit accepted `TODO` or `FIXME` knowledge gap. Documentation neither preserves nor removes the code, and never substitutes a “do not touch” warning for rationale. |
+| Fence visibility | Every Chesterton's fence in scope has either a verified rationale at the governed decision or an explicit accepted `TODO` or `FIXME` recording that its rationale is unknown. |
 | Navigation health | Links resolve; docs build where supported; essential pages are not orphaned. |
 | Publishable end state | Documentation and code represent the completed result and require no cleanup operation to remove draft scaffolding, temporary caveats, or promises of future completion. Any accepted gap is an explicit `TODO` or `FIXME` comment. |
 
@@ -79,7 +79,7 @@ every section and public item in that stated scope:
 10. If the primary reader path changed, was it checked from its stated starting state, and which assumptions remain untested?
 11. For code-local prose, which fact would disappear if the reader saw only the changed symbol and search matches, and what plausible wrong edit does it prevent?
 12. Could this state enter its intended review, merge, or publication without editing away a temporary caveat, placeholder, draft marker, or promise about what will happen later?
-13. Does any code make both “delete it” and “do not touch it” plausible because its reason is invisible? What evidence explains it, where is that explanation presented, or which explicit `TODO` or `FIXME` accepts the unresolved knowledge gap?
+13. Where is the reason for code's existence or present form unknown? What evidence supplies the missing rationale, or which explicit `TODO` or `FIXME` records the uncertainty?
 
 Flag bare verbs such as supports, handles, claims, configure, use, secure, or works when nearby text does not supply behavior, condition, and boundary.
 
@@ -118,7 +118,7 @@ An explicit `TODO` or `FIXME` comment may remain when it deliberately accepts a
 gap. Keep it recognizable as debt and local to the affected code; do not turn
 the gap into ordinary prose that makes incomplete behavior appear complete. For
 an unresolved Chesterton's fence, this marker records missing knowledge; it is
-not a rationale and does not choose whether the code stays or goes.
+not a rationale.
 
 A supported transitional state in the finished product is not implementation
 residue. Document it when it is part of the verified contract.

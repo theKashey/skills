@@ -40,12 +40,10 @@ These apply to every path:
 8. **Preserve topology and ownership.** Give each detailed fact one canonical
    owner. Do not create or move pages, folders, or navigation without the
    user's authorization; a README may own every necessary content mode.
-9. **Expose Chesterton's fences.** Detect loose, unusual, duplicated, or
-   apparently removable code whose reason is invisible. Investigate and
-   document the verified reason and consequence where the decision is
-   encountered. If the reason remains unknown, mark the accepted knowledge gap
-   with `TODO` or `FIXME`. Do not turn documentation into a decision to preserve
-   or remove the code; “do not touch” is not an explanation.
+9. **Expose Chesterton's fences.** A Chesterton's fence is code whose reason for
+   existing is unknown: an island of uncertainty. Detect it. If evidence
+   verifies the reason, document that rationale; otherwise record the accepted
+   uncertainty with an explicit `TODO` or `FIXME`. Never invent rationale.
 10. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support.
@@ -170,23 +168,20 @@ is also in scope.
    that selective context.
 2. Identify the important non-local purpose, invariant, ownership boundary, or
    rejected alternative missing from that view. Name the plausible but wrong
-   edit its absence could invite. If neither hidden rationale nor a fence
-   candidate exists, add no comment.
-3. Treat code that looks loose, redundant, unusually ordered, or safely
-   removable as a fence candidate. Do not choose its disposition. Trace history,
-   callers, tests, runtime effects, and neighboring invariants until the reason
-   and consequence are verified or explicitly accepted as unresolved.
+   edit its absence could invite. If neither hidden rationale nor unexplained
+   code exists, add no comment.
+3. Treat code whose reason for existing or taking its present form is unknown as
+   a Chesterton's fence. Search history, callers, tests, runtime effects, and
+   neighboring invariants for its rationale.
 4. Read `references/locality-ladder.md`, then the code-local documentation
    section of `references/api-jsdoc-examples.md`. Place the smallest durable
    explanation at the line, block, or file rung that governs the decision.
    Treat exported-symbol JSDoc as a public-contract overlay, not another
    locality rung.
-5. If the code has a verified purpose, explain its non-local cause and the
-   consequence of the tempting change. Do not narrate visible mechanics or
-   prescribe whether the code should remain.
-6. If no reason can be verified, do not manufacture one or choose the code's
-   fate. Record the accepted knowledge gap with an explicit `TODO` or `FIXME`
-   comment rather than a “do not touch” warning.
+5. If evidence verifies the reason, explain the non-local cause and relevant
+   consequence. Do not narrate visible mechanics.
+6. If the reason remains unknown and the gap is accepted, record that
+   uncertainty with an explicit `TODO` or `FIXME`. Do not manufacture rationale.
 7. Remove rationale when clearer code, a type, or the same local context makes
    it reliably recoverable. Internal symbols need no JSDoc by default. Finish
    with [Verify every completed path](#verify-every-completed-path).
@@ -247,10 +242,9 @@ For every completed path, verify the applicable minimum:
 3. Confirm that each unit in scope gives its reader enough relevance, behavior,
    evidence, and boundary to act without unsafe inference.
 4. Confirm that code-local prose preserves necessary non-local context without
-   narrating visible mechanics. Every detected fence candidate in scope has a
-   verified explanation or an explicit accepted `TODO` or `FIXME` knowledge gap;
-   documentation never decides preservation or removal, and uncertainty alone
-   never justifies “do not touch.”
+   narrating visible mechanics. Every Chesterton's fence in scope has either a
+   verified rationale or an explicit accepted `TODO` or `FIXME` recording that
+   its rationale is unknown.
 5. Confirm that public JSDoc or TSDoc semantics remain attached to the intended
    exported symbol in the actual extracted or IDE-visible surface.
 6. Build or typecheck examples and documentation when supported. Validate the

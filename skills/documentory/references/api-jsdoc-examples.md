@@ -83,21 +83,18 @@ const digest = hash(canonicalize(entries));
 `Sort before hashing` would merely narrate the code. The example preserves the
 cross-adapter reason a local scan would otherwise miss.
 
-### Fence-visibility test
+### Chesterton's fence test
 
-When code looks loose, redundant, oddly ordered, or safely removable, do not
-choose between deletion and preservation:
+When the reason for code's existence or present form is unknown, treat it as a
+Chesterton's fence:
 
 1. Inspect history, callers, tests, runtime effects, and neighboring invariants.
-2. If a purpose is verified, explain its non-local cause and consequence at the
-   governed decision.
-3. If the reason cannot be resolved and the knowledge gap is deliberately
-   accepted, add an explicit `TODO` or `FIXME` naming the missing knowledge.
-   This accepts debt; it does not explain the fence.
-4. Stop at detection and documentation. Do not convert the documentation task
-   into a decision to keep, remove, or otherwise change the code.
+2. If the rationale is verified, explain its non-local cause and consequence at
+   the governed decision.
+3. If the rationale remains unknown and the knowledge gap is accepted, add an
+   explicit `TODO` or `FIXME` recording that uncertainty.
 
-Neither an uncommented mystery nor a “do not touch” warning passes this test.
+Never replace missing knowledge with invented rationale.
 
 ## Example integrity
 
