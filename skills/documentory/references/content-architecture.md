@@ -6,6 +6,7 @@ Use this reference when planning a README, restructuring documentation, or build
 - [Detail level](#detail-level)
 - [Procedure paths](#procedure-paths)
 - [README roles](#classify-the-readme)
+- [Landing decision test](#landing-decision-test)
 - [Reader entry point](#reader-entry-point)
 - [Opening and scan path](#opening-and-scan-path)
 - [Progressive disclosure](#progressive-disclosure)
@@ -80,7 +81,8 @@ Help an outsider decide whether to enter the project and reach first success:
 
 1. Why the project exists: problem, intended audience, supported outcome,
    scope, and non-goals.
-2. A verifiable reason to choose or explore it, without unsupported promotion.
+2. A concrete, verifiable reason to choose or explore it: observable behavior,
+   a concise task-and-result, or a relevant comparison with its conditions.
 3. Installation and compatibility from the outsider's actual entry point.
 4. The smallest honest first success and expected result.
 5. Essential concepts, boundaries, or security assumptions.
@@ -90,6 +92,22 @@ Help an outsider decide whether to enter the project and reach first success:
 This surface advertises by demonstrating relevance and usefulness. Keep package
 mechanics in their technical owners instead of turning the landing page into a
 monorepo manual.
+
+## Landing decision test
+
+Make the opening and scan path sufficient for an outsider to decide whether the
+next action is worth taking:
+
+1. Can I recognize my problem and intended environment or role here?
+2. What supported outcome can I expect?
+3. What verified behavior, task-and-result, or relevant comparison makes that
+   credible?
+4. What is the smallest next action from my actual environment?
+5. If a likely false expectation exists, which relevant boundary should be
+   visible before it matters?
+
+This is a reader-decision check, not a fixed outline, badge set, or feature
+inventory. Use the smallest verified evidence that lets the reader decide.
 
 ## Internal technical README
 

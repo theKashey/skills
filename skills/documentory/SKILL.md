@@ -108,7 +108,9 @@ is also in scope.
    restructuring is already in scope.
 5. For a top-level project or site landing surface, start with outsider-facing
    why: the problem, intended audience, supported outcome, scope, and
-   non-goals. Then lead to the smallest honest first success and deeper paths.
+   non-goals. Make a concise, verified case for relevance before asking the
+   reader to take the first action, then lead to the smallest honest first
+   success and deeper paths.
 6. For an internal folder, package, module, domain, or service surface, start
    with technical why: its responsibility in the containing system, owned
    boundary, interactions, and constraints. Do not inject project-level sales
