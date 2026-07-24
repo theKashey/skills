@@ -265,9 +265,13 @@ For every completed path, verify the applicable minimum:
    review subagent with no inherited drafting context—or an equally isolated
    independent agent session when that is unavailable—to run the
    [output-context review gate](references/quality-maintenance.md#output-context-review-gate).
-   Give it only the review packet. Wait for its verdict, resolve failures, then
-   use a new reviewer. Keep the gate record in the handoff, not in the reader
-   artifact; an unavailable independent review is not a pass.
+   Give it exactly two artifacts: the final review target (or a sufficiently
+   contextual diff) and the review rules, with no other context. Do not supply
+   subject, role, rung, reader, task, source facts, validation results, process
+   declaration, or an expected verdict; the reviewer must infer them. Wait for its verdict,
+   resolve failures, then use a new reviewer. Keep the gate record in the
+   handoff, not in the reader artifact; an unavailable independent review is
+   not a pass.
 10. Report updated surfaces, intentional omissions, validation run, counts,
     gate result, remaining risks, and future maintenance triggers.
 

@@ -37,7 +37,7 @@ Report documentation quality with evidence and counts.
 | Fence visibility | Every Chesterton's fence in scope has either a verified rationale at the governed decision or an explicit accepted `TODO` or `FIXME` recording that its rationale is unknown. |
 | Navigation health | Links resolve; docs build where supported; essential pages are not orphaned; facts needed to act are not available only through a visual. |
 | Publishable end state | Documentation and code represent the completed result and require no cleanup operation to remove draft scaffolding, temporary caveats, or promises of future completion. Any accepted gap is an explicit `TODO` or `FIXME` comment. |
-| Output-context integrity | A fresh independent reviewer passes the output-context review for every changed artifact in scope. The artifact foregrounds its governed subject rather than its creation or review process; any declared process content is reader-relevant and authorized. A producer self-review or unavailable reviewer is `UNVALIDATED`, not a pass. |
+| Output-context integrity | A fresh independent reviewer passes the two-artifact output-context review for every changed artifact in scope. From the target and rules alone, the reviewer can infer its governed subject, layer, reader, and task; process content qualifies only as a durable process. A producer self-review or unavailable reviewer is `UNVALIDATED`, not a pass. |
 
 Record evidence capable of falsifying qualitative judgments. Use a task-local
 table such as:
@@ -57,8 +57,9 @@ For the judgment-heavy gates, record the observation:
   reach it.
 - **Context resilience:** the non-local fact and plausible wrong edit its
   absence would invite.
-- **Output-context integrity:** semantic subject, artifact role, orientation
-  window, reviewer verdict, declared process exception, and any exact repair.
+- **Output-context integrity:** the reviewer's inferred subject, role, rung,
+  reader, task, orientation window, process determination, verdict, and any
+  exact repair.
 
 Do not replace this with word counts, generic readability scores, or a claim that documentation looks good.
 
@@ -131,21 +132,21 @@ calling the artifact complete. It complements source verification, tests,
 example checks, links, and the end-state exit gate; it does not replace them.
 The producing agent cannot pass this gate for its own artifact.
 
-### Review packet
+### Two review inputs
 
-Create the reviewer without inherited drafting context. Give it only the final
-artifact or changed diff and:
+Create the reviewer without inherited drafting context. Give it exactly two
+durable artifacts:
 
-- the semantic subject, artifact role, rung, intended reader, and reader task;
-- authoritative facts and completed deterministic validation relevant to the
-  artifact;
-- whether a durable process is explicitly the requested subject, plus its
-  operator, trigger, action, result or decision boundary, scope, and owner;
-- the pass rules below.
+1. The final review target. Prefer the complete final artifact; a diff is
+   sufficient only when it retains enough final-state context to assess the
+   opening and changed content.
+2. This review-rules artifact.
 
-Do not provide the drafting conversation, producer rationale, prior review,
-expected verdict, or intended fix. Those are process context, not evidence for
-the reader artifact.
+Supply no task summary, scope statement, semantic classification, reader
+description, source or validation summary, process declaration, producer
+rationale, prior review, expected verdict, or intended fix. The reviewer must
+not consult other sources for this gate. It infers subject, role, rung, reader,
+task, classification, and process status from the target itself.
 
 ### Pass rules
 
@@ -156,23 +157,24 @@ unclassified ambiguity:
    substantive reader-facing prose, excluding navigation—the artifact explains
    the governed subject's reader-relevant purpose, responsibility, outcome,
    contract, boundary, or non-local rationale. For a technical module, package,
-   or service, it makes a concrete verified claim about what the unit does or
+   or service, it makes a concrete reader-relevant claim about what the unit does or
    owns and names a relevant relationship, boundary, or constraint before
    explaining the README, file, skill, or authoring task.
-2. **Durable reader value.** Each changed prose unit advances a current
-   contract, verified rationale, durable operating procedure, explicitly
-   historical record, or necessary navigation for the named reader.
+2. **Durable reader value.** Each changed prose unit advances an inferred
+   reader's current contract, rationale, durable operating procedure,
+   explicitly historical record, or necessary navigation.
 3. **Finished-artifact focus.** The artifact represents the subject and its
    completed state. Creation, drafting, validation, tool, subagent, instruction,
    and review details remain in the gate record or work handoff unless the
-   durable process itself is the declared reader subject.
-4. **Verified and local.** Existing truth, locality, end-state, and example
-   rules pass. Reader-facing evidence remains only when it helps the reader
-   interpret a contract or decision at that rung.
-5. **Declared process exception.** A process-oriented artifact identifies its
-   enduring operator, trigger, action, result or decision boundary, scope, and
-   owner. It may describe that durable process; it does not narrate the
-   particular agent session that produced the artifact.
+   durable process itself qualifies under rule 5.
+4. **Inferable context and locality.** From the target alone, the reviewer can
+   cite a coherent subject, role, rung, reader, and task, and can see why the
+   changed content belongs at that layer. If any of those need producer
+   interpretation, the target does not pass.
+5. **Durable-process exception.** Process content fails unless the target
+   itself establishes an enduring operator, trigger, action, result or decision
+   boundary, scope, and owner. The reviewer determines this from the target; it
+   never receives a producer declaration.
 
 Apply two checks to the orientation window:
 
@@ -183,28 +185,40 @@ Apply two checks to the orientation window:
   remains equally true, it is generic artifact or process prose rather than
   subject orientation.
 
+Before applying the rules, infer the subject, role, rung, reader, task,
+classification, and process determination from the target, citing its
+locations. An unsupported inference is a block, not a request for producer
+interpretation.
+
 For changed source code, apply these rules to added comments, JSDoc/TSDoc,
 examples, reader-visible strings, test descriptions, and documentation-like
 identifiers. Do not force document-shaped prose into code. Repository-native
 tests and a code-specific review remain responsible for implementation
 correctness beyond this gate's scope.
 
+This gate does not establish external factual correctness, contract coverage,
+or deterministic-check results. Run those checks separately and keep their
+evidence outside this review.
+
 ### Fresh-review protocol
 
-1. Finish the candidate and run applicable deterministic checks.
+1. Finish the candidate and run applicable factual and deterministic checks.
+   Keep their evidence outside this gate.
 2. Spawn a fresh independent review subagent with no inherited drafting
    context. When the platform cannot create an isolated subagent, start an
    independent agent session with no inherited drafting context instead.
-3. Give it the review packet. It reviews only; it does not edit or rewrite the
-   artifact.
-4. Require this result:
+3. Give it exactly the final review target and this review-rules artifact. It
+   reviews only; it does not edit, rewrite, or consult other sources.
+4. Require it to infer context from the target before applying the rules, then
+   return:
 
    ```text
    Status: PASS | BLOCK | NEEDS-HUMAN-DECISION | UNVALIDATED
-   Classification: current | historical | rationale | declared process
-   Rule results: rules 1–5, with evidence
+   Inferred context: subject, role, rung, reader, task, classification, with evidence
+   Process determination: absent | qualifies | fails | indeterminate, with evidence
+   Rule results: rules 1–5, with target locations
    Blockers: location, broken rule, reader impact, minimal repair direction
-   Unverified facts or classification decisions:
+   Review boundary: external factual correctness, coverage, and deterministic checks not assessed
    ```
 
 5. On `BLOCK`, repair from the evidence, rerun applicable checks, and use a

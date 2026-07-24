@@ -85,10 +85,10 @@ checklists inside the route they govern.
 - **Current documentation describes the finished state.** Historical change
   belongs in changelogs and migration material. An explicit `TODO` or `FIXME`
   is the only accepted visible gap.
-- **Unvalidated output needs an independent gate.** A fresh reviewer checks the
-  final artifact against its reader and subject rather than trusting the
-  producing agent's self-assessment. The gate report stays outside the reader
-  artifact.
+- **Unvalidated output needs an independent gate.** A fresh reviewer derives
+  the final artifact's subject, layer, reader, and task from the target and
+  durable rules rather than trusting the producing agent's interpretation. The
+  gate report stays outside the reader artifact.
 - **Balanced detail is the default.** Guided and Compressed are reader-specific
   choices; they do not change the truth of the contract.
 
@@ -146,8 +146,9 @@ For a meaningful change:
    npx skills add . --list
    ```
 
-3. Run the output-context review gate with a fresh isolated reviewer. A `PASS`
-   is required for completion. Resolve `BLOCK`, escalate
+3. Run the output-context review gate with a fresh isolated reviewer. Give it
+   only the final target or contextual diff and the durable review rules. A
+   `PASS` is required for completion. Resolve `BLOCK`, escalate
    `NEEDS-HUMAN-DECISION`, and record `UNVALIDATED` when independent review is
    unavailable; neither status is complete.
 4. Forward-test the affected route with realistic source facts and review for
