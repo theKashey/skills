@@ -71,4 +71,4 @@ Each skill lives under `skills/<skill-name>/` and contains:
 
 ## License
 
-No repository-wide license has been selected.
+[MIT](LICENSE) © 2026 Anton Korzunov.
