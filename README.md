@@ -1,109 +1,77 @@
-# Documentory
+# Agent Skills
 
-Documentation should help a reader make a correct decision without making them
-excavate the repository—or wade through prose that merely repeats the code.
+A collection of skills for AI coding agents. Each skill packages instructions
+and optional supporting resources. Compatible agents use the skill description
+to decide when to load its instructions, then load referenced resources only
+when the task needs them.
 
-Documentory is an [Agent Skill](https://agentskills.io/) for creating,
-revising, and auditing documentation for open-source libraries. It keeps
-current documentation about present behavior, moves historical change into
-release material, and reserves code comments for non-obvious rationale that a
-maintainer or coding agent would otherwise miss.
+Skills follow the [Agent Skills](https://agentskills.io/) format.
 
-## What it covers
+## Available Skills
 
-- README files and documentation sites
-- tutorials, how-to guides, explanations, and reference material
-- public APIs, configuration, JSDoc, and TSDoc
-- runnable, illustrative, partial, and pseudocode examples
-- file-, block-, and line-level rationale comments
-- changelogs, migration guides, release checks, and documentation audits
+### documentory
 
-Documentory uses Diátaxis to distinguish reader needs, not to prescribe files
-or folders. It works within the documentation structure a repository already
-owns and proposes a split only when the user should decide whether its benefit
-justifies the maintenance cost.
+Creates, revises, and audits documentation for open-source libraries and
+packages.
 
-## Install
+**Use when:**
 
-The [`skills` CLI](https://github.com/vercel-labs/skills) can discover and
-install Documentory for supported coding agents:
+- Working on README files, documentation sites, tutorials, how-to guides,
+  explanations, or reference material
+- Documenting public APIs, configuration, examples, JSDoc, or TSDoc
+- Preserving non-obvious rationale in file, block, function, or line comments
+- Reviewing changelogs, migration guides, release documentation, or
+  documentation maintenance
 
-```sh
-npx skills add theKashey/skills --skill documentory
+**What it covers:**
+
+- Procedures for verifying current contracts against source, types, tests, and
+  generated artifacts
+- Diátaxis as a reader-needs lens without imposing files or folders
+- Guided, Balanced, and Compressed explanation levels
+- Public-contract inventory and evidence-based example classification
+- Code-local rationale for context that selective readers and coding agents
+  would otherwise miss
+
+## Installation
+
+From this repository's root, let the `skills` CLI discover the available
+skills:
+
+```bash
+npx skills add .
 ```
 
-To make it available globally to Codex without an interactive prompt:
+Install only Documentory:
 
-```sh
-npx skills add theKashey/skills --skill documentory --global --agent codex --yes
-```
-
-From a local clone, replace `theKashey/skills` with the path to the repository:
-
-```sh
+```bash
 npx skills add . --skill documentory
 ```
 
-Restart or begin a new agent session if the client does not reload installed
-skills automatically.
+These commands describe local installation from an existing checkout. This
+README does not declare a public repository source.
 
-## Use
+## Usage
 
-Ask the agent to use `$documentory`, or make a documentation request that
-matches the skill description. For example:
+After installation, a compatible agent can select a skill by matching its
+description to the task. Explicit invocation syntax depends on the client. In
+clients that recognize `$documentory`, for example:
 
 ```text
 Use $documentory to audit this package README against its public exports,
 configuration, tests, and examples. Report defects without editing files.
 ```
 
-```text
-Use $documentory to document this public option. Keep the existing README
-structure and use balanced detail.
-```
+## Skill Structure
 
-```text
-Use $documentory to review comments around this function. Preserve only the
-non-local rationale that prevents a plausible wrong change.
-```
+Each skill lives under `skills/<skill-name>/` and contains:
 
-The default documentation level is **Balanced**. Choose **Guided** when the
-reader needs a friendly primary path, or **Compressed** when a known expert
-audience needs only the irreducible contract and boundary.
-
-## Package layout
-
-```text
-documentory/
-├── SKILL.md
-├── LICENSE.txt
-├── agents/
-│   └── openai.yaml
-└── references/
-    ├── api-jsdoc-examples.md
-    ├── content-architecture.md
-    └── quality-maintenance.md
-```
-
-`SKILL.md` contains the laws, request routing, and procedures. Each reference
-is loaded only when its procedure needs the extra detail, so unrelated doctrine
-does not consume the agent's working context.
-
-## Validate a change
-
-Check that distribution tooling can discover the skill:
-
-```sh
-npx --yes skills@1.5.20 add . --list
-```
-
-Pull requests also validate `documentory/` against the official Agent Skills
-reference implementation and repeat the distribution discovery check on an
-isolated runner.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the evidence expected with changes.
-Security-sensitive behavior should follow [SECURITY.md](SECURITY.md).
+- `SKILL.md` - Required metadata and agent instructions
+- `agents/` - Optional client-facing metadata
+- `scripts/` - Executable helpers, when the skill needs them
+- `references/` - Supporting guidance loaded only when needed
+- `assets/` - Templates or other output resources, when needed
 
 ## License
 
-Documentory is available under the [MIT License](LICENSE).
+No repository-wide license has been selected.
