@@ -47,10 +47,9 @@ These apply to every path:
 10. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support.
-11. **Leave a publishable result.** Documentation and code must be ready for
-    their intended review, merge, or publication without a cleanup operation
-    that changes their temporal stance or removes draft scaffolding. Only an
-    explicit `TODO` or `FIXME` comment may preserve an accepted gap.
+11. **Leave a publishable result.** Meet the [end-state exit
+    gate](references/quality-maintenance.md#end-state-exit-gate); an accepted
+    gap remains an explicit `TODO` or `FIXME`.
 12. **Prove completion.** Validate currentness, coverage, examples, links,
     copy-paste integrity, and the primary reader path at the applicable rung.
     Report evidence, counts, exclusions, untested assumptions, and remaining
@@ -58,21 +57,21 @@ These apply to every path:
 
 ## Route the request
 
-Choose one primary path. Combine paths only when the request genuinely spans
-them, and do not load every reference before starting.
+Choose one primary path. Start its procedure before loading branch-specific
+references; the procedure names each reference at the decision where it is
+needed. Combine paths only when the request genuinely spans them.
 
-| Request | Start here | Read at the indicated step |
-| --- | --- | --- |
-| Top-level project or site README or public landing page | [Create or revise current documentation](#create-or-revise-current-documentation) | `references/locality-ladder.md` before classifying the surface; `references/content-architecture.md` before planning the landing path |
-| Internal folder, package, module, domain, or service README or technical overview | [Create or revise current documentation](#create-or-revise-current-documentation) | `references/locality-ladder.md` before classifying the governed scope; `references/content-architecture.md` before structuring the technical reader path |
-| Tutorial, how-to, explanation, or examples within them | [Create or revise current documentation](#create-or-revise-current-documentation) | `references/locality-ladder.md` before choosing the owning surface; `references/content-architecture.md` before planning the reader path; the example section of `references/api-jsdoc-examples.md` only when code examples are in scope |
-| API or configuration reference, or public JSDoc/TSDoc | [Document a public contract](#document-a-public-contract) | `references/locality-ladder.md` before choosing the canonical owner; `references/api-jsdoc-examples.md` before drafting the contract |
-| Line, block, or file comments | [Document code-local rationale](#document-code-local-rationale) | `references/locality-ladder.md` before choosing placement; the code-local section of `references/api-jsdoc-examples.md` after identifying missing context |
-| Documentation audit, review, release check, or maintenance plan | [Audit documentation](#audit-documentation) | `references/quality-maintenance.md` before scoring or reporting completeness |
-| Changelog, migration guide, or release documentation | [Document a change](#document-a-change) | `references/quality-maintenance.md` before the final drift check |
+| Request | Start here |
+| --- | --- |
+| Top-level project or site README or public landing page | [Create or revise current documentation](#create-or-revise-current-documentation) |
+| Internal folder, package, module, domain, or service README or technical overview | [Create or revise current documentation](#create-or-revise-current-documentation) |
+| Tutorial, how-to, explanation, or examples within them | [Create or revise current documentation](#create-or-revise-current-documentation) |
+| API or configuration reference, or public JSDoc/TSDoc | [Document a public contract](#document-a-public-contract) |
+| Line, block, or file comments | [Document code-local rationale](#document-code-local-rationale) |
+| Documentation audit, review, release check, or maintenance plan | [Audit documentation](#audit-documentation) |
+| Changelog, migration guide, or release documentation | [Document a change](#document-a-change) |
 
-Go directly to the selected procedure. Apply another path only when its artifact
-is also in scope.
+Apply another path only when its artifact is also in scope.
 
 ## Create or revise current documentation
 
@@ -84,10 +83,10 @@ is also in scope.
    it. Do not publish a mid-process snapshot or treat an example, private
    helper, or identifier name as proof of public behavior.
 2. Read `references/locality-ladder.md`. Classify the governed scope and the
-   surface's actual role before writing; do not infer its role from a
-   `README.md` filename alone. Identify the reader, available context, prior
-   knowledge, task or question, smallest successful outcome, prerequisites,
-   dangerous assumptions, and next useful detail.
+   surface's actual role from its reader, available context, and responsibility
+   before writing. Identify the reader's prior knowledge, task or question,
+   smallest successful outcome, prerequisites, dangerous assumptions, and next
+   useful detail.
 3. Select explanation density at this decision point:
    - **Guided** for a reader new to the domain or library: define unfamiliar
      terms, make prerequisites and results explicit, and show one safe primary
@@ -255,10 +254,8 @@ For every completed path, verify the applicable minimum:
    internal surface. Otherwise report the assumptions that remain untested.
 7. Check links, code-fence status, terminology, defaults, historical leakage,
    mid-process wording, and copy-paste integrity.
-8. Apply the exit gate: the documentation and code can enter their intended
-   review, merge, or publication without editing away temporary caveats,
-   placeholders, draft scaffolding, or future-tense completion. Permit an open
-   gap only when an explicit `TODO` or `FIXME` comment accepts it.
+8. Apply the [end-state exit
+   gate](references/quality-maintenance.md#end-state-exit-gate).
 9. Report updated surfaces, intentional omissions, validation run, counts,
    remaining risks, and future maintenance triggers.
 
