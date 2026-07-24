@@ -1,5 +1,10 @@
 # Documentation locality ladder
 
+Documentation locality puts a fact beside the decisions it governs, so readers
+can act without hunting across the repository or carrying duplicate
+explanations. It preserves one canonical owner for detail while exposing the
+right context at each scope.
+
 Use this reference to decide where documentation belongs and which context it
 may assume.
 
@@ -15,10 +20,10 @@ may assume.
 - [Top-level documentation](#7-top-level-documentation)
 - [Movement tests](#movement-tests)
 
-Locality answers **where a fact belongs**. Diátaxis answers **which reader
-question it serves**. JSDoc or TSDoc extraction answers **which symbol
-semantics must remain visible outside the implementation**. The rungs are a
-scope vocabulary, not a guaranteed filesystem tree or total ordering.
+Diátaxis answers **which reader question a fact serves**. JSDoc or TSDoc
+extraction answers **which symbol semantics must remain visible outside the
+implementation**. The rungs are a scope vocabulary, not a guaranteed filesystem
+tree or total ordering.
 
 ## Placement rule
 

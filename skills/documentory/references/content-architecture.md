@@ -1,6 +1,10 @@
 # Content architecture
 
-Use this reference when planning a README, restructuring documentation, or building public documentation-site navigation.
+Content architecture gives each reader a clear path to a decision or task
+without forcing a new filesystem topology.
+
+Use this reference when planning a README, restructuring documentation, or
+building public documentation-site navigation.
 
 - [Reader paths](#reader-paths)
 - [Detail level](#detail-level)
@@ -168,6 +172,13 @@ Treat an internal technical opening as a boundary surface. Let the maintainer
 identify the unit's responsibility, place in the containing system, owned
 boundary, and first route to implementation or validation. Do not force a
 marketing problem statement onto it.
+
+Open every reader-facing surface with the governed subject's relevant purpose,
+responsibility, outcome, contract, boundary, or rationale—not with the
+artifact's label, placement, or production story. Keep drafting, validation,
+tool, and review material in the work handoff. When a durable process is the
+explicit reader subject, establish its operator, trigger, action, and decision
+boundary before explaining the document mechanics.
 
 State scope or a non-goal only when a reasonable reader might otherwise infer a
 capability or ownership that is not promised. Do not add generic disclaimers.

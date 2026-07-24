@@ -50,7 +50,12 @@ These apply to every path:
 11. **Leave a publishable result.** Meet the [end-state exit
     gate](references/quality-maintenance.md#end-state-exit-gate); an accepted
     gap remains an explicit `TODO` or `FIXME`.
-12. **Prove completion.** Validate currentness, coverage, examples, links,
+12. **Gate unvalidated outputs.** Before declaring a changed documentation or
+    code artifact complete, run its deterministic checks and the
+    [output-context review gate](references/quality-maintenance.md#output-context-review-gate).
+    A fresh independent reviewer must pass; a producer self-review or unavailable
+    reviewer is a reported risk, not a pass.
+13. **Prove completion.** Validate currentness, coverage, examples, links,
     copy-paste integrity, and the primary reader path at the applicable rung.
     Report evidence, counts, exclusions, untested assumptions, and remaining
     risks.
@@ -256,8 +261,15 @@ For every completed path, verify the applicable minimum:
    mid-process wording, and copy-paste integrity.
 8. Apply the [end-state exit
    gate](references/quality-maintenance.md#end-state-exit-gate).
-9. Report updated surfaces, intentional omissions, validation run, counts,
-   remaining risks, and future maintenance triggers.
+9. For every changed documentation or code artifact, spawn a fresh independent
+   review subagent with no inherited drafting context—or an equally isolated
+   independent agent session when that is unavailable—to run the
+   [output-context review gate](references/quality-maintenance.md#output-context-review-gate).
+   Give it only the review packet. Wait for its verdict, resolve failures, then
+   use a new reviewer. Keep the gate record in the handoff, not in the reader
+   artifact; an unavailable independent review is not a pass.
+10. Report updated surfaces, intentional omissions, validation run, counts,
+    gate result, remaining risks, and future maintenance triggers.
 
 Prefer repository-native link, documentation-build, typecheck, doctest, and
 example commands. Add custom automation only after repeated use shows that a

@@ -1,10 +1,14 @@
 # Public contracts, JSDoc, and examples
 
+Public contracts, JSDoc, and examples let readers use an API safely without
+reconstructing behavior from implementation. They expose purpose, constraints,
+and failures that types and a local code scan cannot reliably show.
+
 Use this reference for public exports, configuration, API documentation, JS or TS JSDoc, and code examples.
 
 - [Contract checklist](#contract-checklist)
 - [Code-local documentation](#code-local-documentation)
-- [Fence-visibility test](#fence-visibility-test)
+- [Chesterton's fence test](#chestertons-fence-test)
 - [Example integrity](#example-integrity)
 - [Verification evidence](#verification-evidence)
 
@@ -74,7 +78,9 @@ concrete plausible mistake, sits beside the governed decision, and remains true
 when incidental implementation details change.
 
 Useful rationale connects a constraint to its non-local cause and, when useful,
-the consequence of the apparent alternative. Illustrative contrast:
+the consequence of the apparent alternative. This illustrative comment omits
+surrounding imports and definitions; it is a rationale pattern, not a complete
+program:
 
 ```ts
 // Canonicalize before hashing: adapters do not guarantee iteration order, but

@@ -1,9 +1,14 @@
 # Maintaining Documentory
 
-This is the module-level technical README for `documentory`. The repository
-root README is a public landing surface; [SKILL.md](SKILL.md) is the runtime
-entry point. This file helps maintainers change the module without
-reconstructing its design from runtime instructions and references.
+Documentory routes a documentation task by reader question and locality, then
+maps verified implementation facts to the README, reference, example, or
+code-local rationale that owns them. It keeps documentation usable when a
+maintainer or coding agent sees only partial repository context.
+
+This module-level technical README helps maintainers change that behavior
+without reconstructing its design from runtime instructions and references. The
+repository root README is a public landing surface; [SKILL.md](SKILL.md) is the
+runtime entry point.
 
 It is not part of the runtime route. Keep it focused on module ownership,
 current decisions, and maintenance—not on repeating agent instructions.
@@ -19,10 +24,9 @@ current decisions, and maintenance—not on repeating agent instructions.
 
 ## Technical role
 
-Documentory turns verified implementation facts into documentation a particular
-reader can use safely. It directs an agent to identify the reader and surface,
-place each fact with its canonical owner, expose hidden constraints, and verify
-that the finished documentation agrees with the finished code.
+The module directs an agent to identify the reader and surface, place each fact
+with its canonical owner, expose hidden constraints, and verify that the
+finished documentation agrees with the finished code.
 
 It is deliberately AI-aware at code level. A maintainer or coding agent may
 see only a symbol, nearby lines, and search matches. Code-local prose therefore
@@ -37,7 +41,7 @@ mechanics.
 | [content architecture](references/content-architecture.md) | Reader paths, README roles, procedure structure, and progressive disclosure. | A change affects documentation surfaces or reader journeys. |
 | [locality ladder](references/locality-ladder.md) | Scope vocabulary for placing facts from a line comment to top-level documentation. | A change affects where a fact belongs. |
 | [API, JSDoc, and examples](references/api-jsdoc-examples.md) | Public contracts, JSDoc/TSDoc, code-local rationale, and examples. | A change affects API semantics, snippets, or code comments. |
-| [quality and maintenance](references/quality-maintenance.md) | Audit evidence, change triggers, drift checks, and the end-state exit gate. | A change affects how documentation quality is assessed or maintained. |
+| [quality and maintenance](references/quality-maintenance.md) | Audit evidence, change triggers, drift checks, end-state exit, and output-context review gates. | A change affects how documentation quality is assessed or maintained. |
 | This README | Maintainer intent, file ownership, decisions, and validation. | A change affects how the module is understood or maintained. |
 
 Keep each behavior in one canonical owner. Link to it from other files rather
@@ -81,6 +85,10 @@ checklists inside the route they govern.
 - **Current documentation describes the finished state.** Historical change
   belongs in changelogs and migration material. An explicit `TODO` or `FIXME`
   is the only accepted visible gap.
+- **Unvalidated output needs an independent gate.** A fresh reviewer checks the
+  final artifact against its reader and subject rather than trusting the
+  producing agent's self-assessment. The gate report stays outside the reader
+  artifact.
 - **Balanced detail is the default.** Guided and Compressed are reader-specific
   choices; they do not change the truth of the contract.
 
@@ -118,6 +126,10 @@ adding prose.
 6. For a behavioral, routing, or new-branch change, forward-test the affected
    route with a fresh agent and a raw task artifact. Do not disclose the
    intended rule, diagnosis, or expected answer.
+7. Run the [output-context review
+   gate](references/quality-maintenance.md#output-context-review-gate) against
+   every changed artifact. Keep its independent verdict with the handoff, not
+   in the artifact.
 
 This README records the current design, not a change log. Git history records
 superseded decisions.
@@ -134,14 +146,19 @@ For a meaningful change:
    npx skills add . --list
    ```
 
-3. Forward-test the affected route with realistic source facts and review for
+3. Run the output-context review gate with a fresh isolated reviewer. A `PASS`
+   is required for completion. Resolve `BLOCK`, escalate
+   `NEEDS-HUMAN-DECISION`, and record `UNVALIDATED` when independent review is
+   unavailable; neither status is complete.
+4. Forward-test the affected route with realistic source facts and review for
    invented claims, wrong routing, duplicated doctrine, skipped completion
    criteria, or unsupported documentation changes.
-4. Run `git diff --check` and report any validation that was unavailable.
+5. Run `git diff --check` and report any validation that was unavailable.
 
-The change is complete when its canonical source, discovered or installed skill,
-and applicable forward-test behavior agree—or when the remaining uncertainty is
-explicit.
+The change is complete only when its canonical source, discovered or installed
+skill, applicable forward-test behavior, and an independent output-context
+review agree. Record remaining accepted uncertainty explicitly; it does not
+substitute for a gate result.
 
 ## Influences
 
@@ -152,3 +169,6 @@ explicit.
 - [Writing Great Skills](https://github.com/mattpocock/skills/blob/main/skills/productivity/writing-great-skills/SKILL.md)
   is a maintenance lens: keep runtime instructions lean, give each behavior one
   owner, and prove a material change with a fresh forward test.
+- [Context Gates](https://asdlc.io/patterns/context-gates/) supplies the
+  independent output-review model for artifacts that would otherwise leave the
+  producing session unvalidated.
