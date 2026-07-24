@@ -40,10 +40,12 @@ These apply to every path:
 8. **Preserve topology and ownership.** Give each detailed fact one canonical
    owner. Do not create or move pages, folders, or navigation without the
    user's authorization; a README may own every necessary content mode.
-9. **Protect Chesterton's fences.** Preserve the verified reason behind a
-   boundary, oddity, duplication, or rejected alternative that invites removal
-   or simplification, at the smallest scope it governs. If the reason cannot be
-   verified, flag the gap; never invent it.
+9. **Expose Chesterton's fences.** Detect loose, unusual, duplicated, or
+   apparently removable code whose reason is invisible. Investigate and
+   document the verified reason and consequence where the decision is
+   encountered. If the reason remains unknown, mark the accepted knowledge gap
+   with `TODO` or `FIXME`. Do not turn documentation into a decision to preserve
+   or remove the code; “do not touch” is not an explanation.
 10. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support.
@@ -67,7 +69,7 @@ them, and do not load every reference before starting.
 | Internal folder, package, module, domain, or service README or technical overview | [Create or revise current documentation](#create-or-revise-current-documentation) | `references/locality-ladder.md` before classifying the governed scope; `references/content-architecture.md` before structuring the technical reader path |
 | Tutorial, how-to, explanation, or examples within them | [Create or revise current documentation](#create-or-revise-current-documentation) | `references/locality-ladder.md` before choosing the owning surface; `references/content-architecture.md` before planning the reader path; the example section of `references/api-jsdoc-examples.md` only when code examples are in scope |
 | API or configuration reference, or public JSDoc/TSDoc | [Document a public contract](#document-a-public-contract) | `references/locality-ladder.md` before choosing the canonical owner; `references/api-jsdoc-examples.md` before drafting the contract |
-| Line, block, or file comments | [Preserve code-local rationale](#preserve-code-local-rationale) | `references/locality-ladder.md` before choosing placement; the code-local section of `references/api-jsdoc-examples.md` after identifying missing context |
+| Line, block, or file comments | [Document code-local rationale](#document-code-local-rationale) | `references/locality-ladder.md` before choosing placement; the code-local section of `references/api-jsdoc-examples.md` after identifying missing context |
 | Documentation audit, review, release check, or maintenance plan | [Audit documentation](#audit-documentation) | `references/quality-maintenance.md` before scoring or reporting completeness |
 | Changelog, migration guide, or release documentation | [Document a change](#document-a-change) | `references/quality-maintenance.md` before the final drift check |
 
@@ -161,25 +163,33 @@ is also in scope.
    exclusion. Then finish with [Verify every completed
    path](#verify-every-completed-path).
 
-## Preserve code-local rationale
+## Document code-local rationale
 
 1. Inspect the governed symbol or block, nearby lines, relevant types and tests,
    and search matches. Assume the next maintainer or coding agent may see only
    that selective context.
 2. Identify the important non-local purpose, invariant, ownership boundary, or
    rejected alternative missing from that view. Name the plausible but wrong
-   edit its absence could invite. If there is no such edit, add no comment.
-3. Read `references/locality-ladder.md`, then the code-local documentation
+   edit its absence could invite. If neither hidden rationale nor a fence
+   candidate exists, add no comment.
+3. Treat code that looks loose, redundant, unusually ordered, or safely
+   removable as a fence candidate. Do not choose its disposition. Trace history,
+   callers, tests, runtime effects, and neighboring invariants until the reason
+   and consequence are verified or explicitly accepted as unresolved.
+4. Read `references/locality-ladder.md`, then the code-local documentation
    section of `references/api-jsdoc-examples.md`. Place the smallest durable
    explanation at the line, block, or file rung that governs the decision.
    Treat exported-symbol JSDoc as a public-contract overlay, not another
    locality rung.
-4. Explain why the code deliberately differs from an apparent alternative and,
-   when useful, its consequence. Do not narrate mechanics visible in code,
-   types, names, or nearby tests. Internal symbols need no JSDoc by default.
-5. Remove the comment when clearer code, a type, or the same local context makes
-   the rationale reliably recoverable. Finish with [Verify every completed
-   path](#verify-every-completed-path).
+5. If the code has a verified purpose, explain its non-local cause and the
+   consequence of the tempting change. Do not narrate visible mechanics or
+   prescribe whether the code should remain.
+6. If no reason can be verified, do not manufacture one or choose the code's
+   fate. Record the accepted knowledge gap with an explicit `TODO` or `FIXME`
+   comment rather than a “do not touch” warning.
+7. Remove rationale when clearer code, a type, or the same local context makes
+   it reliably recoverable. Internal symbols need no JSDoc by default. Finish
+   with [Verify every completed path](#verify-every-completed-path).
 
 ## Audit documentation
 
@@ -237,7 +247,10 @@ For every completed path, verify the applicable minimum:
 3. Confirm that each unit in scope gives its reader enough relevance, behavior,
    evidence, and boundary to act without unsafe inference.
 4. Confirm that code-local prose preserves necessary non-local context without
-   narrating visible mechanics.
+   narrating visible mechanics. Every detected fence candidate in scope has a
+   verified explanation or an explicit accepted `TODO` or `FIXME` knowledge gap;
+   documentation never decides preservation or removal, and uncertainty alone
+   never justifies “do not touch.”
 5. Confirm that public JSDoc or TSDoc semantics remain attached to the intended
    exported symbol in the actual extracted or IDE-visible surface.
 6. Build or typecheck examples and documentation when supported. Validate the

@@ -4,6 +4,7 @@ Use this reference for public exports, configuration, API documentation, JS or T
 
 - [Contract checklist](#contract-checklist)
 - [Code-local documentation](#code-local-documentation)
+- [Fence-visibility test](#fence-visibility-test)
 - [Example integrity](#example-integrity)
 - [Verification evidence](#verification-evidence)
 
@@ -81,6 +82,22 @@ const digest = hash(canonicalize(entries));
 
 `Sort before hashing` would merely narrate the code. The example preserves the
 cross-adapter reason a local scan would otherwise miss.
+
+### Fence-visibility test
+
+When code looks loose, redundant, oddly ordered, or safely removable, do not
+choose between deletion and preservation:
+
+1. Inspect history, callers, tests, runtime effects, and neighboring invariants.
+2. If a purpose is verified, explain its non-local cause and consequence at the
+   governed decision.
+3. If the reason cannot be resolved and the knowledge gap is deliberately
+   accepted, add an explicit `TODO` or `FIXME` naming the missing knowledge.
+   This accepts debt; it does not explain the fence.
+4. Stop at detection and documentation. Do not convert the documentation task
+   into a decision to keep, remove, or otherwise change the code.
+
+Neither an uncommented mystery nor a “do not touch” warning passes this test.
 
 ## Example integrity
 
