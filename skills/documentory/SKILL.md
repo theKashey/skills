@@ -5,15 +5,18 @@ description: Create, revise, and audit layered software documentation. Use when 
 
 # Documentory
 
-Create documentation that lets a reader safely understand and use the library as it exists now.
+Create documentation that lets a reader safely understand and use the
+completed, verified result.
 
 ## Laws
 
 These apply to every path:
 
-1. **Describe present truth.** Current documentation explains what a library,
-   API, option, route, or workflow is and does now. Changelogs, migration
-   guides, and release documentation explain what changed or used to be true.
+1. **Describe the finished state.** Current documentation represents what is
+   true when the requested work is complete, not the temporary state or
+   sequence used to get there. At exit, verify that account against the
+   finished code and artifacts. Changelogs, migration guides, and release
+   documentation explain what changed or used to be true.
 2. **Verify; never invent.** Check source, exported types, tests, generated
    artifacts, or an explicit product decision. Put evidence beside evaluative
    or comparative claims.
@@ -44,7 +47,11 @@ These apply to every path:
 10. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support.
-11. **Prove completion.** Validate currentness, coverage, examples, links,
+11. **Leave a publishable result.** Documentation and code must be ready for
+    their intended review, merge, or publication without a cleanup operation
+    that changes their temporal stance or removes draft scaffolding. Only an
+    explicit `TODO` or `FIXME` comment may preserve an accepted gap.
+12. **Prove completion.** Validate currentness, coverage, examples, links,
     copy-paste integrity, and the primary reader path at the applicable rung.
     Report evidence, counts, exclusions, untested assumptions, and remaining
     risks.
@@ -69,10 +76,13 @@ is also in scope.
 
 ## Create or revise current documentation
 
-1. Establish current truth from package metadata, public exports, types,
-   configuration, defaults, errors, tests, existing documentation, examples,
-   and repository-native documentation tooling. Do not treat an example,
-   private helper, or identifier name as proof of public behavior.
+1. Establish the verified starting truth and the authorized state expected when
+   the work is complete from package metadata, public exports, types,
+   configuration, defaults, errors, tests, explicit decisions, and
+   repository-native documentation tooling. Write current documentation toward
+   that completed state, then verify that the finished implementation matches
+   it. Do not publish a mid-process snapshot or treat an example, private
+   helper, or identifier name as proof of public behavior.
 2. Read `references/locality-ladder.md`. Classify the governed scope and the
    surface's actual role before writing; do not infer its role from a
    `README.md` filename alone. Identify the reader, available context, prior
@@ -201,10 +211,12 @@ is also in scope.
 2. Record one outcome for each impact: update current documentation; update a
    changelog or migration guide; update public JSDoc or code-local rationale; or
    no documentation impact, with evidence.
-3. Keep time domains separate. Current documentation describes what the library
-   is and does now. Changelogs, migration guides, and release documentation
-   describe what changed or used to be true. Do not leave former names, removed
-   behavior, or vague temporal phrases in current reference material.
+3. Keep time domains separate. Write current documentation in present tense as
+   the completed change: what the library is and does when the work exits.
+   Changelogs, migration guides, and release documentation describe what
+   changed or used to be true. Do not leave former names, removed behavior,
+   mid-process caveats, or vague temporal phrases in current reference
+   material.
 4. Use only existing or explicitly authorized surfaces. Route current-contract,
    public-API, and code-local updates through their procedures above.
 5. Read `references/quality-maintenance.md`, perform the applicable drift and
@@ -217,8 +229,8 @@ For audits, release preparation, or work spanning multiple documentation
 surfaces, read `references/quality-maintenance.md` for the complete scorecard.
 For every completed path, verify the applicable minimum:
 
-1. Check changed behavior against code, types, tests, generated artifacts, or an
-   approved product decision.
+1. Check the completed behavior against code, types, tests, generated artifacts,
+   or an approved product decision.
 2. Account for every public export, option, route, error, command, and
    documentation surface in the stated scope. In a change-set scope, this means
    every changed or affected item.
@@ -233,8 +245,12 @@ For every completed path, verify the applicable minimum:
    success for a landing surface; entry points and technical workflows for an
    internal surface. Otherwise report the assumptions that remain untested.
 7. Check links, code-fence status, terminology, defaults, historical leakage,
-   and copy-paste integrity.
-8. Report updated surfaces, intentional omissions, validation run, counts,
+   mid-process wording, and copy-paste integrity.
+8. Apply the exit gate: the documentation and code can enter their intended
+   review, merge, or publication without editing away temporary caveats,
+   placeholders, draft scaffolding, or future-tense completion. Permit an open
+   gap only when an explicit `TODO` or `FIXME` comment accepts it.
+9. Report updated surfaces, intentional omissions, validation run, counts,
    remaining risks, and future maintenance triggers.
 
 Prefer repository-native link, documentation-build, typecheck, doctest, and

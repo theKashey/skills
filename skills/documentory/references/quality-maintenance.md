@@ -5,6 +5,7 @@ Use this reference for documentation audits, PR review, release preparation, and
 - [Evidence scorecard](#evidence-scorecard)
 - [Audit questions](#audit-questions)
 - [Change triggers](#change-triggers)
+- [End-state exit gate](#end-state-exit-gate)
 - [Release and drift review](#release-and-drift-review)
 
 ## Evidence scorecard
@@ -13,7 +14,7 @@ Report documentation quality with evidence and counts.
 
 | Gate | Pass condition |
 | --- | --- |
-| Currentness | Checked evidence shows no contradiction with current exports, types, defaults, routes, tests, or supported versions in the stated scope. |
+| Currentness | At exit, checked evidence shows no contradiction between the documented finished state and the completed exports, types, defaults, routes, tests, or supported versions in scope. |
 | Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is documented in an authorized existing surface or has an explicit justified exclusion. |
 | Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
@@ -28,6 +29,7 @@ Report documentation quality with evidence and counts.
 | Context resilience | A maintainer seeing only the changed symbol, nearby lines, and search matches can identify the non-local purpose, invariant, ownership boundary, or prohibited simplification required for a safe change. |
 | Comment discipline | New code-local documentation preserves public semantics hidden by the signature or non-obvious why and why-not; none narrates mechanically recoverable behavior. |
 | Navigation health | Links resolve; docs build where supported; essential pages are not orphaned. |
+| Publishable end state | Documentation and code represent the completed result and require no cleanup operation to remove draft scaffolding, temporary caveats, or promises of future completion. Any accepted gap is an explicit `TODO` or `FIXME` comment. |
 
 Record evidence capable of falsifying qualitative judgments. Use a task-local
 table such as:
@@ -75,6 +77,7 @@ every section and public item in that stated scope:
 9. From where does the intended reader encounter this document, and which context, paths, credentials, tools, or prerequisites are actually available there?
 10. If the primary reader path changed, was it checked from its stated starting state, and which assumptions remain untested?
 11. For code-local prose, which fact would disappear if the reader saw only the changed symbol and search matches, and what plausible wrong edit does it prevent?
+12. Could this state enter its intended review, merge, or publication without editing away a temporary caveat, placeholder, draft marker, or promise about what will happen later?
 
 Flag bare verbs such as supports, handles, claims, configure, use, secure, or works when nearby text does not supply behavior, condition, and boundary.
 
@@ -94,6 +97,28 @@ Choose one result and record the evidence:
 - update JSDoc or code-local rationale;
 - no user-facing documentation impact.
 
+## End-state exit gate
+
+Write current documentation as the contract expected when the requested work is
+complete. It may temporarily lead the implementation while both are being
+edited, but it must not claim completion until the final code, generated
+artifacts, and documented behavior agree.
+
+Reject a result that requires another edit merely to:
+
+- replace future tense with the completed contract;
+- remove notes about temporary repository, branch, rollout, or access state;
+- delete draft labels, placeholders, commented-out scaffolding, or instructions
+  to finish the work later;
+- reveal content that was intentionally hidden during implementation.
+
+An explicit `TODO` or `FIXME` comment may remain when it deliberately accepts a
+gap. Keep it recognizable as debt and local to the affected code; do not turn
+the gap into ordinary prose that makes incomplete behavior appear complete.
+
+A supported transitional state in the finished product is not implementation
+residue. Document it when it is part of the verified contract.
+
 ## Release and drift review
 
 At release cadence:
@@ -105,5 +130,6 @@ At release cadence:
 3. Run repository-native docs builds, link checks, type checks, doctests, or example tests.
 4. Search current documentation for legacy names and historical wording that should be in migration material.
 5. Re-check that public defaults, errors, supported versions, and security boundaries match source.
+6. Apply the end-state exit gate before declaring the documentation releasable.
 
 Prefer generated inventory or repository-native documentation tooling. Introduce a maintained API map only if coverage cannot otherwise be derived, because every additional index is another drift risk.

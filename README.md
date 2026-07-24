@@ -32,6 +32,7 @@ Creates, revises, and audits layered software documentation.
 - Public-contract inventory and evidence-based example classification
 - Code-local rationale for context that selective readers and coding agents
   would otherwise miss
+- An end-state exit gate that rejects unfinished or intermediate-state prose
 
 ## Installation
 
@@ -46,9 +47,6 @@ Install only Documentory:
 ```bash
 npx skills add theKashey/skills --skill documentory
 ```
-
-The CLI resolves `theKashey/skills` from GitHub. Access to this repository is
-required while it remains private.
 
 ## Usage
 
