@@ -25,6 +25,8 @@ For every stable public option, function, class, type, route, command, or error,
 | Example | Does ambiguity remain after the factual contract? If so, show a minimal verified use. |
 
 Do not give every field equal prose. State the smallest precise contract needed for safe use.
+Use a predictable field order and stable terms for comparable entries. Omit
+inapplicable fields rather than filling them with vague prose.
 
 ## Code-local documentation
 
@@ -106,6 +108,11 @@ Classify each fenced sample before publication:
 | Illustrative | Syntax-check it and state that integration setup is omitted. |
 | Partial | Identify omitted surrounding code and link to a complete source example. |
 | Pseudocode | Identify it as non-executable before the code fence. |
+
+For a value the reader must substitute, use a descriptive placeholder and
+explain it before the fence. Do not call a sample Runnable or copyable if the
+reader must delete syntax or infer a replacement. In Partial code, mark an
+omission with a language-valid comment rather than an ellipsis.
 
 For runnable samples:
 

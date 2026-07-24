@@ -4,11 +4,13 @@ Use this reference when planning a README, restructuring documentation, or build
 
 - [Reader paths](#reader-paths)
 - [Detail level](#detail-level)
+- [Procedure paths](#procedure-paths)
 - [README roles](#classify-the-readme)
 - [Reader entry point](#reader-entry-point)
 - [Opening and scan path](#opening-and-scan-path)
 - [Progressive disclosure](#progressive-disclosure)
 - [Explain-before-code pattern](#explain-before-code-pattern)
+- [Meaningful visuals](#meaningful-visuals)
 - [Separation tests](#separation-tests)
 
 ## Reader paths
@@ -41,6 +43,22 @@ Choose Guided, Balanced, or Compressed for the intended reader before writing.
 | Compressed | The exact answer, required conditions, meaningful boundary, and a descriptive link to detail. | Introductions, examples, or explanations the named expert audience can safely infer. |
 
 Do not use Compressed to hide a failure mode, security condition, required setup, or public API contract. Do not use Guided to make every page a tutorial. Keep code samples copyable at every level; change surrounding prose, not the amount of commentary inside the code.
+
+## Procedure paths
+
+Use a procedure only when a sentence, example, or link cannot carry the action
+safely.
+
+- A tutorial controls its starting conditions and follows one reproducible route
+  to a visible result. State the expected result at meaningful checkpoints; defer
+  variants.
+- A how-to serves a reader who knows the goal. Name real prerequisites and
+  branch only when a condition changes the action or recovery path.
+
+For either, let the heading state the task. Put the location, condition, or
+purpose before the action. Give each numbered step one meaningful action,
+combining only trivial actions in the same context. Put required warnings or
+decisions in the normal flow immediately before they matter.
 
 ## Classify the README
 
@@ -133,6 +151,9 @@ identify the unit's responsibility, place in the containing system, owned
 boundary, and first route to implementation or validation. Do not force a
 marketing problem statement onto it.
 
+State scope or a non-goal only when a reasonable reader might otherwise infer a
+capability or ownership that is not promised. Do not add generic disclaimers.
+
 Put evidence beside evaluative or comparative claims. Include the conditions
 needed to interpret a benchmark, size, compatibility, or security claim;
 otherwise replace the adjective with the observable behavior it was meant to
@@ -144,6 +165,10 @@ responsibility, boundary, and validation; an integrator should find contracts
 and prerequisites; an operator should find state, failure, recovery, and
 escalation paths. This test does not prescribe badges, bold text, horizontal
 rules, a table of contents, or a fixed section order.
+
+Make headings and link text identify their task, concept, or destination without
+surrounding prose. Do not make visual position, such as "above" or "below", the
+only way to locate content.
 
 Validate the primary reader path from its stated starting state. For a landing
 surface, use a clean supported environment. For an internal technical surface,
@@ -182,6 +207,13 @@ Use prose after it to state:
 - next useful page.
 
 Do not narrate every line inside a runnable sample. Preserve comments only when they carry a non-obvious rationale that remains true when the sample is copied elsewhere.
+
+## Meaningful visuals
+
+When a diagram, screenshot, or image carries a fact, state, decision, or
+relationship needed to act, expose it in concise contextual alt text or nearby
+prose. Do not make a contract, requirement, or necessary state visible only in
+the visual.
 
 ## Separation tests
 
