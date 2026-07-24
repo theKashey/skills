@@ -67,20 +67,9 @@ configuration, tests, and examples. Report defects without editing files.
 Each skill lives under `skills/<skill-name>/` and contains:
 
 - `SKILL.md` - Required metadata and agent instructions
-- `agents/` - Optional client-facing metadata
 - `scripts/` - Executable helpers, when the skill needs them
 - `references/` - Supporting guidance loaded only when needed
 - `assets/` - Templates or other output resources, when needed
-
-### OpenAI metadata
-
-Documentory includes
-[`agents/openai.yaml`](skills/documentory/agents/openai.yaml), which OpenAI
-documents as [optional skill metadata](https://learn.chatgpt.com/docs/build-skills#optional-metadata)
-for the ChatGPT desktop skill UI. It supplies the display name, short
-description, and starter prompt. It does not change the skill instructions,
-declare tool dependencies, or override invocation policy. Clients that only
-implement the portable Agent Skills format do not need this file.
 
 ## License
 
