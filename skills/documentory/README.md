@@ -73,9 +73,11 @@ checklists inside the route they govern.
 - **Locality is governed scope, not filesystem shape.** One README may be a
   landing page, package manual, or folder note; classify its reader and
   responsibility before choosing its posture.
-- **Public landings and internal READMEs have different jobs.** The former make
-  a verified case for relevance and first success; the latter explain system
-  responsibility, technical boundaries, and internal entry points.
+- **Repository READMEs and public websites have different entry actions.** A
+  project README may lead to source or package onboarding only when acquisition
+  is the reader's actual first task. A public website leads to a verified
+  browser-native action; source remains secondary. Internal READMEs explain
+  system responsibility, technical boundaries, and internal entry points.
 - **A map is not a transcript; mark reefs, not cliffs.** Select relationships,
   invisible behavior, and constraints a reader cannot recover locally instead
   of narrating implementation that is already visible.

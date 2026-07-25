@@ -70,8 +70,11 @@ decisions in the normal flow immediately before they matter.
 Read `locality-ladder.md` and classify the README by the scope it governs and
 the reader it serves. The filename alone does not determine its role:
 
-- A top-level open-source project, public site, or product README is a landing
-  page for outsiders.
+- A top-level repository or project README is a landing surface for outsiders
+  whose relevant next action may be source or package acquisition.
+- A public website landing page is a browser-native decision surface for
+  visitors evaluating, navigating to, or using a hosted product or service. It
+  is not a repository README merely because the source is public.
 - A folder, internal package, or internal module README is a technical document
   for people working inside the containing system.
 - An independently published package README may serve both roles. Keep its
@@ -79,16 +82,18 @@ the reader it serves. The filename alone does not determine its role:
 
 Do not apply the landing-page pattern to every README.
 
-## Top-level landing README
+## Top-level repository or project README
 
-Help an outsider decide whether to enter the project and reach first success:
+Help an outsider decide whether to enter the project and reach a source or
+package first success when that is their actual entry action:
 
 1. Why the project exists: problem, intended audience, supported outcome,
    scope, and non-goals.
 2. A concrete, verifiable reason to choose or explore it: observable behavior,
    a concise task-and-result, or a relevant comparison with its conditions.
-3. Installation and compatibility from the outsider's actual entry point.
-4. The smallest honest first success and expected result.
+3. Installation and compatibility when acquisition is the outsider's actual
+   entry point.
+4. The smallest honest source or package first success and expected result.
 5. Essential concepts, boundaries, or security assumptions.
 6. Clear routes to deeper technical material, contribution, support, and
    licensing as applicable.
@@ -96,6 +101,25 @@ Help an outsider decide whether to enter the project and reach first success:
 This surface advertises by demonstrating relevance and usefulness. Keep package
 mechanics in their technical owners instead of turning the landing page into a
 monorepo manual.
+
+## Public website landing page
+
+Help a browser visitor decide whether to take a verified web-native next action:
+
+1. Why the product or service exists: problem, intended audience, supported
+   outcome, scope, and non-goals.
+2. A concrete, verifiable reason to explore it: observable behavior, a concise
+   task-and-result, or a relevant comparison with its conditions.
+3. The smallest verified browser-native next action, such as using the product,
+   trying a demo, reading public docs, downloading a client, or contacting the
+   team.
+4. Essential concepts, boundaries, or access assumptions.
+5. Routes to deeper material; source is secondary and only when contribution or
+   self-hosting is a verified visitor task.
+
+Do not add a prominent source quickstart, install, clone, package-manager, or
+code path merely because the project is open source. If no web-native action is
+verified, route to neutral deeper material rather than inventing a CTA.
 
 ## Landing decision test
 
@@ -112,6 +136,9 @@ next action is worth taking:
 
 This is a reader-decision check, not a fixed outline, badge set, or feature
 inventory. Use the smallest verified evidence that lets the reader decide.
+For a repository or project README, the next action can be code acquisition.
+For a public website landing page, it must be a browser-native visitor action,
+not source setup.
 
 ## Internal technical README
 
@@ -151,11 +178,12 @@ clear sections.
 Model the reader at the surface where they first encounter the documentation.
 Assume only context available at that rung.
 
-For an external landing README, name an installation source the reader can
-reach, such as a registry package, repository identifier, or URL. Use `.` only
-after explicitly establishing a clone-and-enter-checkout workflow. For an
-internal technical README, repository-local paths and commands may be the
-correct primary path.
+For a top-level repository or project README, name an installation source the
+reader can reach, such as a registry package, repository identifier, or URL.
+Use `.` only after explicitly establishing a clone-and-enter-checkout workflow.
+For a public website landing page, make the primary action browser-native; do
+not put source setup in the primary path. For an internal technical README,
+repository-local paths and commands may be the correct primary path.
 
 Check commands, links, paths, prerequisites, and first success from the stated
 entry point. State additional authentication, source access, checkout state, or
@@ -188,22 +216,26 @@ needed to interpret a benchmark, size, compatibility, or security claim;
 otherwise replace the adjective with the observable behavior it was meant to
 describe.
 
-Check the scan path for the named reader and task. For example, a landing reader
-should determine relevance and find first success; a maintainer should find
-responsibility, boundary, and validation; an integrator should find contracts
-and prerequisites; an operator should find state, failure, recovery, and
-escalation paths. This test does not prescribe badges, bold text, horizontal
-rules, a table of contents, or a fixed section order.
+Check the scan path for the named reader and task. For example, a repository or
+project README reader should determine relevance and find source or package
+first success when that is their entry action; a public website visitor should
+determine relevance and find a web-native action, not source setup; a
+maintainer should find responsibility, boundary, and validation; an integrator
+should find contracts and prerequisites; an operator should find state, failure,
+recovery, and escalation paths. This test does not prescribe badges, bold text,
+horizontal rules, a table of contents, or a fixed section order.
 
 Make headings and link text identify their task, concept, or destination without
 surrounding prose. Do not make visual position, such as "above" or "below", the
 only way to locate content.
 
-Validate the primary reader path from its stated starting state. For a landing
-surface, use a clean supported environment. For an internal technical surface,
-use the documented repository state and repository-native tooling. Do not
-silently depend on unstated caches, global tools, credentials, generated files,
-or maintainer knowledge. State what remained untested.
+Validate the primary reader path from its stated starting state. For a
+repository or project README, use a clean supported code environment. For a
+public website landing page, use a clean supported browser entry with the
+stated access. For an internal technical surface, use the documented repository
+state and repository-native tooling. Do not silently depend on unstated caches,
+global tools, credentials, generated files, or maintainer knowledge. State what
+remained untested.
 
 ## Progressive disclosure
 

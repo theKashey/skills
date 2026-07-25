@@ -68,7 +68,8 @@ needed. Combine paths only when the request genuinely spans them.
 
 | Request | Start here |
 | --- | --- |
-| Top-level project or site README or public landing page | [Create or revise current documentation](#create-or-revise-current-documentation) |
+| Top-level repository or project README | [Create or revise current documentation](#create-or-revise-current-documentation) |
+| Public website landing page | [Create or revise current documentation](#create-or-revise-current-documentation) |
 | Internal folder, package, module, domain, or service README or technical overview | [Create or revise current documentation](#create-or-revise-current-documentation) |
 | Tutorial, how-to, explanation, or examples within them | [Create or revise current documentation](#create-or-revise-current-documentation) |
 | API or configuration reference, or public JSDoc/TSDoc | [Document a public contract](#document-a-public-contract) |
@@ -110,22 +111,37 @@ Apply another path only when its artifact is also in scope.
    improve it in place. Propose a split with benefits and maintenance cost only
    when distinct reader intents justify it; let the user decide unless
    restructuring is already in scope.
-5. For a top-level project or site landing surface, start with outsider-facing
+5. Before using an outsider landing pattern, classify the entry action. A
+   top-level repository or project README may lead to source or package
+   acquisition when the primary reader is a developer, integrator, or
+   self-hoster and first success requires the code or package. A public website
+   landing page serves a browser visitor evaluating, navigating to, or using a
+   hosted product or service. Do not classify by public visibility, an
+   open-source license, or the existence of a GitHub repository.
+6. For a top-level repository or project README, start with outsider-facing
    why: the problem, intended audience, supported outcome, scope, and
-   non-goals. Make a concise, verified case for relevance before asking the
-   reader to take the first action, then lead to the smallest honest first
-   success and deeper paths.
-6. For an internal folder, package, module, domain, or service surface, start
+   non-goals. Lead to installation, cloning, or a source quickstart only when
+   that is the verified primary entry action; then lead to the smallest honest
+   first success and deeper paths.
+7. For a public website landing page, start with outsider-facing why and lead
+   to a verified web-native visitor action, such as using the product, trying a
+   demo, reading public docs, downloading a client, or contacting the team. Do
+   not add a prominent source quickstart, install, clone, package-manager, or
+   code path merely because source exists. Keep source as a secondary route
+   only when it is verified useful for contribution or self-hosting; when no
+   web-native action is verified, use a neutral deeper route rather than invent
+   a CTA.
+8. For an internal folder, package, module, domain, or service surface, start
    with technical why: its responsibility in the containing system, owned
    boundary, interactions, and constraints. Do not inject project-level sales
    copy or external installation unless the unit is also independently
    published.
-7. Write the minimum sufficient explanation. Describe effect, condition, and
+9. Write the minimum sufficient explanation. Describe effect, condition, and
    relevant boundary; put evidence beside evaluative or comparative claims.
    Add material only when it enables a priority task, closes a contract or
    operational risk, or makes an example safe. Apply a deletion test to
    everything else.
-8. For API or configuration reference, continue with [Document a public
+10. For API or configuration reference, continue with [Document a public
    contract](#document-a-public-contract). For an example inside another
    document, read the example section of `references/api-jsdoc-examples.md` and
    apply only steps 5–6 of that procedure. Then finish with [Verify every
@@ -255,8 +271,10 @@ For every completed path, verify the applicable minimum:
    exported symbol in the actual extracted or IDE-visible surface.
 6. Build or typecheck examples and documentation when supported. Validate the
    primary path from its documented starting state: installation and first
-   success for a landing surface; entry points and technical workflows for an
-   internal surface. Otherwise report the assumptions that remain untested.
+   source or package success for a top-level repository or project README; a
+   web-native visitor action for a public website landing page; entry points
+   and technical workflows for an internal surface. Otherwise report the
+   assumptions that remain untested.
 7. Check links, code-fence status, terminology, defaults, historical leakage,
    mid-process wording, and copy-paste integrity.
 8. Apply the [end-state exit
