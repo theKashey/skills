@@ -1,41 +1,45 @@
 # Content architecture
 
-Content architecture gives each reader a clear path to a decision or task
-without forcing a new filesystem topology.
+Content architecture gives each reader a useful path to a task or decision without
+forcing a new filesystem topology. It starts with reader context and governed
+scope, not with a filename, repository visibility, or an assumed marketing role.
 
 Use this reference when planning a README, restructuring documentation, or
 building public documentation-site navigation.
 
-- [Reader paths](#reader-paths)
+- [Reader contexts](#reader-contexts)
 - [Detail level](#detail-level)
 - [Procedure paths](#procedure-paths)
-- [README roles](#classify-the-readme)
-- [Landing decision test](#landing-decision-test)
-- [Reader entry point](#reader-entry-point)
-- [Opening and scan path](#opening-and-scan-path)
+- [Classify technical documents and public sites](#classify-technical-documents-and-public-sites)
+- [Technical README roles](#technical-readme-roles)
+- [Public documentation homes](#public-documentation-homes)
+- [Public website presentation pages](#public-website-presentation-pages)
+- [Reader entry and scan path](#reader-entry-and-scan-path)
 - [Progressive disclosure](#progressive-disclosure)
 - [Explain-before-code pattern](#explain-before-code-pattern)
 - [Meaningful visuals](#meaningful-visuals)
 - [Separation tests](#separation-tests)
 
-## Reader paths
+## Reader contexts
 
-Start with the reader's question, not the repository's folders. Diátaxis names
-content modes; it does not require separate files, folders, or navigation.
+Start with the reader's question, entry context, and task. Diátaxis names content
+modes; it does not require separate files, folders, or navigation.
 
-| Reader need | Diátaxis mode | Likely surface | A useful success condition |
+| Reader need | Diátaxis mode | Appropriate surface | Useful success condition |
 | --- | --- | --- | --- |
-| Decide whether a project or published package is relevant | Explanation | Landing page | Understand the problem, audience, scope, and first next step. |
-| Understand an internal unit's role | Explanation | Technical overview | Identify responsibility, boundary, interactions, and the next source or validation path. |
-| Learn a capability | Tutorial | Tutorial or guided README section | Reach a visible working result by following steps. |
+| Orient in a repository, system, or documentation set | Explanation | Top-level technical README or documentation home | Identify purpose, scope, boundaries, and the technical route relevant to the reader's task. |
+| Understand a package or module | Explanation and reference | Package or module README, API reference | Identify contract, integration conditions, and the next technical detail. |
+| Work safely inside a repository area | Explanation | Folder overview | Identify ownership, conventions, boundary, and local validation. |
+| Learn a capability | Tutorial | Tutorial or guided README section | Reach a visible working result by following one stated path. |
 | Solve a known problem | How-to | How-to page or procedural README section | Complete the task with stated prerequisites and expected result. |
-| Find an exact fact | Reference | API, configuration, or in-page reference | Locate a precise answer quickly without reading a narrative. |
+| Find an exact fact | Reference | API, configuration, or in-page reference | Locate a precise answer without a narrative detour. |
 | Understand a design | Explanation | Concept or architecture section | Understand the mental model, trade-off, and boundary. |
+| Evaluate or access a browser-based product | Presentation or product guidance | Public website page, not a README | Recognize the supported outcome and take a verified browser-native next action. |
 
-Apply these modes within the documentation surfaces the repository already
-uses. If the README is the only surface, keep the necessary modes as clear
-README sections. Do not create or move pages unless the user requested a new
-structure or explicitly accepts a proposed split.
+Apply modes within the documentation surfaces the repository already uses. If a
+README is the only surface, keep the necessary modes as clear technical README
+sections. Do not create or move pages unless the user requested a new structure
+or explicitly accepts a proposed split.
 
 ## Detail level
 
@@ -47,7 +51,10 @@ Choose Guided, Balanced, or Compressed for the intended reader before writing.
 | Balanced | The reader outcome, non-obvious choices, important boundaries, and contextual links. | Repeating the reference contract or assuming specialist knowledge without evidence. |
 | Compressed | The exact answer, required conditions, meaningful boundary, and a descriptive link to detail. | Introductions, examples, or explanations the named expert audience can safely infer. |
 
-Do not use Compressed to hide a failure mode, security condition, required setup, or public API contract. Do not use Guided to make every page a tutorial. Keep code samples copyable at every level; change surrounding prose, not the amount of commentary inside the code.
+Do not use Compressed to hide a failure mode, security condition, required setup,
+or public API contract. Do not use Guided to make every page a tutorial. Keep
+code samples copyable at every level; change surrounding prose, not the amount
+of commentary inside the code.
 
 ## Procedure paths
 
@@ -65,193 +72,154 @@ purpose before the action. Give each numbered step one meaningful action,
 combining only trivial actions in the same context. Put required warnings or
 decisions in the normal flow immediately before they matter.
 
-## Classify the README
+## Classify technical documents and public sites
 
-Read `locality-ladder.md` and classify the README by the scope it governs and
-the reader it serves. The filename alone does not determine its role:
+Read locality-ladder.md. Classify every surface by its governed scope, reader,
+available context, and task:
 
-- A top-level repository or project README is a landing surface for outsiders
-  whose relevant next action may be source or package acquisition.
-- A public website landing page is a browser-native decision surface for
-  visitors evaluating, navigating to, or using a hosted product or service. It
-  is not a repository README merely because the source is public.
-- A folder, internal package, or internal module README is a technical document
-  for people working inside the containing system.
-- An independently published package README may serve both roles. Keep its
-  short external landing path distinct from its technical contract.
+- A top-level repository or project README is technical orientation for the
+  whole technical system or repository.
+- A package README is technical orientation and contract for the package,
+  whether it is internal or independently published.
+- A folder or module README is technical orientation for the governed area.
+- A public documentation home is navigation and orientation for readers already
+  seeking documentation.
+- A public website or product landing page is a separate presentation surface
+  for browser visitors; it is not a README and is not implied by public source.
 
-Do not apply the landing-page pattern to every README.
+README is never an advertising landing page. Do not import landing-page section
+order, persuasion goals, browser calls to action, or source-versus-browser
+routing into a README. This does not ban verified technical commands,
+installation instructions, or routes for the README's named reader. Public
+access, root placement, a source host, and a license establish availability, not
+the reader's task.
 
-## Top-level repository or project README
+A document can host several technical modes when it is the authorized surface,
+but its sections must remain scannable by role. Do not create a split just to
+make the taxonomy tidy.
 
-Help an outsider decide whether to enter the project and reach a source or
-package first success when that is their actual entry action:
+## Technical README roles
 
-1. Why the project exists: problem, intended audience, supported outcome,
-   scope, and non-goals.
-2. A concrete, verifiable reason to choose or explore it: observable behavior,
-   a concise task-and-result, or a relevant comparison with its conditions.
-3. Installation and compatibility when acquisition is the outsider's actual
-   entry point.
-4. The smallest honest source or package first success and expected result.
-5. Essential concepts, boundaries, or security assumptions.
-6. Clear routes to deeper technical material, contribution, support, and
-   licensing as applicable.
+### Top-level repository or project README
 
-This surface advertises by demonstrating relevance and usefulness. Keep package
-mechanics in their technical owners instead of turning the landing page into a
-monorepo manual.
+Help a named technical reader orient in the whole repository or system. Do not
+assume the reader is a prospective customer, a contributor, or an integrator;
+derive the actual technical task from the request and verified context.
 
-## Public website landing page
+State only what that reader needs at top level:
 
-Help a browser visitor decide whether to take a verified web-native next action:
+1. What the project or system is for in technical terms, its scope, and important
+   non-goals.
+2. Its major components, boundaries, and any system-wide constraints that change
+   a safe technical decision.
+3. The technical audience or audiences served by the documented routes.
+4. The verified route relevant to the task: using a published package, running
+   the system, contributing, operating it, or finding deeper documentation.
+5. Links to canonical package, domain, API, configuration, operation, and
+   contribution material as applicable.
 
-1. Why the product or service exists: problem, intended audience, supported
-   outcome, scope, and non-goals.
-2. A concrete, verifiable reason to explore it: observable behavior, a concise
-   task-and-result, or a relevant comparison with its conditions.
-3. The smallest verified browser-native next action, such as using the product,
-   trying a demo, reading public docs, downloading a client, or contacting the
-   team.
-4. Essential concepts, boundaries, or access assumptions.
-5. Routes to deeper material; source is secondary and only when contribution or
-   self-hosting is a verified visitor task.
+A source or package start belongs here only when it is the verified technical
+task for the reader. It is an instruction, not a conversion call to action.
+Do not add a generic source quickstart merely because source exists, and do not
+turn this README into a product advertisement or a monorepo manual.
 
-Do not add a prominent source quickstart, install, clone, package-manager, or
-code path merely because the project is open source. If no web-native action is
-verified, route to neutral deeper material rather than inventing a CTA.
+### Package README
 
-## Landing decision test
+Help an integrator or consumer use a bounded technical unit. Give its purpose,
+supported contract, prerequisites, installation when verified and relevant,
+smallest safe use, configuration, defaults, failures, compatibility boundaries,
+and routes to deeper reference.
 
-Make the opening and scan path sufficient for an outsider to decide whether the
-next action is worth taking:
+A published package can serve readers outside the repository without becoming a
+landing page. It remains a technical contract. Keep marketing claims and
+product-wide narrative outside it; keep exhaustive API detail with its canonical
+reference owner.
 
-1. Can I recognize my problem and intended environment or role here?
-2. What supported outcome can I expect?
-3. What verified behavior, task-and-result, or relevant comparison makes that
-   credible?
-4. What is the smallest next action from my actual environment?
-5. If a likely false expectation exists, which relevant boundary should be
-   visible before it matters?
+### Folder, module, domain, and service README
 
-This is a reader-decision check, not a fixed outline, badge set, or feature
-inventory. Use the smallest verified evidence that lets the reader decide.
-For a repository or project README, the next action can be code acquisition.
-For a public website landing page, it must be a browser-native visitor action,
-not source setup.
+Use the locality ladder's reader-context matrix. Explain responsibility,
+ownership, boundary, interactions, and the technical route appropriate to that
+scope. A folder-level reader may have a checkout; a package-level reader may not;
+a service-level reader may need operational context. Do not borrow assumptions
+from a broader or narrower rung.
 
-## Internal technical README
+## Public documentation homes
 
-Help a maintainer or coding agent understand the governed folder, package, or
-module without reconstructing the containing system:
+Help a reader who has already arrived to find documentation. Start with the
+documentation subject, its available navigation, and a route to the relevant
+tutorial, how-to, explanation, or reference. A public documentation home may be
+browser-delivered, but that does not make it a product presentation page or
+give it a conversion goal.
 
-1. Why the unit exists and its responsibility in the parent system.
-2. What it owns, what it deliberately does not own, and its boundary with
-   sibling units.
-3. How it interacts with callers, dependencies, state, lifecycle, or host
-   infrastructure.
-4. Its entry points, configuration, failure behavior, local workflows, and
-   validation commands when those facts belong at this scope.
-5. Routes to source, tests, package reference, domain context, and broader
-   architecture.
+Validate that the reader can navigate to a relevant topic or locate an exact
+fact from the stated entry. Keep product evaluation and browser-product actions
+on a separately classified public website presentation page.
 
-This surface is technical documentation. It may assume a checkout, internal
-paths, and repository tooling when those are genuinely available to its reader.
-Do not add project-level sales copy or external installation merely because the
-file is named `README.md`.
+## Public website presentation pages
 
-## Dual-role package README
+Use this route only for an actual public website or product page. Its browser
+visitor may need a decision or verified web-native action, so it has a different
+reader contract from every README.
 
-When a package is independently published, begin with the shortest external
-landing path needed to establish relevance, installation, and first use. Then
-make the technical package contract separately scannable. Do not let the
-landing introduction displace required defaults, behavior, failures,
-interactions, or boundaries.
+Describe verified purpose, supported outcome, relevant limits, and the smallest
+honest browser-native next step. Keep source secondary unless contribution or
+self-hosting is a verified visitor task. If no browser action is verified, route
+to neutral deeper material rather than inventing a call to action.
 
-When deeper surfaces already exist, avoid duplicating their exhaustive detail.
-When a README is the only documentation at its rung, completeness takes
-precedence; organize necessary reference, procedure, and explanation under
-clear sections.
+A public documentation home is not automatically a marketing page. Classify it
+by whether its reader needs documentation navigation, technical reference, or a
+product decision.
 
-## Reader entry point
+## Reader entry and scan path
 
 Model the reader at the surface where they first encounter the documentation.
-Assume only context available at that rung.
+Assume only context genuinely available at that rung.
 
-For a top-level repository or project README, name an installation source the
-reader can reach, such as a registry package, repository identifier, or URL.
-Use `.` only after explicitly establishing a clone-and-enter-checkout workflow.
-For a public website landing page, make the primary action browser-native; do
-not put source setup in the primary path. For an internal technical README,
-repository-local paths and commands may be the correct primary path.
-
-Check commands, links, paths, prerequisites, and first success from the stated
-entry point. State additional authentication, source access, checkout state, or
-tooling instead of relying on it silently.
-
-## Opening and scan path
-
-Treat a landing opening as a decision surface. In plain, current terms, let the
-outsider identify the problem, supported outcome, scope, and first next step.
-State a meaningful distinction from alternatives only when it matters to that
-decision and can be verified.
-
-Treat an internal technical opening as a boundary surface. Let the maintainer
-identify the unit's responsibility, place in the containing system, owned
-boundary, and first route to implementation or validation. Do not force a
-marketing problem statement onto it.
+For a README, state the technical reader, task, and starting context before
+giving a route. A repository checkout, package registry, command line, runtime,
+credentials, or source access is available only when stated or verified. For a
+public website presentation page, the primary route is browser-native. Do not
+swap those contracts. For a public documentation home, the primary route is
+documentation navigation or reference lookup, not a product conversion path.
 
 Open every reader-facing surface with the governed subject's relevant purpose,
 responsibility, outcome, contract, boundary, or rationale—not with the
-artifact's label, placement, or production story. Keep drafting, validation,
-tool, and review material in the work handoff. When a durable process is the
-explicit reader subject, establish its operator, trigger, action, and decision
-boundary before explaining the document mechanics.
+artifact's label, placement, or production story.
 
-State scope or a non-goal only when a reasonable reader might otherwise infer a
-capability or ownership that is not promised. Do not add generic disclaimers.
+A technical README opening should let its technical reader identify the governed
+system or unit, scope, boundary, and the route that fits their task. A public
+documentation home should let a documentation reader identify the subject and
+next navigation route. A public website presentation opening may instead help a
+browser visitor recognize a supported outcome and next action. This distinction
+does not prescribe badges, a table of contents, visual position, or a fixed
+section order.
 
-Put evidence beside evaluative or comparative claims. Include the conditions
-needed to interpret a benchmark, size, compatibility, or security claim;
-otherwise replace the adjective with the observable behavior it was meant to
-describe.
-
-Check the scan path for the named reader and task. For example, a repository or
-project README reader should determine relevance and find source or package
-first success when that is their entry action; a public website visitor should
-determine relevance and find a web-native action, not source setup; a
-maintainer should find responsibility, boundary, and validation; an integrator
-should find contracts and prerequisites; an operator should find state, failure,
-recovery, and escalation paths. This test does not prescribe badges, bold text,
-horizontal rules, a table of contents, or a fixed section order.
-
-Make headings and link text identify their task, concept, or destination without
-surrounding prose. Do not make visual position, such as "above" or "below", the
-only way to locate content.
-
-Validate the primary reader path from its stated starting state. For a
-repository or project README, use a clean supported code environment. For a
-public website landing page, use a clean supported browser entry with the
-stated access. For an internal technical surface, use the documented repository
-state and repository-native tooling. Do not silently depend on unstated caches,
-global tools, credentials, generated files, or maintainer knowledge. State what
-remained untested.
+Validate the primary reader path from its documented starting state. For a
+README, validate its stated technical task rather than assuming installation or
+a browser journey. For a public website presentation page, use a clean supported
+browser entry with stated access. For a public documentation home, test the
+documented navigation or reference path. For an internal technical surface, use
+the documented repository state and repository-native tooling. Do not silently
+depend on unstated caches, global tools, credentials, generated files, or
+maintainer knowledge. State what remained untested.
 
 ## Progressive disclosure
 
 Give enough context before each link to answer why it applies. Move detail only
-to an existing or authorized surface. Otherwise disclose it progressively in
-the current document through headings and local navigation.
+to an existing or authorized surface. Otherwise disclose it progressively in the
+current document through headings and local navigation.
 
 Use a canonical-owner rule within the existing documentation topology. The
-terms below describe content modes and may refer to sections in one README:
+following modes may be sections in one README:
 
 - Put exact defaults, type shapes, error details, and exhaustive option facts in reference.
 - Put task-specific setup and procedure in how-tos.
 - Put concepts and trade-offs in explanations.
 - Put only a short contextual summary plus a link in other surfaces.
 
-Delete repeated prose if a reader can still determine purpose, behavior, and boundary. Add only the smallest missing explanation at the reader's present level.
+Delete repeated prose if a reader can still determine purpose, behavior, and
+boundary. Add only the smallest missing explanation at the reader's present
+level.
 
 ## Explain-before-code pattern
 
@@ -267,7 +235,9 @@ Use prose after it to state:
 - meaningful limit, ownership boundary, or failure case;
 - next useful page.
 
-Do not narrate every line inside a runnable sample. Preserve comments only when they carry a non-obvious rationale that remains true when the sample is copied elsewhere.
+Do not narrate every line inside a runnable sample. Preserve comments only when
+they carry a non-obvious rationale that remains true when the sample is copied
+elsewhere.
 
 ## Meaningful visuals
 
@@ -284,8 +254,14 @@ Apply these tests while reviewing:
 - How-to: can an informed reader identify the goal, prerequisites, steps, and result?
 - Reference: can a reader find the factual contract without a narrative detour?
 - Explanation: does it answer a conceptual or design question rather than conceal procedural steps?
+- Technical README: can the named technical reader locate scope, boundary, and
+  the route for their task without encountering marketing posture?
+- Public documentation home: can a reader find the relevant topic or exact fact
+  without a product-presentation detour?
+- Public website presentation page: can a browser visitor find only a verified
+  web-native path without source setup being made primary?
 
 Flag a possible split when one page attempts to teach, prescribe, enumerate
-facts, and justify architecture with no clear separation. Until the user
-accepts restructuring, preserve the current files and improve separation with
-headings and local navigation.
+facts, and justify architecture with no clear separation. Until the user accepts
+restructuring, preserve the current files and improve separation with headings
+and local navigation.

@@ -24,7 +24,7 @@ Report documentation quality with evidence and counts.
 | Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is documented in an authorized existing surface or has an explicit justified exclusion. |
 | Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
-| Scan-path usability | The named reader can identify the document's purpose, task or destination from headings and links, primary path, and next useful detail without relying on decorative formatting. For a public landing, an outsider can identify the problem and intended context, supported outcome, a concrete reason to believe it, and the first action; any boundary needed to avoid a likely false expectation appears before it matters. |
+| Scan-path usability | The named reader can identify the document's purpose, task or destination from headings and links, primary path, and next useful detail without relying on decorative formatting. For a public website presentation page, a browser visitor can identify the intended context, supported outcome, and first verified action; any boundary needed to avoid a likely false expectation appears before it matters. For a public documentation home, a reader can find the relevant topic or exact fact without a product-presentation detour. For a README, the named technical reader can identify the governed scope, boundary, and route for their task without marketing posture. |
 | Locality fit | Each fact has a canonical owner at the narrowest governed scope visible to affected readers; overlapping physical and logical roles are explicit rather than duplicated or forced apart. |
 | Entry-point validity | Commands, links, paths, prerequisites, and assumed context work from the documented starting state; any additional access or knowledge is explicit. |
 | Reader-path usability | A representative intended reader can complete the documented outcome from the stated starting state without undocumented setup, unsafe inference, or a required condition or warning that arrives after the action it governs; any untested assumptions are explicit. |
@@ -89,7 +89,9 @@ every section and public item in that stated scope:
 5. Is this fact duplicated elsewhere, and which location is canonical?
 6. What source evidence verifies it? For an evaluative or comparative claim, is the evidence adjacent and are its conditions clear?
 7. Which ladder rung contains everything this fact governs, and is the current surface serving that role rather than a broader or narrower one?
-8. Can the named reader—outsider, maintainer, integrator, operator, administrator, support engineer, or end user—find the purpose, primary path, and next detail appropriate to their role?
+8. Can the named reader—technical newcomer, maintainer, integrator, operator,
+   administrator, support engineer, end user, or browser visitor—find the
+   purpose, primary path, and next detail appropriate to their role?
 9. From where does the intended reader encounter this document, and which context, paths, credentials, tools, or prerequisites are actually available there?
 10. If the primary reader path changed, was it checked from its stated starting state, and which assumptions remain untested?
 11. For a procedure, does the heading state the task and does each step give one meaningful action after its necessary location, condition, and warning? For a tutorial, can the reader see its meaningful checkpoints?
@@ -263,8 +265,9 @@ At release cadence:
 
 1. Compare the public export and configuration inventory with reference coverage.
 2. Revalidate each changed primary reader path from its stated starting state,
-   including landing first success, integration, maintenance, operation, or
-   recovery as applicable. Record untested assumptions.
+   including a public-website action, documentation navigation or reference
+   lookup, technical integration, maintenance, operation, or recovery as
+   applicable. Record untested assumptions.
 3. Run repository-native docs builds, link checks, type checks, doctests, or example tests.
 4. Search current documentation for legacy names and historical wording that should be in migration material.
 5. Re-check that public defaults, errors, supported versions, and security boundaries match source.

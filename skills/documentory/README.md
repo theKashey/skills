@@ -7,8 +7,8 @@ maintainer or coding agent sees only partial repository context.
 
 This module-level technical README helps maintainers change that behavior
 without reconstructing its design from runtime instructions and references. The
-repository root README is a public landing surface; [SKILL.md](SKILL.md) is the
-runtime entry point.
+repository root README is technical orientation for the repository; [SKILL.md](SKILL.md)
+is the runtime entry point.
 
 It is not part of the runtime route. Keep it focused on module ownership,
 current decisions, and maintenance—not on repeating agent instructions.
@@ -63,21 +63,24 @@ checklists inside the route they govern.
 
 ## Current design decisions
 
-- **Start with why at the governing scope.** A public landing establishes
-  relevance; an internal README explains responsibility and boundaries; a code
-  comment preserves a non-local reason. The why must add a fact that raw code
-  cannot safely provide at that rung.
+- **Start with why at the governing scope.** A technical README explains scope,
+  responsibility, and boundaries; a public website presentation page has a
+  separate browser-visitor contract; a code comment preserves a non-local
+  reason. The why must add a fact that raw code cannot safely provide at that
+  rung.
 - **Diátaxis is a reader-question lens, not an enforced file tree.** It informs
   content mode and separation while the existing documentation topology remains
   authoritative. See [Diátaxis](https://diataxis.fr/).
 - **Locality is governed scope, not filesystem shape.** One README may be a
-  landing page, package manual, or folder note; classify its reader and
-  responsibility before choosing its posture.
-- **Repository READMEs and public websites have different entry actions.** A
-  project README may lead to source or package onboarding only when acquisition
-  is the reader's actual first task. A public website leads to a verified
-  browser-native action; source remains secondary. Internal READMEs explain
-  system responsibility, technical boundaries, and internal entry points.
+  top-level technical orientation, package manual, or folder note. It is never
+  a marketing or advertising landing page; classify its reader, available
+  context, need, and responsibility before choosing its content.
+- **Repository READMEs and public websites have different reader contracts.** A
+  README gives a named technical reader scope, boundary, and a route for their
+  task. A public website presentation page leads a browser visitor to a
+  verified web-native action; a public documentation home leads a reader to
+  documentation navigation or reference. Neither role follows from a public
+  repository or license.
 - **A map is not a transcript; mark reefs, not cliffs.** Select relationships,
   invisible behavior, and constraints a reader cannot recover locally instead
   of narrating implementation that is already visible.
@@ -94,8 +97,8 @@ checklists inside the route they govern.
 - **Balanced detail is the default.** Guided and Compressed are reader-specific
   choices; they do not change the truth of the contract.
 
-The public-landing decision test turns these principles into a choice-ready
-opening without prescribing a feature list, badge set, or fixed section order.
+The reader-context matrix turns these principles into a placement decision
+without prescribing a feature list, badge set, or fixed section order.
 
 ## Boundaries
 
@@ -106,9 +109,9 @@ whether to create or move a surface.
 
 The module is deliberately portable: runtime instructions and direct references
 are its only integration surface. Installation belongs to the repository's
-public README. Add a client-specific integration artifact, executable helper,
-or new documentation surface only when a real operating requirement and its
-owner are explicit.
+technical README when it is a verified task for its reader. Add a
+client-specific integration artifact, executable helper, or new documentation
+surface only when a real operating requirement and its owner are explicit.
 
 ## Changing the skill
 

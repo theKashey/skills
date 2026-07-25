@@ -1,171 +1,145 @@
 # Documentation locality ladder
 
-Documentation locality puts a fact beside the decisions it governs, so readers
-can act without hunting across the repository or carrying duplicate
-explanations. It preserves one canonical owner for detail while exposing the
-right context at each scope.
+A locality rung is a reader-context contract. It says who encounters a fact,
+what that reader can already see, what gap would otherwise remain, and how much
+context the surface can responsibly carry.
 
-Use this reference to decide where documentation belongs and which context it
-may assume.
+Use this reference to place a fact where its reader can notice it before making
+the governed decision. The rungs are a scope vocabulary, not a required folder
+tree, a document outline, or a measure of importance.
 
-- [Placement rule](#placement-rule)
-- [Three heuristics](#three-heuristics)
+- [Reader-context rule](#reader-context-rule)
+- [Choose a rung](#choose-a-rung)
+- [Reader-context matrix](#reader-context-matrix)
 - [Overlapping rungs](#overlapping-rungs)
-- [Line-level comment](#1-line-level-comment)
-- [Block-level comment](#2-block-level-comment)
-- [File-level comment](#3-file-level-comment)
-- [Folder-level documentation](#4-folder-level-documentation)
-- [Package- or module-level documentation](#5-package--or-module-level-documentation)
-- [Domain- or service-level documentation](#6-domain--or-service-level-documentation)
-- [Top-level documentation](#7-top-level-documentation)
+- [Three heuristics](#three-heuristics)
 - [Movement tests](#movement-tests)
 
-Diátaxis answers **which reader question a fact serves**. JSDoc or TSDoc
-extraction answers **which symbol semantics must remain visible outside the
-implementation**. The rungs are a scope vocabulary, not a guaranteed filesystem
-tree or total ordering.
+Diátaxis names the question a fact answers. JSDoc or TSDoc exposes symbol
+semantics outside implementation. Neither changes the reader context available
+at a locality rung.
 
-## Placement rule
+## Reader-context rule
 
-1. Identify the fact and every decision, task, or boundary it governs.
-2. Choose the narrowest governed scope whose surface is encountered by all
-   affected readers.
-3. If the fact governs sibling units, move it to their shared logical boundary.
-4. When scopes overlap on one surface, classify each fact or section by its
-   role instead of forcing a split or duplicating it.
-5. Keep the detailed fact in one canonical place. Broader scopes orient and
-   link; narrower scopes contain only the local consequence they must expose.
-6. Choose by governed scope and reader role, not by filename alone. A
-   `README.md` can be a folder note, an internal package manual, or a top-level
-   landing page.
-7. Do not create a missing surface without authorization. Report the placement
-   gap and propose the smallest useful surface.
+For every fact, establish five things before deciding its home:
+
+1. **Reader:** who naturally encounters this surface while doing real work?
+2. **Available context:** what code, system, task, access, and prior knowledge
+   can that reader reasonably have at this point?
+3. **Need:** which purpose, condition, boundary, or decision would remain
+   unsafe or costly to reconstruct from that context?
+4. **Scope:** what can this surface state truthfully without pretending to own a
+   broader contract or duplicating a narrower one?
+5. **Placement:** why must the reader see this fact here, before the governed
+   decision, rather than only in a parent, sibling, or later document?
+
+Write the missing fact, not a narration of what the reader can already see.
+Broader rungs orient and route; narrower rungs preserve the local consequence.
+Keep detailed content with one canonical owner.
+
+### README boundary
+
+**README.md** names a technical orientation document at the rung it serves. It
+is never a marketing or advertising landing page. A repository README, package
+README, and folder README differ because their technical readers, available
+context, and tasks differ—not because one is more public.
+
+A public website or product landing page is a separate presentation surface with
+a browser visitor's reader contract. Classify it independently. Do not transfer
+its promotional structure, browser-product conversion call to action, or
+source-versus-browser routing into any README. Verified technical commands,
+installation steps, and task routes remain appropriate in a README. Do not
+infer a presentation surface from a public repository.
+
+## Choose a rung
+
+1. Name the actual reader and the decision or task they are about to make.
+2. List only context available at that encounter: nearby code, imported API,
+   checkout, package metadata, system access, or public browser page.
+3. Identify the invisible fact that changes a safe decision at that point.
+4. Choose the narrowest surface that every affected reader naturally encounters
+   before the decision.
+5. State the fact in the form that rung can support: local rationale, technical
+   boundary, contract, system map, or route. Link to the canonical owner for
+   deeper detail.
+
+Do not create a missing surface without authorization. Report the placement gap
+and propose the smallest useful surface instead.
+
+## Reader-context matrix
+
+| Rung | Reader and likely context | What the reader needs now | What this rung can tell them | Why and how it belongs here |
+| --- | --- | --- | --- | --- |
+| **1. Line** | A maintainer or coding agent sees one expression, branch, argument, or assignment and nearby syntax. | The non-obvious reason this exact choice, exception, or value cannot be simplified safely. | A concise local constraint, rejected alternative, or consequence. | The decision is made on this line. Put the reason immediately before or beside it; do not narrate syntax, types, or names already visible. |
+| **2. Block** | A reader sees one guard, transformation, loop, or sequence and understands its statements in isolation. | The invariant joining the statements: ordering, atomicity, ownership transfer, intentional duplication, synchronization, or algorithmic boundary. | The block-wide purpose and the condition that must survive edits within it. | The risk arises from treating individual lines independently. Put one comment at the block boundary; move it up when it governs more than this block. |
+| **3. File** | A reader has the declarations, imports, and implementation unit, but may not know the containing subsystem. | Why this file exists, what it owns, its lifecycle or non-local relationship, and where its responsibility stops. | The cohesive implementation responsibility and a boundary that declarations cannot reliably expose. | The fact governs the whole unit, not one branch. Use a file header or local overview; do not turn it into a declaration tour or system manual. |
+| **4. Folder** | A contributor has entered an implementation area and can see sibling names and paths, usually with a checkout. | The area's purpose, ownership, organization, shared conventions, boundary with neighboring areas, and local validation route. | A technical map of the area and how to work in it safely. | The reader needs orientation before selecting or changing a sibling. Use an existing folder README or authorized overview; do not make it describe the project as a whole. |
+| **5. Package or module** | An integrator, maintainer, or internal consumer knows the package or module name and may have its manifest, import, or public API, but not its parent system. | The unit's purpose, public or internal contract, supported entry points, configuration, lifecycle, failures, dependencies, and compatibility boundaries. | The technical contract and integration conditions for this reusable unit. | The reader decides whether and how to depend on this unit at its boundary. A package README may include verified installation and use when those are part of that technical task; it does not become a product advertisement. |
+| **6. Domain or service** | An engineer, operator, or collaborator works across several packages and knows the wider product area, but not every implementation detail. | Responsibility and ownership, major flows, cross-unit contracts, state, lifecycle, failures, operational entry points, and escalation boundaries. | A map of one capability or service and routes to the owning packages, APIs, and operations material. | The reader's decision crosses unit boundaries. Keep mechanics in their canonical package or file owner; document the collaboration and boundary here. |
+| **7. Top level** | A technical reader arrives at a repository, system, or documentation root with little or no topology knowledge. They may know the project's name and their own task, but not its internals. | What the system or repository is for, its scope and major boundaries, its technical audience, the relevant starting route, and where deeper detail lives. | A technical orientation: system map, supported technical entry points, global constraints, and routes for using, contributing to, operating, or learning the system. | The reader needs a map before choosing a path. Keep it broad and factual; do not duplicate package mechanics, infer a browser journey, or turn the README into an advertisement. |
+
+The matrix is deliberately asymmetric: each higher rung can explain a wider
+relationship, but must not overwrite the detailed contract of a lower owner.
+Each lower rung can preserve a closer rationale, but must not reconstruct the
+whole system.
+
+### Public documentation home
+
+A public documentation home uses the top-level orientation rung for a reader
+who arrived to find documentation, not to evaluate a product. It may state the
+documentation map, topic boundaries, and routes to tutorials, how-tos,
+explanations, and reference. Validate that navigation or lookup path. Do not
+give it a product-presentation posture merely because it is browser-delivered.
+
+## Overlapping rungs
+
+Physical layout and logical scope do not always align. A language module can be
+a file, a package can be a folder, and a one-service repository can also be the
+top-level system. One technical document may therefore contain sections serving
+more than one rung.
+
+Classify each section by reader and governed scope. Make different roles
+scannable, keep one canonical owner for detail, and co-locate only when the
+scopes genuinely coincide. Do not manufacture files or repeat prose merely to
+make the ladder look physically nested.
 
 ## Three heuristics
 
 ### A map is not the territory
 
-Source and runtime behavior are the territory and the evidence. Documentation
-is a selective map for a particular reader and task. It should expose purpose,
-relationships, observable contract, and boundaries from an angle the raw
-implementation does not provide; it should not transcribe the implementation.
-At code-local rungs, that different angle is usually verified why or why-not.
-At a public contract surface, observable behavior may itself be missing because
-the reader cannot inspect the implementation.
+Source and runtime behavior are the territory and evidence. Documentation is a
+selective map for a reader and task. Expose purpose, relationships, observable
+contract, and boundaries that raw implementation does not give that reader; do
+not transcribe implementation.
 
 ### Chesterton's fence
 
-A Chesterton's fence is code whose reason for existing or taking its present
-form is unknown. It is an island of uncertainty.
+A Chesterton's fence is code whose reason for existing or present form is
+unknown: an island of uncertainty.
 
 Search history, callers, tests, runtime effects, and neighboring invariants for
 the missing rationale. If evidence verifies it, document the non-local reason
-where it governs the code. If the reason remains unknown and the gap is
-accepted, record the uncertainty with an explicit `TODO` or `FIXME`. Never
-invent rationale.
+at the rung where it governs a decision. If it remains unknown and the gap is
+accepted, mark it with an explicit **TODO** or **FIXME**. Never invent rationale.
 
 ### Mark reefs, not cliffs
 
-Document hazards and constraints hidden below the reader's normal view:
-non-obvious defaults, failure modes, security or ownership boundaries, lifecycle
-coupling, and cross-unit invariants. Do not mark cliffs already visible in code,
-types, names, signatures, or the surrounding surface. Visibility changes by
-rung, so judge from that rung's reader context.
-
-## Overlapping rungs
-
-The line, block, and file rungs usually nest spatially. The upper scopes often
-overlap: a package is also a folder, a language module may be a file, and a
-single-service repository may be both service-level and top-level.
-
-One document may therefore serve multiple rungs. Classify each fact or section,
-make the roles separately scannable, and keep one canonical owner. Co-locate
-when the governed scopes genuinely coincide; do not manufacture files or repeat
-content merely to make the ladder look physically nested.
-
-## 1. Line-level comment
-
-**Governs:** one expression, argument, branch, return, or assignment.
-
-Preserve the non-local constraint, rejected alternative, or consequence needed
-at that exact decision. Omit mechanics already visible in the line. Move up
-when the reason governs more than that decision.
-
-## 2. Block-level comment
-
-**Governs:** one contiguous guard, transformation, sequence, or algorithmic
-block.
-
-Explain an invariant across statements: ordering, atomicity, intentional
-duplication, synchronization, or an unusual algorithm. Do not narrate the
-statements. Move up when the invariant governs multiple blocks.
-
-## 3. File-level comment
-
-**Governs:** the file as a cohesive implementation unit.
-
-Explain the file's responsibility, boundary, lifecycle, or non-obvious
-relationship to another subsystem when declarations and imports cannot reveal
-it reliably. Do not provide a declaration tour. Move up when the explanation
-applies to sibling files.
-
-## 4. Folder-level documentation
-
-**Governs:** a coherent directory, subsystem slice, or implementation area.
-
-Use the existing folder README or nearest authorized overview to explain why
-the area exists, what it owns, how its parts are organized, shared conventions,
-its boundary with sibling areas, and the local validation path. This is
-technical documentation for people working in the repository; it may assume a
-checkout when that is the real reader context. Do not turn it into a project
-landing page.
-
-## 5. Package- or module-level documentation
-
-**Governs:** an independently imported, versioned, built, or reused unit.
-
-For an internal package or module, explain its role in the containing system,
-owned contract, entry points, dependencies, configuration, lifecycle, failure
-behavior, and how other internal units use it. It is a technical document, not
-an advertisement for the whole project.
-
-When the unit is independently published, the same README may have two roles:
-a short landing path for external consumers followed by the technical package
-contract. Keep those roles distinguishable instead of applying either posture
-to the entire document.
-
-## 6. Domain- or service-level documentation
-
-**Governs:** a business capability, deployable service, or collaboration among
-multiple packages and modules.
-
-Explain responsibility and ownership, boundaries, major flows, external and
-internal contracts, dependencies, state and lifecycle, failure modes,
-operational entry points, and where deeper technical detail lives. Do not
-duplicate file or package mechanics.
-
-## 7. Top-level documentation
-
-**Governs:** the whole project, product, public documentation site, or
-repository.
-
-For an open-source project or public site, treat the top-level README or home
-page as a landing page for outsiders. Make the verifiable case for relevance:
-the problem, intended audience, supported outcome, meaningful distinction,
-scope and non-goals, installation or first success, and routes to deeper
-material. Advertise through demonstrated usefulness and evidence, not hype.
-
-For an internal-only project, the same rung orients a newcomer to the whole
-system rather than selling it publicly. In either case, keep internal package
-mechanics below this rung and link to their canonical owners.
+Document hazards hidden below the reader's normal view: non-obvious defaults,
+failure modes, security or ownership boundaries, lifecycle coupling, and
+cross-unit invariants. Do not mark cliffs already visible in code, types, names,
+signatures, or the surrounding surface. Visibility changes by rung, so judge
+from the reader context in the matrix.
 
 ## Movement tests
 
-- **Scope:** Does this fact govern a wider or narrower unit than its surface?
-- **Visibility:** Will every affected reader naturally encounter this surface?
-- **Role:** Is this a landing surface, technical boundary document, extracted
-  contract, or local rationale?
-- **Duplication:** Is repeated lower-level prose evidence that the fact belongs
-  at their shared parent?
-- **Deletion:** Can a higher-level repetition become a short orientation or
-  link without losing safety or findability?
+- **Reader:** Who encounters this before the governed decision, and what can
+  they genuinely see or know there?
+- **Need:** Which unsafe inference or expensive reconstruction does the fact
+  prevent for that reader?
+- **Scope:** Does the fact govern a wider or narrower unit than this surface?
+- **Capability:** Is this surface asserting only a local rationale, technical
+  boundary, contract, system map, or route that it can own?
+- **Placement:** Would moving it leave an affected reader without the fact when
+  they need it, or would keeping it duplicate the canonical owner?
+- **README separation:** Has a technical README been kept separate from any
+  public website presentation page and its visitor journey?

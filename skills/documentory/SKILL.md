@@ -26,7 +26,7 @@ These apply to every path:
    there.
 4. **Make a map, not a transcript.** Select and relate the present truths the
    reader needs; do not mirror the implementation. Add the different angle
-   appropriate to the rung: outsider relevance, internal responsibility, or
+   appropriate to the rung: technical orientation, system responsibility, or
    non-obvious local why.
 5. **Explain before code.** Treat code as evidence, not the explanation. Keep
    runnable examples copyable, put necessary explanation around them, and label
@@ -37,28 +37,32 @@ These apply to every path:
    documentation layer that contains every decision, task, or boundary it
    governs. Assume only context available at that layer; orient upward or link
    downward instead of duplicating detail.
-8. **Preserve topology and ownership.** Give each detailed fact one canonical
+8. **Keep READMEs technical.** A README is never a marketing or advertising
+   landing page. Classify a public website or product presentation page as a
+   separate surface; do not transfer its visitor journey or browser-product
+   conversion calls to action into a README.
+9. **Preserve topology and ownership.** Give each detailed fact one canonical
    owner. Do not create or move pages, folders, or navigation without the
    user's authorization; a README may own every necessary content mode.
-9. **Expose Chesterton's fences.** A Chesterton's fence is code whose reason for
+10. **Expose Chesterton's fences.** A Chesterton's fence is code whose reason for
    existing is unknown: an island of uncertainty. Detect it. If evidence
    verifies the reason, document that rationale; otherwise record the accepted
    uncertainty with an explicit `TODO` or `FIXME`. Never invent rationale.
-10. **Disclose progressively.** Add material only when it enables a priority
+11. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support.
-11. **Leave a publishable result.** Meet the [end-state exit
+12. **Leave a publishable result.** Meet the [end-state exit
     gate](references/quality-maintenance.md#end-state-exit-gate); an accepted
     gap remains an explicit `TODO` or `FIXME`.
-12. **Gate unvalidated outputs.** Before declaring a changed documentation or
+13. **Gate unvalidated outputs.** Before declaring a changed documentation or
     code artifact complete, run its deterministic checks and the
     [output-context review gate](references/quality-maintenance.md#output-context-review-gate).
     A fresh independent reviewer must pass; a producer self-review or unavailable
     reviewer is a reported risk, not a pass.
-13. **Prove completion.** Validate currentness, coverage, examples, links,
-    copy-paste integrity, and the primary reader path at the applicable rung.
-    Report evidence, counts, exclusions, untested assumptions, and remaining
-    risks.
+14. **Prove completion.** Validate currentness, coverage, examples, links,
+   copy-paste integrity, and the primary reader path at the applicable rung.
+   Report evidence, counts, exclusions, untested assumptions, and remaining
+   risks.
 
 ## Route the request
 
@@ -70,6 +74,7 @@ needed. Combine paths only when the request genuinely spans them.
 | --- | --- |
 | Top-level repository or project README | [Create or revise current documentation](#create-or-revise-current-documentation) |
 | Public website landing page | [Create or revise current documentation](#create-or-revise-current-documentation) |
+| Public documentation home or docs-site navigation | [Create or revise current documentation](#create-or-revise-current-documentation) |
 | Internal folder, package, module, domain, or service README or technical overview | [Create or revise current documentation](#create-or-revise-current-documentation) |
 | Tutorial, how-to, explanation, or examples within them | [Create or revise current documentation](#create-or-revise-current-documentation) |
 | API or configuration reference, or public JSDoc/TSDoc | [Document a public contract](#document-a-public-contract) |
@@ -92,7 +97,9 @@ Apply another path only when its artifact is also in scope.
    surface's actual role from its reader, available context, and responsibility
    before writing. Identify the reader's prior knowledge, task or question,
    smallest successful outcome, prerequisites, dangerous assumptions, and next
-   useful detail.
+   useful detail. Record the reader, available context, need, scope, and
+   placement rationale before outlining; do not infer any of them from a
+   filename, root location, public visibility, source host, or license.
 3. Select explanation density at this decision point:
    - **Guided** for a reader new to the domain or library: define unfamiliar
      terms, make prerequisites and results explicit, and show one safe primary
@@ -107,41 +114,48 @@ Apply another path only when its artifact is also in scope.
    copyable code.
 4. Read `references/content-architecture.md`. Use Diátaxis as a lens for the
    reader's question, not as a required file or folder structure. Work in the
-   existing documentation topology. If the README is the only public surface,
-   improve it in place. Propose a split with benefits and maintenance cost only
-   when distinct reader intents justify it; let the user decide unless
-   restructuring is already in scope.
-5. Before using an outsider landing pattern, classify the entry action. A
-   top-level repository or project README may lead to source or package
-   acquisition when the primary reader is a developer, integrator, or
-   self-hoster and first success requires the code or package. A public website
-   landing page serves a browser visitor evaluating, navigating to, or using a
-   hosted product or service. Do not classify by public visibility, an
-   open-source license, or the existence of a GitHub repository.
-6. For a top-level repository or project README, start with outsider-facing
-   why: the problem, intended audience, supported outcome, scope, and
-   non-goals. Lead to installation, cloning, or a source quickstart only when
-   that is the verified primary entry action; then lead to the smallest honest
-   first success and deeper paths.
-7. For a public website landing page, start with outsider-facing why and lead
+   existing documentation topology. If the README is the only available
+   technical surface, improve it in place. Never turn it into a public product
+   presentation page. When the requested visitor presentation has no separate
+   surface, report the gap and request authorization for one. Propose a split
+   with benefits and maintenance cost only when distinct reader intents justify
+   it; let the user decide unless restructuring is already in scope.
+5. Treat every README as technical orientation at its governed rung. It is
+   never a marketing or advertising landing page, including at repository root
+   or for an independently published package. A public website or product
+   presentation page is a distinct surface with a browser visitor's contract;
+   do not infer either surface from public visibility, an open-source license,
+   or the existence of a source repository.
+6. For a top-level repository or project README, start with technical why:
+   what the system or repository is for, its scope, major boundaries, intended
+   technical reader, and the verified route relevant to that reader's task.
+   Include installation, cloning, or a source quickstart only when it is a
+   necessary technical instruction in that route; do not add one as a
+   promotional default.
+7. For a public website landing page, start with visitor-facing why and lead
    to a verified web-native visitor action, such as using the product, trying a
    demo, reading public docs, downloading a client, or contacting the team. Do
    not add a prominent source quickstart, install, clone, package-manager, or
    code path merely because source exists. Keep source as a secondary route
    only when it is verified useful for contribution or self-hosting; when no
    web-native action is verified, use a neutral deeper route rather than invent
-   a CTA.
-8. For an internal folder, package, module, domain, or service surface, start
+   a conversion call to action.
+8. For a public documentation home, start with the documentation reader's
+   subject, available navigation, and route to the relevant tutorial, how-to,
+   explanation, or reference. Browser delivery does not make it a product
+   presentation page. Validate a documentation-navigation or reference task,
+   not a browser-product conversion path.
+9. For an internal folder, package, module, domain, or service surface, start
    with technical why: its responsibility in the containing system, owned
    boundary, interactions, and constraints. Do not inject project-level sales
-   copy or external installation unless the unit is also independently
-   published.
-9. Write the minimum sufficient explanation. Describe effect, condition, and
+   copy. Include external installation only when the unit is independently
+   published and that instruction is necessary for its technical reader.
+10. Write the minimum sufficient explanation. Describe effect, condition, and
    relevant boundary; put evidence beside evaluative or comparative claims.
    Add material only when it enables a priority task, closes a contract or
    operational risk, or makes an example safe. Apply a deletion test to
    everything else.
-10. For API or configuration reference, continue with [Document a public
+11. For API or configuration reference, continue with [Document a public
    contract](#document-a-public-contract). For an example inside another
    document, read the example section of `references/api-jsdoc-examples.md` and
    apply only steps 5–6 of that procedure. Then finish with [Verify every
@@ -270,11 +284,11 @@ For every completed path, verify the applicable minimum:
 5. Confirm that public JSDoc or TSDoc semantics remain attached to the intended
    exported symbol in the actual extracted or IDE-visible surface.
 6. Build or typecheck examples and documentation when supported. Validate the
-   primary path from its documented starting state: installation and first
-   source or package success for a top-level repository or project README; a
-   web-native visitor action for a public website landing page; entry points
-   and technical workflows for an internal surface. Otherwise report the
-   assumptions that remain untested.
+   primary path from its documented starting state: the stated technical task
+   for any README; a web-native visitor action for a public website landing
+   page; a documentation-navigation or reference task for a public
+   documentation home; entry points and technical workflows for an internal
+   surface. Otherwise report the assumptions that remain untested.
 7. Check links, code-fence status, terminology, defaults, historical leakage,
    mid-process wording, and copy-paste integrity.
 8. Apply the [end-state exit
