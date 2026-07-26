@@ -33,8 +33,9 @@ These apply to every path:
 5. **Explain before code.** Treat code as evidence, not the explanation. Keep
    runnable examples copyable, put necessary explanation around them, and label
    deliberately incomplete samples.
-6. **Cover the public contract.** Document every stable public item in an
-   existing canonical surface or record an explicit, justified exclusion.
+6. **Cover the public contract.** Document every stable public item in the
+   stated scope in an existing canonical surface or record an explicit,
+   justified exclusion.
 7. **Match scope, reader, and placement.** Place each fact at the lowest
    documentation layer that contains every decision, task, or boundary it
    governs. Assume only context available at that layer; orient upward or link
@@ -76,6 +77,10 @@ These apply to every path:
 Choose one primary path. Start its procedure before loading branch-specific
 references; the procedure names each reference at the decision where it is
 needed. Combine paths only when the request genuinely spans them.
+
+For a post-generation readiness gate over a mixed deliverable, keep this
+procedure scoped to documentation truth, coverage, reader paths, and locality.
+Do not present its result as verification of the non-documentation parts.
 
 | Request | Start here |
 | --- | --- |
@@ -173,7 +178,7 @@ Apply another path only when its artifact is also in scope.
 11. For API or configuration reference, continue with [Document a public
    contract](#document-a-public-contract). For an example inside another
    document, read the example section of `references/api-jsdoc-examples.md` and
-   apply only steps 5–6 of that procedure. Then finish with [Verify every
+   apply only steps 6–7 of that procedure. Then finish with [Verify every
    completed path](#verify-every-completed-path).
 
 ## Document a public contract
@@ -245,7 +250,11 @@ Apply another path only when its artifact is also in scope.
    Establish current truth, canonical facts, examples, code-local rationale,
    and repository-native verification commands.
 2. Read `references/locality-ladder.md` and
-   `references/quality-maintenance.md`. Compare the evidence with the
+   `references/quality-maintenance.md`. When the scope includes a README,
+   tutorial, how-to, explanation, or reader path, also read
+   `references/content-architecture.md`. When it includes a public contract,
+   configuration reference, JSDoc or TSDoc, examples, or code-local rationale,
+   also read `references/api-jsdoc-examples.md`. Compare the evidence with the
    documentation for currentness, contract coverage, locality fit, minimum
    sufficient explanation, reader paths, claim evidence, example integrity,
    context resilience, and navigation health.
@@ -315,10 +324,10 @@ For every completed path, verify the applicable minimum:
    Give it exactly two artifacts: the final review target (or a sufficiently
    contextual diff) and the review rules, with no other context. Do not supply
    subject, role, rung, reader, task, source facts, validation results, process
-   declaration, or an expected verdict; the reviewer must infer them. Wait for its verdict,
-   resolve failures, then use a new reviewer. Keep the gate record in the
-   handoff, not in the reader artifact; an unavailable independent review is
-   not a pass.
+   declaration, or an expected verdict; the reviewer must infer them. Wait for
+   its verdict, resolve failures, then use a new reviewer. Keep the gate record
+   in the handoff, not in the reader artifact; an unavailable independent
+   review is not a pass.
 10. Report updated surfaces, intentional omissions, validation run, counts,
     gate result, remaining risks, and future maintenance triggers.
 
