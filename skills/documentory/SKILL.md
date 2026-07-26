@@ -5,8 +5,10 @@ description: Create, revise, and audit layered software documentation. Use when 
 
 # Documentory
 
-Create documentation that lets a reader safely understand and use the
-completed, verified result.
+Map verified software facts to the lowest documentation surface where their
+reader needs them: an existing technical README, reference, example, or
+code-local rationale. Preserve only the context that raw code cannot safely
+provide, and leave the finished artifact publishable.
 
 ## Laws
 
@@ -37,29 +39,34 @@ These apply to every path:
    documentation layer that contains every decision, task, or boundary it
    governs. Assume only context available at that layer; orient upward or link
    downward instead of duplicating detail.
-8. **Keep READMEs technical.** A README is never a marketing or advertising
+8. **Earn every surface.** A reader role, package, public source, or repository
+   position does not itself require a README, page, reference, or comment.
+   Before adding one, establish a material fact a named reader cannot safely
+   recover from readable code, types, tests, metadata, or an existing canonical
+   surface. If no gap remains, add nothing.
+9. **Keep READMEs technical.** A README is never a marketing or advertising
    landing page. Classify a public website or product presentation page as a
    separate surface; do not transfer its visitor journey or browser-product
    conversion calls to action into a README.
-9. **Preserve topology and ownership.** Give each detailed fact one canonical
+10. **Preserve topology and ownership.** Give each detailed fact one canonical
    owner. Do not create or move pages, folders, or navigation without the
    user's authorization; a README may own every necessary content mode.
-10. **Expose Chesterton's fences.** A Chesterton's fence is code whose reason for
+11. **Expose Chesterton's fences.** A Chesterton's fence is code whose reason for
    existing is unknown: an island of uncertainty. Detect it. If evidence
    verifies the reason, document that rationale; otherwise record the accepted
    uncertainty with an explicit `TODO` or `FIXME`. Never invent rationale.
-11. **Disclose progressively.** Add material only when it enables a priority
+12. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support.
-12. **Leave a publishable result.** Meet the [end-state exit
+13. **Leave a publishable result.** Meet the [end-state exit
     gate](references/quality-maintenance.md#end-state-exit-gate); an accepted
     gap remains an explicit `TODO` or `FIXME`.
-13. **Gate unvalidated outputs.** Before declaring a changed documentation or
+14. **Gate unvalidated outputs.** Before declaring a changed documentation or
     code artifact complete, run its deterministic checks and the
     [output-context review gate](references/quality-maintenance.md#output-context-review-gate).
     A fresh independent reviewer must pass; a producer self-review or unavailable
     reviewer is a reported risk, not a pass.
-14. **Prove completion.** Validate currentness, coverage, examples, links,
+15. **Prove completion.** Validate currentness, coverage, examples, links,
    copy-paste integrity, and the primary reader path at the applicable rung.
    Report evidence, counts, exclusions, untested assumptions, and remaining
    risks.
@@ -93,12 +100,16 @@ Apply another path only when its artifact is also in scope.
    that completed state, then verify that the finished implementation matches
    it. Do not publish a mid-process snapshot or treat an example, private
    helper, or identifier name as proof of public behavior.
-2. Read `references/locality-ladder.md`. Classify the governed scope and the
-   surface's actual role from its reader, available context, and responsibility
-   before writing. Identify the reader's prior knowledge, task or question,
-   smallest successful outcome, prerequisites, dangerous assumptions, and next
-   useful detail. Record the reader, available context, need, scope, and
-   placement rationale before outlining; do not infer any of them from a
+2. Before adding a surface or comment, establish a material reader gap. If
+   readable code, types, tests, metadata, local context, or an existing
+   canonical surface already lets that reader act safely, add nothing; do not
+   manufacture a layer because a project, package, public source, or reader role
+   exists. Read `references/locality-ladder.md`. Classify the governed scope and
+   the surface's actual role from its reader, available context, and
+   responsibility before writing. Identify the reader's prior knowledge, task or
+   question, smallest successful outcome, prerequisites, dangerous assumptions,
+   and next useful detail. Record the reader, available context, need, scope,
+   and placement rationale before outlining; do not infer any of them from a
    filename, root location, public visibility, source host, or license.
 3. Select explanation density at this decision point:
    - **Guided** for a reader new to the domain or library: define unfamiliar
@@ -114,19 +125,22 @@ Apply another path only when its artifact is also in scope.
    copyable code.
 4. Read `references/content-architecture.md`. Use Diátaxis as a lens for the
    reader's question, not as a required file or folder structure. Work in the
-   existing documentation topology. If the README is the only available
-   technical surface, improve it in place. Never turn it into a public product
-   presentation page. When the requested visitor presentation has no separate
-   surface, report the gap and request authorization for one. Propose a split
-   with benefits and maintenance cost only when distinct reader intents justify
-   it; let the user decide unless restructuring is already in scope.
-5. Treat every README as technical orientation at its governed rung. It is
+   existing documentation topology. A rung or reader role never requires a new
+   document. If the README is the only available technical surface, improve it
+   in place. Never turn it into a public product presentation page. When the
+   requested visitor presentation has no separate surface, report the gap and
+   request authorization for one. Propose a split with benefits and maintenance
+   cost only when distinct reader intents justify it; let the user decide unless
+   restructuring is already in scope.
+5. When an existing or authorized README is the right owner, treat it as
+   technical orientation at its governed rung. It is
    never a marketing or advertising landing page, including at repository root
    or for an independently published package. A public website or product
    presentation page is a distinct surface with a browser visitor's contract;
    do not infer either surface from public visibility, an open-source license,
    or the existence of a source repository.
-6. For a top-level repository or project README, start with technical why:
+6. For a top-level repository or project README that is the right owner, start
+   with technical why:
    what the system or repository is for, its scope, major boundaries, intended
    technical reader, and the verified route relevant to that reader's task.
    Include installation, cloning, or a source quickstart only when it is a
@@ -145,11 +159,12 @@ Apply another path only when its artifact is also in scope.
    explanation, or reference. Browser delivery does not make it a product
    presentation page. Validate a documentation-navigation or reference task,
    not a browser-product conversion path.
-9. For an internal folder, package, module, domain, or service surface, start
-   with technical why: its responsibility in the containing system, owned
-   boundary, interactions, and constraints. Do not inject project-level sales
-   copy. Include external installation only when the unit is independently
-   published and that instruction is necessary for its technical reader.
+9. For an internal folder, package, module, domain, or service surface that is
+   the right owner, start with technical why: its responsibility in the
+   containing system, owned boundary, interactions, and constraints. Do not
+   inject project-level sales copy. Include external installation only when the
+   unit is independently published and that instruction is necessary for its
+   technical reader.
 10. Write the minimum sufficient explanation. Describe effect, condition, and
    relevant boundary; put evidence beside evaluative or comparative claims.
    Add material only when it enables a priority task, closes a contract or

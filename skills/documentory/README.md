@@ -75,6 +75,11 @@ checklists inside the route they govern.
   top-level technical orientation, package manual, or folder note. It is never
   a marketing or advertising landing page; classify its reader, available
   context, need, and responsibility before choosing its content.
+- **Layers are candidate placements, not an inventory.** A reader state, public
+  source, package, or code location does not earn a surface. Add or retain a
+  README, page, reference, or comment only for a material reader gap that clear
+  code, types, tests, metadata, existing documentation, and available context
+  cannot safely cover; otherwise add nothing.
 - **Repository READMEs and public websites have different reader contracts.** A
   README gives a named technical reader scope, boundary, and a route for their
   task. A public website presentation page leads a browser visitor to a
@@ -98,7 +103,8 @@ checklists inside the route they govern.
   choices; they do not change the truth of the contract.
 
 The reader-context matrix turns these principles into a placement decision
-without prescribing a feature list, badge set, or fixed section order.
+without prescribing a feature list, badge set, fixed section order, or required
+artifact set.
 
 ## Boundaries
 

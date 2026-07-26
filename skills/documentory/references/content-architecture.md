@@ -3,6 +3,7 @@
 Content architecture gives each reader a useful path to a task or decision without
 forcing a new filesystem topology. It starts with reader context and governed
 scope, not with a filename, repository visibility, or an assumed marketing role.
+It does not require that any layer or document exist.
 
 Use this reference when planning a README, restructuring documentation, or
 building public documentation-site navigation.
@@ -25,21 +26,27 @@ building public documentation-site navigation.
 Start with the reader's question, entry context, and task. Diátaxis names content
 modes; it does not require separate files, folders, or navigation.
 
-| Reader need | Diátaxis mode | Appropriate surface | Useful success condition |
+| Reader need | Diátaxis mode | Possible existing or authorized home | Useful success condition |
 | --- | --- | --- | --- |
-| Orient in a repository, system, or documentation set | Explanation | Top-level technical README or documentation home | Identify purpose, scope, boundaries, and the technical route relevant to the reader's task. |
-| Understand a package or module | Explanation and reference | Package or module README, API reference | Identify contract, integration conditions, and the next technical detail. |
-| Work safely inside a repository area | Explanation | Folder overview | Identify ownership, conventions, boundary, and local validation. |
+| Orient in a repository, system, or documentation set | Explanation | Top-level technical README or documentation home, if needed | Identify purpose, scope, boundaries, and the technical route relevant to the reader's task. |
+| Understand a package or module | Explanation and reference | Package/module README, in-page contract, or API reference | Identify contract, integration conditions, and the next technical detail. |
+| Work safely inside a repository area | Explanation | Existing folder overview or authorized technical overview | Identify ownership, conventions, boundary, and local validation. |
 | Learn a capability | Tutorial | Tutorial or guided README section | Reach a visible working result by following one stated path. |
 | Solve a known problem | How-to | How-to page or procedural README section | Complete the task with stated prerequisites and expected result. |
 | Find an exact fact | Reference | API, configuration, or in-page reference | Locate a precise answer without a narrative detour. |
 | Understand a design | Explanation | Concept or architecture section | Understand the mental model, trade-off, and boundary. |
-| Evaluate or access a browser-based product | Presentation or product guidance | Public website page, not a README | Recognize the supported outcome and take a verified browser-native next action. |
+| Evaluate or access a browser-based product | Presentation or product guidance | Actual public website page, not a README | Recognize the supported outcome and take a verified browser-native next action. |
 
 Apply modes within the documentation surfaces the repository already uses. If a
 README is the only surface, keep the necessary modes as clear technical README
 sections. Do not create or move pages unless the user requested a new structure
 or explicitly accepts a proposed split.
+
+These are candidate homes after the locality existence gate, not a required
+inventory. A package, public repository, unfamiliar reader, or code location is
+not a documentation gap by itself. If readable code, types, tests, metadata, or
+an existing canonical surface already lets the named reader act safely, add
+nothing.
 
 ## Detail level
 
@@ -74,15 +81,16 @@ decisions in the normal flow immediately before they matter.
 
 ## Classify technical documents and public sites
 
-Read locality-ladder.md. Classify every surface by its governed scope, reader,
-available context, and task:
+Read locality-ladder.md. Classify only a surface that exists or whose creation
+or change is authorized, by its governed scope, reader, available context, and
+task:
 
-- A top-level repository or project README is technical orientation for the
+- A top-level repository or project README, when present, is technical orientation for the
   whole technical system or repository.
-- A package README is technical orientation and contract for the package,
+- A package README, when present, is technical orientation and contract for the package,
   whether it is internal or independently published.
-- A folder or module README is technical orientation for the governed area.
-- A public documentation home is navigation and orientation for readers already
+- A folder or module README, when present, is technical orientation for the governed area.
+- A public documentation home, when present, is navigation and orientation for readers already
   seeking documentation.
 - A public website or product landing page is a separate presentation surface
   for browser visitors; it is not a README and is not implied by public source.
@@ -100,11 +108,20 @@ make the taxonomy tidy.
 
 ## Technical README roles
 
+### Decide whether a README is needed
+
+A package, repository, public source, or unfamiliar reader does not require a
+README. Use or revise one only when a named technical reader needs scope,
+boundary, contract, or route that they cannot safely recover from readable code,
+types, tests, metadata, existing canonical documentation, and their actual
+context. If no gap remains, add none.
+
 ### Top-level repository or project README
 
-Help a named technical reader orient in the whole repository or system. Do not
-assume the reader is a prospective customer, a contributor, or an integrator;
-derive the actual technical task from the request and verified context.
+Where a top-level README is the right owner, help a named technical reader orient
+in the whole repository or system. Do not assume the reader is a prospective
+customer, a contributor, or an integrator; derive the actual technical task from
+the request and verified context.
 
 State only what that reader needs at top level:
 
@@ -125,7 +142,10 @@ turn this README into a product advertisement or a monorepo manual.
 
 ### Package README
 
-Help an integrator or consumer use a bounded technical unit. Give its purpose,
+A package README is optional. Readable exports, types, package metadata, and an
+existing reference may already cover the integrator's need. Where a remaining
+reader gap makes an existing or authorized package README the right owner, help
+an integrator or consumer use the bounded technical unit. Give its purpose,
 supported contract, prerequisites, installation when verified and relevant,
 smallest safe use, configuration, defaults, failures, compatibility boundaries,
 and routes to deeper reference.
@@ -137,18 +157,18 @@ reference owner.
 
 ### Folder, module, domain, and service README
 
-Use the locality ladder's reader-context matrix. Explain responsibility,
-ownership, boundary, interactions, and the technical route appropriate to that
-scope. A folder-level reader may have a checkout; a package-level reader may not;
-a service-level reader may need operational context. Do not borrow assumptions
-from a broader or narrower rung.
+Use the locality ladder's reader-context matrix only when a scope-wide reader
+gap remains. Then explain responsibility, ownership, boundary, interactions, and
+the technical route appropriate to that scope. A folder-level reader may have a
+checkout; a package-level reader may not; a service-level reader may need
+operational context. Do not borrow assumptions from a broader or narrower rung.
 
 ## Public documentation homes
 
-Help a reader who has already arrived to find documentation. Start with the
-documentation subject, its available navigation, and a route to the relevant
-tutorial, how-to, explanation, or reference. A public documentation home may be
-browser-delivered, but that does not make it a product presentation page or
+Where a public documentation home exists or is authorized, help a reader who has
+already arrived to find documentation. Start with the documentation subject, its
+available navigation, and a route to the relevant tutorial, how-to, explanation,
+or reference. Browser delivery does not make it a product presentation page or
 give it a conversion goal.
 
 Validate that the reader can navigate to a relevant topic or locate an exact

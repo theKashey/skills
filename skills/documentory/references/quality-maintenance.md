@@ -23,6 +23,7 @@ Report documentation quality with evidence and counts.
 | Currentness | At exit, checked evidence shows no contradiction between the documented finished state and the completed exports, types, defaults, routes, tests, or supported versions in scope. |
 | Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is documented in an authorized existing surface or has an explicit justified exclusion. |
 | Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. |
+| Surface necessity | Every added or retained README, page, reference, or comment closes a material named-reader gap that readable code, types, tests, metadata, local context, and existing canonical surfaces do not already close. Absence is correct when no such gap remains. |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
 | Scan-path usability | The named reader can identify the document's purpose, task or destination from headings and links, primary path, and next useful detail without relying on decorative formatting. For a public website presentation page, a browser visitor can identify the intended context, supported outcome, and first verified action; any boundary needed to avoid a likely false expectation appears before it matters. For a public documentation home, a reader can find the relevant topic or exact fact without a product-presentation detour. For a README, the named technical reader can identify the governed scope, boundary, and route for their task without marketing posture. |
 | Locality fit | Each fact has a canonical owner at the narrowest governed scope visible to affected readers; overlapping physical and logical roles are explicit rather than duplicated or forced apart. |
@@ -89,16 +90,20 @@ every section and public item in that stated scope:
 5. Is this fact duplicated elsewhere, and which location is canonical?
 6. What source evidence verifies it? For an evaluative or comparative claim, is the evidence adjacent and are its conditions clear?
 7. Which ladder rung contains everything this fact governs, and is the current surface serving that role rather than a broader or narrower one?
-8. Can the named reader—technical newcomer, maintainer, integrator, operator,
-   administrator, support engineer, end user, or browser visitor—find the
-   purpose, primary path, and next detail appropriate to their role?
-9. From where does the intended reader encounter this document, and which context, paths, credentials, tools, or prerequisites are actually available there?
-10. If the primary reader path changed, was it checked from its stated starting state, and which assumptions remain untested?
-11. For a procedure, does the heading state the task and does each step give one meaningful action after its necessary location, condition, and warning? For a tutorial, can the reader see its meaningful checkpoints?
-12. For code-local prose, which fact would disappear if the reader saw only the changed symbol and search matches, and what plausible wrong edit does it prevent?
-13. Could this state enter its intended review, merge, or publication without editing away a temporary caveat, placeholder, draft marker, or promise about what will happen later?
-14. Where is the reason for code's existence or present form unknown? What evidence supplies the missing rationale, or which explicit `TODO` or `FIXME` records the uncertainty?
-15. What is the semantic subject, distinct from the artifact role? Does the
+8. What material named-reader gap justifies this surface or comment? If readable
+   code, types, tests, metadata, local context, or an existing canonical surface
+   already covers it, should no addition—or a deletion—be the result?
+9. Can the named reader—stranger, developer, coding agent, coder, maintainer,
+   integrator, operator, administrator, support engineer, end user, or browser
+   visitor—find the purpose, primary path, and next detail appropriate to their
+   role?
+10. From where does the intended reader encounter this document, and which context, paths, credentials, tools, or prerequisites are actually available there?
+11. If the primary reader path changed, was it checked from its stated starting state, and which assumptions remain untested?
+12. For a procedure, does the heading state the task and does each step give one meaningful action after its necessary location, condition, and warning? For a tutorial, can the reader see its meaningful checkpoints?
+13. For code-local prose, which fact would disappear if the reader saw only the changed symbol and search matches, and what plausible wrong edit does it prevent?
+14. Could this state enter its intended review, merge, or publication without editing away a temporary caveat, placeholder, draft marker, or promise about what will happen later?
+15. Where is the reason for code's existence or present form unknown? What evidence supplies the missing rationale, or which explicit `TODO` or `FIXME` records the uncertainty?
+16. What is the semantic subject, distinct from the artifact role? Does the
     orientation window establish that subject's reader-relevant purpose,
     responsibility, outcome, or boundary before document or production
     mechanics appear?
