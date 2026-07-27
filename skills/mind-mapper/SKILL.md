@@ -1,19 +1,35 @@
 ---
 name: mind-mapper
-description: Build, reconstruct, and extend a living fishbone and mind-map graph that orients work against a wider goal before implementation inspection. Map one outcome-level epic through indicator or attack-angle branches, hypotheses, smaller moves or tasks, and observed results; recover the history and backlinks behind the current position; expose open edges; and select the next justified extension. Use when defining an epic or key result; inheriting an initiative or proposed solution; understanding what led to the current state; mapping an OKR, SLI, workstream, or collection of skills into accountable contributions; counting known remaining work; or auditing tasks and changes for missing lineage to the real goal.
+description: Use when a problem, observed effect, or inherited body of work needs one planning graph that can combine real work sequences, parallel contribution branches, uncertain relationships, evidence, actions, and results.
 ---
 
 # Mind Mapper
 
-Build or reconstruct one living goal map, then find where it should extend.
-The outward mind map decomposes the epic into indicator branches, hypotheses,
-and smaller moves; the inward fishbone trace recovers how existing moves and
-results contribute to the same spine. Open edges show what is missing, what is
-ready, and which next extension can move the wider goal before implementation
-details narrow the problem.
+Build or reconstruct one living goal graph, then find where it should extend.
+Preserve real dependencies, independent contribution paths, and unresolved
+relationships without forcing them into one planning shape. Open edges show
+what is missing, what is ready, and which next extension can move the wider
+goal before implementation details narrow the problem.
 
 Use scientific readback only to decide how a completed move changes the map.
-It is branch-update discipline, not a replacement for mind mapping.
+It is branch-update discipline, not a replacement for planning.
+
+## Choose and combine planning shapes
+
+Choose a planning shape for each relationship, not once for the whole graph:
+
+| Condition | Useful view | Relationship asserted |
+| --- | --- | --- |
+| One move's result is genuinely required before another can begin or be selected. | A linear sequence. | `M1 --unlocks--> M2`; a terminal move has no successor until evidence supports one. |
+| Distinct aspects can make independently observable gains toward one outcome without waiting on one another. | Parallel contribution branches; a classic fishbone is one useful rendering. | Separate `contributes to` paths with no invented prerequisite between them. |
+| Supplied fragments are connected but their direction, role, or hierarchy is incomplete or cross-cutting. | Associative links; a classic mind map is one useful rendering. | Labeled `related to`, tentative, or unknown edges that do not yet establish contribution, order, or cause. |
+
+Combine the views when the problem requires it. For example, reducing
+onboarding failures may have independent instruction, account-access, and
+recovery branches. Within account access, locating failures may unlock choosing
+an explanation, which may unlock a bounded pilot. Old tickets, an abandoned
+experiment, and a metric spike may remain associated fragments until evidence
+places them. Keep all of these relationships in the same graph.
 
 ## Use one living graph
 
@@ -21,25 +37,27 @@ Use one outcome root and four kinds of descendants:
 
 ```text
 Epic E1: [outcome and key result]
-  Indicator I1 -> E1: [attack angle, current signal, target, and gap]
-    Hypothesis H1 -> I1 -> E1: [why this gap may move and what would refute it]
-      Move/task M1 -> H1 -> I1 -> E1: [bounded action and expected readback]
-        Result R1 -> M1 -> H1 -> I1 -> E1:
+  Indicator I1 --contributes to--> E1: [attack angle, current signal, target, and gap]
+    Hypothesis H1 --explains possible movement in--> I1:
+      [why this gap may move and what would refute it]
+      Move/task M1 --tests or advances--> H1:
+        [bounded action and expected readback]
+        Result R1 --is readback for--> M1:
           [actual action, observation, effect, explanation, consequence, next]
 
-History: M1 -> R1 -> readback decision -> H1 status change -> graph update
+History: M1 --produces--> R1 --updates--> H1 and the graph
 Extension frontier: [consequential incomplete nodes and open edges]
 Action frontier: [ready M# nodes, dependencies, and known remaining count]
 ```
 
-The outward hierarchy is the mind map. Indicator branches are the fish bones;
-the return path from every hypothesis, move, and result to the epic is the
-spine. A prospective node without that return path is an orphan, not admitted
-work. Preserve supplied historical fragments with missing return edges as
-reconstruction gaps; do not discard them, count them as ready work, or invent
-their lineage. History and forward direction are views over the same graph, not
-separate narratives. An open edge marks where that graph may need another
-ordinary indicator, hypothesis, move, or result; it is not a fifth node type.
+This is the canonical accountability graph, not a required diagram layout. A
+prospective node without a contribution path to the epic is an orphan, not
+admitted work. Preserve supplied historical fragments with missing return
+edges as reconstruction gaps; do not discard them, count them as ready work,
+or invent their lineage. History and forward direction are views over the same
+graph, not separate narratives. An open edge marks where that graph may need
+another ordinary indicator, hypothesis, move, or result; it is not a fifth node
+type.
 
 The extension frontier contains the consequential locations where the map is
 missing or weak. The action frontier contains only the dependency-free `M#`
@@ -49,14 +67,18 @@ forward direction; do not collapse them into a flat task list.
 Use the surrounding system's identifiers when they exist. Otherwise use
 temporary labels such as `E1`, `I1`, and `M1` only to keep relationships
 unambiguous. Allow a shared move to backlink to several indicators when the
-contributions are distinct, but name one primary path. Reject cycles.
+contributions are distinct, but name one primary path. In the shorthand
+`M# -> H# -> I# -> E1`, arrows mean contribution backlinks, never execution
+order. Label dependencies as `requires` or `unlocks`. Reject cycles in
+contribution and dependency relationships; allow clearly labeled associative
+cross-links that assert neither order nor cause.
 
 ## Build, reconstruct, then extend
 
 Use two construction directions and one decision pass on the same graph:
 
 1. **Build outward:** start with the epic and decompose only as far as supported
-   into indicator bones, live hypotheses, bounded moves, and result slots.
+   into indicator branches, live hypotheses, bounded moves, and result slots.
 2. **Reconstruct inward:** start with supplied results, changes, decisions, or
    tasks and trace each one back through its intended hypothesis and indicator
    to the epic. Preserve an explicit unknown node or edge when the connection
@@ -160,7 +182,7 @@ When its expectation, chronology, baseline, or causal boundary is unavailable,
 record the gap and classify the effect as inconclusive where necessary. Do not
 retrofit a success criterion or manufacture history after seeing the result.
 
-## Build the indicator bones
+## Build the indicator branches
 
 Create materially different indicator branches beneath the epic. Treat
 `indicator` as the common planning role for an attack angle, pillar, SLI, OKR
@@ -253,7 +275,7 @@ conditional move before counting it as planned, active, or blocked.
 Scan every branch from the epic toward its leaves and mark its first
 consequential incomplete node or open edge:
 
-- **Coverage:** an epic condition has no indicator bone.
+- **Coverage:** an epic condition has no indicator branch.
 - **Lineage:** supplied work or a result has no supported path back to the epic.
 - **Understanding:** an indicator lacks a supported current state, target,
   contribution, guardrail, or live hypothesis.
@@ -296,7 +318,7 @@ Report the readiness snapshot before any implementation inspection:
 ```text
 Code gate: OPEN | CLOSED | NOT_APPLICABLE
 Epic roots: 1
-Indicator bones: [total] ([mapped] mapped / [unmapped] unmapped)
+Indicator branches: [total] ([mapped] mapped / [unmapped] unmapped)
 Indicator outcomes: [target met / gap open / unknown / branch retired]
 Hypotheses: [untried / supported / weakened / refuted / unresolved]
 History: [result count / closed-readback count / completed-move count]
@@ -428,7 +450,7 @@ Keep completion claims at their own level:
   not released first.
 - **Hypothesis resolved:** a result supports, weakens, or refutes it enough to
   select a different forward choice.
-- **Indicator bone mapped:** its current state, target, gap, hypothesis, and
+- **Indicator branch mapped:** its current state, target, gap, hypothesis, and
   forward move or explicit block are present.
 - **Indicator target met:** its signal reaches its stated target.
 - **Indicator branch retired:** its decision owner deliberately stops pursuing
@@ -446,11 +468,13 @@ or revise the contribution hypothesis, and renew only the affected branches.
 ## Return the living map
 
 Render the map in the user's chosen surface. When none is specified, return a
-nested map in the response, not a flat plan or experiment log. Make four views
-scannable:
+compact labeled graph in the response, not a flat plan or experiment log. Make
+the applicable views scannable:
 
-- the outward `E -> I -> H -> M -> R` branches;
-- inward backlinks and reconstruction gaps;
+- contribution paths through `E`, `I`, `H`, `M`, and `R`;
+- real move sequences labeled `requires` or `unlocks`, including terminal
+  points;
+- associative cross-links and unresolved relationship or reconstruction gaps;
 - history annotations on the affected branches; and
 - extension and action frontiers with known remaining counts.
 
