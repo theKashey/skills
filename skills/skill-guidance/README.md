@@ -45,7 +45,8 @@ references, or reader paths change.
 
 | File | Owns |
 | --- | --- |
-| [SKILL.md](SKILL.md) | Universal decision laws, package isolation, route selection, obligation admission, and completion |
+| [The Laws of Agent Instruction](LAWS.md) | Canonical Law identifiers, titles, and universal decision constraints |
+| [SKILL.md](SKILL.md) | Activation boundary, package isolation, route selection, obligation admission, and completion |
 | [Build or revise](references/build-or-revise.md) | Capability ownership, activation/runtime separation, authoring, pruning, and structural validation |
 | [Audit a skill](references/audit-skill.md) | Evidence-backed review without mutation |
 | [Validate changed choices](references/validate-changes.md) | Frozen behavioral evaluation and verdicts |
@@ -56,12 +57,14 @@ reference, but it must not point here.
 
 ## Law alignment
 
-While forming a skill, name the exact Skill Guidance law identifier and title
-that materially constrains its design—for example, `Law VII — Enforce or delete
-mechanical rules`. Each citation carries the target-skill choice it governs and
-evidence for that choice. This creates a short, reviewable design checklist
-without copying the full law set into every package, and lets an audit point to
-one broken law rather than a vague principle.
+While forming a skill, name the exact [Agent Instruction
+Law](LAWS.md) identifier and title that materially constrains its design—for
+example,
+[`Law VII — Enforce or delete mechanical rules`](LAWS.md#law-vii--enforce-or-delete-mechanical-rules).
+Each citation carries the target-skill choice it governs and evidence for that
+choice. This creates a short, reviewable design checklist without copying the
+full law set into every package, and lets an audit point to one broken law
+rather than a vague principle.
 
 The alignment record stays in the handoff by default. A target runtime may name
 a law only when the law and its local consequence tell its agent what to do;

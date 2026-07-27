@@ -33,12 +33,12 @@ being inferable from the package.
 
 ## 3. Apply the laws
 
-Apply every decision law and admission requirement in the parent `SKILL.md`;
-do not redefine them here. Cite the exact canonical law identifier and title
-for each failure. Also check
-that every named law maps to an observable target-skill choice and evidence,
-and that no named-law list is presented as an exemption from the remaining
-laws; check
+Apply every [Agent Instruction Law](../LAWS.md) and the admission requirements
+in the parent `SKILL.md`; do not redefine them here. Cite the exact canonical
+Law identifier and title for each failure. Also check
+that every named Law maps to an observable target-skill choice and evidence,
+and that no named-Law list is presented as an exemption from the remaining
+Laws; check
 that the description is one sentence of at most 240 characters and contains
 only a concrete situation and behavior trigger; that the body and runtime
 references contain no skill-level triggers, support, explanations, or excuses;

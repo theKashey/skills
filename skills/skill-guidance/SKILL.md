@@ -19,45 +19,13 @@ branch conditions remain execution logic.
 
 ## Apply the eight decision laws
 
-1. **Law I — Point at the delta.** Admit an instruction only when it changes a plausible
-   choice. Record the generic or locally attractive default it must beat.
-   Paths, signatures, discoverable mechanics, and enforced policy stay in the
-   territory; retain only the reef and the exact command or flag an agent would
-   otherwise guess incorrectly.
-2. **Law II — Spend the instruction budget.** Make every sentence avert a named wrong
-   turn or premature stop. Delete no-ops, sediment, duplicated meaning, and
-   context that is merely relevant. Length and repetition both consume a
-   bounded attention budget; put the most frequently missed,
-   highest-consequence choices first.
-3. **Law III — Recruit shared priors.** Prefer a precise leading concept such as
-   Chesterton's Fence, POLA, TOCTOU, or N+1 over restating its generic theory.
-   Add the local consequence when the name alone does not select an action.
-4. **Law IV — Lead with the supported move.** State `+ preferred choice` before
-   `- plausible wrong choice`. Keep a prohibition only when the wrong route
-   remains live after the positive route is explicit; when a gate or structural
-   change can remove that route, prefer it and delete the warning.
-5. **Law V — Keep the chart local.** Put a rule at the narrowest stable scope encountered
-   by every affected reader. Keep pre-arrival invariants at the root, and verify
-   how the target harness resolves nested instructions before relying on depth:
-   depth scopes a rule; it does not enforce it.
-6. **Law VI — Carry verified why for surprising fences.** Preserve the shortest verified
-   `X because Y` when it protects an apparently wrong constraint or transfers a
-   choice to an unseen case. Keep other explanation, defense, apology,
-   anticipated objections, authoring support, and design history out of runtime
-   files. A README may explain durable reasons, concrete ownership, and a
-   framework distinction that changes a reader's choice, but never becomes a
-   runtime dependency. Keep construction and framework-provenance records in
-   the handoff.
-7. **Law VII — Enforce or delete mechanical rules.** Prefer types, lint, formatting, hooks,
-   tests, or CI for enforceable constraints. Point to the gate and its exact
-   invocation instead of duplicating its policy in prose.
-8. **Law VIII — Keep every claim falsifiable.** Verify paths, commands, fields, versions,
-   examples, links, and current behavior. A stale instruction is a defect, not
-   harmless context: it is obeyed with the confidence of a live one.
+Read and apply [The Laws of Agent Instruction](LAWS.md) before selecting a
+route, admitting an obligation, or loading a branch procedure. `LAWS.md` is the
+canonical owner of all eight identifiers, titles, and decision constraints.
 
 ## Name the active laws
 
-While forming or revising a skill, name every law above that materially
+While forming or revising a skill, name every [Law](LAWS.md) that materially
 constrains its design in a concise authoring record:
 
 ```text
@@ -67,7 +35,8 @@ Evidence: package scripts and representative task
 ```
 
 Use the exact canonical identifier and title, the target-skill choice it
-governs, and evidence. Cite `Law VII — Enforce or delete mechanical rules`,
+governs, and evidence. Cite
+[`Law VII — Enforce or delete mechanical rules`](LAWS.md#law-vii--enforce-or-delete-mechanical-rules),
 for example, when a duplicate prose rule must be removed. The named set is a
 compact design checklist, not an exception list: every law still applies when
 its condition arises. Keep this record in the handoff. Name a law in the target

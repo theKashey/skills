@@ -22,8 +22,9 @@ Record:
 - representative tasks, including one unseen case when rationale should
   generalize;
 - the open-world choices and observed or plausible wrong defaults;
-- the exact parent-law identifier and title that materially constrain each
-  target-skill choice, with their supporting evidence;
+- the exact [Agent Instruction Law](../LAWS.md) identifier and title that
+  materially constrain each target-skill choice, with their supporting
+  evidence;
 - intended users, target harnesses, and invocation boundary;
 - authorized files and mutation scope;
 - observable success, failure, and premature-completion signals.
@@ -83,9 +84,9 @@ they are execution logic, not skill triggers.
 For every procedure:
 
 1. State its internal branch condition and authorized scope.
-2. Apply each named parent-law identifier and title that constrains its
-   decisions, then check every remaining parent law whose condition arises;
-   naming a law is not an exemption from the rest.
+2. Apply each named [Agent Instruction Law](../LAWS.md) that constrains its
+   decisions, then check every remaining Law whose condition arises; naming a
+   Law is not an exemption from the rest.
 3. Put warnings immediately before the action they govern.
 4. End each meaningful step with a checkable completion condition.
 5. Use an example only when it resolves ambiguity left by the decision laws.
@@ -116,8 +117,10 @@ relationship in maintainer prose never creates a runtime dependency.
 
 ## 5. Prune and verify the package
 
-Apply the parent Budget law sentence by sentence: if deletion changes no
-invocation, choice, scope, execution, or completion, delete the sentence.
+Apply
+[Law II — Spend the instruction budget](../LAWS.md#law-ii--spend-the-instruction-budget)
+sentence by sentence: if deletion changes no invocation, choice, scope,
+execution, or completion, delete the sentence.
 Leave each surviving meaning with one canonical owner.
 
 Classify every retained prose unit as description trigger, runtime execution,
@@ -130,9 +133,11 @@ target runtime only when its title and local consequence directly select an
 agent action; do not publish a bare list of frameworks or create a cross-skill
 runtime dependency.
 
-Apply Law VIII — Keep every claim falsifiable and Law VII — Enforce or delete
-mechanical rules to every retained
-repository-specific claim.
+Apply
+[Law VIII — Keep every claim falsifiable](../LAWS.md#law-viii--keep-every-claim-falsifiable)
+and
+[Law VII — Enforce or delete mechanical rules](../LAWS.md#law-vii--enforce-or-delete-mechanical-rules)
+to every retained repository-specific claim.
 
 If package mechanics changed, require the bundled structural and isolation
 validator command from the parent `SKILL.md` to pass against the target skill

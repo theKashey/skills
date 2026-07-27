@@ -30,11 +30,11 @@ validator command from the parent `SKILL.md` as prerequisite evidence;
 otherwise skip that gate. Do not repeat its checks here. Verify:
 
 - every retained obligation satisfies the parent admission contract;
-- each named parent law uses the exact identifier and title, has a target-skill
-  choice and supporting evidence, and does not claim that unnamed laws no
-  longer apply;
-- every repository-specific claim satisfies Law VIII — Keep every claim
-  falsifiable;
+- each named [Agent Instruction Law](../LAWS.md) uses the exact identifier and
+  title, has a target-skill choice and supporting evidence, and does not claim
+  that unnamed Laws no longer apply;
+- every repository-specific claim satisfies
+  [Law VIII — Keep every claim falsifiable](../LAWS.md#law-viii--keep-every-claim-falsifiable);
 - the description is one sentence of at most 240 characters, contains only a
   concrete situation and behavior trigger, and covers every intended
   activation;
