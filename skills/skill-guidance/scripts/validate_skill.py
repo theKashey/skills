@@ -739,12 +739,12 @@ def validate_skill(skill_root: Path, known_names: set[str]) -> list[str]:
     name, description = parse_frontmatter(skill_file)
     if not name or not NAME_RE.fullmatch(name):
         errors.append(f"{skill_file}: invalid or missing frontmatter name")
-    elif name != skill_root.name:
+    elif name != root.name:
         errors.append(f"{skill_file}: name {name!r} does not match directory")
     if not description:
         errors.append(f"{skill_file}: missing frontmatter description")
-    elif len(description) > 1024:
-        errors.append(f"{skill_file}: description exceeds 1024 characters")
+    elif len(description) > 240:
+        errors.append(f"{skill_file}: description exceeds 240 characters")
 
     texts: dict[Path, str] = {}
     local_links: dict[Path, list[Path]] = {}
@@ -807,6 +807,12 @@ def validate_skill(skill_root: Path, known_names: set[str]) -> list[str]:
                 runtime_files.add(linked)
                 queue.append(linked)
 
+    if Path("README.md") in runtime_files:
+        errors.append(
+            f"{skill_root}/README.md: maintainer README must not be a "
+            "runtime dependency"
+        )
+
     for relative, text in texts.items():
         path = root / relative
         errors.extend(skill_dependency_errors(text, relative, name, known_names))
@@ -861,6 +867,23 @@ def run_self_test() -> tuple[list[str], int]:
 
         valid = make_skill("valid-skill", "Use only bundled instructions.")
         expect("valid standalone package", valid, True)
+
+        overlong_description = make_skill(
+            "overlong-description", "Use only bundled instructions."
+        )
+        (overlong_description / "SKILL.md").write_text(
+            "---\n"
+            "name: overlong-description\n"
+            f"description: {'x' * 241}\n"
+            "---\n\n# overlong-description\n",
+            encoding="utf-8",
+        )
+        expect(
+            "overlong description",
+            overlong_description,
+            False,
+            contains="description exceeds 240 characters",
+        )
 
         nested = make_skill("nested-link", "Read [the reference](references/a.md).")
         (nested / "references").mkdir()
@@ -1017,7 +1040,22 @@ def run_self_test() -> tuple[list[str], int]:
             "runtime-linked network setup",
             linked_readme,
             False,
-            contains="network",
+            contains="README",
+        )
+
+        linked_support = make_skill(
+            "linked-support",
+            "Before running, read [maintainer support](README.md).",
+        )
+        (linked_support / "README.md").write_text(
+            "Maintainer design rationale.\n",
+            encoding="utf-8",
+        )
+        expect(
+            "runtime-linked maintainer support",
+            linked_support,
+            False,
+            contains="README",
         )
 
         scp_remote = make_skill(
@@ -1373,12 +1411,13 @@ def main() -> int:
             print(f"PASS validator self-test: {case_count} cases")
 
     if args.skill:
-        known_names = set(args.known_name) | {args.skill.name}
-        errors.extend(validate_skill(args.skill, known_names))
+        skill_path = args.skill.resolve()
+        known_names = set(args.known_name) | {skill_path.name}
+        errors.extend(validate_skill(skill_path, known_names))
         if not errors:
-            file_count = sum(1 for path in args.skill.rglob("*") if path.is_file())
+            file_count = sum(1 for path in skill_path.rglob("*") if path.is_file())
             print(
-                f"PASS {args.skill.name}: {file_count} files, "
+                f"PASS {skill_path.name}: {file_count} files, "
                 "structurally isolated"
             )
     elif not args.self_test:

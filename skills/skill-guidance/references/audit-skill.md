@@ -8,7 +8,8 @@ the mutation scope.
 
 Finish when every runtime route and retained obligation in scope has an
 evidence-backed verdict, findings identify exact locations and minimal repair
-directions, and unobserved runtime behavior remains explicitly unvalidated.
+directions, activation and support prose have valid owners, and unobserved
+runtime behavior remains explicitly unvalidated.
 
 ## 1. Establish the audit boundary
 
@@ -33,10 +34,18 @@ being inferable from the package.
 ## 3. Apply the laws
 
 Apply every decision law and admission requirement in the parent `SKILL.md`;
-do not redefine them here. Cite the canonical law for each failure. Also check
-description-to-route coverage, direct and conditional reference pointers,
-present-state wording, clean end-state, and route-specific completion
-criteria.
+do not redefine them here. Cite the exact canonical law identifier and title
+for each failure. Also check
+that every named law maps to an observable target-skill choice and evidence,
+and that no named-law list is presented as an exemption from the remaining
+laws; check
+that the description is one sentence of at most 240 characters and contains
+only a concrete situation and behavior trigger; that the body and runtime
+references contain no skill-level triggers, support, explanations, or excuses;
+that retained causal rationale improves behavior; and that README support is
+not a runtime dependency. Check description-to-route coverage,
+direct and conditional reference pointers, present-state wording, clean
+end-state, and route-specific completion criteria.
 
 ## 4. Report evidence, not taste
 

@@ -1,18 +1,17 @@
 ---
 name: documentory
-description: Create, revise, and audit layered software documentation. Use when working on README files, documentation sites, tutorials, how-to guides, API or configuration reference, examples, JSDoc/TSDoc, inline rationale comments, code documentation for maintainers or coding agents, changelogs, migration guides, documentation reviews, or maintenance planning.
+description: Use when creating, revising, auditing, or maintaining technical documentation, or when documentation needs to help its reader understand a subject, make a safe decision, and act.
 ---
 
 # Documentory
 
-Map verified software facts to the lowest documentation surface where their
-reader needs them: an existing technical README, reference, example, or
-code-local rationale. Preserve only the context that raw code cannot safely
-provide, and leave the finished artifact publishable.
+Establish whether a material reader gap requires documentation. When it does,
+create, revise, audit, or maintain the lowest authorized README, reference,
+example, public contract, or code-local rationale that owns the verified truth.
+Preserve only the context that raw code cannot safely provide, and leave the
+finished result publishable. When no gap remains, add nothing.
 
-## Laws
-
-These apply to every path:
+## Universal laws
 
 1. **Describe the finished state.** Current documentation represents what is
    true when the requested work is complete, not the temporary state or
@@ -22,55 +21,55 @@ These apply to every path:
 2. **Verify; never invent.** Check source, exported types, tests, generated
    artifacts, or an explicit product decision. Put evidence beside evaluative
    or comparative claims.
-3. **Mark reefs, not cliffs.** Describe invisible behavior, conditions,
+3. **Offer before diagnosis; orient before mechanism.** Open a reader-facing
+   surface or collection with the subject's name, what it provides, and why the
+   reader would use it. Put detailed situation, problem, and impact selection
+   context after that simple offer. Before methodology, taxonomy, workflow, or
+   components, establish the relevant pressure, affected reader or system,
+   intended observable effect or changed decision, and boundary at the
+   subject's owning section. A compact catalog entry needs `name: what and why`;
+   its chooser or owning section carries the fuller selection context. A parent
+   summary does not replace local orientation on a standalone subject page.
+4. **Mark reefs, not cliffs.** Describe invisible behavior, conditions,
    boundaries, failures, and interactions a reader can miss at that rung. Do
    not merely gesture at them, and do not explain mechanics already visible
    there.
-4. **Make a map, not a transcript.** Select and relate the present truths the
+5. **Make a map, not a transcript.** Select and relate the present truths the
    reader needs; do not mirror the implementation. Add the different angle
    appropriate to the rung: technical orientation, system responsibility, or
    non-obvious local why.
-5. **Explain before code.** Treat code as evidence, not the explanation. Keep
-   runnable examples copyable, put necessary explanation around them, and label
-   deliberately incomplete samples.
-6. **Cover the public contract.** Document every stable public item in the
-   stated scope in an existing canonical surface or record an explicit,
-   justified exclusion.
-7. **Match scope, reader, and placement.** Place each fact at the lowest
+6. **Match scope, reader, and placement.** Place each fact at the lowest
    documentation layer that contains every decision, task, or boundary it
    governs. Assume only context available at that layer; orient upward or link
    downward instead of duplicating detail.
-8. **Earn every surface.** A reader role, package, public source, or repository
-   position does not itself require a README, page, reference, or comment.
-   Before adding one, establish a material fact a named reader cannot safely
-   recover from readable code, types, tests, metadata, or an existing canonical
-   surface. If no gap remains, add nothing.
-9. **Keep READMEs technical.** A README is never a marketing or advertising
+7. **Earn every surface.** Apply the [locality ladder's existence
+   gate](references/locality-ladder.md#existence-gate) before adding a README,
+   page, reference, or comment. Add nothing when it finds no material reader
+   gap.
+8. **Keep READMEs technical.** A README is never a marketing or advertising
    landing page. Classify a public website or product presentation page as a
    separate surface; do not transfer its visitor journey or browser-product
    conversion calls to action into a README.
-10. **Preserve topology and ownership.** Give each detailed fact one canonical
+9. **Preserve topology and ownership.** Give each detailed fact one canonical
    owner. Do not create or move pages, folders, or navigation without the
    user's authorization; a README may own every necessary content mode.
-11. **Expose Chesterton's fences.** A Chesterton's fence is code whose reason for
-   existing is unknown: an island of uncertainty. Detect it. If evidence
-   verifies the reason, document that rationale; otherwise record the accepted
-   uncertainty with an explicit `TODO` or `FIXME`. Never invent rationale.
-12. **Disclose progressively.** Add material only when it enables a priority
+10. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support.
-13. **Leave a publishable result.** Meet the [end-state exit
+11. **Leave a publishable result.** Meet the [end-state exit
     gate](references/quality-maintenance.md#end-state-exit-gate); an accepted
     gap remains an explicit `TODO` or `FIXME`.
-14. **Gate unvalidated outputs.** Before declaring a changed documentation or
-    code artifact complete, run its deterministic checks and the
-    [output-context review gate](references/quality-maintenance.md#output-context-review-gate).
-    A fresh independent reviewer must pass; a producer self-review or unavailable
-    reviewer is a reported risk, not a pass.
-15. **Prove completion.** Validate currentness, coverage, examples, links,
-   copy-paste integrity, and the primary reader path at the applicable rung.
-   Report evidence, counts, exclusions, untested assumptions, and remaining
-   risks.
+12. **Prove route-specific completion.** Apply the completion checks named by
+    the active route and report evidence, exclusions, untested assumptions, and
+    remaining risks.
+13. **Keep construction outside the document.** Document the governed subject,
+    not the process used to document it. Do not publish generic claims about
+    why a document exists, its maintenance role, or the drafting, review, or
+    validation process; nor a bare declaration that it follows Diátaxis or
+    another framework. Keep those build-time facts in the authoring record or
+    handoff. Include a concrete component map, ownership boundary, or framework
+    distinction when it changes the reader's decision or is part of the
+    reader's subject or contract.
 
 ## Route the request
 
@@ -170,11 +169,15 @@ Apply another path only when its artifact is also in scope.
    inject project-level sales copy. Include external installation only when the
    unit is independently published and that instruction is necessary for its
    technical reader.
-10. Write the minimum sufficient explanation. Describe effect, condition, and
-   relevant boundary; put evidence beside evaluative or comparative claims.
-   Add material only when it enables a priority task, closes a contract or
-   operational risk, or makes an example safe. Apply a deletion test to
-   everything else.
+10. Write the minimum sufficient explanation. For a repository, collection, or
+   other chooser surface, present the offering first in `name: what and why`
+   form, then provide the situation, problem, impact, and boundary that help the
+   reader select it. Before internal mechanism, make that fuller selection
+   context inferable at each independently selectable subject's owning section.
+   A compact catalog entry does not need to carry the full diagnosis. Put
+   evidence beside evaluative or comparative claims. Add material only when it
+   enables a priority task, closes a contract or operational risk, or makes an
+   example safe. Apply a deletion test to everything else.
 11. For API or configuration reference, continue with [Document a public
    contract](#document-a-public-contract). For an example inside another
    document, read the example section of `references/api-jsdoc-examples.md` and
@@ -317,19 +320,8 @@ For every completed path, verify the applicable minimum:
    mid-process wording, and copy-paste integrity.
 8. Apply the [end-state exit
    gate](references/quality-maintenance.md#end-state-exit-gate).
-9. For every changed documentation or code artifact, spawn a fresh independent
-   review subagent with no inherited drafting context—or an equally isolated
-   independent agent session when that is unavailable—to run the
-   [output-context review gate](references/quality-maintenance.md#output-context-review-gate).
-   Give it exactly two artifacts: the final review target (or a sufficiently
-   contextual diff) and the review rules, with no other context. Do not supply
-   subject, role, rung, reader, task, source facts, validation results, process
-   declaration, or an expected verdict; the reviewer must infer them. Wait for
-   its verdict, resolve failures, then use a new reviewer. Keep the gate record
-   in the handoff, not in the reader artifact; an unavailable independent
-   review is not a pass.
-10. Report updated surfaces, intentional omissions, validation run, counts,
-    gate result, remaining risks, and future maintenance triggers.
+9. Report updated surfaces, intentional omissions, validation run, counts,
+   gate result, remaining risks, and future maintenance triggers.
 
 Prefer repository-native link, documentation-build, typecheck, doctest, and
 example commands. Add custom automation only after repeated use shows that a

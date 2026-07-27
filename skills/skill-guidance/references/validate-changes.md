@@ -30,7 +30,21 @@ validator command from the parent `SKILL.md` as prerequisite evidence;
 otherwise skip that gate. Do not repeat its checks here. Verify:
 
 - every retained obligation satisfies the parent admission contract;
-- every repository-specific claim satisfies the parent Falsifiability law;
+- each named parent law uses the exact identifier and title, has a target-skill
+  choice and supporting evidence, and does not claim that unnamed laws no
+  longer apply;
+- every repository-specific claim satisfies Law VIII — Keep every claim
+  falsifiable;
+- the description is one sentence of at most 240 characters, contains only a
+  concrete situation and behavior trigger, and covers every intended
+  activation;
+- the body and runtime references begin after activation and contain only
+  execution content or behavior-improving causal rationale;
+- README support and design reasons are not required by any runtime route;
+- an existing or authorized maintainer README first makes the skill's name,
+  offering, and reader-relevant reason inferable, then makes the driving
+  failure, affected agent or reader, intended impact, and boundary inferable
+  before package architecture or methodology;
 - each route satisfies the parent locality, ownership, and conditional-pointer
   contracts;
 - the completed package satisfies the parent reader contract and has a

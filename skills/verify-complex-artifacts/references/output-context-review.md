@@ -12,8 +12,8 @@ external facts, requirements, tests, or source evidence.
 
 ## Isolated and unbiased context
 
-Create a fresh reviewer with no inherited drafting or verification context.
-Give it exactly two durable artifacts:
+Spawn a fresh review subagent with no inherited drafting or verification
+context. Give it exactly two durable artifacts:
 
 1. The final review target. Prefer the complete delivered artifact. A diff is
    sufficient only when it retains enough final-state context to assess the
@@ -34,22 +34,37 @@ its verdict.
 ## Pass rules
 
 Before applying the rules, infer the target's subject, artifact role and layer,
-consumer or reader, task, classification, and process determination. An
-unsupported inference is a block, not a request for producer interpretation.
+consumer or reader, task, classification, and process determination. Inventory
+every independently selectable named subject. An unsupported inference is a
+block, not a request for producer interpretation.
 
 Return `PASS` only when every applicable rule passes with no unclassified
 ambiguity:
 
-1. **Subject before artifact.** The opening or primary entry surface establishes
-   the governed subject's purpose, responsibility, outcome, contract, or
-   boundary before explaining production, file, tool, or review mechanics.
+1. **Offer before diagnosis; selection context before mechanism.** The document
+   opening states the governed subject or collection as `name: what and why`
+   before detailed failure analysis or internal method. Every compact catalog
+   entry names what the subject provides and why the consumer would choose it.
+   After that offer and before methodology, workflow, taxonomy, components,
+   production, file, tool, or review mechanics, a chooser or owning section
+   makes the relevant situation or pressure, affected consumer or system,
+   intended observable impact or changed decision, and boundary inferable. A
+   standalone subject page and a detailed owning section orient themselves
+   locally; a compact catalog entry need not carry the full diagnosis.
 2. **Durable consumer value.** Each material unit advances the inferred
    consumer's contract, rationale, task, durable operating process, explicitly
-   historical record, or necessary navigation.
+   historical record, or necessary navigation. A statement that merely names
+   the artifact, its format, its placement, or its intended maintenance use
+   does not advance the governed subject: the consumer can already infer that
+   from the artifact's location and form. A concrete component map, ownership
+   boundary, or framework distinction passes when it changes the consumer's
+   next choice; a bare framework declaration or construction account does not.
 3. **Finished-artifact focus.** The target represents its subject and completed
-   state. Creation, drafting, validation, tooling, agent, instruction, and
-   review details remain outside it unless the durable process itself qualifies
-   under rule 5.
+   state, not an implementation-time recording that awaits another in-scope
+   edit. Creation, drafting, validation, tooling, agent, instruction, and review
+   details remain outside it unless the durable process itself qualifies under
+   rule 5. A supported transitional product state may pass only when the target
+   establishes it as part of the enduring contract.
 4. **Inferable context and coherence.** From the target alone, the reviewer can
    cite a coherent subject, role, layer or rung when applicable, consumer or
    reader, and task. The parts agree about that context and do not require a
@@ -58,12 +73,27 @@ ambiguity:
    itself establishes an enduring operator, trigger, action, result or decision
    boundary, scope, and owner. A narrative of the session that produced or
    verified the artifact never qualifies.
+6. **Proportion and placement integrity.** The target contains no proof leakage
+   that echoes instructions or claims compliance, no focal point whose
+   repetition or prominence overwhelms sibling consumer needs, and no material
+   placed at a structurally convenient but semantically wrong owner. Treat
+   “this README,” “this module,” “this document,” or equivalent generic
+   assertions of the artifact's own purpose, placement, or maintenance role as
+   proof leakage. A concrete component map or ownership boundary passes when
+   it changes the consumer's next choice. Repeated emphasis and unusual
+   placement pass only when the target itself establishes their distinct
+   consumer value and governed scope.
 
-For prose or labeled visual surfaces, apply two adversarial checks:
+For prose or labeled visual surfaces, apply two adversarial checks to the
+document offering window, each compact subject offer, and each subject's
+selection-context or owning section:
 
 - **Deletion:** remove artifact labels, paths, and phrases such as “this file,”
-  “this deck,” or “this report.” If no useful claim about the governed subject
-  remains, the target fails.
+  “this deck,” or “this report.” A remaining generic claim that the artifact
+  helps someone understand, change, use, or maintain the governed subject also
+  fails: it restates the artifact's placement rather than a fact about that
+  subject. Retain a concrete framework distinction or component map only when
+  it selects a different consumer action or understanding.
 - **Substitution:** replace the subject with a sibling unit. If the opening or
   primary entry surface remains equally true, it is generic artifact or process
   language rather than subject orientation.
@@ -73,6 +103,18 @@ source code, inspect added comments, public documentation, examples,
 reader-visible strings, test descriptions, and documentation-like identifiers;
 do not demand document-shaped prose from implementation code.
 
+Report one row for every independently selectable named subject:
+
+```text
+Subject results: subject | what is offered | why choose it | offer location | situation or pressure | affected consumer or system | intended impact or changed decision | boundary | selection-context location | PASS or BLOCK
+```
+
+Judge whether relationship direction, modality, conditions, placement, and
+internal consistency are clear, but do not infer that an internally coherent
+relationship is true. The factual gate must verify each consumer-visible edge
+against authoritative contracts for both endpoints or an explicit product
+decision.
+
 ## Verdict format
 
 Return:
@@ -80,8 +122,9 @@ Return:
 ```text
 Status: PASS | BLOCK | NEEDS-HUMAN-DECISION | UNVALIDATED
 Inferred context: subject, artifact role and layer, consumer or reader, task, classification, with target evidence
+Subject results: one row per independently selectable named subject
 Process determination: absent | qualifies | fails | indeterminate, with target evidence
-Rule results: rules 1–5, with target locations
+Rule results: rules 1–6, with target locations
 Blockers: location, broken rule, consumer impact, minimal repair direction
 Review boundary: external factual correctness, requirements, coverage, source truth, and deterministic checks not assessed
 ```
@@ -90,7 +133,7 @@ Use `BLOCK` for a known rule violation or an inference that depends on producer
 interpretation. Use `NEEDS-HUMAN-DECISION` only for artifact scope,
 classification, or strategic intent that the target leaves genuinely
 ambiguous. Use `UNVALIDATED` when the target, a required consumer-visible form,
-or an isolated reviewer is unavailable.
+or a review subagent is unavailable.
 
 This gate's `PASS` means the target is semantically coherent in its own context
 and free of unjustified process residue. It does not establish factual
@@ -101,15 +144,15 @@ results; those remain separate gates.
 
 1. Finish the candidate and run factual, deterministic, and consumer-surface
    checks. Keep their inputs, outputs, and conclusions outside this gate.
-2. Start a fresh isolated reviewer with no inherited context.
+2. Spawn a fresh review subagent with no inherited context.
 3. Give it exactly the final target and this rules artifact. It reviews only;
    it does not edit, rewrite, or consult other sources.
 4. Require the verdict format above.
 5. On `BLOCK`, repair in the production context, rerun invalidated checks, and
-   use a new isolated reviewer.
+   use a new review subagent.
 6. Give the new reviewer no prior verdict, repair narrative, expected outcome,
    or other producer interpretation.
-7. When no isolated reviewer can run, record `UNVALIDATED`; never call that a
+7. When no review subagent can run, record `UNVALIDATED`; never call that a
    pass or a publish-ready result.
 8. Keep the verdict in the handoff, not in the delivered artifact, unless the
    review record is itself an explicitly requested deliverable.

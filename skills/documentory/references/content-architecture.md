@@ -1,12 +1,7 @@
 # Content architecture
 
-Content architecture gives each reader a useful path to a task or decision without
-forcing a new filesystem topology. It starts with reader context and governed
-scope, not with a filename, repository visibility, or an assumed marketing role.
-It does not require that any layer or document exist.
-
-Use this reference when planning a README, restructuring documentation, or
-building public documentation-site navigation.
+Start with the reader's task and governed scope; do not infer a document's role
+from its filename, repository visibility, or marketing posture.
 
 - [Reader contexts](#reader-contexts)
 - [Detail level](#detail-level)
@@ -195,6 +190,20 @@ product decision.
 Model the reader at the surface where they first encounter the documentation.
 Assume only context genuinely available at that rung.
 
+Open with the simplest useful offer: the subject's name, what it provides or
+owns, and why that matters to the reader. When a surface catalogs several
+independently selectable capabilities, services, packages, or concepts, present
+each first in compact `name: what and why` form. Do not make the reader cross a
+failure analysis, methodology, taxonomy, workflow, or component inventory to
+discover what is being offered.
+
+After the offering layer, give the situation, problem, impact, and boundary
+needed to choose safely. A chooser may own that selection context for compact
+catalog entries. Before a named subject's detailed methodology or parts, its
+owning section must make the relevant pressure, affected reader or system,
+intended observable impact or changed decision, and boundary inferable. A
+parent summary or sibling section cannot orient a standalone subject page.
+
 For a README, state the technical reader, task, and starting context before
 giving a route. A repository checkout, package registry, command line, runtime,
 credentials, or source access is available only when stated or verified. For a
@@ -202,9 +211,10 @@ public website presentation page, the primary route is browser-native. Do not
 swap those contracts. For a public documentation home, the primary route is
 documentation navigation or reference lookup, not a product conversion path.
 
-Open every reader-facing surface with the governed subject's relevant purpose,
-responsibility, outcome, contract, boundary, or rationale—not with the
-artifact's label, placement, or production story.
+Open every reader-facing surface with the governed subject's plain offer:
+identity, capability or responsibility, and reader-relevant purpose—not with
+diagnosis, artifact placement, production story, or internal method. Follow
+with the selection context and boundary appropriate to that surface.
 
 A technical README opening should let its technical reader identify the governed
 system or unit, scope, boundary, and the route that fits their task. A public

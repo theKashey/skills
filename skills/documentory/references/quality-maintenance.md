@@ -1,16 +1,8 @@
 # Quality and maintenance
 
-Quality and maintenance keep documentation trustworthy as code changes: claims
-remain evidence-backed, reader paths stay usable, and drift becomes visible
-before publication.
-
-Use this reference for documentation audits, PR review, release preparation,
-and ongoing maintenance.
-
 - [Evidence scorecard](#evidence-scorecard)
 - [Audit questions](#audit-questions)
 - [Change triggers](#change-triggers)
-- [Output-context review gate](#output-context-review-gate)
 - [End-state exit gate](#end-state-exit-gate)
 - [Release and drift review](#release-and-drift-review)
 
@@ -21,9 +13,12 @@ Report documentation quality with evidence and counts.
 | Gate | Pass condition |
 | --- | --- |
 | Currentness | At exit, checked evidence shows no contradiction between the documented finished state and the completed exports, types, defaults, routes, tests, or supported versions in scope. |
+| Offering clarity | The document opens with the governed subject or collection in plain `name: what and why` form. Every compact catalog entry names what the subject provides and why the reader would choose it before diagnosis or mechanism. |
+| Selection context and impact | After the simple offer and before methodology, workflow, taxonomy, or components, the intended reader can infer the relevant situation or pressure, affected party or system, observable impact or changed decision, and boundary. A chooser may own this context for compact catalog entries; a standalone subject page and a detailed owning section orient themselves locally. |
 | Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is documented in an authorized existing surface or has an explicit justified exclusion. |
+| Relationship coverage | Every consumer-visible assertion connecting named subjects is inventoried by source, relation, target, direction, modality, and condition, then verified against authoritative contracts for both endpoints or an explicit product decision. Internal coherence, co-location, and repeated prose are not evidence. |
 | Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. |
-| Surface necessity | Every added or retained README, page, reference, or comment closes a material named-reader gap that readable code, types, tests, metadata, local context, and existing canonical surfaces do not already close. Absence is correct when no such gap remains. |
+| Surface necessity | The surface passes the [locality ladder's existence gate](locality-ladder.md#existence-gate). |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
 | Scan-path usability | The named reader can identify the document's purpose, task or destination from headings and links, primary path, and next useful detail without relying on decorative formatting. For a public website presentation page, a browser visitor can identify the intended context, supported outcome, and first verified action; any boundary needed to avoid a likely false expectation appears before it matters. For a public documentation home, a reader can find the relevant topic or exact fact without a product-presentation detour. For a README, the named technical reader can identify the governed scope, boundary, and route for their task without marketing posture. |
 | Locality fit | Each fact has a canonical owner at the narrowest governed scope visible to affected readers; overlapping physical and logical roles are explicit rather than duplicated or forced apart. |
@@ -38,7 +33,6 @@ Report documentation quality with evidence and counts.
 | Fence visibility | Every Chesterton's fence in scope has either a verified rationale at the governed decision or an explicit accepted `TODO` or `FIXME` recording that its rationale is unknown. |
 | Navigation health | Links resolve; docs build where supported; essential pages are not orphaned; facts needed to act are not available only through a visual. |
 | Publishable end state | Documentation and code represent the completed result and require no cleanup operation to remove draft scaffolding, temporary caveats, or promises of future completion. Any accepted gap is an explicit `TODO` or `FIXME` comment. |
-| Output-context integrity | A fresh independent reviewer passes the two-artifact output-context review for every changed artifact in scope. From the target and rules alone, the reviewer can infer its governed subject, layer, reader, and task; process content qualifies only as a durable process. A producer self-review or unavailable reviewer is `UNVALIDATED`, not a pass. |
 
 Record evidence capable of falsifying qualitative judgments. Use a task-local
 table such as:
@@ -58,9 +52,14 @@ For the judgment-heavy gates, record the observation:
   reach it.
 - **Context resilience:** the non-local fact and plausible wrong edit its
   absence would invite.
-- **Output-context integrity:** the reviewer's inferred subject, role, rung,
-  reader, task, orientation window, process determination, verdict, and any
-  exact repair.
+- **Offering clarity:** one row per independently selectable subject with its
+  name, what it provides, why a reader would choose it, and offer location.
+- **Selection context and impact:** one row per subject with its situation or
+  pressure, affected party or system, intended impact or changed decision,
+  boundary, and selection-context location.
+- **Relationship coverage:** verified edges over total edges, authoritative
+  evidence for both endpoints or the explicit product decision, and every
+  exclusion.
 
 Do not replace this with word counts, generic readability scores, or a claim that documentation looks good.
 
@@ -104,9 +103,17 @@ every section and public item in that stated scope:
 14. Could this state enter its intended review, merge, or publication without editing away a temporary caveat, placeholder, draft marker, or promise about what will happen later?
 15. Where is the reason for code's existence or present form unknown? What evidence supplies the missing rationale, or which explicit `TODO` or `FIXME` records the uncertainty?
 16. What is the semantic subject, distinct from the artifact role? Does the
-    orientation window establish that subject's reader-relevant purpose,
-    responsibility, outcome, or boundary before document or production
-    mechanics appear?
+    opening state its name, what it provides or owns, and why the reader would
+    use it before diagnosis, document, production, or internal mechanics?
+17. Which independently selectable named subjects have their own entry point?
+    Does each compact catalog entry provide `name: what and why`? After that
+    offer and before internal method or parts, can the reader recover the
+    relevant situation or pressure, affected party, intended impact or
+    decision, and boundary from its chooser or owning section? Does every
+    standalone subject page orient itself locally?
+18. Which statements connect two named subjects? For each directed, reciprocal,
+    shared-property, conditional, or negative edge, what authoritative contract
+    for both endpoints or explicit product decision establishes it?
 
 Flag bare verbs such as supports, handles, claims, configure, use, secure, or works when nearby text does not supply behavior, condition, and boundary.
 
@@ -130,112 +137,6 @@ Choose one result and record the evidence:
 - update changelog or migration docs;
 - update JSDoc or code-local rationale;
 - no user-facing documentation impact.
-
-## Output-context review gate
-
-A changed artifact leaves its producing session as an **unvalidated output**.
-Run this semantic review gate after applicable deterministic checks and before
-calling the artifact complete. It complements source verification, tests,
-example checks, links, and the end-state exit gate; it does not replace them.
-The producing agent cannot pass this gate for its own artifact.
-
-### Two review inputs
-
-Create the reviewer without inherited drafting context. Give it exactly two
-durable artifacts:
-
-1. The final review target. Prefer the complete final artifact; a diff is
-   sufficient only when it retains enough final-state context to assess the
-   opening and changed content.
-2. This review-rules artifact.
-
-Supply no task summary, scope statement, semantic classification, reader
-description, source or validation summary, process declaration, producer
-rationale, prior review, expected verdict, or intended fix. The reviewer must
-not consult other sources for this gate. It infers subject, role, rung, reader,
-task, classification, and process status from the target itself.
-
-### Pass rules
-
-The reviewer returns `PASS` only when every applicable rule passes with no
-unclassified ambiguity:
-
-1. **Subject before artifact.** In the orientation window—the title plus first
-   substantive reader-facing prose, excluding navigation—the artifact explains
-   the governed subject's reader-relevant purpose, responsibility, outcome,
-   contract, boundary, or non-local rationale. For a technical module, package,
-   or service, it makes a concrete reader-relevant claim about what the unit does or
-   owns and names a relevant relationship, boundary, or constraint before
-   explaining the README, file, skill, or authoring task.
-2. **Durable reader value.** Each changed prose unit advances an inferred
-   reader's current contract, rationale, durable operating procedure,
-   explicitly historical record, or necessary navigation.
-3. **Finished-artifact focus.** The artifact represents the subject and its
-   completed state. Creation, drafting, validation, tool, subagent, instruction,
-   and review details remain in the gate record or work handoff unless the
-   durable process itself qualifies under rule 5.
-4. **Inferable context and locality.** From the target alone, the reviewer can
-   cite a coherent subject, role, rung, reader, and task, and can see why the
-   changed content belongs at that layer. If any of those need producer
-   interpretation, the target does not pass.
-5. **Durable-process exception.** Process content fails unless the target
-   itself establishes an enduring operator, trigger, action, result or decision
-   boundary, scope, and owner. The reviewer determines this from the target; it
-   never receives a producer declaration.
-
-Apply two checks to the orientation window:
-
-- **Deletion:** remove document labels, paths, and phrases such as “this
-  README” or “this file.” If no useful claim about the governed subject remains,
-  the artifact fails.
-- **Substitution:** replace the subject with a sibling unit. If the opening
-  remains equally true, it is generic artifact or process prose rather than
-  subject orientation.
-
-Before applying the rules, infer the subject, role, rung, reader, task,
-classification, and process determination from the target, citing its
-locations. An unsupported inference is a block, not a request for producer
-interpretation.
-
-For changed source code, apply these rules to added comments, JSDoc/TSDoc,
-examples, reader-visible strings, test descriptions, and documentation-like
-identifiers. Do not force document-shaped prose into code. Repository-native
-tests and a code-specific review remain responsible for implementation
-correctness beyond this gate's scope.
-
-This gate does not establish external factual correctness, contract coverage,
-or deterministic-check results. Run those checks separately and keep their
-evidence outside this review.
-
-### Fresh-review protocol
-
-1. Finish the candidate and run applicable factual and deterministic checks.
-   Keep their evidence outside this gate.
-2. Spawn a fresh independent review subagent with no inherited drafting
-   context. When the platform cannot create an isolated subagent, start an
-   independent agent session with no inherited drafting context instead.
-3. Give it exactly the final review target and this review-rules artifact. It
-   reviews only; it does not edit, rewrite, or consult other sources.
-4. Require it to infer context from the target before applying the rules, then
-   return:
-
-   ```text
-   Status: PASS | BLOCK | NEEDS-HUMAN-DECISION | UNVALIDATED
-   Inferred context: subject, role, rung, reader, task, classification, with evidence
-   Process determination: absent | qualifies | fails | indeterminate, with evidence
-   Rule results: rules 1–5, with target locations
-   Blockers: location, broken rule, reader impact, minimal repair direction
-   Review boundary: external factual correctness, coverage, and deterministic checks not assessed
-   ```
-
-5. On `BLOCK`, repair from the evidence, rerun applicable checks, and use a
-   new fresh reviewer. The producing agent cannot waive its own failed gate.
-6. On `NEEDS-HUMAN-DECISION`, ask the user only to resolve artifact scope,
-   classification, or strategic intent. Missing evidence remains a block.
-7. When no independent reviewer can run, record `UNVALIDATED`; never call that
-   a pass or publish-ready result.
-8. Put the gate result in the work handoff, not in the finished reader artifact,
-   unless the user explicitly requested a review record.
 
 ## End-state exit gate
 
@@ -261,8 +162,7 @@ not a rationale.
 A supported transitional state in the finished product is not implementation
 residue. Document it when it is part of the verified contract.
 
-The end-state exit gate removes temporary-state residue. The output-context
-review gate removes authoring and review residue. Pass both.
+The end-state exit gate removes temporary-state residue.
 
 ## Release and drift review
 
@@ -277,7 +177,5 @@ At release cadence:
 4. Search current documentation for legacy names and historical wording that should be in migration material.
 5. Re-check that public defaults, errors, supported versions, and security boundaries match source.
 6. Apply the end-state exit gate before declaring the documentation releasable.
-7. Run the output-context review gate for every changed artifact and retain its
-   result with the release evidence.
 
 Prefer generated inventory or repository-native documentation tooling. Introduce a maintained API map only if coverage cannot otherwise be derived, because every additional index is another drift risk.

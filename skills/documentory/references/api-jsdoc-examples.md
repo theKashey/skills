@@ -1,11 +1,5 @@
 # Public contracts, JSDoc, and examples
 
-Public contracts, JSDoc, and examples let readers use an API safely without
-reconstructing behavior from implementation. They expose purpose, constraints,
-and failures that types and a local code scan cannot reliably show.
-
-Use this reference for public exports, configuration, API documentation, JS or TS JSDoc, and code examples.
-
 - [Contract checklist](#contract-checklist)
 - [Code-local documentation](#code-local-documentation)
 - [Chesterton's fence test](#chestertons-fence-test)

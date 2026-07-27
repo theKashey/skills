@@ -1,6 +1,6 @@
 ---
 name: read-the-terrain
-description: Orient uncertain, changing, or time-sensitive work by combining a compact terrain snapshot, Cynefin regime choice, recognition-primed mental simulation, isolated second-order problem checks, and verified OODA moves. Use when the next action depends on whether causality is obvious, analyzable, emergent, unstable, or unknown; when a familiar pattern may be misleading; when actions multiply without a changed signal; or when isolated context must reveal which problem a candidate move or artifact appears aimed at.
+description: Use when uncertain or changing work needs a bounded next move, a fresh signal, or a check that an artifact still addresses the recipient's problem.
 ---
 
 # Read the Terrain

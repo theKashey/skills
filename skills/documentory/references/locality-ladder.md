@@ -1,12 +1,8 @@
 # Documentation locality ladder
 
-A locality rung is a reader-context contract. It says who encounters a fact,
-what that reader can already see, what gap would otherwise remain, and how much
-context the surface can responsibly carry.
-
-Use this reference to place a fact where its reader can notice it before making
-the governed decision. The rungs are a scope vocabulary, not a required folder
-tree, a document outline, or a measure of importance.
+Place each fact where its reader encounters it before the governed decision.
+Use the rungs as a scope vocabulary, not as a required folder tree, document
+outline, or measure of importance.
 
 - [Existence gate](#existence-gate)
 - [Reader states](#reader-states)
@@ -16,10 +12,6 @@ tree, a document outline, or a measure of importance.
 - [Overlapping rungs](#overlapping-rungs)
 - [Three heuristics](#three-heuristics)
 - [Movement tests](#movement-tests)
-
-Diátaxis names the question a fact answers. JSDoc or TSDoc exposes symbol
-semantics outside implementation. Neither changes the reader context available
-at a locality rung.
 
 ## Existence gate
 

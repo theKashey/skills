@@ -1,6 +1,6 @@
 ---
 name: verify-complex-artifacts
-description: Verify complex generated artifacts after authoring and before handoff, publication, merge, deployment, or acceptance. Use for post-generation verification of complex artifacts or artefacts, isolated and unbiased output-context review, release or readiness gates, independent QA, and create-or-change requests that explicitly require a final gate for compound outputs such as code changes, websites, documents, slide decks, spreadsheets, PDFs, diagrams, data or configuration bundles, and multi-file deliverables. Use especially when tests alone cannot establish visual, structural, cross-file, contextual, or requirement correctness. Run after the generation workflow has produced a candidate; do not use as the primary authoring workflow or for a narrow single-check request.
+description: Use when a finished multi-file deliverable needs an integrated readiness decision before handoff, publication, merge, deployment, or acceptance, beyond normal deterministic checks.
 ---
 
 # Verify Complex Artifacts
@@ -9,63 +9,79 @@ Gate a finished candidate between generation and its next trust boundary.
 Separate factual and deterministic evidence from an isolated output-context
 review so the producer cannot explain the artifact into passing.
 
+## Point at the problem
+
+After a gate establishes a defect, name the matching [Sin](SINS.md) in the gate
+record: `sin → observed evidence → countermeasure → invalidated gate`. Naming
+the mechanism gives the repair a target; it does not turn a plausible mechanism
+into proof of cause or completion.
+
 ## Laws
 
 1. **Gate the candidate, not the conversation.** Verify the final files,
    renders, behaviors, and consumer entry points. Do not pass an artifact from a
    producer's summary, confidence, or remembered tool output.
-2. **Freeze the factual boundary.** Name the candidate revision, artifact
-   manifest, governing sources, intended consumer, and next transition before
-   checking. Keep that producer interpretation outside the isolated
-   output-context review. A repair creates a new revision and invalidates
-   affected results.
-3. **Keep gate classes distinct.** Deterministic quality checks establish
+2. **Expect gaps; refine from evidence.** Iterative and model-assisted
+   production predictably leaves omissions, misplaced emphasis, private-context
+   assumptions, and locally coherent relationships. Treat the gate as a way to
+   expose and repair those gaps, not as a ceremony for confirming the
+   producer's result. Preserve every unresolved gap in the verdict.
+3. **Freeze the end-state factual boundary.** Name the candidate revision,
+   artifact manifest, governing sources, intended consumer, next transition,
+   and authorized state expected when the iteration completes before checking.
+   Treat the observed implementation-time state as progress evidence, not as
+   the acceptance contract. Keep that producer interpretation outside the
+   isolated output-context review. A repair creates a new revision and
+   invalidates affected results.
+4. **Keep gate classes distinct.** Deterministic quality checks establish
    machine-testable facts. Factual review checks requirements and source truth.
    Isolated output-context review checks inferable context, semantic coherence,
    and process residue. Human acceptance resolves subjective or strategic fit.
    One class cannot substitute for another.
-4. **Verify through the consumer surface.** Parse source, but also open, render,
+5. **Verify through the consumer surface.** Parse source, but also open, render,
    run, import, install, print, navigate, or recalculate the artifact from the
    entry point its consumer receives.
-5. **Turn prohibitions into checks.** Convert important “must not” constraints
+6. **Turn prohibitions into checks.** Convert important “must not” constraints
    into a linter, schema, assertion, search, permission boundary, or explicit
    adversarial review item whenever possible.
-6. **Do not self-certify output-context integrity.** The producing context may
-   run factual and deterministic checks, but a fresh isolated reviewer with no
+7. **Do not self-certify output-context integrity.** The producing context may
+   run factual and deterministic checks, but a fresh review subagent with no
    drafting history must perform the output-context gate.
-7. **Enforce an unbiased review boundary.** Give the reviewer exactly the final
+8. **Enforce an unbiased review boundary.** Give the reviewer exactly the final
    target and neutral durable review rules. Give it no producer interpretation,
    consumer or reader profile, artifact role, layer or rung, source facts,
    validation output, process declaration, expected verdict, intended repair,
    or prior review. It must infer context from the artifact and cite that
    evidence in its verdict.
-8. **Fail visibly.** A skipped required check, unavailable consumer view, or
-   unavailable independent reviewer is `UNVALIDATED`, not a pass. A known
+9. **Fail visibly.** A skipped required check, unavailable consumer view, or
+   unavailable review subagent is `UNVALIDATED`, not a pass. A known
    violation is `BLOCK`.
-9. **Repair by revision.** If edits are authorized, repair the production
+10. **Repair by revision.** If edits are authorized, repair the production
    artifact outside the review session, regenerate derived outputs, rerun every
-   invalidated check, and use a fresh reviewer.
-10. **Reserve acceptance for judgment.** Ask a human about product direction,
+   invalidated check, and use a fresh review subagent.
+11. **Reserve acceptance for judgment.** Ask a human about product direction,
     taste, brand, risk ownership, or an ambiguous contract. Do not ask a human
     to compensate for failed syntax, broken links, missing requirements, or
     other checkable defects.
+12. **Diagnose damage, not polish.** Scan the whole candidate for cross-cutting
+    damage signatures before accepting local improvements or passing checks.
+    Treat each signature as a lead and prove or dismiss it through the gate
+    class capable of observing the affected property.
 
-## Route the request
+## Select the post-trigger route
 
-Choose the smallest route that covers the requested trust transition:
+After activation, choose the smallest route that covers the trust transition:
 
-| Request | Route |
+| Activated verification need | Route |
 | --- | --- |
 | A complex artifact already exists and must be ready for handoff, merge, publication, deployment, or delivery | Run the complete gate |
-| Create or change an artifact and verify it | Finish the relevant generation workflow, freeze its candidate, then run this skill as a separate phase |
+| Create or change an artifact and verify it | Finish the relevant generation workflow, freeze its candidate, then run the complete gate as a separate phase |
 | Review only, audit, or assess readiness | Run the gates and report; do not edit |
-| Verify one explicit property such as syntax, links, formulas, or tests | Run the repository-native check; use this skill only if an integrated readiness decision is also requested |
+| Verify one explicit property such as syntax, links, formulas, or tests | Run the repository-native check; add the complete gate only when an integrated readiness decision is requested |
 | Decide whether the result is desirable, on-brand, or strategically correct | Run applicable quality and review gates first, then request human acceptance |
 
-This skill owns the post-generation gate, not the domain-specific authoring
-method. A producing skill may define what a correct document, site, code
-change, or data product means; keep that domain contract as an input rather
-than copying its workflow here.
+Use the supplied domain contract as gate input. Do not copy a domain-specific
+authoring workflow into the gate.
 
 ## Run the complete gate
 
@@ -76,13 +92,16 @@ Record:
 - the exact candidate revision and every artifact in scope;
 - the next transition and the consumer or system receiving it;
 - authoritative requirements, schemas, source facts, policies, and explicit
-  user decisions;
+  user decisions, including the state expected when the current iteration is
+  complete;
 - critical failure modes and irreversible or high-impact consequences;
 - whether repairs are authorized and who owns final acceptance.
 
-Separate verified requirements from assumptions. If scope or strategic intent
-cannot be inferred safely, return `NEEDS-HUMAN-DECISION`; do not invent a
-contract.
+Separate completed-state requirements from observations of the current
+implementation, then separate verified requirements from assumptions. If the
+intended completed state, scope, or strategic intent cannot be inferred safely,
+return `NEEDS-HUMAN-DECISION`; do not promote the implementation-time state into
+the contract.
 
 ### 2. Build the artifact manifest
 
@@ -90,9 +109,9 @@ Inventory primary files, generated or derived files, cross-file references,
 consumer entry points, and required views. Include enough identity to detect a
 stale check: revision, path, version, checksum, or an equivalent stable marker.
 
-Read [artifact checks](references/artifact-checks.md) and select only the
-applicable artifact families. Add contract-specific checks before running
-generic ones.
+Read [artifact checks](references/artifact-checks.md), apply its cross-cutting
+damage-signature scan, and select only the applicable artifact families. Add
+contract-specific checks before running generic ones.
 
 For a compound deliverable, state cross-artifact invariants such as:
 
@@ -101,6 +120,12 @@ For a compound deliverable, state cross-artifact invariants such as:
 - a PDF export matches the editable document;
 - screenshots reflect the shipped interface;
 - schemas, examples, generated clients, and runtime defaults agree.
+
+Inventory every consumer-visible assertion connecting named subjects as
+`source, relation, target, direction, modality, condition`. Verify each edge
+against authoritative contracts for both endpoints or an explicit product
+decision. Repeated prose, co-location, valid links, and internal coherence are
+not evidence for a relationship.
 
 ### 3. Freeze the factual verification plan
 
@@ -124,16 +149,35 @@ Prefer repository-native validators, builds, tests, linters, schema checks,
 exporters, and inspectors. Capture the command or tool, candidate revision,
 scope, result, and material counts.
 
+For every plausible damage signature, record the target evidence and run the
+adversarial check named in the reference. Route proof leakage, disproportionate
+attention, and placement drift through the isolated output-context review as
+well as any factual gate they trigger. Do not clear a signature because the
+change is requested, locally correct, or covered by a passing proxy check.
+
 Check requirements, authoritative source facts, and cross-artifact invariants
 here. Account for every in-scope requirement or record an explicit exclusion.
+Account separately for every named-subject relationship edge or return
+`BLOCK`, `UNVALIDATED`, or `NEEDS-HUMAN-DECISION` according to the missing
+evidence or authority.
 These checks may use domain skills, source repositories, specifications,
 schemas, and validation output; none of that evidence enters the isolated
 output-context review.
+
+Reconcile the candidate with the authorized state at the end of the iteration,
+not merely with a checkout, branch, rollout, or artifact observed while work is
+in flight. A consumer-visible record of that intermediate state is `BLOCK` when
+it stands in for the completed contract, even if it was accurate when recorded.
+A transitional state passes only when the finished product deliberately
+supports it as part of its enduring contract.
 
 Run prerequisite checks before expensive or judgment-heavy checks. Stop the
 transition on a failed required check. If repair is authorized, fix the
 candidate and restart from the earliest invalidated gate; otherwise report
 `BLOCK`.
+
+Apply the named sin's countermeasure to the repair plan, then rerun every
+invalidated gate. The owning gate still proves whether the defect is repaired.
 
 A command exiting successfully proves only the property it actually checks.
 Do not relabel a build as semantic, visual, security, or requirement
@@ -156,8 +200,8 @@ checks.
 
 ### 6. Run the isolated output-context review
 
-Start a fresh reviewer or isolated agent session with no inherited generation
-context. Give it exactly:
+Spawn a fresh review subagent with no inherited generation context. Give it
+exactly:
 
 1. the final review target; and
 2. [output-context review](references/output-context-review.md), unchanged.
@@ -175,27 +219,31 @@ does not edit or rewrite the artifact.
 
 Require it to infer the subject, artifact role and layer, consumer or reader,
 task, classification, and process status from the target and cite target
-evidence. This gate's `PASS` means the output is semantically coherent in its
-own context and free of unjustified process residue. It does not establish
-external factual correctness, requirement coverage, cross-artifact truth, or
-deterministic-check results.
+evidence. When the target presents independently selectable named subjects,
+require a separate `name: what and why` offer result and a subsequent
+situation, affected party, intended impact, and boundary result for each. A
+compact catalog entry may route to a chooser or owning section for that fuller
+selection context. This gate's `PASS` means the output is semantically coherent
+in its own context and free of unjustified process residue. It does not
+establish external factual correctness, requirement coverage, cross-artifact
+truth, or deterministic-check results.
 
 ### 7. Resolve the verdict
 
 Use exactly one gate status:
 
 - `PASS`: every required factual, deterministic, and consumer-surface check
-  passed, the fresh output-context reviewer passed, and acceptance passed or
+  passed, the fresh output-context review subagent passed, and acceptance passed or
   was not required.
 - `BLOCK`: a known defect, contradiction, failed required check, or unmet
   contract remains.
 - `NEEDS-HUMAN-DECISION`: only a subjective, strategic, ownership, or genuinely
   ambiguous contract decision prevents completion.
-- `UNVALIDATED`: a required tool, view, source, environment, or independent
-  reviewer was unavailable.
+- `UNVALIDATED`: a required tool, view, source, environment, or review
+  subagent was unavailable.
 
 On `BLOCK`, repair only when authorized. Create a new candidate revision,
-rerun invalidated checks, and use a new independent reviewer who receives no
+rerun invalidated checks, and use a new review subagent that receives no
 prior verdict or repair narrative.
 
 ### 8. Produce the gate record
@@ -204,9 +252,12 @@ Report:
 
 - candidate revision, manifest, consumer, and trust transition;
 - contract sources and assumptions;
+- named-subject relationship edges, authoritative evidence, exclusions, and
+  verified-over-total count;
 - deterministic checks with commands, results, and counts;
+- damage signatures tested, evidence observed, and gate disposition;
 - consumer surfaces and critical paths observed;
-- isolated output-context reviewer status and inferred context;
+- isolated output-context review subagent status and inferred context;
 - human acceptance result or exact decision needed;
 - exclusions, unavailable checks, residual risks, and final gate status.
 
@@ -224,9 +275,13 @@ Declare the post-generation gate complete only when:
    cross-artifact invariant;
 3. applicable factual and deterministic checks ran against the reported
    candidate revision;
-4. primary consumer paths and materially distinct views were exercised;
-5. a fresh isolated output-context reviewer inferred context from only the
+4. every plausible cross-cutting damage signature was tested through its
+   owning gate rather than dismissed from producer intent;
+5. every consumer-visible named-subject relationship was inventoried and
+   verified against both endpoint contracts or an explicit product decision;
+6. primary consumer paths and materially distinct views were exercised;
+7. a fresh output-context review subagent inferred context from only the
    target and neutral rules and returned a valid verdict;
-6. required human acceptance is recorded;
-7. the handoff distinguishes `PASS`, `BLOCK`, `NEEDS-HUMAN-DECISION`, and
+8. required human acceptance is recorded;
+9. the handoff distinguishes `PASS`, `BLOCK`, `NEEDS-HUMAN-DECISION`, and
    `UNVALIDATED` without softening them.

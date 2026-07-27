@@ -1,45 +1,79 @@
 ---
 name: skill-guidance
-description: Create, revise, and audit self-contained agent skills as verified decision maps. Use when skill work has an unresolved choice about admission, canonical ownership, invocation or routing, instruction locality, package isolation, rationale, completion criteria, pruning, or behavioral evaluation.
+description: Use when creating, revising, or auditing an agent skill; or when deciding how a skill should activate, guide behavior, validate outcomes, or remain standalone.
 ---
 
 # Skill Guidance
 
 Turn unresolved agent choices into the smallest verified runtime decision map.
-Treat the repository and its tooling as the territory; preserve only the
-selection criteria, hidden boundaries, and completion conditions the territory
-does not supply.
 
-## Apply the decision laws
+## Set the activation boundary
 
-1. **Point at the delta.** Admit an instruction only when it changes a plausible
+**Activation boundary — Separate activation from execution.** Put every
+skill-level activation condition in the frontmatter description. Keep it to one
+sentence and at most 240 characters. Name the concrete situation and behavior
+that need the skill; do not list hypothetical failures, adjacent tools, or
+workflow phases. Start the body after activation: retain only post-trigger
+decisions, actions, resources, boundaries, and completion checks. Internal
+branch conditions remain execution logic.
+
+## Apply the eight decision laws
+
+1. **Law I — Point at the delta.** Admit an instruction only when it changes a plausible
    choice. Record the generic or locally attractive default it must beat.
    Paths, signatures, discoverable mechanics, and enforced policy stay in the
    territory; retain only the reef and the exact command or flag an agent would
    otherwise guess incorrectly.
-2. **Spend the instruction budget.** Make every sentence avert a named wrong
+2. **Law II — Spend the instruction budget.** Make every sentence avert a named wrong
    turn or premature stop. Delete no-ops, sediment, duplicated meaning, and
-   context that is merely relevant. Put the most frequently missed,
+   context that is merely relevant. Length and repetition both consume a
+   bounded attention budget; put the most frequently missed,
    highest-consequence choices first.
-3. **Recruit shared priors.** Prefer a precise leading concept such as
+3. **Law III — Recruit shared priors.** Prefer a precise leading concept such as
    Chesterton's Fence, POLA, TOCTOU, or N+1 over restating its generic theory.
    Add the local consequence when the name alone does not select an action.
-4. **Lead with the supported move.** State `+ preferred choice` before
+4. **Law IV — Lead with the supported move.** State `+ preferred choice` before
    `- plausible wrong choice`. Keep a prohibition only when the wrong route
-   remains live after the positive route is explicit.
-5. **Keep the chart local.** Put a rule at the narrowest stable scope encountered
+   remains live after the positive route is explicit; when a gate or structural
+   change can remove that route, prefer it and delete the warning.
+5. **Law V — Keep the chart local.** Put a rule at the narrowest stable scope encountered
    by every affected reader. Keep pre-arrival invariants at the root, and verify
-   how the target harness resolves nested instructions before relying on depth.
-6. **Carry verified why for surprising fences.** Preserve the shortest
-   evidence-backed rationale that protects an apparently wrong constraint or
-   helps an unseen choice. Record unresolved rationale as an explicit decision
-   gap; never manufacture it.
-7. **Let gates own mechanical rules.** Prefer types, lint, formatting, hooks,
+   how the target harness resolves nested instructions before relying on depth:
+   depth scopes a rule; it does not enforce it.
+6. **Law VI — Carry verified why for surprising fences.** Preserve the shortest verified
+   `X because Y` when it protects an apparently wrong constraint or transfers a
+   choice to an unseen case. Keep other explanation, defense, apology,
+   anticipated objections, authoring support, and design history out of runtime
+   files. A README may explain durable reasons, concrete ownership, and a
+   framework distinction that changes a reader's choice, but never becomes a
+   runtime dependency. Keep construction and framework-provenance records in
+   the handoff.
+7. **Law VII — Enforce or delete mechanical rules.** Prefer types, lint, formatting, hooks,
    tests, or CI for enforceable constraints. Point to the gate and its exact
    invocation instead of duplicating its policy in prose.
-8. **Keep every claim falsifiable.** Verify paths, commands, fields, versions,
+8. **Law VIII — Keep every claim falsifiable.** Verify paths, commands, fields, versions,
    examples, links, and current behavior. A stale instruction is a defect, not
-   harmless context.
+   harmless context: it is obeyed with the confidence of a live one.
+
+## Name the active laws
+
+While forming or revising a skill, name every law above that materially
+constrains its design in a concise authoring record:
+
+```text
+Law: Law I — Point at the delta
+Target choice: retain the repository-specific test command and its flag
+Evidence: package scripts and representative task
+```
+
+Use the exact canonical identifier and title, the target-skill choice it
+governs, and evidence. Cite `Law VII — Enforce or delete mechanical rules`,
+for example, when a duplicate prose rule must be removed. The named set is a
+compact design checklist, not an exception list: every law still applies when
+its condition arises. Keep this record in the handoff. Name a law in the target
+runtime only when its title plus local consequence selects an action for that
+target skill's agent; never add a bare framework label or make the target depend
+on this package.
 
 ## Enforce package isolation
 
@@ -66,8 +100,8 @@ that row; return here if the task materially changes.
 
 | Request | Primary procedure | Required validation |
 | --- | --- | --- |
-| Create a skill or decide skill versus reference | [Build or revise a skill](references/build-or-revise.md) | For a changed runtime contract, [validate changed choices](references/validate-changes.md) and [review the final artifact in output context](references/output-context-review.md); for `No-op`, report the admission decision |
-| Revise, restructure, prune, or repair a skill | [Build or revise a skill](references/build-or-revise.md) | For changed invocation, normative prose, scope, routing, or completion, [validate changed choices](references/validate-changes.md) and [review the final artifact in output context](references/output-context-review.md); for mechanical-only work, stop after the bundled validator passes |
+| Create a skill or decide skill versus reference | [Build or revise a skill](references/build-or-revise.md) | For a changed runtime contract, [validate changed choices](references/validate-changes.md); for `No-op`, report the admission decision |
+| Revise, restructure, prune, or repair a skill | [Build or revise a skill](references/build-or-revise.md) | For changed invocation, normative prose, scope, routing, or completion, [validate changed choices](references/validate-changes.md); for mechanical-only work, stop after the bundled validator passes |
 | Audit or review without editing | [Audit a skill](references/audit-skill.md) | Use the audit completion contract; load [Validate changed choices](references/validate-changes.md) only when runtime outcome evidence is requested |
 | Evaluate routing, runtime behavior, or context cost | [Validate changed choices](references/validate-changes.md) | Use its frozen evaluation contract |
 
@@ -88,25 +122,29 @@ answer:
   representative observation establishes the preferred route?
 - **Gravity:** What is the narrowest stable owner visible to every affected
   activation?
+- **Surface:** Is the content an activation trigger, runtime instruction,
+  maintainer support or rationale, or deterministic rule?
 - **Gate:** Can structure or deterministic enforcement own the constraint?
 - **Completion:** What observable state distinguishes done from incomplete?
 
-Reject an item missing a concrete Choice, Default, Authority, Gravity, or
-Completion. Always consider Gate; `none` is valid only when deterministic
-enforcement cannot own the choice. Prefer `No-op`, an amendment to the
-canonical owner, or a structural repair over a new runtime obligation.
+Reject an item missing a concrete Choice, Default, Authority, Gravity, Surface,
+or Completion. Always consider Gate; `none` is valid only when deterministic
+enforcement cannot own the choice. Prefer `No-op`, an amendment to the canonical
+owner, or a structural repair over a new runtime obligation.
 
 ## Preserve the reader contract
 
 Write the finished operational present for an agent mid-task. Make the governed
 capability, reader, scope, supported action, and boundary inferable from the
-artifact itself. Give each fact one canonical owner and expose branch-specific
-detail through a direct, conditional pointer. Keep authoring history,
-validation narration, and review records in the handoff rather than runtime
-instructions.
+runtime artifact itself. Give each fact one canonical owner and expose
+branch-specific detail through a direct, conditional pointer. Keep activation
+criteria in the description; keep durable, subject-facing reasons in `README.md`;
+keep authoring history, validation narration, review records, generic
+surface-selection rationale, and non-operational framework provenance in the
+handoff.
 
 Complete a changed runtime contract only when current source evidence,
-deterministic checks, representative behavior, and a fresh output-context
-review agree, or report `BLOCK`, `NEEDS-HUMAN-DECISION`, or `UNVALIDATED`.
+deterministic checks, and representative behavior agree, or report `BLOCK`,
+`NEEDS-HUMAN-DECISION`, or `UNVALIDATED`.
 For mechanical-only changes, stop when the bundled structural and isolation
 validator passes.
