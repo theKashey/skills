@@ -59,7 +59,7 @@ orientation ritual.
 
 For wider documentation work, Mind Mapper can identify the consequential branch
 and its contribution to the wider outcome. Read the Terrain then selects the
-smallest evidence-producing move for an uncertain branch. Documentory turns the
+smallest evidence-producing move for an uncertain branch. Context Docs turns the
 supported result into truthful reader-facing material at the right layer.
 
 This is an external composition, not a runtime dependency. Read the Terrain

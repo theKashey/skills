@@ -17,10 +17,10 @@ standalone package that loads for the right problem, changes one consequential
 post-trigger choice, and stops on observable evidence rather than on prose,
 tool use, or structural validity alone.
 
-Documentory supplies the reader-locality and progressive-disclosure discipline
+Context Docs supplies the reader-locality and progressive-disclosure discipline
 used to decide what a maintainer needs to understand about that package. Skill
 Guidance supplies the agent-instruction discipline used to package and maintain
-Documentory as a skill. They are used to build each other, but neither runtime
+Context Docs as a skill. They are used to build each other, but neither runtime
 package invokes or depends on the other.
 
 ## When to use this skill

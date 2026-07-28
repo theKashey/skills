@@ -1,6 +1,6 @@
 # Documentation locality ladder
 
-Documentory uses locality to place verified fence explanations; locality is the
+Context Docs uses locality to place verified fence explanations; locality is the
 method, not the purpose. Place each hidden reason where its reader encounters it
 before the governed decision. Use the rungs as a scope vocabulary, not as a
 required folder tree, document outline, or measure of importance.
@@ -23,6 +23,16 @@ gap. Add or retain a surface only when a named reader needs a material fact for
 a real decision and cannot safely recover it from readable code, types, tests,
 package metadata, existing canonical documentation, or context they genuinely
 have.
+
+For coding work, applicable local context documentation is part of what the
+reader may have: inspect the governing `AGENTS.md`, README, package
+documentation, and linked canonical contract before deciding that an unfamiliar
+use needs explanation. An unfamiliar local abstraction normally needs a route
+to its canonical owner, not invocation-by-invocation prose. Conversely, a
+durable repository-specific convention can earn the smallest local context
+owner when it changes a safe action and is not recoverable elsewhere. Count a
+document only when the reader naturally encounters it before the decision; a
+symbol, diff, or search-match reader may still need code-local rationale.
 
 For a line, block, or file comment, missing information is not enough. Apply the
 [canonical selective-context authoring
@@ -204,7 +214,9 @@ matrix.
 - **Reader:** Who encounters this before the governed decision, and what can
   they genuinely see or know there?
 - **Existence:** Does a material fact remain unavailable from the reader's
-  present context and existing canonical surfaces? If not, add nothing.
+  present context and existing canonical surfaces they actually encounter? If
+  not, add nothing. Route an unfamiliar abstraction to its owner; promote only
+  a verified local convention that needs a durable local explanation.
 - **Need:** Which unsafe inference or expensive reconstruction does the fact
   prevent for that reader?
 - **Code-local admission:** Did the [canonical selective-context

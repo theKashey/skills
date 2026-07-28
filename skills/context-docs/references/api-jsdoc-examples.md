@@ -37,13 +37,17 @@ entries. Omit inapplicable fields rather than filling them with vague prose.
 
 ## Code-local documentation
 
-Code, types, names, and nearby tests usually reveal local what and how. Make
+Code, types, names, nearby tests, and applicable local context documentation
+usually reveal local what and how. Make
 code-local documentation earn its place by preserving public semantics or
 rationale that a selective reader cannot recover reliably. Assume a maintainer
 or coding agent may inspect only one symbol, nearby lines, and search matches
 rather than read every related file. An unfamiliar effect of a called
-abstraction is not automatically a gap at its caller; that abstraction owns its
-contract and implementation.
+abstraction is not automatically a gap at its caller; inspect its canonical
+local documentation and route the reader there. That abstraction owns its
+contract and implementation. A durable, repository-specific convention around
+an otherwise familiar abstraction may instead earn a concise local explanation
+at the smallest context owner that the affected reader receives before acting.
 
 Public JSDoc has an additional extracted-reference audience. State what the API
 does when generated documentation or IDE help cannot rely on the implementation
@@ -68,8 +72,9 @@ symbol; it does not sit between file and block in the locality ladder.
 
 ### Selective-context authoring decision
 
-Before writing code-local documentation, work as if only the changed symbol,
-nearby lines, and search matches were visible:
+Before writing code-local documentation, identify the applicable local context
+the intended reader actually receives, then work as if only the changed symbol,
+nearby lines, search matches, and that genuinely available context were visible:
 
 1. Name the code decision available at this site.
 2. Identify an alternative that is selectable and appears reasonable under the
@@ -85,12 +90,15 @@ nearby lines, and search matches were visible:
    while the remote implementation changes under the same contract. Keep deeper
    mechanics with their owner.
 5. Protect the verified constraint in the completed result. Ask whether clearer
-   names, code, types, API shape, or structure can make the choice and
-   consequence locally recoverable:
+   names, code, types, API shape, structure, or an already-authorized canonical
+   local context explanation can make the choice and consequence locally
+   recoverable:
    - When that change is already authorized and in scope, prefer the visible
      constraint and remove only the prose made redundant.
-   - Otherwise, place the smallest durable explanation at the decision and
-     report the clarity opportunity when it is useful.
+   - Otherwise, place the smallest durable explanation at the decision. A
+     canonical `AGENTS.md`, README, or package document can replace it only
+     when the affected reader encounters that context before acting; otherwise
+     retain code-local rationale and report the clarity opportunity when useful.
    - Do not turn every admitted fence into a refactoring task. Clear mechanics
      may still carry non-local system meaning that code at this site cannot
      expose.

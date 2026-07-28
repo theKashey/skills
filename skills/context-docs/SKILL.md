@@ -1,9 +1,9 @@
 ---
-name: documentory
-description: Use when creating, revising, auditing, or maintaining technical documentation, including recovering and placing verified explanations for constraints, boundaries, relationships, or structures whose reasons are not visible.
+name: context-docs
+description: Use when creating, revising, auditing, or maintaining technical documentation that gives readers and coding agents the local context needed to act safely.
 ---
 
-# Documentory
+# Context Docs
 
 Document fences: recover and preserve the verified reason for a choice,
 constraint, boundary, relationship, or structure when that reason is not
@@ -49,8 +49,12 @@ remains, add nothing.
 6. **Place fence explanations locally.** Put each verified hidden reason at the
    narrowest authorized documentation layer every affected reader, including a
    coding agent working from selective context, naturally encounters before the
-   decision, task, or boundary it governs. Assume only context available at
-   that layer; orient upward or link downward instead of duplicating detail.
+   decision, task, or boundary it governs. A fence is relative to that reader's
+   genuinely available local context, not to the model's general knowledge.
+   Use an applicable canonical `AGENTS.md`, README, package document, or linked
+   contract before duplicating its explanation; do not assume a higher-level
+   document reaches a reader who arrived through a symbol, diff, or search
+   match. Orient upward or link downward instead of duplicating detail.
 7. **Earn every surface.** Apply the [locality ladder's existence
    gate](references/locality-ladder.md#existence-gate) before adding a README,
    page, reference, or comment. Add nothing when it finds no material reader
@@ -64,7 +68,9 @@ remains, add nothing.
    user's authorization; a README may own every necessary content mode.
 10. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
-   Delete it when removal costs no safety, clarity, findability, or support.
+   Delete it when removal costs no safety, clarity, findability, or support,
+   including when code or canonical local context actually available to the
+   affected reader now carries the same decision and boundary.
 11. **Leave non-inline documentation publishable.** At wrap-up, meet the
     [end-state exit
     gate](references/quality-maintenance.md#end-state-exit-gate). Code-local
@@ -132,6 +138,17 @@ merely to satisfy this path.
    and next useful detail. Record the reader, available context, need, scope,
    and placement rationale before outlining; do not infer any of them from a
    filename, root location, public visibility, source host, or license.
+   Treat applicable local context as part of the decision surface. First find
+   the canonical `AGENTS.md`, README, package documentation, or linked contract
+   that the named reader actually receives before acting. An unfamiliar local
+   abstraction is a route to its owner, not a reason to document each caller.
+   When an otherwise familiar primitive has a durable, verified,
+   repository-specific convention that existing context does not explain,
+   promote only that convention to the smallest authorized local owner: usually
+   `AGENTS.md` for coding routes or conventions, and a README or package
+   document for use or integration. Do not add generic model tutoring, and do
+   not remove a narrower explanation unless the replacement context reliably
+   reaches its reader before the decision.
 3. Select explanation density at this decision point:
    - **Guided** for a reader new to the domain or library: define unfamiliar
      terms, make prerequisites and results explicit, and show one safe primary
@@ -253,8 +270,10 @@ admitted non-local cause at the decision it governs. Add nothing for visible
 mechanics, and never turn this path into documentation review.
 
 1. Inspect the governed symbol or block, nearby lines, relevant types and tests,
-   and search matches. Assume the next maintainer or coding agent may see only
-   that selective context.
+   search matches, and any applicable local context the intended reader actually
+   receives before editing. Assume the next maintainer or coding agent may see
+   only the selective context of a symbol, diff, or search match; do not credit
+   it with a README or `AGENTS.md` it would not naturally encounter.
 2. Read `references/locality-ladder.md`, then apply the canonical
    selective-context authoring decision in the code-local documentation section
    of `references/api-jsdoc-examples.md`. It owns detailed admission, remote
@@ -268,11 +287,14 @@ mechanics, and never turn this path into documentation review.
    decision. Treat exported-symbol JSDoc as a public-contract overlay, not
    another locality rung.
 5. Protect the verified constraint in the completed result. When a code, type,
-   API, or structural change that makes the meaning locally visible is already
-   authorized and in scope, prefer that cliff and remove only the prose it makes
-   redundant. Otherwise retain the smallest fence explanation and report the
-   clarity opportunity when useful. Do not turn every admitted fence into a
-   refactoring task.
+   API, structural change, or canonical local context explanation makes the
+   meaning available to the affected reader before this decision, prefer that
+   cliff and remove only the prose it makes redundant. An unknown called
+   abstraction belongs with its canonical documentation; a durable local
+   convention may belong in `AGENTS.md`, a README, or package documentation.
+   Otherwise retain the smallest fence explanation and report the clarity
+   opportunity when useful. Do not turn every admitted fence into a refactoring
+   task.
 6. If the reason remains unknown and the gap is accepted, record that
    uncertainty with an explicit `TODO` or `FIXME`. Do not manufacture rationale.
 7. Internal symbols need no JSDoc by default. Stop after the evidence-backed

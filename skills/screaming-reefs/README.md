@@ -1,65 +1,81 @@
 # Screaming Reefs
 
-Screaming Reefs makes codebases reveal the constraints that matter. It turns a
-verified documented reef into locally visible terrain—names, types, APIs,
-ownership boundaries, or filesystem topology—so humans and coding agents can
-act safely without reconstructing remote context.
+Screaming Reefs turns a verified reef into a cliff: it gives a documented
+constraint a structural owner — names, types, APIs, ownership boundaries,
+or filesystem topology — so humans and coding agents acting from selective
+context decide safely without reconstructing the remote explanation.
+
+The name joins two ideas: screaming architecture (structure should scream
+its domain) and "document reefs, not cliffs" (prose should carry only
+hidden hazards). Where documentation preserves a reef, this skill makes
+the structure scream it.
 
 ## Why it exists
 
-Important constraints often survive only because a comment, README, or agent
-instruction explains them. That prose protects the decision, but it can be
-missed in selective context, duplicated away from its owner, or allowed to
-drift as the repository changes. Screaming Reefs treats the explanation as
-evidence for making the constraint visible where the decision is made.
+Important constraints often survive only because a comment, README, or
+agent instruction explains them. That prose protects the decision, but it
+can be missed in selective context, duplicated away from its owner, or
+drift as the repository changes. Screaming Reefs treats the verified
+explanation as evidence for an authorized structural change that carries
+the same meaning more reliably.
 
-The fence comes first. The verified constraint and its consequence remain
-protected while the repository is reshaped. Explanatory prose is removed only
-when code, types, APIs, boundaries, or topology carry the same meaning. A reef
+The fence comes first: the constraint and its consequence stay protected
+while the repository is reshaped, and prose is retired only after the new
+owner passes a readback from the affected reader's local context. A reef
 whose significance is irreducibly non-local remains documented.
 
-## Technical role
+## Worked example
 
-Screaming Reefs owns explicitly authorized repository context refactoring. Its
-subject is the relationship between a documented constraint and the structure
-that should expose it. The intended result is not prettier code or fewer
-comments; it is a safer local decision surface with an observable, bounded
-change in the repository.
+Documented reef at a call site:
 
-Typical visible owners include:
+```ts
+// NOTE: user IDs must be lowercased before comparison — the billing
+// exporter lowercases IDs on ingest, so mixed-case comparison silently
+// drops rows during reconciliation.
+if (a.toLowerCase() === b.toLowerCase()) { ... }
+```
 
-| Constraint becomes visible as | When it is the right owner |
+Evidence record:
+
+```text
+Constraint: user IDs compare case-insensitively everywhere.
+Evidence: billing/ingest.test.ts lowercases on ingest; incident PR #482.
+Unsafe inference: a new caller compares raw IDs; reconciliation drops rows.
+Authorized scope: ids.ts and raw-comparison call sites; no behavior change.
+Readback: a coder holding only ids.ts cannot compare unnormalized IDs.
+```
+
+Owner: a branded `NormalizedUserId` type whose only constructor
+lowercases, with comparison helpers accepting only the branded type. Raw
+string comparison of IDs no longer typechecks.
+
+Retirement: the call-site comment is deleted. One causal edge remains on
+the constructor — `Lowercased because the billing exporter lowercases on
+ingest; mixed-case comparison drops reconciliation rows.` — because the
+remote cause is external to this file and the type cannot express it.
+
+Return: `PASS`.
+
+## Relationship to Context Docs
+
+Context Docs preserves hidden reasons the current structure cannot express
+and may report that structure could carry one. Screaming Reefs uses such a
+verified explanation as evidence for an explicitly authorized change; the
+report itself authorizes nothing. The packages share vocabulary, but
+neither runtime package invokes or depends on the other; each defines the
+terms it uses.
+
+## Ownership
+
+| File | Owns |
 | --- | --- |
-| Domain names and vocabulary | Readers need to recognize a concept or responsibility. |
-| Types, states, invariants, or constructors | An invalid state or unsafe transition should be constrained by the model. |
-| APIs, exports, routes, or capability boundaries | Callers need a contract that cannot be recovered from a warning. |
-| Module, package, or ownership boundaries | Responsibility must be local instead of inferred from organizational memory. |
-| Filesystem topology | Discovery or selective context depends on where the truth lives. |
-
-The smallest stable owner wins. Broad architecture changes, unrelated cleanup,
-and comment deletion without structural equivalence are outside the capability.
-
-## Relationship to Documentory
-
-Documentory preserves hidden reasons that the current code cannot express.
-Screaming Reefs uses those verified explanations as evidence for an explicitly
-authorized code or repository change. Documentory may identify a clarity
-opportunity, but it does not independently authorize mutation. Screaming Reefs
-owns that transformation; after it, only the irreducibly non-local reef stays
-with documentation.
-
-The packages are independent. Screaming Reefs carries the fence-first and
-evidence-first rules needed to act safely on its own, whether or not the
-companion documentation capability is present.
+| [SKILL.md](SKILL.md) | Activation boundary, vocabulary, authorization test, procedure, owner selection, and return contract |
+| [README.md](README.md) | Durable rationale, name provenance, worked example, and boundaries |
 
 ## Boundaries
 
-Screaming Reefs does not invent a reason for an unexplained fence, decide a
-product or ownership policy, silently widen the mutation scope, or claim that
-local structure proves behavior. It preserves existing meaning by default and
-stops when authority, evidence, contract compatibility, or local readback is
-unresolved.
-
-The finished repository should let the affected reader answer the constrained
-decision from the relevant local context, while any remaining non-local reason
-is still available at its canonical documentation surface.
+Screaming Reefs does not invent a reason for an unexplained fence, decide
+product or ownership policy, widen the mutation scope silently, or claim
+that structure proves behavior. It preserves existing meaning by default
+and stops when authority, evidence, contract compatibility, or the local
+readback is unresolved.

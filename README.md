@@ -1,15 +1,15 @@
 # Agent Skills
 
-Documentory is the cornerstone and main offering of this repository. Code and
+Context Docs is the cornerstone and main offering of this repository. Code and
 system structure often show what happens without preserving why a surprising
-constraint, boundary, or relationship must exist. Documentory recovers that
+constraint, boundary, or relationship must exist. Context Docs recovers that
 verified explanation before a maintainer or coding agent changes the wrong
 thing.
 
 The other four skills were created to support decisions connected to that work:
 what outcome it serves, what evidence-producing move comes next, what recurring
 behavior belongs in a skill, or whether a finished artifact is ready to trust.
-Each skill, including Documentory, remains independently installable.
+Each skill, including Context Docs, remains independently installable.
 
 AI coding agents can produce convincing work while losing why it exists. They
 can start implementation before the outcome and constraints are clear, mistake
@@ -18,7 +18,7 @@ rationalize their own output into looking ready.
 
 ## What this repository offers
 
-- **[Documentory](skills/documentory/README.md):** preserves verified
+- **[Context Docs](skills/context-docs/README.md):** preserves verified
   explanations for fences—causes in lower-level implementation, another
   process, or another point in time that are not visible where their constraint
   affects a decision.
@@ -42,7 +42,7 @@ make them stages in one loop or runtime dependencies.
 
 | When this is the problem | Route to | Outcome | It does not prove |
 | --- | --- | --- | --- |
-| Code or system structure exposes behavior without the reason a constraint, boundary, or relationship must exist. | [Documentory](skills/documentory/README.md) | A verified explanation at the surface where the affected reader encounters the decision. | Product decisions, undocumented implementation correctness, or readiness of non-documentation artifacts. |
+| Code or system structure exposes behavior without the reason a constraint, boundary, or relationship must exist. | [Context Docs](skills/context-docs/README.md) | A verified explanation at the surface where the affected reader encounters the decision. | Product decisions, undocumented implementation correctness, or readiness of non-documentation artifacts. |
 | Work has become a list of tasks with no accountable path to the wider goal. | [Mind Mapper](skills/mind-mapper/README.md) | Shows why each piece of work exists, what can proceed independently, what is blocked, and which claims have evidence. | That an action caused the outcome or that the goal is valuable. |
 | The next move is plausible, but cause and effect are unclear or conditions are changing. | [Read the Terrain](skills/read-the-terrain/README.md) | One bounded move that advances the aim or produces evidence that changes the next decision. | Causality, solution correctness, or requirement coverage. |
 | Agent instructions contain relevant advice but do not reliably change the intended choice. | [Skill Guidance](skills/skill-guidance/README.md) | A skill that appears for matching work and changes the agent's behavior in a testable way. | Domain correctness or behavioral effectiveness from structure alone. |
@@ -56,13 +56,13 @@ There are three supported compositions, not one complete loop:
 flowchart TB
     subgraph F1["1 · Documentation"]
         direction LR
-        A1["Documentation problem"] --> A2["Documentory"] --> A3["Truthful reader-facing result"]
+        A1["Documentation problem"] --> A2["Context Docs"] --> A3["Truthful reader-facing result"]
     end
 
     subgraph F2["2 · Agent-skill package"]
         direction LR
         B1["Agent-skill problem"] --> B2["Skill Guidance"]
-        B1 --> B3["Documentory"]
+        B1 --> B3["Context Docs"]
         B2 -->|"agent-facing contract"| B4["Finished skill package"]
         B3 -->|"reader-facing contract"| B4
         B4 --> B5["Verify Complex Artifacts"]
@@ -73,19 +73,19 @@ flowchart TB
         direction LR
         C1["Wider outcome"] --> C2["Mind Mapper"]
         C2 --> C3["Read the Terrain"]
-        C3 --> C4["Documentory"]
+        C3 --> C4["Context Docs"]
         C4 --> C5["Supported meaning reaches the reader"]
     end
 ```
 
-- **Documentation:** Documentory can complete a documentation task on its own.
+- **Documentation:** Context Docs can complete a documentation task on its own.
 - **Agent-skill package:** Skill Guidance owns agent-facing activation and
-  execution; Documentory owns reader-facing purpose, locality, and progressive
+  execution; Context Docs owns reader-facing purpose, locality, and progressive
   disclosure. They shape the package together. Verify Complex Artifacts gives
   the finished multi-file result an independent refinement and readiness gate.
 - **Wider uncertain documentation work:** Mind Mapper preserves contribution
   lineage, Read the Terrain selects an evidence-producing move on the relevant
-  uncertain branch, and Documentory publishes only the supported meaning.
+  uncertain branch, and Context Docs publishes only the supported meaning.
 
 Mind Mapper is also the management view over the collection. It can attach each
 skill to the outcome branch it may influence, expose missing or duplicated
@@ -93,10 +93,10 @@ coverage, and select the next map extension from current evidence and work
 state. That relationship is goal lineage, not invocation: using a skill is
 activity, not proof that the wider outcome moved.
 
-Documentory and Skill Guidance are reciprocal authoring disciplines.
-Documentory's locality and progressive-disclosure model shapes how Skill
+Context Docs and Skill Guidance are reciprocal authoring disciplines.
+Context Docs' locality and progressive-disclosure model shapes how Skill
 Guidance separates maintainer support from runtime instructions. Skill Guidance
-supplies the agent-skill packaging discipline used to maintain Documentory.
+supplies the agent-skill packaging discipline used to maintain Context Docs.
 Each package still works when installed alone.
 
 Compatible agents route to whichever installed skill matches the problem. The
@@ -117,7 +117,7 @@ them. By default, it installs them for the current project.
 Install one skill for Codex:
 
 ```bash
-npx skills add theKashey/skills --skill documentory --agent codex
+npx skills add theKashey/skills --skill context-docs --agent codex
 ```
 
 Add `--global` to either command to make the selected skills available across
@@ -127,7 +127,7 @@ and install locations.
 
 ## Capability details
 
-### Documentory
+### Context Docs
 
 Code usually exposes mechanics. It often does not expose why a surprising
 choice, constraint, boundary, or relationship must exist. A lower-level
@@ -136,14 +136,14 @@ the current decision without being visible here. That hidden causal edge is a
 fence: without it, a locally reasonable edit can violate a non-local
 requirement.
 
-Documentory documents reefs, not cliffs. It recovers the verified hidden reason,
+Context Docs documents reefs, not cliffs. It recovers the verified hidden reason,
 omits mechanics already visible, and uses locality to place the explanation in
 the README, reference, public contract, example, or code-local rationale where
 the affected reader naturally encounters the decision. It owns the full
 documentation cycle without turning every visible detail into prose.
 
-Read [why Documentory exists and how it is maintained](skills/documentory/README.md)
-or inspect its [runtime documentation workflow](skills/documentory/SKILL.md).
+Read [why Context Docs exists and how it is maintained](skills/context-docs/README.md)
+or inspect its [runtime documentation workflow](skills/context-docs/SKILL.md).
 
 ### Skill Guidance
 

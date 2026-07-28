@@ -28,9 +28,9 @@ repository.
   development lifecycle.
 - Use `skills/skill-guidance/SKILL.md` for every skill creation, runtime-content
   revision, routing decision, or skill audit.
-- Also use `skills/documentory/SKILL.md` whenever prose, examples, references,
+- Also use `skills/context-docs/SKILL.md` whenever prose, examples, references,
   comments, or reader paths change. `skill-guidance` owns agent-choice behavior;
-  `documentory` owns truth, locality, reader context, and publishable end state.
+  `context-docs` owns truth, locality, reader context, and publishable end state.
 - Use `skills/verify-complex-artifacts/SKILL.md` after authoring a multi-file
   skill package or repository-wide governance change.
 

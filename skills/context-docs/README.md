@@ -1,21 +1,21 @@
-# Documentory
+# Context Docs
 
-Documentory preserves verified explanations for fences: choices, constraints,
+Context Docs preserves verified explanations for fences: choices, constraints,
 boundaries, relationships, and structures whose reason is not visible in the
 code or system surface where a reader encounters them. It documents reefs, not
 cliffs—the hidden why and consequence, not mechanics already in view.
 
-Locality is how Documentory makes those explanations useful. It leaves each one
+Locality is how Context Docs makes those explanations useful. It leaves each one
 at the narrowest authorized surface a human reader or coding agent naturally
 encounters before making the affected decision.
 
-- [Why Documentory exists](#why-documentory-exists)
+- [Why Context Docs exists](#why-context-docs-exists)
 - [Technical role](#technical-role)
 - [Architecture and ownership](#architecture-and-ownership)
 - [Principles and design rationale](#principles-and-design-rationale)
 - [Boundaries](#boundaries)
 
-## Why Documentory exists
+## Why Context Docs exists
 
 Code and system structure usually expose what happens. They often cannot expose
 the non-local cause that makes a surprising choice, constraint, boundary, or
@@ -54,7 +54,7 @@ complexity, or a genuinely non-local influence. An explanation protects the
 decision now and may expose an opportunity to make the constraint visible
 later.
 
-Documentory is also a filesystem-level context-engineering practice. Code and
+Context Docs is also a filesystem-level context-engineering practice. Code and
 domain structure should expose what they can—[“If your code-base doesn’t scream
 its domain, AI will whisper
 nonsense.”](https://asdlc.io/concepts/context-engineering/#references)—while
@@ -65,11 +65,11 @@ followed the instructions, explored and reasoned more, and incurred higher
 inference cost without significantly improved task performance. Unnecessary
 instruction is therefore active context, not neutral background.
 
-Documentory closes that explanation gap across the full documentation
+Context Docs closes that explanation gap across the full documentation
 lifecycle. At broader surfaces, a fence may be hidden purpose, contract,
 failure, interaction, or ownership boundary. At code level, it is the verified
 non-local cause that makes a locally selectable, apparently reasonable
-alternative unsafe. Documentory leaves that explanation with its canonical
+alternative unsafe. Context Docs leaves that explanation with its canonical
 owner and omits facts the reader can already recover.
 
 ## Technical role
@@ -84,13 +84,13 @@ A fence is a present choice, constraint, boundary, relationship, or structure
 whose reason is not locally visible. Its reef is the material hidden cause and
 consequence that can make an apparently reasonable action unsafe. A cliff is
 meaning already visible and safely recoverable from local context. A
-Chesterton's Fence is a fence whose reason remains unresolved. Documentory
+Chesterton's Fence is a fence whose reason remains unresolved. Context Docs
 investigates that uncertainty; it records only a verified explanation or an
 explicit accepted `TODO` or `FIXME`, never an invented rationale.
 
 A coding agent may enter through a task, diff, README, public contract, symbol,
 or search match without tacit organizational memory. The same selective-context
-problem affects human readers. At code level, Documentory preserves
+problem affects human readers. At code level, Context Docs preserves
 evidence-backed causes that rule out a locally reasonable alternative. It does
 not narrate visible mechanics, inevitable effects, or remote behavior that has
 no material consequence for the decision here.
@@ -99,6 +99,18 @@ Source evidence supports documentation while it is authored, but documentation
 review and deterministic completion checks happen once at wrap-up. Line, block,
 and file comments are admitted and written from evidence but never enter
 documentation review; exported-symbol JSDoc remains a public contract.
+
+Local documentation is part of that context engineering. A local `AGENTS.md`,
+README, package document, or linked contract can turn a model-surprising use
+into a normal repository primitive when the intended reader actually encounters
+it before acting. First route an unfamiliar local abstraction to its existing
+canonical documentation; do not explain every invocation. When a familiar
+primitive has a durable, verified local convention that cannot otherwise be
+recovered, promote the smallest explanation to the local context owner that
+governs the convention. This keeps context living: it is revised or removed
+when code, structure, tooling, or a higher canonical owner makes it redundant,
+while code-local rationale remains for readers who do not receive the broader
+context.
 
 ## Architecture and ownership
 
@@ -126,6 +138,10 @@ The skill's durable principles are:
   the subject's owning scope before internal method or detail.
 - **Keep truth local and canonical.** Put a fact at the lowest stable surface
   that governs every decision it affects, then link rather than duplicate.
+- **Treat local context as living terrain.** Route readers to existing canonical
+  local documentation before adding caller prose. Promote only a durable,
+  verified repository convention that changes a safe action, and retire it when
+  a reader can recover the same boundary from a more reliable owner.
 - **Prefer a map to a transcript.** Preserve non-obvious constraints,
   interactions, and rationale that protect a real decision the reader cannot
   safely infer; omit visible or inevitable mechanics, callee-owned behavior,
@@ -154,7 +170,7 @@ reader-question vocabulary, not a required file tree.
 
 ## Boundaries
 
-Documentory guides documentation work. It does not independently decide product
+Context Docs guides documentation work. It does not independently decide product
 behavior, preserve or remove code, invent facts, or authorize a documentation
 restructure. It may report a code-clarity or placement opportunity, but acts on
 code or topology only when that change is already authorized and in scope.

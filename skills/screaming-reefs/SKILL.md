@@ -1,99 +1,81 @@
----
-name: screaming-reefs
-description: Use when an authorized change must turn a verified documented repository constraint into visible code, types, APIs, ownership boundaries, or filesystem structure.
----
-
 # Screaming Reefs
 
-Turn documented reefs into visible terrain.
+Screaming Reefs turns a verified reef into a cliff: it gives a documented
+constraint a structural owner — names, types, APIs, ownership boundaries,
+or filesystem topology — so humans and coding agents acting from selective
+context decide safely without reconstructing the remote explanation.
 
-## Freeze the reef
+The name joins two ideas: screaming architecture (structure should scream
+its domain) and "document reefs, not cliffs" (prose should carry only
+hidden hazards). Where documentation preserves a reef, this skill makes
+the structure scream it.
 
-1. Identify the documented reef and the decision that depends on its
-   explanatory prose or a hard-to-find repository relationship. Read the affected
-   code, names, types, exports, tests, configuration, callers, and nearby
-   documentation before choosing a shape.
-2. Write a compact evidence record for the current state:
+## Why it exists
 
-   ```text
-   Constraint: [what must remain true]
-   Evidence: [source, test, contract, history, or explicit decision]
-   Unsafe inference: [what a reader could reasonably do incorrectly]
-   Authorized scope: [files, symbols, topology, and allowed behavior change]
-   Readback: [what will show that the constraint is visible and preserved]
-   ```
+Important constraints often survive only because a comment, README, or
+agent instruction explains them. That prose protects the decision, but it
+can be missed in selective context, duplicated away from its owner, or
+drift as the repository changes. Screaming Reefs treats the verified
+explanation as evidence for an authorized structural change that carries
+the same meaning more reliably.
 
-3. Preserve the shortest verified `X because Y` statement before editing. If
-   the reason is still unknown, the evidence conflicts, or the requested
-   change does not authorize code or topology mutation, return `BLOCK` or
-   `NEEDS-HUMAN-DECISION` and keep the existing explanation.
+The fence comes first: the constraint and its consequence stay protected
+while the repository is reshaped, and prose is retired only after the new
+owner passes a readback from the affected reader's local context. A reef
+whose significance is irreducibly non-local remains documented.
 
-## Choose the visible owner
+## Worked example
 
-Select the smallest stable repository structure that lets the affected reader
-make the decision safely in selective context:
+Documented reef at a call site:
 
-- Use domain names or a vocabulary boundary when the missing meaning is a
-  concept that callers must recognize.
-- Use types, states, invariants, or constructors when an invalid state should
-  become difficult or impossible to express.
-- Use an API shape, export, route, or capability boundary when callers need a
-  contract instead of a warning.
-- Use module, package, or ownership boundaries when responsibility is being
-  inferred from remote knowledge.
-- Use filesystem topology when discovery, selective loading, or agent context
-  depends on where the truth lives.
+```ts
+// NOTE: user IDs must be lowercased before comparison — the billing
+// exporter lowercases IDs on ingest, so mixed-case comparison silently
+// drops rows during reconciliation.
+if (a.toLowerCase() === b.toLowerCase()) { ... }
+```
 
-Prefer the narrowest owner that carries the constraint for every affected
-reader. Do not redesign adjacent architecture, rename unrelated concepts, or
-move files merely to make the tree look orderly. If the significance remains
-irreducibly non-local, keep the explanation and return `NO-OP` for this skill.
+Evidence record:
 
-## Confirm authority and make the change
+```text
+Constraint: user IDs compare case-insensitively everywhere.
+Evidence: billing/ingest.test.ts lowercases on ingest; incident PR #482.
+Unsafe inference: a new caller compares raw IDs; reconciliation drops rows.
+Authorized scope: ids.ts and raw-comparison call sites; no behavior change.
+Readback: a coder holding only ids.ts cannot compare unnormalized IDs.
+```
 
-1. Compare the proposed owner with the frozen authorized scope. Treat behavior,
-   public contracts, generated outputs, paths, and ownership as preserved by
-   default; a breaking change requires explicit authority.
-2. Apply the smallest structural change that makes the constraint selectable
-   from local context. Update tests, generated artifacts, imports, exports,
-   and repository-native indexes only when the authorized change requires
-   them. Keep unrelated cleanup out of the diff.
-3. Re-read the changed decision as a human or coding agent would encounter it.
-   The local names, types, API, boundary, or topology must carry the constraint
-   without requiring the original remote explanation.
+Owner: a branded `NormalizedUserId` type whose only constructor
+lowercases, with comparison helpers accepting only the branded type. Raw
+string comparison of IDs no longer typechecks.
 
-## Retire only redundant prose
+Retirement: the call-site comment is deleted. One causal edge remains on
+the constructor — `Lowercased because the billing exporter lowercases on
+ingest; mixed-case comparison drops reconciliation rows.` — because the
+remote cause is external to this file and the type cannot express it.
 
-Remove or shorten documentation only after the structure passes the readback.
-Delete a sentence when its meaning is now fully carried by the changed code or
-repository topology and the remaining text would repeat a visible cliff.
-Retain the causal edge, consequence, failure mode, ownership relationship, or
-remote contract that the repository still cannot express. Update nearby prose
-when the change makes it false; do not replace a reef with a vague summary.
+Return: `PASS`.
 
-## Verify the completed terrain
+## Relationship to Context Docs
 
-Run the repository's native formatter, typecheck, lint, tests, generators, or
-documentation checks that cover the changed surface. Then verify all of the
-following:
+Context Docs preserves hidden reasons the current structure cannot express
+and may report that structure could carry one. Screaming Reefs uses such a
+verified explanation as evidence for an explicitly authorized change; the
+report itself authorizes nothing. The packages share vocabulary, but
+neither runtime package invokes or depends on the other; each defines the
+terms it uses.
 
-- the documented constraint has a current structural owner;
-- a reader with only the relevant local context can identify the constraint,
-  the safe action, and the boundary it protects;
-- behavior and public contracts are unchanged unless the authorized scope says
-  otherwise;
-- no stale names, imports, paths, ownership claims, or duplicate instructions
-  remain;
-- remaining prose is limited to significance the structure cannot express;
-- the diff contains no unauthorized files or opportunistic refactoring.
+## Ownership
 
-Return:
+| File | Owns |
+| --- | --- |
+| [SKILL.md](SKILL.md) | Activation boundary, vocabulary, authorization test, procedure, owner selection, and return contract |
+| [README.md](README.md) | Durable rationale, name provenance, worked example, and boundaries |
 
-- `PASS` when the constraint is locally visible, preserved, and covered by
-  representative checks;
-- `NO-OP` when the current repository already exposes the meaning or the reef
-  must remain documented because it is irreducibly non-local;
-- `BLOCK` when evidence, checks, or the local readback do not establish the
-  constraint;
-- `NEEDS-HUMAN-DECISION` when authority, ownership, scope, or a breaking
-  contract choice is unresolved.
+## Boundaries
+
+Screaming Reefs does not invent a reason for an unexplained fence, decide
+product or ownership policy, widen the mutation scope silently, or claim
+that structure proves behavior. It preserves existing meaning by default
+and stops when authority, evidence, contract compatibility, or the local
+readback is unresolved.
