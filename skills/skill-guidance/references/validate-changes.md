@@ -25,9 +25,9 @@ Do not revise the frozen contract merely to accommodate the candidate.
 
 ## 2. Validate the delta
 
-When package mechanics changed, take the bundled structural and isolation
-validator command from the parent `SKILL.md` as prerequisite evidence;
-otherwise skip that gate. Do not repeat its checks here. Verify:
+When package mechanics changed, take the parent
+[isolation-gate result](../SKILL.md#enforce-package-isolation) as prerequisite
+evidence; otherwise skip that gate. Do not repeat its checks here. Verify:
 
 - every retained obligation satisfies the parent admission contract;
 - each named [Agent Instruction Law](../LAWS.md) uses the exact identifier and

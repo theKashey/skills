@@ -45,9 +45,11 @@ Authorized scope: ids.ts and raw-comparison call sites; no behavior change.
 Readback: a coder holding only ids.ts cannot compare unnormalized IDs.
 ```
 
-Owner: a branded `NormalizedUserId` type whose only constructor
-lowercases, with comparison helpers accepting only the branded type. Raw
-string comparison of IDs no longer typechecks.
+Owner: a branded `NormalizedUserId` type whose constructor lowercases and whose
+comparison helper accepts that type. The authorized change includes migrating
+the named raw-comparison call sites and their tests before restricting the
+helper; it does not strand existing callers with a compile error. This is
+illustrative pseudocode, not a copyable TypeScript migration.
 
 Retirement: the call-site comment is deleted. One causal edge remains on
 the constructor — `Lowercased because the billing exporter lowercases on

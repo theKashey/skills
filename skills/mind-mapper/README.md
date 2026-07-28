@@ -1,57 +1,36 @@
 # Mind Mapper
 
-Mind Mapper gives agents one living planning graph that connects an outcome to
-its contributing indicators, hypotheses, bounded moves, observed results, and
-unresolved relationships. It exists because commit histories, tickets, and
-specifications often flatten work into a list even when the real problem
-contains dependencies, independent contribution paths, and fragments whose
-connection is not yet known.
+Mind Mapper keeps one durable planning map that links an outcome to the work
+that might move it, the result of that work, and the one decision that follows.
+It exists for inherited or uncertain work where tickets and commit history show
+activity but not why a move matters or what evidence should change course.
 
-Its goal is to keep planning, inherited history, and readback in the same
-evidence-bearing graph. That gives an agent a durable way to preserve
-uncertainty, trace each prospective action back to an outcome, and choose the
-smallest consequential extension before implementation details narrow the
-problem.
+The map deliberately keeps implementation detail last. It starts with the
+outcome, proof, boundary, contribution branches, and a bounded move; code is
+inspected only after those choices make an implementation question worth asking.
+This is a planning stance, not an architecture framework or a ban on technical
+investigation.
 
-## Work from context to action
+## What it preserves
 
-Mind Mapper uses a scale ladder to keep different planning problems from
-collapsing into one task tree:
+- A move must link to a branch and outcome, or remain an explicit orphan rather
+  than acquiring invented lineage.
+- A result is appended beside its original readback. It can disconfirm a move
+  without erasing the history that made the next decision understandable.
+- A retry is a new move, not a rewritten old one. This prevents repeated work
+  from looking like a new experiment.
+- The map carries one selected next move or block, not a second task queue.
 
-- A product or body of work is a mind map of jobs, outcomes, evidence,
-  constraints, history, and unresolved cross-cutting relationships.
-- A job is a fishbone: several distinct directions may progress in parallel,
-  but all directions named by its completion contract are required.
-- A unit of work is linear only where one step or move truly requires or
-  unlocks another.
+## Persistence and boundary
 
-An agent descends this ladder to make a broad problem actionable and ascends it
-when a task has lost its reason or a job has lost product context. The ladder
-selects the working view; labeled edges still distinguish contribution,
-dependency, evidence, and association so layout cannot manufacture order or
-causality.
+Mind Mapper requires an explicitly configured durable planning surface. The
+configuration names its reference, its representation of the map semantics, and
+the available read/write authority. It may use a local artifact, shared system,
+or network integration; the skill does not choose among them or offer a default.
+Without configuration, it asks the user to configure the map surface instead of
+storing state in a transcript.
 
-## Principles and boundaries
-
-- The map is a graph of accountable contribution, not a flat task list:
-  prospective work needs a path back to the epic, while unrecoverable history
-  remains an explicit gap rather than invented lineage.
-- Keep the product, job, and unit levels distinct while labeling contribution,
-  dependency, evidence, and association explicitly.
-- Outward planning and inward reconstruction describe the same graph. Results
-  update hypotheses and frontiers instead of becoming a separate experiment or
-  status narrative.
-- The code gate keeps the **what** and **why** ahead of the **how**. Before it
-  opens, define the outcome, evidence, contribution paths, and bounded moves
-  without letting code, tools, or architecture narrow the problem prematurely.
-  Opening the gate means that reasoning is ready to guide implementation
-  inspection for one selected move, within the scope the user already
-  authorized; it does not create permission to inspect or change a repository.
-- A frozen readback makes a move informative even when it disconfirms the
-  hypothesis. The map owns its extension frontier, but derives the selected
-  next move from current evidence and work state instead of becoming another
-  task queue.
-
-Mind Mapper is not an OKR framework, goal system, or project-management
-process. Its links organize an investigation; they do not prove causality,
-priority, value, or implementation correctness.
+Mind Mapper does not prove an outcome is valuable, a branch is causal, or an
+implementation is correct. It does not select or mutate a local file, ticket,
+project-management service, or network integration without configuration and
+authority, and it does not replace a routine task with a planning ritual.

@@ -1,6 +1,6 @@
 ---
 name: context-docs
-description: Use when creating, revising, auditing, or maintaining technical documentation that gives readers and coding agents the local context needed to act safely.
+description: Use when revising a README, guide, API reference, example, or code comment whose reader needs a verified non-local reason to act safely; not for behavior changes.
 ---
 
 # Context Docs
@@ -59,10 +59,10 @@ remains, add nothing.
    gate](references/locality-ladder.md#existence-gate) before adding a README,
    page, reference, or comment. Add nothing when it finds no material reader
    gap.
-8. **Keep READMEs technical.** A README is never a marketing or advertising
-   landing page. Classify a public website or product presentation page as a
-   separate surface; do not transfer its visitor journey or browser-product
-   conversion calls to action into a README.
+8. **Keep reader contracts distinct.** Classify technical READMEs, public
+   documentation homes, and visitor presentation pages by their actual reader;
+   [content architecture](references/content-architecture.md) owns the
+   boundary details.
 9. **Preserve topology and ownership.** Give each detailed fact one canonical
    owner. Do not create or move pages, folders, or navigation without the
    user's authorization; a README may own every necessary content mode.
@@ -165,18 +165,14 @@ merely to satisfy this path.
    reader's question, not as a required file or folder structure. Work in the
    existing documentation topology. A rung or reader role never requires a new
    document. If the README is the only available technical surface, improve it
-   in place. Never turn it into a public product presentation page. When the
-   requested visitor presentation has no separate surface, report the gap and
-   request authorization for one. Propose a split with benefits and maintenance
-   cost only when distinct reader intents justify it; let the user decide unless
-   restructuring is already in scope.
+   in place. When the requested visitor presentation has no separate surface,
+   report the gap and request authorization for one. Propose a split with
+   benefits and maintenance cost only when distinct reader intents justify it;
+   let the user decide unless restructuring is already in scope.
 5. When an existing or authorized README is the right owner, treat it as
-   technical orientation at its governed rung. It is
-   never a marketing or advertising landing page, including at repository root
-   or for an independently published package. A public website or product
-   presentation page is a distinct surface with a browser visitor's contract;
-   do not infer either surface from public visibility, an open-source license,
-   or the existence of a source repository.
+   technical orientation at its governed rung. Use the reader-contract boundary
+   in `content-architecture.md`; do not infer its role from public visibility,
+   an open-source license, or the existence of a source repository.
 6. For a top-level repository or project README that is the right owner, start
    with technical why:
    what the system or repository is for, its scope, major boundaries, intended

@@ -30,7 +30,7 @@ REMOTE_URL_RE = re.compile(
 )
 SCP_REMOTE_RE = re.compile(r"(?<![\w.-])[\w.-]+@[\w.-]+:[\w~./-]{2,}")
 NETWORK_COMMAND_RE = re.compile(
-    r"\b(?:curl|wget|git\s+clone|npx|bunx|pip\d*\s+install|"
+    r"\b(?:curl|wget)(?=\s|$)|\b(?:git\s+clone|npx|bunx|pip\d*\s+install|"
     r"(?:npm|pnpm|yarn)\s+(?:add|install))\b",
     re.IGNORECASE,
 )
@@ -182,6 +182,33 @@ def escape_errors(relative: Path, path: Path, root: Path, text: str) -> list[str
     return errors
 
 
+def fenced_shell_escape_errors(relative: Path, path: Path, root: Path, text: str) -> list[str]:
+    """Check executable Markdown fences without treating ordinary prose as code."""
+    errors: list[str] = []
+    fence: str | None = None
+    shell_fence = False
+    for number, line in enumerate(text.splitlines(), start=1):
+        marker = line.lstrip()
+        if fence is None and marker.startswith(("```", "~~~")):
+            fence = marker[:3]
+            language = marker[3:].strip().casefold()
+            shell_fence = language in {"bash", "sh", "shell", "zsh"}
+            continue
+        if fence is not None and marker.startswith(fence):
+            fence = None
+            shell_fence = False
+            continue
+        if not shell_fence:
+            continue
+        for match in PARENT_TOKEN_RE.finditer(line):
+            resolved = (path.parent / match.group(1)).resolve()
+            try:
+                resolved.relative_to(root)
+            except ValueError:
+                errors.append(f"{relative}:{number}: parent path escapes package")
+    return errors
+
+
 def validate_skill(skill_root: Path) -> list[str]:
     if skill_root.is_symlink():
         return [f"{skill_root}: package root must not be a symlink"]
@@ -268,6 +295,8 @@ def validate_skill(skill_root: Path) -> list[str]:
             errors.extend(network_errors(relative, content))
         if relative.suffix.lower() in ESCAPE_SCAN_SUFFIXES:
             errors.extend(escape_errors(relative, root / relative, root, content))
+        elif relative.suffix.lower() == ".md":
+            errors.extend(fenced_shell_escape_errors(relative, root / relative, root, content))
     return errors
 
 
@@ -323,12 +352,15 @@ def run_self_test() -> tuple[list[str], int]:
             ("README.md", f"Background: {url}example.invalid/paper.\n")]), True)
         expect("network command", make("net-cmd", "Run `pip install requests` first."),
             False, "network command")
+        expect("command-like prose", make("curl-like", "Keep curl-like labels descriptive."), True)
         expect("svg namespace", make("svg-ns", "Use [icon](assets/i.svg).", files=[
             ("assets/i.svg", f'<svg xmlns="{url}www.w3.org/2000/svg"></svg>\n')]), True)
         expect("schema identifier", make("schema-id", "Use [s](references/s.json).", files=[
             ("references/s.json", f'{{"$schema": "{url}json-schema.org/x"}}\n')]), True)
         expect("script escape", make("s-escape", "Run the bundled script.", files=[
             ("scripts/run.js", f'import "{up}{up}shared/r.js";\n')]), False, "escapes package")
+        expect("shell fence escape", make("fence-escape", "Run this:\n```bash\nsource " + up + "shared.sh\n```"),
+            False, "escapes package")
         expect("script internal", make("s-internal", "Run the bundled script.", files=[
             ("scripts/run.js", f'import "{up}assets/d.json";\n'),
             ("assets/d.json", "{}\n")]), True)

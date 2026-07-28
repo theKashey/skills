@@ -6,7 +6,7 @@ constraint, boundary, or relationship must exist. Context Docs recovers that
 verified explanation before a maintainer or coding agent changes the wrong
 thing.
 
-The other four skills were created to support decisions connected to that work:
+The other five skills support decisions connected to that work:
 what outcome it serves, what evidence-producing move comes next, what recurring
 behavior belongs in a skill, or whether a finished artifact is ready to trust.
 Each skill, including Context Docs, remains independently installable.
@@ -34,6 +34,9 @@ rationalize their own output into looking ready.
 - **[Mind Mapper](skills/mind-mapper/README.md):** maintains accountable
   outcome-to-work-to-result lineage, so a collection of capabilities stays
   manageable without becoming an invented pipeline.
+- **[Screaming Reefs](skills/screaming-reefs/README.md):** makes a verified
+  constraint visible in structure, so a reader can act safely without relying
+  on a remote explanation.
 
 Each skill is independently installable. Their support relationships do not
 make them stages in one loop or runtime dependencies.
@@ -47,6 +50,7 @@ make them stages in one loop or runtime dependencies.
 | The next move is plausible, but cause and effect are unclear or conditions are changing. | [Read the Terrain](skills/read-the-terrain/README.md) | One bounded move that advances the aim or produces evidence that changes the next decision. | Causality, solution correctness, or requirement coverage. |
 | Agent instructions contain relevant advice but do not reliably change the intended choice. | [Skill Guidance](skills/skill-guidance/README.md) | A skill that appears for matching work and changes the agent's behavior in a testable way. | Domain correctness or behavioral effectiveness from structure alone. |
 | A finished multi-file artifact looks coherent to its producer, but that producer's context may hide gaps. | [Verify Complex Artifacts](skills/verify-complex-artifacts/README.md) | An independent readiness decision that identifies blockers and decisions needing a human. | Product desirability or facts outside the contract and checks actually reviewed. |
+| A verified constraint is still carried only by prose, and an authorized structural change can make it visible to local readers. | [Screaming Reefs](skills/screaming-reefs/README.md) | The smallest structural owner for the constraint, with the irreducibly remote cause retained as prose. | That structure proves behavior or authorizes a wider redesign. |
 
 ## How the skills support each other
 
@@ -98,6 +102,10 @@ Context Docs' locality and progressive-disclosure model shapes how Skill
 Guidance separates maintainer support from runtime instructions. Skill Guidance
 supplies the agent-skill packaging discipline used to maintain Context Docs.
 Each package still works when installed alone.
+
+Screaming Reefs can follow Context Docs when an explicitly authorized structural
+change can carry a verified local constraint more reliably than prose. It does
+not turn a documentation finding into authorization for that change.
 
 Compatible agents route to whichever installed skill matches the problem. The
 diagram describes how their outcomes can relate; it is not a prompt recipe or a

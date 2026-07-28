@@ -1,6 +1,6 @@
 ---
 name: verify-complex-artifacts
-description: Use when a finished multi-file deliverable needs an integrated readiness decision before handoff, publication, merge, deployment, or acceptance, beyond normal deterministic checks.
+description: Use before handing off a finished multi-file artifact when requirements, consumer paths, or cross-file relationships need an integrated readiness decision; not for one routine check.
 ---
 
 # Verify Complex Artifacts
@@ -217,13 +217,12 @@ process declaration, producer rationale, prior review, expected verdict, or
 intended fix. The reviewer must not consult other sources. It reviews only; it
 does not edit or rewrite the artifact.
 
-Require it to infer the subject, artifact role and layer, consumer or reader,
-task, classification, and process status from the target and cite target
-evidence. When the target presents independently selectable named subjects,
-require a separate `name: what and why` offer result and a subsequent
-situation, affected party, intended impact, and boundary result for each. A
-compact catalog entry may route to a chooser or owning section for that fuller
-selection context. This gate's `PASS` means the output is semantically coherent
+Require it to infer the subject, consumer or system, task or effect, and process
+status from the target where those are material, and cite target evidence. When
+the target presents independently selectable named subjects, require a separate
+`name: what and why` offer result for each. Do not require a documentation-style
+offer from code, spreadsheets, or other artifacts whose consumer surface
+establishes purpose differently. This gate's `PASS` means the output is semantically coherent
 in its own context and free of unjustified process residue. It does not
 establish external factual correctness, requirement coverage, cross-artifact
 truth, or deterministic-check results.

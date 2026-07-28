@@ -139,7 +139,5 @@ and
 [Law VII — Enforce or delete mechanical rules](../LAWS.md#law-vii--enforce-or-delete-mechanical-rules)
 to every retained repository-specific claim.
 
-If package mechanics changed, require the bundled structural and isolation
-validator command from the parent `SKILL.md` to pass against the target skill
-directory. Then apply the validation selected by the parent router. Structural
-validity is not evidence that the skill changes the intended choice.
+Apply the validation selected by the parent router. Structural validity is not
+evidence that the skill changes the intended choice.

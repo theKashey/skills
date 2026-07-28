@@ -102,21 +102,18 @@ with its canonical owner.
 
 ### README boundary
 
-**README.md** names a technical orientation document at the rung it serves. It
-is never a marketing or advertising landing page. A repository README, package
-README, and folder README differ because their technical readers, available
-context, and tasks differ—not because one is more public.
+**README.md** names a technical orientation document at the rung it serves. A
+repository README, package README, and folder README differ because their
+technical readers, available context, and tasks differ—not because one is more
+public. The presentation boundary is defined in `content-architecture.md`.
 
 A README is optional. A package, repository root, or public source does not
 create a README task when its reader can safely act from readable code, types,
 metadata, and existing canonical documentation.
 
 A public website or product landing page is a separate presentation surface with
-a browser visitor's reader contract. Classify it independently. Do not transfer
-its promotional structure, browser-product conversion call to action, or
-source-versus-browser routing into any README. Verified technical commands,
-installation steps, and task routes remain appropriate in a README. Do not
-infer a presentation surface from a public repository.
+a browser visitor's reader contract. Classify it independently; its detailed
+boundary is owned by `content-architecture.md`.
 
 ## Choose a rung
 

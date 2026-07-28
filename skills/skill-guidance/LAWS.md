@@ -9,7 +9,7 @@ rest.
 Admit an instruction only when it changes a plausible choice. Record the
 generic or locally attractive default it must beat. Paths, signatures,
 discoverable mechanics, and enforced policy stay in the territory; retain only
-the reef and the exact command or flag an agent would otherwise guess
+the non-obvious constraint and the exact command or flag an agent would otherwise guess
 incorrectly.
 
 ## Law II — Spend the instruction budget

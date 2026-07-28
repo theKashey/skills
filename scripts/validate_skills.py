@@ -36,16 +36,10 @@ def main() -> int:
         print(f"ERROR missing repository license: {ROOT_LICENSE}", file=sys.stderr)
         return 1
 
-    names = [package.name for package in packages]
     expected_license = ROOT_LICENSE.read_bytes()
     if not run([sys.executable, str(VALIDATOR), "--self-test"]):
         return 1
 
-    known_name_args = [
-        argument
-        for name in names
-        for argument in ("--known-name", name)
-    ]
     for package in packages:
         package_license = package / "LICENSE"
         if not package_license.is_file():
@@ -65,7 +59,6 @@ def main() -> int:
                 sys.executable,
                 str(VALIDATOR),
                 str(package),
-                *known_name_args,
             ]
         ):
             return 1

@@ -1,6 +1,6 @@
 ---
 name: read-the-terrain
-description: Use when uncertain or changing work needs a bounded next move, a fresh signal, or a check that an artifact still addresses the recipient's problem.
+description: Use when a consequential choice is uncertain or changing and needs one bounded evidence-producing move; not for routine execution with a proven response.
 ---
 
 # Read the Terrain
@@ -8,6 +8,17 @@ description: Use when uncertain or changing work needs a bounded next move, a fr
 Turn an uncertain situation into one justified move and one useful readback.
 Treat orientation as a living model of the environment, not as a planning
 phase to finish once.
+
+## Run this order
+
+1. Build the terrain card from current observations.
+2. Classify the regime; separate explanations or split an opaque signal only
+   when that classification leaves a consequential choice open.
+3. Set one bounded Move and its expected, disconfirming, and stop signals.
+4. Act, read back, then either close, renew with a changed question, or stop.
+
+Do not load every branch for every move. The sections below apply only when
+their named condition is present.
 
 ## Build the terrain card
 
@@ -32,6 +43,16 @@ When a fresh signal contradicts the card—or the Move changes while Signals do
 not—mark the affected fields stale instead of defending them. Preserve
 still-supported observations; rebuild the Aim, Regime, Pattern, or Move that
 the new signal disproved.
+
+### Worked example
+
+An incident report says that an export occasionally omits rows. The card records
+the observed omission, two competing explanations (a pagination boundary or a
+stale cache), and an Unresolved regime. The Move is one bounded export with a
+page-boundary trace; its readback distinguishes the explanations. It is not
+“investigate exports” or a plan to rewrite the exporter. If the trace is
+inconclusive at the stated review point, stop and choose a different signal
+split rather than collecting more of the same trace.
 
 ## Choose the causal regime
 
@@ -225,7 +246,11 @@ about problem alignment even when it does not change the candidate.
 ## Close or renew the loop
 
 Close the loop only when external evidence shows the Aim was reached. Otherwise
-renew it with the changed signal, updated regime, and next review point.
+renew it only with a changed signal, changed prediction, or a newly authorized
+boundary; an unchanged retry is not a new move. Stop and report `BLOCK` or
+`NEEDS-HUMAN-DECISION` when the review bound expires without a discriminating
+signal, the same question has produced two inconclusive moves, or the next move
+would exceed authority.
 
 Stop and ask for direction when the Aim has materially different plausible
 meanings or the Move exceeds available authority. Escalate when safety bounds

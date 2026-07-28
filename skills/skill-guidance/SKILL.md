@@ -1,6 +1,6 @@
 ---
 name: skill-guidance
-description: Use when creating, revising, or auditing an agent skill; or when deciding how a skill should activate, guide behavior, validate outcomes, or remain standalone.
+description: Use when an agent skill's trigger, runtime decision, validation, or standalone boundary needs creating, revising, or auditing; not for its domain workflow.
 ---
 
 # Skill Guidance
@@ -70,14 +70,13 @@ that row; return here if the task materially changes.
 | Request | Primary procedure | Required validation |
 | --- | --- | --- |
 | Create a skill or decide skill versus reference | [Build or revise a skill](references/build-or-revise.md) | For a changed runtime contract, [validate changed choices](references/validate-changes.md); for `No-op`, report the admission decision |
-| Revise, restructure, prune, or repair a skill | [Build or revise a skill](references/build-or-revise.md) | For changed invocation, normative prose, scope, routing, or completion, [validate changed choices](references/validate-changes.md); for mechanical-only work, stop after the bundled validator passes |
+| Revise, restructure, prune, or repair a skill | [Build or revise a skill](references/build-or-revise.md) | For changed invocation, normative prose, scope, routing, or completion, [validate changed choices](references/validate-changes.md); for mechanical-only work, use the [isolation gate](#enforce-package-isolation) |
 | Audit or review without editing | [Audit a skill](references/audit-skill.md) | Use the audit completion contract; load [Validate changed choices](references/validate-changes.md) only when runtime outcome evidence is requested |
 | Evaluate routing, runtime behavior, or context cost | [Validate changed choices](references/validate-changes.md) | Use its frozen evaluation contract |
 
 Use normal file operations when a create or revise route reaches package
-mechanics, then run the bundled validator against the target directory. Do not
-turn mechanical-only work into an audit or outcome evaluation. This skill owns
-unresolved admission, ownership, isolation, locality, and
+mechanics. Do not turn mechanical-only work into an audit or outcome
+evaluation. This skill owns unresolved admission, ownership, isolation, locality, and
 behavioral-validation choices.
 
 ## Admit each obligation
@@ -112,8 +111,9 @@ keep authoring history, validation narration, review records, generic
 surface-selection rationale, and non-operational framework provenance in the
 handoff.
 
-Complete a changed runtime contract only when current source evidence,
-deterministic checks, and representative behavior agree, or report `BLOCK`,
-`NEEDS-HUMAN-DECISION`, or `UNVALIDATED`.
-For mechanical-only changes, stop when the bundled structural and isolation
-validator passes.
+Complete a changed runtime contract when current source evidence and the
+applicable deterministic checks agree. Add a representative clean-context
+comparison when the changed instruction must prove an interpretation-dependent
+choice; otherwise record the bounded evidence used. Report `UNVALIDATED` only
+when required evidence cannot be obtained, not merely because creation and
+validation occurred in one session.

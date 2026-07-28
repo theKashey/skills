@@ -14,10 +14,11 @@ is neither proof of cause nor a substitute for verification.
 
 Attention has no negation bit; naming the forbidden summons it.
 
-**Tell:** Told “never use `any`,” the diff blooms with `any`.
+**Tell:** A concern repeated during iteration grows until it displaces sibling
+requirements, paths, or risks.
 
-**Counter:** State the preferred replacement and its required effect instead of
-repeating the forbidden route.
+**Counter:** Compare the focal material with its siblings, retain only
+recurrences with a distinct consumer purpose, and restore displaced coverage.
 
 ## II. The Sycophant
 
