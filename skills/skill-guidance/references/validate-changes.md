@@ -35,9 +35,8 @@ evidence; otherwise skip that gate. Do not repeat its checks here. Verify:
   that unnamed Laws no longer apply;
 - every repository-specific claim satisfies
   [Law VIII — Keep every claim falsifiable](../LAWS.md#law-viii--keep-every-claim-falsifiable);
-- the description is one sentence of at most 240 characters, contains only a
-  concrete situation and behavior trigger, and covers every intended
-  activation;
+- the description meets the parent activation boundary contract and covers
+  every intended activation;
 - the body and runtime references begin after activation and contain only
   execution content or behavior-improving causal rationale;
 - README support and design reasons are not required by any runtime route;

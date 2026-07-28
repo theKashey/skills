@@ -1,6 +1,6 @@
 ---
 name: read-the-terrain
-description: Use when a consequential choice is uncertain or changing and needs one bounded evidence-producing move; not for routine execution with a proven response.
+description: Use when the next move is uncertain—an unexplained failure, flaky behavior, an incident, shifting conditions, or a risky decision—and needs one bounded evidence-producing move; not for routine execution with a proven response.
 ---
 
 # Read the Terrain
@@ -12,9 +12,10 @@ phase to finish once.
 ## Run this order
 
 1. Build the terrain card from current observations.
-2. Classify the regime; separate explanations or split an opaque signal only
+2. Classify the regime; separate explanations or run a signal split only
    when that classification leaves a consequential choice open.
-3. Set one bounded Move and its expected, disconfirming, and stop signals.
+3. Set one bounded Move, its expected and disconfirming signals, and its
+   review point.
 4. Act, read back, then either close, renew with a changed question, or stop.
 
 Do not load every branch for every move. The sections below apply only when
@@ -128,8 +129,10 @@ private reflection:
 2. Separately freeze the producer-side comparison baseline: the current Aim,
    relevant Field and Signals, Move boundary, and Readback. Keep it outside the
    reader context.
-3. Instantiate an isolated reader whose entire context is the candidate and the
-   neutral question below.
+3. Instantiate an isolated reader—a fresh subagent or new session—whose entire
+   context is the candidate and the neutral question below. Do not simulate the
+   reader inside the producing context; a simulated readback is Unvalidated,
+   not evidence.
 4. Give it only the candidate and this neutral question:
 
    ```text
@@ -193,8 +196,10 @@ For execution opacity, make a **signal split** the Move:
 5. In Orient, delete stories contradicted by the result. Do not promote a
    surviving story from hypothesis to cause without evidence of its mechanism.
 6. Restore anything changed solely to make the split visible, then replay the
-   passage. If visibility changed the behavior, record the disturbance as a
-   Signal and discard the causal reading.
+   passage; when the passage is not reproducible, record that limit as a
+   Signal and keep the causal reading provisional. If visibility changed the
+   behavior, record the disturbance as a Signal and discard the causal
+   reading.
 
 Revise the Regime or Pattern only when the split eliminates a plausible story
 or exposes a previously hidden transition. Otherwise the Move produced no new
@@ -247,14 +252,13 @@ about problem alignment even when it does not change the candidate.
 
 Close the loop only when external evidence shows the Aim was reached. Otherwise
 renew it only with a changed signal, changed prediction, or a newly authorized
-boundary; an unchanged retry is not a new move. Stop and report `BLOCK` or
-`NEEDS-HUMAN-DECISION` when the review bound expires without a discriminating
-signal, the same question has produced two inconclusive moves, or the next move
-would exceed authority.
-
-Stop and ask for direction when the Aim has materially different plausible
-meanings or the Move exceeds available authority. Escalate when safety bounds
-break. Do not widen the Field merely to preserve a failing Pattern.
+boundary; an unchanged retry is not a new move. In the final report, return
+`BLOCK` (the available evidence cannot establish a next move) when the review
+bound expires without a discriminating signal or the same question has produced
+two inconclusive moves; return `NEEDS-HUMAN-DECISION` (the choice needs the
+user's authority) when the next move would exceed authority or the Aim has
+materially different plausible meanings. Escalate when safety bounds break. Do
+not widen the Field merely to preserve a failing Pattern.
 
 Keep the visible response proportional to the decision. Show the terrain card
 when its distinctions help the user evaluate the move; for routine work, act

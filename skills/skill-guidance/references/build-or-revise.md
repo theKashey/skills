@@ -68,13 +68,11 @@ completion criterion fails to prevent observed premature completion.
 
 ## 4. Write the runtime contract
 
-Write the frontmatter description as one activation sentence of at most 240
-characters. Name the concrete situation and behavior that need the skill; do
-not catalogue possible failures, artifact types, adjacent tools, or workflow
-phases. Omit capability summaries, implementation details, resources,
-benefits, reasons, and output promises unless a detail distinguishes the
-activation. Keep all skill-level "when to use" and "when not to use" guidance
-out of the body.
+Write the frontmatter description to the activation boundary contract in the
+parent `SKILL.md`. Omit capability summaries, implementation details,
+resources, benefits, reasons, and output promises unless a detail
+distinguishes the activation. Keep all skill-level "when to use" and "when not
+to use" guidance out of the body.
 
 Open the body at the first post-trigger decision or action. Use imperative
 language for actions and declarative language for execution facts and decision
@@ -99,7 +97,8 @@ choice transfer, or the outcome on an unseen case.
 Put durable reasons about the governed capability, its rejected alternatives,
 reader-relevant boundaries, and concrete component ownership in `README.md`.
 Keep authoring and review history, generic surface-selection rationale, and
-framework provenance in the authoring record or handoff. Do not publish claims
+framework provenance in the handoff, which also holds the authoring record;
+neither ships with the package. Do not publish claims
 such as “this README explains,” “this skill follows,” or “this documentation
 uses Diátaxis” merely because they are true of the build. A framework belongs
 in the final artifact when its distinction changes the reader's choice or it is

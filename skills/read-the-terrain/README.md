@@ -62,7 +62,8 @@ and its contribution to the wider outcome. Read the Terrain then selects the
 smallest evidence-producing move for an uncertain branch. Context Docs turns the
 supported result into truthful reader-facing material at the right layer.
 
-This is an external composition, not a runtime dependency. Read the Terrain
+This is an external composition of separately installed skills, not a runtime
+dependency. Read the Terrain
 does not create the goal map, establish documentation truth, prove causality,
 or verify requirement coverage.
 

@@ -1,6 +1,6 @@
 ---
 name: skill-guidance
-description: Use when an agent skill's trigger, runtime decision, validation, or standalone boundary needs creating, revising, or auditing; not for its domain workflow.
+description: Use when creating an agent skill from scratch or revising, auditing, or validating a skill's trigger description, runtime instructions, references, or standalone packaging; not for the domain workflow the skill teaches.
 ---
 
 # Skill Guidance
@@ -39,7 +39,9 @@ governs, and evidence. Cite
 [`Law VII — Enforce or delete mechanical rules`](LAWS.md#law-vii--enforce-or-delete-mechanical-rules),
 for example, when a duplicate prose rule must be removed. The named set is a
 compact design checklist, not an exception list: every law still applies when
-its condition arises. Keep this record in the handoff. Name a law in the target
+its condition arises. Keep this record in the handoff: the wrap-up report
+returned to the requesting user or process at the end of the task, never a
+file in the distributed package. Name a law in the target
 runtime only when its title plus local consequence selects an action for that
 target skill's agent; never add a bare framework label or make the target depend
 on this package.
@@ -69,7 +71,7 @@ that row; return here if the task materially changes.
 
 | Request | Primary procedure | Required validation |
 | --- | --- | --- |
-| Create a skill or decide skill versus reference | [Build or revise a skill](references/build-or-revise.md) | For a changed runtime contract, [validate changed choices](references/validate-changes.md); for `No-op`, report the admission decision |
+| Create a skill or decide skill versus reference | [Build or revise a skill](references/build-or-revise.md) | For a changed runtime contract, [validate changed choices](references/validate-changes.md); for a `No-op` outcome (no runtime change admitted), report the admission decision |
 | Revise, restructure, prune, or repair a skill | [Build or revise a skill](references/build-or-revise.md) | For changed invocation, normative prose, scope, routing, or completion, [validate changed choices](references/validate-changes.md); for mechanical-only work, use the [isolation gate](#enforce-package-isolation) |
 | Audit or review without editing | [Audit a skill](references/audit-skill.md) | Use the audit completion contract; load [Validate changed choices](references/validate-changes.md) only when runtime outcome evidence is requested |
 | Evaluate routing, runtime behavior, or context cost | [Validate changed choices](references/validate-changes.md) | Use its frozen evaluation contract |

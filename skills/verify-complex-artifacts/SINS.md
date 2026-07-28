@@ -1,7 +1,7 @@
 # The Sins of the LLM
 
-The Laws bind the one who writes the chart. The Sins belong to the one who
-sails by it. They are not moral failures; they are mechanisms. You cannot scold
+The [Laws](SKILL.md#laws) bind the one who writes the chart. The Sins belong
+to the one who sails by it. They are not moral failures; they are mechanisms. You cannot scold
 them out—only design around them.
 
 Use this reference only after a gate has found a defect and the evidence makes
@@ -129,7 +129,8 @@ fresh non-producing subagent the unchanged contract, baseline artifact, rejected
 candidate, and raw correction; require `preserve | change | evidence` plus the
 smallest safe repair. Block broad edits until that scope challenge exists. After
 repair, recheck every preserved invariant and send the finished artifact to a
-different fresh review subagent.
+different fresh review subagent. This protocol illustrates the repair-by-revision
+Law; the binding repair requirements stay in `SKILL.md`.
 
 ## IX. The Potemkin
 

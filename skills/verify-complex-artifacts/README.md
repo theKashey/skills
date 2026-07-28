@@ -41,12 +41,14 @@ workflow or decide whether its product direction is desirable.
 
 These are diagnostic signatures, not claims about intent and not proof that
 every generated artifact contains them. An observed signature directs the
-reviewer to the factual, deterministic, consumer-surface, security, or isolated
+reviewer to the factual, deterministic, consumer-surface, or isolated
 review gate capable of deciding whether damage is present.
 
 | Signature | What may be damaged |
 | --- | --- |
 | **Proof leakage** | The artifact repeats the request, addresses the producer or user, or claims it complied, verified, or passed instead of representing the delivered subject. |
+| **Implementation-time recording** | The artifact preserves a momentary checkout, branch, rollout, or work-in-progress state instead of the authorized state expected when the iteration completes. |
+| **Offering and subject-order loss** | The reader must cross failure analysis or internal method before learning what is offered and why, or lacks the selection context to judge relevance. |
 | **Pink-elephant amplification** | Repeated attention makes one concern disproportionately dominant and displaces sibling requirements, paths, or risks. |
 | **Placement drift** | Correct material is added under the nearest visible heading, component, sheet, slide, or branch instead of its semantic owner. |
 | **Proxy completion** | A checklist, metric, snapshot, example, or test passes while the consumer outcome or an unmeasured invariant fails. |
@@ -63,7 +65,7 @@ signature.
 ## Point at a discovered problem
 
 When a gate has established a defect, name the matching [Sin in *The Sins of
-the LLM*](SINS.md) as `sin → evidence → countermeasure → invalidated gate`.
+the LLM*](SINS.md) as `sin → observed evidence → countermeasure → invalidated gate`.
 The name gives the repair a target; it never replaces target evidence or the
 gate that proves the repair.
 
@@ -84,7 +86,7 @@ fresh review subagent. It returns one explicit readiness status:
 A `PASS` is scoped to the frozen contract and candidate. The isolated review
 establishes semantic coherence and absence of unjustified process residue; it
 does not substitute for source truth, requirement coverage, deterministic
-checks, security review, or human product acceptance.
+checks including security scans, or human product acceptance.
 
 The [runtime workflow](SKILL.md) owns the complete procedure. The
 [isolated review rules](references/output-context-review.md) own the review

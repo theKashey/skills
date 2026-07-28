@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Deterministic structural validation for one standalone Agent Skill package.
 
-Checks only mechanically decidable properties: frontmatter contract, text
-encoding, forbidden artifacts, local link closure, README runtime exclusion,
-literal network references in runtime files, and parent-directory escapes in
-scripts and structured data. Semantic questions -- whether prose creates an
-external dependency, whether a network mention is load-bearing -- belong to
-the audit route, not this gate. PASS therefore claims exactly what was
-checked and nothing more.
+Checks only mechanically decidable properties: frontmatter contract including
+the single-sentence description, text encoding, forbidden artifacts, local
+link and heading-anchor closure, README runtime exclusion, literal network
+references in runtime files, and parent-directory escapes in scripts and
+structured data. Semantic questions -- whether prose creates an external
+dependency, whether a network mention is load-bearing -- belong to the audit
+route, not this gate. PASS therefore claims exactly what was checked and
+nothing more.
 """
 
 from __future__ import annotations
@@ -46,8 +47,13 @@ ESCAPE_SCAN_SUFFIXES = {
     ".yaml", ".yml",
 }
 COMMAND_SURFACES = {".md", ".ps1", ".sh", ".txt", ".yaml", ".yml"}
+# Files under these roots are runtime by location; material elsewhere (for
+# example assets/) is treated as runtime only when the SKILL.md link graph
+# reaches it.
 RUNTIME_ROOTS = {"agents", "references", "scripts"}
 MAX_DESCRIPTION = 240
+SENTENCE_BREAK_RE = re.compile(r"[.!?]\s+\S")
+ABBREVIATION_RE = re.compile(r"\b(?:e\.g|i\.e|etc|vs|cf)\.\s", re.IGNORECASE)
 
 
 def decode_text(path: Path) -> tuple[str | None, str | None]:
@@ -144,15 +150,33 @@ def markdown_destinations(text: str) -> list[str]:
     return found
 
 
-def local_link_target(raw: str) -> str | None:
+def clean_link(raw: str) -> str | None:
     target = raw.strip()
     if target.startswith("<") and ">" in target:
         target = target[1 : target.index(">")]
     else:
         target = target.split(maxsplit=1)[0] if target else ""
-    if not target or target.startswith("#") or urlsplit(target).scheme:
+    if not target or urlsplit(target).scheme:
         return None
-    return unquote(target.split("#", 1)[0])
+    return target
+
+
+def heading_slugs(text: str) -> set[str]:
+    """GitHub-style heading anchors: lowercase, punctuation removed, spaces
+    to hyphens, duplicate slugs suffixed with a counter."""
+    slugs: set[str] = set()
+    counts: dict[str, int] = {}
+    for line in without_fences(text).splitlines():
+        match = re.match(r"^\s{0,3}#{1,6}\s+(.*?)\s*#*\s*$", line)
+        if not match:
+            continue
+        title = re.sub(r"`([^`]*)`", r"\1", match.group(1))
+        title = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", title)
+        slug = re.sub(r"[^\w\- ]", "", title.casefold()).replace(" ", "-")
+        seen = counts.get(slug, 0)
+        counts[slug] = seen + 1
+        slugs.add(slug if seen == 0 else f"{slug}-{seen}")
+    return slugs
 
 
 def network_errors(relative: Path, text: str) -> list[str]:
@@ -230,9 +254,12 @@ def validate_skill(skill_root: Path) -> list[str]:
         errors.append(f"{skill_file}: missing frontmatter description")
     elif len(description) > MAX_DESCRIPTION:
         errors.append(f"{skill_file}: description exceeds {MAX_DESCRIPTION} characters")
+    elif SENTENCE_BREAK_RE.search(ABBREVIATION_RE.sub("", description)):
+        errors.append(f"{skill_file}: description must be one sentence")
 
     texts: dict[Path, str] = {}
     links: dict[Path, list[Path]] = {}
+    anchor_checks: list[tuple[Path, Path, str]] = []
     for path in sorted(root.rglob("*")):
         relative = path.relative_to(root)
         if path.is_symlink():
@@ -257,8 +284,14 @@ def validate_skill(skill_root: Path) -> list[str]:
         if path.suffix.lower() != ".md":
             continue
         for raw in markdown_destinations(content):
-            target = local_link_target(raw)
-            if target is None:
+            cleaned = clean_link(raw)
+            if cleaned is None:
+                continue
+            base, _, fragment = cleaned.partition("#")
+            target = unquote(base)
+            if not target:
+                if fragment:
+                    anchor_checks.append((relative, relative, unquote(fragment)))
                 continue
             if Path(target).is_absolute() or re.match(r"^[A-Za-z]:[\\/]", target):
                 errors.append(f"{skill_root}/{relative}: absolute local link {target!r}")
@@ -273,6 +306,19 @@ def validate_skill(skill_root: Path) -> list[str]:
                 errors.append(f"{skill_root}/{relative}: broken local link {target!r}")
             elif resolved.is_file():
                 links.setdefault(relative, []).append(resolved.relative_to(root))
+                if fragment and resolved.suffix.lower() == ".md":
+                    anchor_checks.append(
+                        (relative, resolved.relative_to(root), unquote(fragment))
+                    )
+
+    for source, target_file, fragment in anchor_checks:
+        target_text = texts.get(target_file)
+        if target_text is None:
+            continue
+        if fragment.casefold() not in heading_slugs(target_text):
+            errors.append(
+                f"{skill_root}/{source}: missing anchor {fragment!r} in {target_file}"
+            )
 
     runtime = {
         relative
@@ -334,6 +380,19 @@ def run_self_test() -> tuple[list[str], int]:
 
         expect("valid package", make("valid-skill", "Use only bundled material."), True)
         expect("overlong description", make("overlong", "Body.", "x" * 241), False, "exceeds")
+        expect("multi-sentence description", make("two-sentence", "Body.",
+            "Use when X applies. Also use when Y applies."), False, "one sentence")
+        expect("abbreviated description", make("abbrev-ok", "Body.",
+            "Use when X needs e.g. a check; not for Y."), True)
+        expect("missing cross-file anchor", make("anchor-miss", "See [a](references/a.md#absent).", files=[
+            ("references/a.md", "# Present topic\n\nBody.\n")]), False, "missing anchor")
+        expect("present cross-file anchor", make("anchor-hit", "See [a](references/a.md#present-topic).", files=[
+            ("references/a.md", "# Present topic\n\nBody.\n")]), True)
+        expect("missing same-file anchor", make("anchor-self", "Jump to [x](#absent-here)."),
+            False, "missing anchor")
+        expect("punctuated heading anchor", make("anchor-dash",
+            "See [law](references/l.md#law-vii--enforce-or-delete-mechanical-rules).", files=[
+            ("references/l.md", "## Law VII — Enforce or delete mechanical rules\n\nBody.\n")]), True)
         expect("name mismatch", make("mismatch", "Body.", files=[
             ("SKILL.md", "---\nname: other-name\ndescription: D.\n---\n# x\n")]),
             False, "does not match directory")

@@ -8,6 +8,7 @@ examples without paraphrasing mechanics already visible to their reader.
 
 - [Contract checklist](#contract-checklist)
 - [Code-local documentation](#code-local-documentation)
+- [Selective-context authoring decision](#selective-context-authoring-decision)
 - [Chesterton's fence test](#chestertons-fence-test)
 - [Example integrity](#example-integrity)
 - [Source evidence](#source-evidence)
@@ -89,10 +90,11 @@ nearby lines, search matches, and that genuinely available context were visible:
    choice, preserve only the causal edge and local consequence that remain true
    while the remote implementation changes under the same contract. Keep deeper
    mechanics with their owner.
-5. Protect the verified constraint in the completed result. Ask whether clearer
-   names, code, types, API shape, structure, or an already-authorized canonical
-   local context explanation can make the choice and consequence locally
-   recoverable:
+5. Protect the verified constraint in the completed result, then settle the
+   reef-to-cliff disposition: ask whether clearer names, code, types, API
+   shape, structure, or an already-authorized canonical local context
+   explanation can turn the hidden reef into a visible cliff by making the
+   choice and consequence locally recoverable:
    - When that change is already authorized and in scope, prefer the visible
      constraint and remove only the prose made redundant.
    - Otherwise, place the smallest durable explanation at the decision. A

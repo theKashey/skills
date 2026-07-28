@@ -25,7 +25,7 @@ not add a producer-authored explanation, manifest, or review wrapper unless it
 is genuinely part of the deliverable.
 
 Supply no task summary, scope statement, producer interpretation, consumer or
-reader profile, artifact role, layer or rung, semantic classification, source
+reader profile, artifact role or layer, semantic classification, source
 facts, validation output, process declaration, producer rationale, prior
 review, expected verdict, or intended fix. The reviewer must not consult other
 sources. It infers context from the target itself and cites target evidence in

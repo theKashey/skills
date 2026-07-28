@@ -188,20 +188,16 @@ not transcribe implementation.
 
 A fence is a present choice, constraint, boundary, relationship, or structure
 whose reason is not locally visible. A Chesterton's Fence is the unresolved
-state: its reason is still unknown.
-
-Search history, callers, tests, runtime effects, and neighboring invariants for
-the missing rationale. If evidence verifies it, return to the applicable
-existence decision; for code-local prose, use the [canonical authoring
-decision](api-jsdoc-examples.md#selective-context-authoring-decision). If the
-reason remains unknown and the gap is accepted, mark it with an explicit
-**TODO** or **FIXME**. Never invent rationale.
+state: its reason is still unknown. Investigate it with the [Chesterton's
+fence test](api-jsdoc-examples.md#chestertons-fence-test), then return to the
+applicable existence decision. Never invent rationale.
 
 ### Document reefs, not cliffs
 
-A reef is a material hazard hidden below the reader's normal view: a
-non-obvious default, failure mode, security or ownership boundary, lifecycle
-coupling, or cross-unit invariant. A cliff is meaning already visible and
+A reef is the material hidden cause and consequence below the reader's normal
+view—for example a non-obvious default, failure mode, security or ownership
+boundary, lifecycle coupling, or cross-unit invariant—that can make an
+apparently reasonable action unsafe. A cliff is meaning already visible and
 safely recoverable from code, types, names, signatures, or the surrounding
 surface. Visibility changes by rung, so judge from the reader context in the
 matrix.

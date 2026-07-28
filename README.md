@@ -8,7 +8,8 @@ thing.
 
 The other five skills support decisions connected to that work:
 what outcome it serves, what evidence-producing move comes next, what recurring
-behavior belongs in a skill, or whether a finished artifact is ready to trust.
+behavior belongs in a skill, whether a finished artifact is ready to trust, or
+when structure rather than prose should carry a documented constraint.
 Each skill, including Context Docs, remains independently installable.
 
 AI coding agents can produce convincing work while losing why it exists. They
@@ -46,7 +47,7 @@ make them stages in one loop or runtime dependencies.
 | When this is the problem | Route to | Outcome | It does not prove |
 | --- | --- | --- | --- |
 | Code or system structure exposes behavior without the reason a constraint, boundary, or relationship must exist. | [Context Docs](skills/context-docs/README.md) | A verified explanation at the surface where the affected reader encounters the decision. | Product decisions, undocumented implementation correctness, or readiness of non-documentation artifacts. |
-| Work has become a list of tasks with no accountable path to the wider goal. | [Mind Mapper](skills/mind-mapper/README.md) | Shows why each piece of work exists, what can proceed independently, what is blocked, and which claims have evidence. | That an action caused the outcome or that the goal is valuable. |
+| Work has become a list of tasks with no accountable path to the wider goal. | [Mind Mapper](skills/mind-mapper/README.md) | Shows why each piece of work exists, what can proceed independently, what is blocked, and which claims have evidence. Requires a planning surface the user configures before mapping. | That an action caused the outcome or that the goal is valuable. |
 | The next move is plausible, but cause and effect are unclear or conditions are changing. | [Read the Terrain](skills/read-the-terrain/README.md) | One bounded move that advances the aim or produces evidence that changes the next decision. | Causality, solution correctness, or requirement coverage. |
 | Agent instructions contain relevant advice but do not reliably change the intended choice. | [Skill Guidance](skills/skill-guidance/README.md) | A skill that appears for matching work and changes the agent's behavior in a testable way. | Domain correctness or behavioral effectiveness from structure alone. |
 | A finished multi-file artifact looks coherent to its producer, but that producer's context may hide gaps. | [Verify Complex Artifacts](skills/verify-complex-artifacts/README.md) | An independent readiness decision that identifies blockers and decisions needing a human. | Product desirability or facts outside the contract and checks actually reviewed. |
@@ -54,7 +55,7 @@ make them stages in one loop or runtime dependencies.
 
 ## How the skills support each other
 
-There are three supported compositions, not one complete loop:
+There are four supported compositions, not one complete loop:
 
 ```mermaid
 flowchart TB
@@ -80,6 +81,12 @@ flowchart TB
         C3 --> C4["Context Docs"]
         C4 --> C5["Supported meaning reaches the reader"]
     end
+
+    subgraph F4["4 · Structural enforcement"]
+        direction LR
+        D1["Documented reef"] --> D2["Screaming Reefs"]
+        D2 -->|"authorized change"| D3["Constraint visible in structure"]
+    end
 ```
 
 - **Documentation:** Context Docs can complete a documentation task on its own.
@@ -90,6 +97,10 @@ flowchart TB
 - **Wider uncertain documentation work:** Mind Mapper preserves contribution
   lineage, Read the Terrain selects an evidence-producing move on the relevant
   uncertain branch, and Context Docs publishes only the supported meaning.
+- **Structural enforcement:** Screaming Reefs can follow Context Docs when an
+  explicitly authorized structural change can carry a verified constraint more
+  reliably than prose. A documentation finding is not authorization for that
+  change.
 
 Mind Mapper is also the management view over the collection. It can attach each
 skill to the outcome branch it may influence, expose missing or duplicated
@@ -102,10 +113,6 @@ Context Docs' locality and progressive-disclosure model shapes how Skill
 Guidance separates maintainer support from runtime instructions. Skill Guidance
 supplies the agent-skill packaging discipline used to maintain Context Docs.
 Each package still works when installed alone.
-
-Screaming Reefs can follow Context Docs when an explicitly authorized structural
-change can carry a verified local constraint more reliably than prose. It does
-not turn a documentation finding into authorization for that change.
 
 Compatible agents route to whichever installed skill matches the problem. The
 diagram describes how their outcomes can relate; it is not a prompt recipe or a
@@ -214,6 +221,23 @@ understanding from moves that are ready to execute.
 
 Read [why Mind Mapper manages the collection](skills/mind-mapper/README.md) or
 inspect its [runtime goal-lineage workflow](skills/mind-mapper/SKILL.md).
+
+### Screaming Reefs
+
+Important constraints often survive only because a comment, README, or agent
+instruction explains them. That prose protects the decision, but a reader
+acting from selective context—a diff, a symbol, a search match—can miss it,
+and a copy far from its owner can drift as the repository changes.
+
+Screaming Reefs turns a verified reef into a cliff: it gives a documented
+constraint a structural owner—names, types, API shape, ownership boundaries,
+or filesystem topology—under an explicit authorization test. Prose is retired
+only after a fresh-context readback passes; a constraint whose significance is
+irreducibly non-local stays documented.
+
+Read [why Screaming Reefs exists and where its
+boundaries are](skills/screaming-reefs/README.md) or inspect its
+[runtime structural-change workflow](skills/screaming-reefs/SKILL.md).
 
 ## License
 

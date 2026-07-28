@@ -38,8 +38,8 @@ or auditing an agent skill. It also owns decisions about:
 Do not use it as a substitute for the domain workflow the target skill teaches,
 for a narrow mechanical check already owned by repository tooling, or for
 general documentation work that does not change an agent skill. Pair it with
-the repository's documentation guidance when README prose, examples,
-references, or reader paths change.
+a documentation skill such as Context Docs (installed separately) when README
+prose, examples, references, or reader paths change.
 
 ## Runtime architecture
 

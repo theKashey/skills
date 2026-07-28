@@ -33,8 +33,25 @@ named gate.
 | **Context neglect** | A requirement, exception, invariant, or dependency is omitted or contradicted because it was distant, structurally buried, or outside the producer's local view. | Reconcile every requirement and boundary against the final artifact by stable ID. Inspect middle sections, cross-references, negative constraints, and non-adjacent owners; search for contradictions and unaccounted exclusions. | Factual and cross-artifact gates. |
 | **Confabulated support** | Plausible but invented facts, citations, paths, counts, test results, screenshots, rationale, or source attributions make the artifact appear grounded. Uncertainty may be silently converted into a confident claim. | Resolve each support item to an authoritative source or reproducible observation. Re-run claimed checks, open cited targets, and preserve explicit uncertainty where evidence does not decide. | Factual and deterministic gates. |
 | **Uniformity collapse** | Distinct cases, voices, visual treatments, data classes, configurations, or failure modes are flattened into a repeated template or dominant pattern, erasing meaningful variation. | Compare representative siblings and boundary cases. Name every distinction the contract requires, then verify that content, behavior, and representation preserve it without cosmetic duplication. | Factual and consumer-surface gates; human acceptance for intentional style. |
-| **Source contamination** | Prompt fragments, untrusted embedded instructions, examples, placeholders, secrets, local paths, or source-only annotations are followed or copied into the delivered artifact. | Separate instructions from source data before evaluation. Scan the bundle and rendered forms for source-only tokens and sensitive material; verify suspicious changes against authoritative requirements rather than the embedded text that suggested them. | Security and factual gates; isolated output-context review for visible residue. |
+| **Source contamination** | Prompt fragments, untrusted embedded instructions, examples, placeholders, secrets, local paths, or source-only annotations are followed or copied into the delivered artifact. | Separate instructions from source data before evaluation. Scan the bundle and rendered forms for source-only tokens and sensitive material; verify suspicious changes against authoritative requirements rather than the embedded text that suggested them. | Deterministic and factual gates, including secret and security scans; isolated output-context review for visible residue. |
 | **Collateral regression** | A focused improvement degrades an adjacent behavior, representation, mode, edge case, or previously correct region. The artifact becomes better on the optimized axis and worse overall. | Compare the frozen baseline with the candidate across neighboring paths and non-target invariants. Exercise unchanged modes and at least one counterexample to the focal improvement. | Deterministic, factual, and consumer-surface gates. |
+
+This table owns signature detection: the observable evidence and adversarial
+check. When a gate then establishes the defect and the repair needs a named
+mechanism, the matching [Sin](../SINS.md) owns the repair countermeasure:
+
+- Pink-elephant amplification → The Pink Elephant;
+- Proxy completion → The Djinn, or The Potemkin when completion is claimed
+  rather than mismeasured;
+- Context neglect → The Tunnel;
+- Collateral regression → The Reformer;
+- Uniformity collapse → The Prior;
+- Confabulated support → The Confabulator;
+- Proof leakage → The Potemkin.
+
+Implementation-time recording, offering and subject-order loss, placement
+drift, and source contamination map to no single sin; name their mechanism
+from the observed evidence instead.
 
 ## Cross-artifact checks
 
@@ -49,10 +66,11 @@ Apply these to every compound deliverable:
 - scan the delivery bundle for secrets, temporary files, draft markers, stale
   outputs, absolute local paths, and undeclared dependencies;
 - confirm that regeneration is reproducible or record why it is not.
-- inventory every consumer-visible named-subject relationship as source,
-  relation, target, direction, modality, and condition; verify each edge
-  against authoritative contracts for both endpoints or an explicit product
-  decision, and report verified edges over total edges.
+- inventory every material consumer-visible named-subject relationship—an
+  edge a consumer could act on—as source, relation, target, direction,
+  modality, and condition; record the bound applied, verify each inventoried
+  edge against authoritative contracts for both endpoints or an explicit
+  product decision, and report verified edges over total edges.
 
 ## Code, packages, and services
 

@@ -20,10 +20,10 @@ Report documentation quality with evidence and counts.
 | Gate | Pass condition |
 | --- | --- |
 | Currentness | At wrap-up, checked evidence shows no contradiction between the documented finished state and the completed exports, types, defaults, routes, tests, or supported versions in scope. |
-| Entry relevance | The document opens with the pressure, consequence, responsibility, supported outcome, boundary, or changed decision its entering reader needs while keeping the governed subject inferable. Every compact chooser or catalog entry names the subject, what it provides, and why the reader would choose it before mechanism. |
+| Entry relevance | The document opens with the reader-relevant entry need defined in the reader entry and scan path section of `content-architecture.md` while keeping the governed subject inferable. Every compact chooser or catalog entry names the subject, what it provides, and why the reader would choose it before mechanism. |
 | Selection context and impact | Before methodology, workflow, taxonomy, or components, the intended reader can infer the relevant situation or pressure, affected party or system, observable impact or changed decision, and boundary. A chooser may own this context for compact catalog entries; a standalone subject page and a detailed owning section orient themselves locally. |
 | Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is accounted for by a discoverable canonical source or has an explicit justified exclusion; prose fills only material semantic gaps. |
-| Relationship coverage | Every consumer-visible assertion connecting named subjects is inventoried by source, relation, target, direction, modality, and condition, then verified against authoritative contracts for both endpoints or an explicit product decision. Internal coherence, co-location, and repeated prose are not evidence. |
+| Relationship coverage | Within the stated audit scope, every consumer-visible assertion connecting named subjects that a reader could act on—capability, compatibility, dependency, causation, ordering, or ownership claims—is inventoried by source, relation, target, direction, modality, and condition, then verified against authoritative contracts for both endpoints or an explicit product decision. Record the bound applied and its exclusions. Internal coherence, co-location, and repeated prose are not evidence. |
 | Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. |
 | Surface necessity | The surface passes the [locality ladder's existence gate](locality-ladder.md#existence-gate). |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
@@ -55,10 +55,9 @@ For the judgment-heavy gates, record the observation:
 - **Reader path:** starting state, task attempted, and observed result.
 - **Progressive disclosure:** canonical detail owner and the route used to
   reach it.
-- **Entry relevance:** the reader-relevant pressure, consequence,
-  responsibility, supported outcome, boundary, or changed decision in the
-  opening; for each independently selectable catalog subject, also record its
-  name, capability, selection value, and entry location.
+- **Entry relevance:** the reader-relevant entry need served by the opening;
+  for each independently selectable catalog subject, also record its name,
+  capability, selection value, and entry location.
 - **Selection context and impact:** one row per subject with its situation or
   pressure, affected party or system, intended impact or changed decision,
   boundary, and selection-context location.
@@ -108,18 +107,18 @@ every section and public item in that stated scope:
 12. For a procedure, does the heading state the task and does each step give one meaningful action after its necessary location, condition, and warning? For a tutorial, can the reader see its meaningful checkpoints?
 13. Could this state enter its intended review, merge, or publication without editing away a temporary caveat, placeholder, draft marker, or promise about what will happen later?
 14. What does the entering reader need to care about before mechanism? Does the
-    opening lead with that pressure, consequence, responsibility, supported
-    outcome, boundary, or changed decision while keeping the governed subject
-    inferable?
+    opening lead with that reader-relevant entry need while keeping the
+    governed subject inferable?
 15. Which independently selectable named subjects have their own entry point?
     Does each compact catalog entry provide `name: what and why`? After that
     entry and before internal method or parts, can the reader recover the
     relevant situation or pressure, affected party, intended impact or decision,
     and boundary from its chooser or owning section? Does every standalone
     subject page orient itself locally?
-16. Which statements connect two named subjects? For each directed, reciprocal,
-    shared-property, conditional, or negative edge, what authoritative contract
-    for both endpoints or explicit product decision establishes it?
+16. Which statements connect two named subjects in a way a reader could act
+    on? For each such directed, reciprocal, shared-property, conditional, or
+    negative edge in the stated scope, what authoritative contract for both
+    endpoints or explicit product decision establishes it?
 17. Which non-inline statements describe behavior owned elsewhere? Would each
     remain true if that implementation changed without changing its contract,
     and does the statement preserve a material consequence here rather than
@@ -165,8 +164,6 @@ Reject a result that requires another edit merely to:
 
 A supported transitional state in the finished product is not implementation
 residue. Document it when it is part of the verified contract.
-
-The end-state exit gate removes temporary-state residue.
 
 ## Release and drift review
 

@@ -1,6 +1,6 @@
 ---
 name: context-docs
-description: Use when revising a README, guide, API reference, example, or code comment whose reader needs a verified non-local reason to act safely; not for behavior changes.
+description: Use when creating, revising, or auditing a README, tutorial, how-to, API or configuration reference, changelog, migration guide, docs site, landing page, example, or code comment; not for changing code behavior.
 ---
 
 # Context Docs
@@ -212,7 +212,8 @@ merely to satisfy this path.
 11. For API or configuration reference, continue with [Document a public
    contract](#document-a-public-contract). For an example inside another
    document, read the example section of `references/api-jsdoc-examples.md` and
-   apply only steps 6–7 of that procedure. Defer review and deterministic
+   apply only steps 6–7 of [Document a public
+   contract](#document-a-public-contract). Defer review and deterministic
    documentation checks until [Review documentation at
    wrap-up](#review-documentation-at-wrap-up).
 
@@ -255,9 +256,9 @@ source-owned truth or creating an unauthorized surface.
    unless it was validated unchanged with its imports, setup, public names,
    options, and expected behavior.
 8. During authoring, record explicit, justified exclusions as they are
-   identified. Defer inventory accounting, review, and deterministic
-   documentation checks until [Review documentation at
-   wrap-up](#review-documentation-at-wrap-up).
+   identified. Defer the wrap-up items above (steps 5 and 7), inventory
+   accounting, review, and deterministic documentation checks until [Review
+   documentation at wrap-up](#review-documentation-at-wrap-up).
 
 ## Document code-local rationale
 
@@ -270,11 +271,11 @@ mechanics, and never turn this path into documentation review.
    receives before editing. Assume the next maintainer or coding agent may see
    only the selective context of a symbol, diff, or search match; do not credit
    it with a README or `AGENTS.md` it would not naturally encounter.
-2. Read `references/locality-ladder.md`, then apply the canonical
-   selective-context authoring decision in the code-local documentation section
-   of `references/api-jsdoc-examples.md`. It owns detailed admission, remote
-   ownership, stability, and reef-to-cliff disposition. If it rejects prose,
-   add no comment.
+2. Apply the canonical selective-context authoring decision in the code-local
+   documentation section of `references/api-jsdoc-examples.md`; it owns
+   detailed admission, remote ownership, stability, and the reef-to-cliff
+   disposition. If it rejects prose, add no comment. Then use
+   `references/locality-ladder.md` to place an admitted explanation.
 3. Treat code whose reason for existing or taking its present form is unknown as
    a Chesterton's fence. Search history, callers, tests, runtime effects, and
    neighboring invariants for its rationale, then return to the canonical

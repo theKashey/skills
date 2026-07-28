@@ -35,17 +35,19 @@ being inferable from the package.
 
 Apply every [Agent Instruction Law](../LAWS.md) and the admission requirements
 in the parent `SKILL.md`; do not redefine them here. Cite the exact canonical
-Law identifier and title for each failure. Also check
-that every named Law maps to an observable target-skill choice and evidence,
-and that no named-Law list is presented as an exemption from the remaining
-Laws; check
-that the description is one sentence of at most 240 characters and contains
-only a concrete situation and behavior trigger; that the body and runtime
-references contain no skill-level triggers, support, explanations, or excuses;
-that retained causal rationale improves behavior; and that README support is
-not a runtime dependency. Check description-to-route coverage,
-direct and conditional reference pointers, present-state wording, clean
-end-state, and route-specific completion criteria.
+Law identifier and title for each failure. Also check that:
+
+- every named Law maps to an observable target-skill choice and evidence, and
+  no named-Law list is presented as an exemption from the remaining Laws;
+- the description meets the activation boundary contract in the parent
+  `SKILL.md`;
+- the body and runtime references contain no skill-level triggers, support,
+  explanations, or excuses;
+- retained causal rationale improves behavior;
+- README support is not a runtime dependency;
+- description-to-route coverage, direct and conditional reference pointers,
+  present-state wording, clean end-state, and route-specific completion
+  criteria hold.
 
 ## 4. Report evidence, not taste
 

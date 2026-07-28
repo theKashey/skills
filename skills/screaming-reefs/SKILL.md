@@ -1,6 +1,6 @@
 ---
 name: screaming-reefs
-description: Use for an explicitly authorized structural change that must make a verified constraint visible to local readers; not when prose remains the only viable owner.
+description: Use when an authorized change should enforce a documented constraint through names, types, API shape, or structure—for example replacing a warning comment with a checked owner; not when prose must remain the only owner.
 ---
 
 # Screaming Reefs
@@ -78,12 +78,17 @@ explanation and return `NO-OP`.
 2. Apply the smallest structural change that makes the constraint
    selectable from local context. Update tests, generated artifacts,
    imports, exports, and repository-native indexes only when the change
-   requires them; keep unrelated cleanup out of the diff.
-3. Give the changed local context to a fresh reader with no drafting history.
-   It must recover the constraint, safe action, and protected boundary without
-   the evidence record or producer explanation. If it cannot, retain the prose
-   and return `BLOCK`; keep the patch as an unaccepted candidate, restoring the
-   prior state only when that recovery is safe and within scope.
+   requires them; repository-native indexes are generated or convention-bound
+   listings such as barrel exports, route tables, codeowners, and manifests.
+   Keep unrelated cleanup out of the diff.
+3. Give the changed local context to a fresh reader with no drafting history:
+   an isolated subagent or new session that receives only the artifact named in
+   the Readback field. It must recover the constraint, safe action, and
+   protected boundary without the evidence record or producer explanation. If
+   it cannot, retain the prose, restore the working tree to the pre-edit state,
+   keep the rejected patch out of the deliverable (for example as an unapplied
+   diff or unmerged branch), and return `BLOCK` naming any file the restore
+   could not safely revert.
 
 ## Retire only redundant prose
 
@@ -100,15 +105,17 @@ prose the change makes false; do not replace a reef with a vague summary.
 Run the repository-native formatter, typecheck, lint, tests, generators,
 and documentation checks covering the changed surface. Confirm the
 constraint has a structural owner, a fresh-context readback passes for every
-affected reader, behavior and public contracts match the authorized scope, no
+affected reader context the change touches (file, diff, symbol, or search
+entry), behavior and public contracts match the authorized scope, no
 stale names, imports, paths, or duplicate instructions remain, and the
 diff contains no unauthorized files.
 
-Emit the evidence record and one return code as the last line of the
+Whichever section produced the outcome, including an early `NO-OP` or `BLOCK`,
+end here: emit the evidence record and one return code as the last line of the
 wrap-up report and any PR description:
 
-- `PASS` — the constraint is locally visible, preserved, and covered by
-  the checks above.
+- `PASS` — an authorized structural change made the constraint locally
+  visible, preserved, and covered by the checks above.
 - `NO-OP` — structure already exposes the meaning, or the reef is
   irreducibly non-local and stays documented.
 - `BLOCK` — evidence, checks, or the readback fail to establish the

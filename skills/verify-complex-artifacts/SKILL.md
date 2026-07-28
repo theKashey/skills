@@ -1,6 +1,6 @@
 ---
 name: verify-complex-artifacts
-description: Use before handing off a finished multi-file artifact when requirements, consumer paths, or cross-file relationships need an integrated readiness decision; not for one routine check.
+description: Use for a final verification, review, QA pass, or readiness gate on a finished multi-file artifact before handoff, merge, publication, deployment, or delivery; not for one routine check.
 ---
 
 # Verify Complex Artifacts
@@ -35,9 +35,12 @@ into proof of cause or completion.
    invalidates affected results.
 4. **Keep gate classes distinct.** Deterministic quality checks establish
    machine-testable facts. Factual review checks requirements and source truth.
-   Isolated output-context review checks inferable context, semantic coherence,
-   and process residue. Human acceptance resolves subjective or strategic fit.
-   One class cannot substitute for another.
+   Consumer-surface inspection establishes what the consumer actually sees,
+   runs, and can reach. Isolated output-context review checks inferable
+   context, semantic coherence, and process residue. Human acceptance resolves
+   subjective or strategic fit. One class cannot substitute for another.
+   Security checks belong to the deterministic and factual classes; there is
+   no separate security gate.
 5. **Verify through the consumer surface.** Parse source, but also open, render,
    run, import, install, print, navigate, or recalculate the artifact from the
    entry point its consumer receives.
@@ -49,7 +52,7 @@ into proof of cause or completion.
    drafting history must perform the output-context gate.
 8. **Enforce an unbiased review boundary.** Give the reviewer exactly the final
    target and neutral durable review rules. Give it no producer interpretation,
-   consumer or reader profile, artifact role, layer or rung, source facts,
+   consumer or reader profile, artifact role or layer, source facts,
    validation output, process declaration, expected verdict, intended repair,
    or prior review. It must infer context from the artifact and cite that
    evidence in its verdict.
@@ -121,11 +124,14 @@ For a compound deliverable, state cross-artifact invariants such as:
 - screenshots reflect the shipped interface;
 - schemas, examples, generated clients, and runtime defaults agree.
 
-Inventory every consumer-visible assertion connecting named subjects as
-`source, relation, target, direction, modality, condition`. Verify each edge
-against authoritative contracts for both endpoints or an explicit product
-decision. Repeated prose, co-location, valid links, and internal coherence are
-not evidence for a relationship.
+Inventory every material consumer-visible assertion connecting named subjects
+as `source, relation, target, direction, modality, condition`. Material means
+an edge a consumer could act on: a capability, compatibility, dependency,
+causation, ordering, or ownership claim within the frozen scope. Record the
+bound applied and its exclusions. Verify each inventoried edge against
+authoritative contracts for both endpoints or an explicit product decision.
+Repeated prose, co-location, valid links, and internal coherence are not
+evidence for a relationship.
 
 ### 3. Freeze the factual verification plan
 
@@ -133,7 +139,8 @@ Create a concise verification plan before running checks. It must identify:
 
 - candidate and manifest;
 - consumer, transition, and authoritative sources;
-- requirement and invariant IDs;
+- requirement and invariant IDs, minting short stable IDs when the request
+  supplies none;
 - required factual, deterministic, and consumer-surface checks;
 - severity and pass rules;
 - acceptance questions and decision owners.
@@ -157,9 +164,9 @@ change is requested, locally correct, or covered by a passing proxy check.
 
 Check requirements, authoritative source facts, and cross-artifact invariants
 here. Account for every in-scope requirement or record an explicit exclusion.
-Account separately for every named-subject relationship edge or return
-`BLOCK`, `UNVALIDATED`, or `NEEDS-HUMAN-DECISION` according to the missing
-evidence or authority.
+Account separately for every named-subject relationship edge in the manifest's
+recorded bound or return `BLOCK`, `UNVALIDATED`, or `NEEDS-HUMAN-DECISION`
+according to the missing evidence or authority.
 These checks may use domain skills, source repositories, specifications,
 schemas, and validation output; none of that evidence enters the isolated
 output-context review.
@@ -212,15 +219,17 @@ entry surface. For a compound artifact, provide the delivered bundle itself;
 do not add a producer-authored wrapper or manifest solely for review.
 
 Supply no task summary, scope statement, artifact classification, consumer or
-reader description, role, layer or rung, source facts, validation summary,
+reader description, role or layer, source facts, validation summary,
 process declaration, producer rationale, prior review, expected verdict, or
-intended fix. The reviewer must not consult other sources. It reviews only; it
-does not edit or rewrite the artifact.
+intended fix. The reviewer must not consult other sources; when the harness
+supports tool restriction, limit its tools to reading the supplied target. It
+reviews only; it does not edit or rewrite the artifact.
 
 Require it to infer the subject, consumer or system, task or effect, and process
 status from the target where those are material, and cite target evidence. When
-the target presents independently selectable named subjects, require a separate
-`name: what and why` offer result for each. Do not require a documentation-style
+the target presents independently selectable named subjects, require the
+reviewer's per-subject result row, as specified in the review rules, for each.
+Do not require a documentation-style
 offer from code, spreadsheets, or other artifacts whose consumer surface
 establishes purpose differently. This gate's `PASS` means the output is semantically coherent
 in its own context and free of unjustified process residue. It does not
@@ -276,8 +285,9 @@ Declare the post-generation gate complete only when:
    candidate revision;
 4. every plausible cross-cutting damage signature was tested through its
    owning gate rather than dismissed from producer intent;
-5. every consumer-visible named-subject relationship was inventoried and
-   verified against both endpoint contracts or an explicit product decision;
+5. every material consumer-visible named-subject relationship in the recorded
+   bound was inventoried and verified against both endpoint contracts or an
+   explicit product decision;
 6. primary consumer paths and materially distinct views were exercised;
 7. a fresh output-context review subagent inferred context from only the
    target and neutral rules and returned a valid verdict;

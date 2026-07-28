@@ -40,6 +40,7 @@ def main() -> int:
     if not run([sys.executable, str(VALIDATOR), "--self-test"]):
         return 1
 
+    print("phase: in-place validation", flush=True)
     for package in packages:
         package_license = package / "LICENSE"
         if not package_license.is_file():
@@ -63,6 +64,7 @@ def main() -> int:
         ):
             return 1
 
+    print("phase: standalone-copy validation", flush=True)
     for package in packages:
         with tempfile.TemporaryDirectory(prefix=f"{package.name}-standalone-") as temp:
             copied_root = Path(temp)
