@@ -1,14 +1,21 @@
 # Public contracts, JSDoc, and examples
 
+Types and code can look complete while leaving runtime semantics or a
+non-local constraint invisible, and examples can look usable without proving
+their setup or result. Use this reference to account for those material gaps,
+admit only code-local rationale that protects a real choice, and classify
+examples without paraphrasing mechanics already visible to their reader.
+
 - [Contract checklist](#contract-checklist)
 - [Code-local documentation](#code-local-documentation)
 - [Chesterton's fence test](#chestertons-fence-test)
 - [Example integrity](#example-integrity)
-- [Verification evidence](#verification-evidence)
+- [Source evidence](#source-evidence)
 
 ## Contract checklist
 
-For every stable public option, function, class, type, route, command, or error, document the applicable facts:
+For every stable public option, function, class, type, route, command, or error,
+account for the applicable facts:
 
 | Field | Question |
 | --- | --- |
@@ -22,9 +29,11 @@ For every stable public option, function, class, type, route, command, or error,
 | Boundary | What does it explicitly not authorize, store, validate, or affect? |
 | Example | Does ambiguity remain after the factual contract? If so, show a minimal verified use. |
 
-Do not give every field equal prose. State the smallest precise contract needed for safe use.
-Use a predictable field order and stable terms for comparable entries. Omit
-inapplicable fields rather than filling them with vague prose.
+Readable signatures, types, schemas, generated reference, and existing
+canonical surfaces count as coverage when they expose a fact safely. Do not
+give every field equal prose. Add only the smallest precise explanation needed
+for safe use. Use a predictable field order and stable terms for comparable
+entries. Omit inapplicable fields rather than filling them with vague prose.
 
 ## Code-local documentation
 
@@ -32,22 +41,24 @@ Code, types, names, and nearby tests usually reveal local what and how. Make
 code-local documentation earn its place by preserving public semantics or
 rationale that a selective reader cannot recover reliably. Assume a maintainer
 or coding agent may inspect only one symbol, nearby lines, and search matches
-rather than read every related file.
+rather than read every related file. An unfamiliar effect of a called
+abstraction is not automatically a gap at its caller; that abstraction owns its
+contract and implementation.
 
 Public JSDoc has an additional extracted-reference audience. State what the API
 does when generated documentation or IDE help cannot rely on the implementation
 body, but do not paraphrase information already encoded precisely by the
-signature. Verify the prose on the exposed symbol after barrel re-exports,
-overloads, inheritance, declaration emission, or reference generation; a
-successful build can still lose it.
+signature. At wrap-up, verify the prose on the exposed symbol after barrel
+re-exports, overloads, inheritance, declaration emission, or reference
+generation; a successful build can still lose it.
 
 Read `locality-ladder.md` before choosing placement. The code-specific rungs
 are refined here:
 
 | Locality | Document | Omit |
 | --- | --- | --- |
-| Line | The external constraint, rejected alternative, or failure consequence at the exact decision it governs. | A paraphrase of the expression or branch. |
-| Block | Why ordering, duplication, an unusual algorithm, or a guard is necessary across the statements. | A translation of the statements. |
+| Line | Which non-locally-visible cause makes a selectable, apparently reasonable local alternative unsafe. | A paraphrase of the expression, an inevitable effect of the selected operation, or remote mechanics with no material consequence here. |
+| Block | Why a parallel process, lifecycle state, or other non-local invariant rules out an apparently reasonable reordering, omission, algorithm, or guard. | A translation of the statements or an imagined alternative that current interfaces do not permit. |
 | File | Why the file exists, the boundary it owns, and a non-obvious relationship to another subsystem. | A tour of declarations or imports. |
 | Exported symbol JSDoc | Purpose and public semantics the signature cannot encode: runtime defaults, failures, lifecycle, ownership, security boundaries, and important interactions. | Type narration, implementation history, or a duplicate reference page. |
 
@@ -55,21 +66,46 @@ Internal symbols need no JSDoc by default. Extractability alone does not justify
 low-value prose. Exported-symbol JSDoc is a public-contract surface layered on a
 symbol; it does not sit between file and block in the locality ladder.
 
-### Selective-context test
+### Selective-context authoring decision
 
-Review code-local documentation as if only the changed symbol, nearby lines,
-and search matches were visible:
+Before writing code-local documentation, work as if only the changed symbol,
+nearby lines, and search matches were visible:
 
-1. Identify the important purpose, invariant, ownership boundary, or rejected
-   alternative that disappears from that view.
-2. Name the plausible but incorrect edit its absence could invite.
-3. Place the smallest durable explanation at the decision the fact protects.
-4. Remove the comment when clearer code, a type, or the same local context makes
-   it reliably recoverable.
+1. Name the code decision available at this site.
+2. Identify an alternative that is selectable and appears reasonable under the
+   types, interfaces, control flow, and established patterns visible here. An
+   imagined redesign is not enough.
+3. Establish the implementation detail, parallel process, lifecycle state,
+   past event, or future event that is not locally visible and makes that
+   alternative unsafe. State its material consequence here.
+4. Confirm that this site owns the choice. If the fact only explains how a
+   called abstraction stores, emits, or implements the selected operation, do
+   not comment its caller. If remote behavior constrains a distinct caller-owned
+   choice, preserve only the causal edge and local consequence that remain true
+   while the remote implementation changes under the same contract. Keep deeper
+   mechanics with their owner.
+5. Protect the verified constraint in the completed result. Ask whether clearer
+   names, code, types, API shape, or structure can make the choice and
+   consequence locally recoverable:
+   - When that change is already authorized and in scope, prefer the visible
+     constraint and remove only the prose made redundant.
+   - Otherwise, place the smallest durable explanation at the decision and
+     report the clarity opportunity when it is useful.
+   - Do not turn every admitted fence into a refactoring task. Clear mechanics
+     may still carry non-local system meaning that code at this site cannot
+     expose.
 
-A comment passes when it exposes information unavailable locally, prevents a
-concrete plausible mistake, sits beside the governed decision, and remains true
-when incidental implementation details change.
+Write the comment only when evidence establishes a locally selectable,
+apparently reasonable alternative and the non-visible cause that makes it
+unsafe. Missing local information alone is insufficient: inevitable behavior,
+callee semantics without a separate local consequence, and hypothetical
+alternate architectures do not create a comment obligation.
+
+Documentation clustered around an area is evidence of uncertainty, not proof
+of bad code. It may reveal accidental opacity, essential concurrency or
+lifecycle complexity, or an irreducibly non-local influence. Apply the
+authoring decision to each encountered fence rather than creating an automatic
+comment-removal or refactoring queue.
 
 Useful rationale connects a constraint to its non-local cause and, when useful,
 the consequence of the apparent alternative. This illustrative comment omits
@@ -85,14 +121,42 @@ const digest = hash(canonicalize(entries));
 `Sort before hashing` would merely narrate the code. The example preserves the
 cross-adapter reason a local scan would otherwise miss.
 
+Business logic more often explains itself. A guard such as
+`if (order.isCancelled) return` needs no comment when the domain state and
+surrounding policy already reveal why processing stops.
+
+At orchestration level, a future observation in another process can create a
+fence here:
+
+```ts
+// Publish the index before exposing its pointer; readers resolve new pointers immediately.
+await publishIndex(next);
+await switchPointer(next.id);
+```
+
+Both orders may be locally selectable. The comment preserves the non-local
+reader behavior and its consequence here, not the reader process's mechanics.
+
+By contrast, this call needs no comment saying that timings are stored on the
+end event:
+
+```ts
+await endMeasurement(0, { timings });
+```
+
+That statement would describe the selected abstraction's contract, not a
+caller-owned choice. If the contract is unclear, its owning API is the
+documentation location.
+
 ### Chesterton's fence test
 
 When the reason for code's existence or present form is unknown, treat it as a
 Chesterton's fence:
 
 1. Inspect history, callers, tests, runtime effects, and neighboring invariants.
-2. If the rationale is verified, explain its non-local cause and consequence at
-   the governed decision.
+2. If the rationale is verified, return to the selective-context authoring
+   decision. Add prose only when a locally reasonable alternative, non-visible
+   cause, material consequence, and local owner pass that gate.
 3. If the rationale remains unknown and the knowledge gap is accepted, add an
    explicit `TODO` or `FIXME` recording that uncertainty.
 
@@ -100,7 +164,7 @@ Never replace missing knowledge with invented rationale.
 
 ## Example integrity
 
-Classify each fenced sample before publication:
+At wrap-up, classify each fenced sample before publication:
 
 | Status | Requirement |
 | --- | --- |
@@ -123,12 +187,12 @@ For runnable samples:
 - state expected behavior and meaningful limitations outside the code fence.
 
 If the repository has no snippet harness, documentation build, or suitable
-example test, do not infer that a sample is runnable. Validate as much as the
-repository permits, then classify the sample Illustrative or Partial unless it
-has been independently executed unchanged. Report the missing harness as an
-open maintenance risk.
+example test, do not infer that a sample is runnable. At wrap-up, validate as
+much as the repository permits, then classify the sample Illustrative or
+Partial unless it has been independently executed unchanged. Report the missing
+harness as an open maintenance risk.
 
-## Verification evidence
+## Source evidence
 
 Treat source, exported types, tests, generated artifacts, and approved decisions as evidence. Record enough source evidence in the task handoff that another maintainer can re-check contested claims.
 

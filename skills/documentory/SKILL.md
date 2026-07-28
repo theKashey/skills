@@ -1,47 +1,56 @@
 ---
 name: documentory
-description: Use when creating, revising, auditing, or maintaining technical documentation, or when documentation needs to help its reader understand a subject, make a safe decision, and act.
+description: Use when creating, revising, auditing, or maintaining technical documentation, including recovering and placing verified explanations for constraints, boundaries, relationships, or structures whose reasons are not visible.
 ---
 
 # Documentory
 
-Establish whether a material reader gap requires documentation. When it does,
-create, revise, audit, or maintain the lowest authorized README, reference,
-example, public contract, or code-local rationale that owns the verified truth.
-Preserve only the context that raw code cannot safely provide, and leave the
-finished result publishable. When no gap remains, add nothing.
+Document fences: recover and preserve the verified reason for a choice,
+constraint, boundary, relationship, or structure when that reason is not
+visible where a reader encounters it. Document reefs, not cliffs—keep the
+hidden why and consequence, not mechanics already in view. Use locality to
+leave each explanation at the narrowest authorized surface every affected
+reader naturally encounters before deciding or acting. When no material gap
+remains, add nothing.
 
 ## Universal laws
 
-1. **Describe the finished state.** Current documentation represents what is
+1. **Document fences; preserve reefs, not cliffs.** Explain the verified cause
+   that is not locally visible and the material constraint it creates here. The
+   cause may live in lower-level implementation, another process, or an earlier
+   or later event. Preserve its local consequence, not remote mechanics. The
+   hidden reason may govern a code-local choice or a wider purpose, contract,
+   failure, interaction, or ownership boundary. Phrase a remote cause at the
+   stable contract edge that remains true while its implementation changes. Do
+   not transcribe mechanics already visible at the reader's encounter.
+2. **Ground claims; never invent.** During authoring, use source, exported
+   types, tests, generated artifacts, or an explicit product decision as
+   evidence. An unexplained Chesterton's Fence triggers investigation, not a
+   plausible story. Put evidence beside evaluative or comparative claims.
+3. **Describe the finished state.** Current documentation represents what is
    true when the requested work is complete, not the temporary state or
-   sequence used to get there. At exit, verify that account against the
+   sequence used to get there. At wrap-up, verify that account against the
    finished code and artifacts. Changelogs, migration guides, and release
    documentation explain what changed or used to be true.
-2. **Verify; never invent.** Check source, exported types, tests, generated
-   artifacts, or an explicit product decision. Put evidence beside evaluative
-   or comparative claims.
-3. **Offer before diagnosis; orient before mechanism.** Open a reader-facing
-   surface or collection with the subject's name, what it provides, and why the
-   reader would use it. Put detailed situation, problem, and impact selection
-   context after that simple offer. Before methodology, taxonomy, workflow, or
-   components, establish the relevant pressure, affected reader or system,
-   intended observable effect or changed decision, and boundary at the
-   subject's owning section. A compact catalog entry needs `name: what and why`;
-   its chooser or owning section carries the fuller selection context. A parent
-   summary does not replace local orientation on a standalone subject page.
-4. **Mark reefs, not cliffs.** Describe invisible behavior, conditions,
-   boundaries, failures, and interactions a reader can miss at that rung. Do
-   not merely gesture at them, and do not explain mechanics already visible
-   there.
+4. **Lead with reader-relevant why; orient before mechanism.** Open a
+   reader-facing surface with the pressure, consequence, responsibility,
+   supported outcome, boundary, or changed decision its entering reader needs.
+   Make the governed subject and capability inferable, but do not let artifact
+   self-description displace the reason to care. A compact chooser or catalog
+   entry uses `name: what and why` so a reader can select among subjects. Before
+   methodology, taxonomy, workflow, or components, establish the affected
+   reader or system, intended observable effect or changed decision, and
+   boundary at the subject's owning section. A parent summary does not replace
+   local orientation on a standalone subject page.
 5. **Make a map, not a transcript.** Select and relate the present truths the
    reader needs; do not mirror the implementation. Add the different angle
    appropriate to the rung: technical orientation, system responsibility, or
    non-obvious local why.
-6. **Match scope, reader, and placement.** Place each fact at the lowest
-   documentation layer that contains every decision, task, or boundary it
-   governs. Assume only context available at that layer; orient upward or link
-   downward instead of duplicating detail.
+6. **Place fence explanations locally.** Put each verified hidden reason at the
+   narrowest authorized documentation layer every affected reader, including a
+   coding agent working from selective context, naturally encounters before the
+   decision, task, or boundary it governs. Assume only context available at
+   that layer; orient upward or link downward instead of duplicating detail.
 7. **Earn every surface.** Apply the [locality ladder's existence
    gate](references/locality-ladder.md#existence-gate) before adding a README,
    page, reference, or comment. Add nothing when it finds no material reader
@@ -56,12 +65,15 @@ finished result publishable. When no gap remains, add nothing.
 10. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support.
-11. **Leave a publishable result.** Meet the [end-state exit
-    gate](references/quality-maintenance.md#end-state-exit-gate); an accepted
-    gap remains an explicit `TODO` or `FIXME`.
-12. **Prove route-specific completion.** Apply the completion checks named by
-    the active route and report evidence, exclusions, untested assumptions, and
-    remaining risks.
+11. **Leave non-inline documentation publishable.** At wrap-up, meet the
+    [end-state exit
+    gate](references/quality-maintenance.md#end-state-exit-gate). Code-local
+    gaps follow the code-local authoring route, not this gate.
+12. **Review once at wrap-up.** Use source evidence while authoring, but run
+    documentation review and deterministic documentation completion checks only
+    after the in-scope implementation and documentation are complete. Review
+    the final non-inline documentation once. Never review line, block, or file
+    comments.
 13. **Keep construction outside the document.** Document the governed subject,
     not the process used to document it. Do not publish generic claims about
     why a document exists, its maintenance role, or the drafting, review, or
@@ -97,13 +109,18 @@ Apply another path only when its artifact is also in scope.
 
 ## Create or revise current documentation
 
+Close a material gap for the named reader in an existing or authorized
+non-inline surface so the completed purpose, behavior, boundary, and next route
+are safely recoverable. Do not create a surface or publish work-in-progress
+merely to satisfy this path.
+
 1. Establish the verified starting truth and the authorized state expected when
    the work is complete from package metadata, public exports, types,
    configuration, defaults, errors, tests, explicit decisions, and
    repository-native documentation tooling. Write current documentation toward
-   that completed state, then verify that the finished implementation matches
-   it. Do not publish a mid-process snapshot or treat an example, private
-   helper, or identifier name as proof of public behavior.
+   that completed state. At wrap-up, verify that the finished implementation
+   matches it. Do not publish a mid-process snapshot or treat an example,
+   private helper, or identifier name as proof of public behavior.
 2. Before adding a surface or comment, establish a material reader gap. If
    readable code, types, tests, metadata, local context, or an existing
    canonical surface already lets that reader act safely, add nothing; do not
@@ -161,8 +178,8 @@ Apply another path only when its artifact is also in scope.
 8. For a public documentation home, start with the documentation reader's
    subject, available navigation, and route to the relevant tutorial, how-to,
    explanation, or reference. Browser delivery does not make it a product
-   presentation page. Validate a documentation-navigation or reference task,
-   not a browser-product conversion path.
+   presentation page. At wrap-up, validate a documentation-navigation or
+   reference task, not a browser-product conversion path.
 9. For an internal folder, package, module, domain, or service surface that is
    the right owner, start with technical why: its responsibility in the
    containing system, owned boundary, interactions, and constraints. Do not
@@ -170,21 +187,27 @@ Apply another path only when its artifact is also in scope.
    unit is independently published and that instruction is necessary for its
    technical reader.
 10. Write the minimum sufficient explanation. For a repository, collection, or
-   other chooser surface, present the offering first in `name: what and why`
-   form, then provide the situation, problem, impact, and boundary that help the
-   reader select it. Before internal mechanism, make that fuller selection
-   context inferable at each independently selectable subject's owning section.
-   A compact catalog entry does not need to carry the full diagnosis. Put
-   evidence beside evaluative or comparative claims. Add material only when it
-   enables a priority task, closes a contract or operational risk, or makes an
-   example safe. Apply a deletion test to everything else.
+    other chooser surface, lead with why that collection matters to its reader,
+    including any organizing relationship needed to interpret it. Present each
+    independently selectable subject in compact `name: what and why` form. Before
+    internal mechanism, make the fuller situation, impact, and boundary
+    inferable at each subject's owning section. A compact catalog entry does not
+    need to carry the full diagnosis. Put evidence beside evaluative or
+    comparative claims. Add material only when it enables a priority task,
+    closes a contract or operational risk, or makes an example safe. Apply a
+    deletion test to everything else.
 11. For API or configuration reference, continue with [Document a public
    contract](#document-a-public-contract). For an example inside another
    document, read the example section of `references/api-jsdoc-examples.md` and
-   apply only steps 6–7 of that procedure. Then finish with [Verify every
-   completed path](#verify-every-completed-path).
+   apply only steps 6–7 of that procedure. Defer review and deterministic
+   documentation checks until [Review documentation at
+   wrap-up](#review-documentation-at-wrap-up).
 
 ## Document a public contract
+
+Make material public semantics safely recoverable by the contract's consumer at
+their canonical owner. Account for every stable item without paraphrasing
+source-owned truth or creating an unauthorized surface.
 
 1. Inventory every stable public option, export, route, command, relevant
    error, and example in scope. Determine stability from declared package
@@ -192,10 +215,12 @@ Apply another path only when its artifact is also in scope.
    policy, or an explicit product decision. Treat unclear accidental or
    experimental status as a decision gap, not a silent exclusion.
 2. Read `references/locality-ladder.md` to choose the canonical owner, then
-   `references/api-jsdoc-examples.md`. For each public item, document the
+   `references/api-jsdoc-examples.md`. For each public item, account for the
    applicable purpose, use case, inputs, required or default state, observable
-   behavior, failures, interactions, and boundary. Use the smallest precise
-   contract; do not give every field equal prose.
+   behavior, failures, interactions, and boundary. Treat readable signatures,
+   types, schemas, generated reference, and existing canonical surfaces as
+   coverage when they expose those semantics safely. Add the smallest precise
+   prose only for a material contract gap; do not give every field equal prose.
 3. Put each detailed fact in one existing canonical surface. Orient and link
    elsewhere. Do not create a new reference page, folder, or navigation entry
    unless the user authorized it. When a README is the only public surface, let
@@ -204,73 +229,96 @@ Apply another path only when its artifact is also in scope.
    such as runtime defaults, errors, lifecycle, ownership, security boundaries,
    and important interactions. Do not paraphrase types or duplicate the
    reference manual.
-5. For public JSDoc or TSDoc, verify that the semantics appear on the actual
-   exported symbol through re-exports, overloads, inheritance, and the
-   repository's generated-reference, emitted-declaration, or IDE-visible
+5. For public JSDoc or TSDoc, at wrap-up verify that the semantics appear on
+   the actual exported symbol through re-exports, overloads, inheritance, and
+   the repository's generated-reference, emitted-declaration, or IDE-visible
    surface. A successful code or documentation build alone is not proof.
 6. Explain a non-trivial example before its code: state the reader goal,
    prerequisites, and why its meaningful choices exist. Keep runnable code
    complete and free of commentary readers must delete. After it, state the
    result, relevant limit, and next path.
-7. Classify each sample as Runnable, Illustrative, Partial, or Pseudocode using
-   the reference requirements. Never call a sample Runnable unless it was
-   validated unchanged with its imports, setup, public names, options, and
-   expected behavior.
-8. Account for every inventoried item or record an explicit, justified
-   exclusion. Then finish with [Verify every completed
-   path](#verify-every-completed-path).
+7. At wrap-up, classify each sample as Runnable, Illustrative, Partial, or
+   Pseudocode using the reference requirements. Never call a sample Runnable
+   unless it was validated unchanged with its imports, setup, public names,
+   options, and expected behavior.
+8. During authoring, record explicit, justified exclusions as they are
+   identified. Defer inventory accounting, review, and deterministic
+   documentation checks until [Review documentation at
+   wrap-up](#review-documentation-at-wrap-up).
 
 ## Document code-local rationale
+
+Protect a maintainer or coding agent from an unsafe local edit by preserving an
+admitted non-local cause at the decision it governs. Add nothing for visible
+mechanics, and never turn this path into documentation review.
 
 1. Inspect the governed symbol or block, nearby lines, relevant types and tests,
    and search matches. Assume the next maintainer or coding agent may see only
    that selective context.
-2. Identify the important non-local purpose, invariant, ownership boundary, or
-   rejected alternative missing from that view. Name the plausible but wrong
-   edit its absence could invite. If neither hidden rationale nor unexplained
-   code exists, add no comment.
+2. Read `references/locality-ladder.md`, then apply the canonical
+   selective-context authoring decision in the code-local documentation section
+   of `references/api-jsdoc-examples.md`. It owns detailed admission, remote
+   ownership, stability, and reef-to-cliff disposition. If it rejects prose,
+   add no comment.
 3. Treat code whose reason for existing or taking its present form is unknown as
    a Chesterton's fence. Search history, callers, tests, runtime effects, and
-   neighboring invariants for its rationale.
-4. Read `references/locality-ladder.md`, then the code-local documentation
-   section of `references/api-jsdoc-examples.md`. Place the smallest durable
-   explanation at the line, block, or file rung that governs the decision.
-   Treat exported-symbol JSDoc as a public-contract overlay, not another
-   locality rung.
-5. If evidence verifies the reason, explain the non-local cause and relevant
-   consequence. Do not narrate visible mechanics.
+   neighboring invariants for its rationale, then return to the canonical
+   admission decision. Discovering a reason does not by itself justify prose.
+4. Place an admitted explanation at the line, block, or file rung that owns the
+   decision. Treat exported-symbol JSDoc as a public-contract overlay, not
+   another locality rung.
+5. Protect the verified constraint in the completed result. When a code, type,
+   API, or structural change that makes the meaning locally visible is already
+   authorized and in scope, prefer that cliff and remove only the prose it makes
+   redundant. Otherwise retain the smallest fence explanation and report the
+   clarity opportunity when useful. Do not turn every admitted fence into a
+   refactoring task.
 6. If the reason remains unknown and the gap is accepted, record that
    uncertainty with an explicit `TODO` or `FIXME`. Do not manufacture rationale.
-7. Remove rationale when clearer code, a type, or the same local context makes
-   it reliably recoverable. Internal symbols need no JSDoc by default. Finish
-   with [Verify every completed path](#verify-every-completed-path).
+7. Internal symbols need no JSDoc by default. Stop after the evidence-backed
+   local disposition is complete. Do not run documentation review or completion
+   checks for line, block, or file comments, during authoring or at wrap-up.
 
 ## Audit documentation
 
-1. State the audit mode and scope. For a change-set audit, inventory every
-   changed public item and affected surface. For a completeness audit, inventory
-   every stable public item and relevant surface in the stated boundary.
-   Establish current truth, canonical facts, examples, code-local rationale,
-   and repository-native verification commands.
+Decide whether finished non-inline documentation agrees with its current
+contract and lets its named reader act safely. Report evidence, coverage, and
+remaining risk without editing a review-only scope or inspecting line, block,
+or file comments.
+
+1. Run this path only at final work wrap-up or release, or when the user
+   explicitly requests a non-inline documentation audit or review; that request
+   is the wrap-up task. State the audit mode and scope. For a change-set audit,
+   inventory every changed public item and affected non-inline surface. For a
+   completeness audit, inventory every stable public item and relevant
+   non-inline surface in the stated boundary. Establish current truth,
+   canonical facts, examples, and repository-native verification commands.
+   Exclude line, block, and file comments. Exported-symbol JSDoc remains a
+   public-contract surface.
 2. Read `references/locality-ladder.md` and
    `references/quality-maintenance.md`. When the scope includes a README,
    tutorial, how-to, explanation, or reader path, also read
    `references/content-architecture.md`. When it includes a public contract,
-   configuration reference, JSDoc or TSDoc, examples, or code-local rationale,
-   also read `references/api-jsdoc-examples.md`. Compare the evidence with the
+   configuration reference, JSDoc or TSDoc, or examples, also read
+   `references/api-jsdoc-examples.md`. Compare the evidence with the
    documentation for currentness, contract coverage, locality fit, minimum
    sufficient explanation, reader paths, claim evidence, example integrity,
-   context resilience, and navigation health.
-3. Distinguish present-contract defects from missing change history and from
-   missing code-local rationale. Do not recommend the same prose in all three
-   places.
+   and navigation health.
+3. Distinguish present-contract defects from missing change history. Do not
+   recommend the same prose in both places.
 4. Report evidence and counts by surface, plus intentional exclusions, untested
    assumptions, and remaining risks. Do not claim completeness from tone,
    length, or a generic readability score.
 5. Do not edit during a review-only request. If changes are authorized, route
-   each defect to the applicable procedure above before editing.
+   each defect to the applicable procedure above before editing. Use [Review
+   documentation at wrap-up](#review-documentation-at-wrap-up) as this path's
+   completion procedure.
 
 ## Document a change
+
+Keep the current contract and any historical transition accurate for affected
+readers by routing each verified impact to its canonical time domain and
+existing or authorized surface.
 
 1. Inspect the changed behavior and its evidence. Determine whether it affects
    public exports, types, configuration, defaults, CLI, routes, errors,
@@ -287,15 +335,26 @@ Apply another path only when its artifact is also in scope.
    material.
 4. Use only existing or explicitly authorized surfaces. Route current-contract,
    public-API, and code-local updates through their procedures above.
-5. Read `references/quality-maintenance.md`, perform the applicable drift and
-   release checks, and finish with [Verify every completed
-   path](#verify-every-completed-path).
+5. Record the affected non-inline documentation during the work. At wrap-up,
+   read `references/quality-maintenance.md`, perform the applicable drift and
+   release checks, and use [Review documentation at
+   wrap-up](#review-documentation-at-wrap-up).
 
-## Verify every completed path
+## Review documentation at wrap-up
 
-For audits, release preparation, or work spanning multiple documentation
-surfaces, read `references/quality-maintenance.md` for the complete scorecard.
-For every completed path, verify the applicable minimum:
+Establish whether the completed non-inline documentation is publishable for its
+named readers, and expose any unverified assumption or remaining risk.
+
+Run this procedure once, only after the in-scope implementation and
+documentation are complete. A user request specifically for a non-inline
+documentation audit or review is itself a wrap-up task. Never invoke this
+procedure on intermediate work. Exclude line, block, and file comments,
+including from wrap-up review.
+
+For audits, release preparation, or work spanning multiple non-inline
+documentation surfaces, read `references/quality-maintenance.md` for the
+complete scorecard. For the final non-inline documentation, verify the
+applicable minimum:
 
 1. Check the completed behavior against code, types, tests, generated artifacts,
    or an approved product decision.
@@ -304,24 +363,20 @@ For every completed path, verify the applicable minimum:
    every changed or affected item.
 3. Confirm that each unit in scope gives its reader enough relevance, behavior,
    evidence, and boundary to act without unsafe inference.
-4. Confirm that code-local prose preserves necessary non-local context without
-   narrating visible mechanics. Every Chesterton's fence in scope has either a
-   verified rationale or an explicit accepted `TODO` or `FIXME` recording that
-   its rationale is unknown.
-5. Confirm that public JSDoc or TSDoc semantics remain attached to the intended
+4. Confirm that public JSDoc or TSDoc semantics remain attached to the intended
    exported symbol in the actual extracted or IDE-visible surface.
-6. Build or typecheck examples and documentation when supported. Validate the
+5. Build or typecheck examples and documentation when supported. Validate the
    primary path from its documented starting state: the stated technical task
    for any README; a web-native visitor action for a public website landing
    page; a documentation-navigation or reference task for a public
    documentation home; entry points and technical workflows for an internal
    surface. Otherwise report the assumptions that remain untested.
-7. Check links, code-fence status, terminology, defaults, historical leakage,
+6. Check links, code-fence status, terminology, defaults, historical leakage,
    mid-process wording, and copy-paste integrity.
-8. Apply the [end-state exit
+7. Apply the [end-state exit
    gate](references/quality-maintenance.md#end-state-exit-gate).
-9. Report updated surfaces, intentional omissions, validation run, counts,
-   gate result, remaining risks, and future maintenance triggers.
+8. Report updated surfaces, intentional omissions, validation run, counts,
+   wrap-up result, remaining risks, and future maintenance triggers.
 
 Prefer repository-native link, documentation-build, typecheck, doctest, and
 example commands. Add custom automation only after repeated use shows that a

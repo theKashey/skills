@@ -1,5 +1,12 @@
 # Quality and maintenance
 
+Non-inline documentation can look complete while stale contracts, broken reader
+paths, or copied remote mechanics remain. Use this reference at final wrap-up
+or release to decide from evidence whether the finished documentation is
+publishable and to expose any remaining risk. An explicit non-inline
+documentation audit or review is itself this final task. This reference never
+applies to line, block, or file comments.
+
 - [Evidence scorecard](#evidence-scorecard)
 - [Audit questions](#audit-questions)
 - [Change triggers](#change-triggers)
@@ -12,14 +19,15 @@ Report documentation quality with evidence and counts.
 
 | Gate | Pass condition |
 | --- | --- |
-| Currentness | At exit, checked evidence shows no contradiction between the documented finished state and the completed exports, types, defaults, routes, tests, or supported versions in scope. |
-| Offering clarity | The document opens with the governed subject or collection in plain `name: what and why` form. Every compact catalog entry names what the subject provides and why the reader would choose it before diagnosis or mechanism. |
-| Selection context and impact | After the simple offer and before methodology, workflow, taxonomy, or components, the intended reader can infer the relevant situation or pressure, affected party or system, observable impact or changed decision, and boundary. A chooser may own this context for compact catalog entries; a standalone subject page and a detailed owning section orient themselves locally. |
-| Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is documented in an authorized existing surface or has an explicit justified exclusion. |
+| Currentness | At wrap-up, checked evidence shows no contradiction between the documented finished state and the completed exports, types, defaults, routes, tests, or supported versions in scope. |
+| Entry relevance | The document opens with the pressure, consequence, responsibility, supported outcome, boundary, or changed decision its entering reader needs while keeping the governed subject inferable. Every compact chooser or catalog entry names the subject, what it provides, and why the reader would choose it before mechanism. |
+| Selection context and impact | Before methodology, workflow, taxonomy, or components, the intended reader can infer the relevant situation or pressure, affected party or system, observable impact or changed decision, and boundary. A chooser may own this context for compact catalog entries; a standalone subject page and a detailed owning section orient themselves locally. |
+| Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is accounted for by a discoverable canonical source or has an explicit justified exclusion; prose fills only material semantic gaps. |
 | Relationship coverage | Every consumer-visible assertion connecting named subjects is inventoried by source, relation, target, direction, modality, and condition, then verified against authoritative contracts for both endpoints or an explicit product decision. Internal coherence, co-location, and repeated prose are not evidence. |
 | Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. |
 | Surface necessity | The surface passes the [locality ladder's existence gate](locality-ladder.md#existence-gate). |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
+| Remote-truth stability | Non-inline prose that depends on another owner preserves a stable contract or causal edge and its local consequence; it does not narrate remote mechanics that can change independently. |
 | Scan-path usability | The named reader can identify the document's purpose, task or destination from headings and links, primary path, and next useful detail without relying on decorative formatting. For a public website presentation page, a browser visitor can identify the intended context, supported outcome, and first verified action; any boundary needed to avoid a likely false expectation appears before it matters. For a public documentation home, a reader can find the relevant topic or exact fact without a product-presentation detour. For a README, the named technical reader can identify the governed scope, boundary, and route for their task without marketing posture. |
 | Locality fit | Each fact has a canonical owner at the narrowest governed scope visible to affected readers; overlapping physical and logical roles are explicit rather than duplicated or forced apart. |
 | Entry-point validity | Commands, links, paths, prerequisites, and assumed context work from the documented starting state; any additional access or knowledge is explicit. |
@@ -28,11 +36,8 @@ Report documentation quality with evidence and counts.
 | Example integrity | Every fenced example is runnable and validated, illustrative and syntax-checked, partial with stated omissions, or explicitly pseudocode. |
 | Intent clarity | Different reader questions remain distinguishable within the existing structure; mixed intent may be reported as an optional split candidate. |
 | Progressive disclosure | Each surface orients its named reader at its governed scope; detailed facts remain at their canonical owner and are reached through contextual links. |
-| Context resilience | A maintainer seeing only the changed symbol, nearby lines, and search matches can identify the non-local purpose, invariant, ownership boundary, or prohibited simplification required for a safe change. |
-| Comment discipline | New code-local documentation preserves public semantics hidden by the signature or non-obvious why and why-not; none narrates mechanically recoverable behavior. |
-| Fence visibility | Every Chesterton's fence in scope has either a verified rationale at the governed decision or an explicit accepted `TODO` or `FIXME` recording that its rationale is unknown. |
 | Navigation health | Links resolve; docs build where supported; essential pages are not orphaned; facts needed to act are not available only through a visual. |
-| Publishable end state | Documentation and code represent the completed result and require no cleanup operation to remove draft scaffolding, temporary caveats, or promises of future completion. Any accepted gap is an explicit `TODO` or `FIXME` comment. |
+| Publishable end state | Non-inline documentation represents the completed result and requires no cleanup operation to remove draft scaffolding, temporary caveats, or promises of future completion. |
 
 Record evidence capable of falsifying qualitative judgments. Use a task-local
 table such as:
@@ -50,16 +55,18 @@ For the judgment-heavy gates, record the observation:
 - **Reader path:** starting state, task attempted, and observed result.
 - **Progressive disclosure:** canonical detail owner and the route used to
   reach it.
-- **Context resilience:** the non-local fact and plausible wrong edit its
-  absence would invite.
-- **Offering clarity:** one row per independently selectable subject with its
-  name, what it provides, why a reader would choose it, and offer location.
+- **Entry relevance:** the reader-relevant pressure, consequence,
+  responsibility, supported outcome, boundary, or changed decision in the
+  opening; for each independently selectable catalog subject, also record its
+  name, capability, selection value, and entry location.
 - **Selection context and impact:** one row per subject with its situation or
   pressure, affected party or system, intended impact or changed decision,
   boundary, and selection-context location.
 - **Relationship coverage:** verified edges over total edges, authoritative
   evidence for both endpoints or the explicit product decision, and every
   exclusion.
+- **Remote-truth stability:** remote owner, stable contract or causal edge,
+  local consequence, and the implementation detail deliberately omitted.
 
 Do not replace this with word counts, generic readability scores, or a claim that documentation looks good.
 
@@ -89,8 +96,8 @@ every section and public item in that stated scope:
 5. Is this fact duplicated elsewhere, and which location is canonical?
 6. What source evidence verifies it? For an evaluative or comparative claim, is the evidence adjacent and are its conditions clear?
 7. Which ladder rung contains everything this fact governs, and is the current surface serving that role rather than a broader or narrower one?
-8. What material named-reader gap justifies this surface or comment? If readable
-   code, types, tests, metadata, local context, or an existing canonical surface
+8. What material named-reader gap justifies this surface? If readable code,
+   types, tests, metadata, local context, or an existing canonical surface
    already covers it, should no addition—or a deletion—be the result?
 9. Can the named reader—stranger, developer, coding agent, coder, maintainer,
    integrator, operator, administrator, support engineer, end user, or browser
@@ -99,21 +106,24 @@ every section and public item in that stated scope:
 10. From where does the intended reader encounter this document, and which context, paths, credentials, tools, or prerequisites are actually available there?
 11. If the primary reader path changed, was it checked from its stated starting state, and which assumptions remain untested?
 12. For a procedure, does the heading state the task and does each step give one meaningful action after its necessary location, condition, and warning? For a tutorial, can the reader see its meaningful checkpoints?
-13. For code-local prose, which fact would disappear if the reader saw only the changed symbol and search matches, and what plausible wrong edit does it prevent?
-14. Could this state enter its intended review, merge, or publication without editing away a temporary caveat, placeholder, draft marker, or promise about what will happen later?
-15. Where is the reason for code's existence or present form unknown? What evidence supplies the missing rationale, or which explicit `TODO` or `FIXME` records the uncertainty?
-16. What is the semantic subject, distinct from the artifact role? Does the
-    opening state its name, what it provides or owns, and why the reader would
-    use it before diagnosis, document, production, or internal mechanics?
-17. Which independently selectable named subjects have their own entry point?
+13. Could this state enter its intended review, merge, or publication without editing away a temporary caveat, placeholder, draft marker, or promise about what will happen later?
+14. What does the entering reader need to care about before mechanism? Does the
+    opening lead with that pressure, consequence, responsibility, supported
+    outcome, boundary, or changed decision while keeping the governed subject
+    inferable?
+15. Which independently selectable named subjects have their own entry point?
     Does each compact catalog entry provide `name: what and why`? After that
-    offer and before internal method or parts, can the reader recover the
-    relevant situation or pressure, affected party, intended impact or
-    decision, and boundary from its chooser or owning section? Does every
-    standalone subject page orient itself locally?
-18. Which statements connect two named subjects? For each directed, reciprocal,
+    entry and before internal method or parts, can the reader recover the
+    relevant situation or pressure, affected party, intended impact or decision,
+    and boundary from its chooser or owning section? Does every standalone
+    subject page orient itself locally?
+16. Which statements connect two named subjects? For each directed, reciprocal,
     shared-property, conditional, or negative edge, what authoritative contract
     for both endpoints or explicit product decision establishes it?
+17. Which non-inline statements describe behavior owned elsewhere? Would each
+    remain true if that implementation changed without changing its contract,
+    and does the statement preserve a material consequence here rather than
+    remote mechanics?
 
 Flag bare verbs such as supports, handles, claims, configure, use, secure, or works when nearby text does not supply behavior, condition, and boundary.
 
@@ -135,7 +145,7 @@ Choose one result and record the evidence:
 
 - update current docs;
 - update changelog or migration docs;
-- update JSDoc or code-local rationale;
+- update public JSDoc or other non-inline documentation;
 - no user-facing documentation impact.
 
 ## End-state exit gate
@@ -152,12 +162,6 @@ Reject a result that requires another edit merely to:
 - delete draft labels, placeholders, commented-out scaffolding, or instructions
   to finish the work later;
 - reveal content that was intentionally hidden during implementation.
-
-An explicit `TODO` or `FIXME` comment may remain when it deliberately accepts a
-gap. Keep it recognizable as debt and local to the affected code; do not turn
-the gap into ordinary prose that makes incomplete behavior appear complete. For
-an unresolved Chesterton's fence, this marker records missing knowledge; it is
-not a rationale.
 
 A supported transitional state in the finished product is not implementation
 residue. Document it when it is part of the verified contract.
@@ -176,6 +180,8 @@ At release cadence:
 3. Run repository-native docs builds, link checks, type checks, doctests, or example tests.
 4. Search current documentation for legacy names and historical wording that should be in migration material.
 5. Re-check that public defaults, errors, supported versions, and security boundaries match source.
-6. Apply the end-state exit gate before declaring the documentation releasable.
+6. Re-check non-inline statements about another owner against the stable
+   contract they depend on; remove narration of remote mechanics.
+7. Apply the end-state exit gate before declaring the documentation releasable.
 
 Prefer generated inventory or repository-native documentation tooling. Introduce a maintained API map only if coverage cannot otherwise be derived, because every additional index is another drift risk.

@@ -166,9 +166,9 @@ available navigation, and a route to the relevant tutorial, how-to, explanation,
 or reference. Browser delivery does not make it a product presentation page or
 give it a conversion goal.
 
-Validate that the reader can navigate to a relevant topic or locate an exact
-fact from the stated entry. Keep product evaluation and browser-product actions
-on a separately classified public website presentation page.
+At wrap-up, validate that the reader can navigate to a relevant topic or locate
+an exact fact from the stated entry. Keep product evaluation and browser-product
+actions on a separately classified public website presentation page.
 
 ## Public website presentation pages
 
@@ -190,19 +190,19 @@ product decision.
 Model the reader at the surface where they first encounter the documentation.
 Assume only context genuinely available at that rung.
 
-Open with the simplest useful offer: the subject's name, what it provides or
-owns, and why that matters to the reader. When a surface catalogs several
-independently selectable capabilities, services, packages, or concepts, present
-each first in compact `name: what and why` form. Do not make the reader cross a
-failure analysis, methodology, taxonomy, workflow, or component inventory to
-discover what is being offered.
+Open with the pressure, consequence, responsibility, supported outcome,
+boundary, or changed decision the entering reader needs. Make the governed
+subject and capability inferable there when the entry context does not already
+supply them. When a surface catalogs several independently selectable
+capabilities, services, packages, or concepts, present each in compact
+`name: what and why` form so the reader can choose. Do not make the reader cross
+methodology, taxonomy, workflow, or a component inventory to discover why the
+subject matters.
 
-After the offering layer, give the situation, problem, impact, and boundary
-needed to choose safely. A chooser may own that selection context for compact
-catalog entries. Before a named subject's detailed methodology or parts, its
-owning section must make the relevant pressure, affected reader or system,
-intended observable impact or changed decision, and boundary inferable. A
-parent summary or sibling section cannot orient a standalone subject page.
+Give the remaining situation, impact, and boundary needed to choose safely
+before detailed methodology or parts. A chooser may own that selection context
+for compact catalog entries. A parent summary or sibling section cannot orient
+a standalone subject page.
 
 For a README, state the technical reader, task, and starting context before
 giving a route. A repository checkout, package registry, command line, runtime,
@@ -211,10 +211,11 @@ public website presentation page, the primary route is browser-native. Do not
 swap those contracts. For a public documentation home, the primary route is
 documentation navigation or reference lookup, not a product conversion path.
 
-Open every reader-facing surface with the governed subject's plain offer:
-identity, capability or responsibility, and reader-relevant purpose—not with
-diagnosis, artifact placement, production story, or internal method. Follow
-with the selection context and boundary appropriate to that surface.
+At every reader-facing entry, lead with the reader-relevant reason to care
+rather than artifact placement, drafting history, or internal method. Keep
+identity, capability or responsibility, selection context, and boundary
+inferable at that surface; do not force a fixed order when the entry context
+already supplies some of them.
 
 A technical README opening should let its technical reader identify the governed
 system or unit, scope, boundary, and the route that fits their task. A public
@@ -224,14 +225,15 @@ browser visitor recognize a supported outcome and next action. This distinction
 does not prescribe badges, a table of contents, visual position, or a fixed
 section order.
 
-Validate the primary reader path from its documented starting state. For a
-README, validate its stated technical task rather than assuming installation or
-a browser journey. For a public website presentation page, use a clean supported
-browser entry with stated access. For a public documentation home, test the
-documented navigation or reference path. For an internal technical surface, use
-the documented repository state and repository-native tooling. Do not silently
-depend on unstated caches, global tools, credentials, generated files, or
-maintainer knowledge. State what remained untested.
+At wrap-up, validate the primary reader path from its documented starting state.
+Never use this as a mid-work review. For a README, validate its stated technical
+task rather than assuming installation or a browser journey. For a public
+website presentation page, use a clean supported browser entry with stated
+access. For a public documentation home, test the documented navigation or
+reference path. For an internal technical surface, use the documented
+repository state and repository-native tooling. Do not silently depend on
+unstated caches, global tools, credentials, generated files, or maintainer
+knowledge. State what remained untested.
 
 ## Progressive disclosure
 
@@ -265,9 +267,11 @@ Use prose after it to state:
 - meaningful limit, ownership boundary, or failure case;
 - next useful page.
 
-Do not narrate every line inside a runnable sample. Preserve comments only when
-they carry a non-obvious rationale that remains true when the sample is copied
-elsewhere.
+Do not narrate every line inside a runnable sample. Apply the [canonical
+selective-context authoring
+decision](api-jsdoc-examples.md#selective-context-authoring-decision) to its
+comments, and preserve an admitted comment only when it remains true after the
+sample is copied.
 
 ## Meaningful visuals
 
@@ -278,7 +282,7 @@ the visual.
 
 ## Separation tests
 
-Apply these tests while reviewing:
+At wrap-up, apply these review tests:
 
 - Tutorial: can a newcomer complete it without unexplained prior decisions?
 - How-to: can an informed reader identify the goal, prerequisites, steps, and result?

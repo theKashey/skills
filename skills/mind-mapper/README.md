@@ -13,33 +13,31 @@ uncertainty, trace each prospective action back to an outcome, and choose the
 smallest consequential extension before implementation details narrow the
 problem.
 
-## Choose the shape that matches the relationship
+## Work from context to action
 
-Linear plans, classic fishbone diagrams, and classic mind maps are optional,
-composable views of the graph, not required methods or phases:
+Mind Mapper uses a scale ladder to keep different planning problems from
+collapsing into one task tree:
 
-- Use a sequence when one bounded move truly requires or unlocks another.
-- Use parallel contribution branches when distinct aspects can make independent
-  gains toward the same outcome. A fishbone is one useful way to render them.
-- Use associative links when history, evidence, constraints, or possible moves
-  are connected but their direction or role is still uncertain. A mind map can
-  connect those fragments without claiming dependency or contribution.
+- A product or body of work is a mind map of jobs, outcomes, evidence,
+  constraints, history, and unresolved cross-cutting relationships.
+- A job is a fishbone: several distinct directions may progress in parallel,
+  but all directions named by its completion contract are required.
+- A unit of work is linear only where one step or move truly requires or
+  unlocks another.
 
-For example, reducing onboarding failures may have independent instruction,
-account-access, and recovery branches. Within account access, locating the
-failures may unlock choosing an explanation, which may unlock a bounded pilot.
-Old support tickets, an abandoned experiment, and an unexplained metric spike
-can remain associated fragments until evidence gives them a supported role.
-All three shapes belong in the same graph.
+An agent descends this ladder to make a broad problem actionable and ascends it
+when a task has lost its reason or a job has lost product context. The ladder
+selects the working view; labeled edges still distinguish contribution,
+dependency, evidence, and association so layout cannot manufacture order or
+causality.
 
 ## Principles and boundaries
 
 - The map is a graph of accountable contribution, not a flat task list:
   prospective work needs a path back to the epic, while unrecoverable history
   remains an explicit gap rather than invented lineage.
-- Choose a shape per relationship, not once for the whole problem. Label
-  contribution, dependency, evidence, and association explicitly so proximity
-  or an arrow does not manufacture order or causality.
+- Keep the product, job, and unit levels distinct while labeling contribution,
+  dependency, evidence, and association explicitly.
 - Outward planning and inward reconstruction describe the same graph. Results
   update hypotheses and frontiers instead of becoming a separate experiment or
   status narrative.
@@ -50,8 +48,9 @@ All three shapes belong in the same graph.
   inspection for one selected move, within the scope the user already
   authorized; it does not create permission to inspect or change a repository.
 - A frozen readback makes a move informative even when it disconfirms the
-  hypothesis. The skill reports the extension frontier separately from the
-  dependency-free action frontier so readiness is not mistaken for priority.
+  hypothesis. The map owns its extension frontier, but derives the selected
+  next move from current evidence and work state instead of becoming another
+  task queue.
 
 Mind Mapper is not an OKR framework, goal system, or project-management
 process. Its links organize an investigation; they do not prove causality,

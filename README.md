@@ -1,9 +1,15 @@
 # Agent Skills
 
-Agent Skills is a collection of five independently installable skills. Each
-addresses a different missing decision: what outcome the work serves, what
-evidence-producing move comes next, what a reader must know, what recurring
+Documentory is the cornerstone and main offering of this repository. Code and
+system structure often show what happens without preserving why a surprising
+constraint, boundary, or relationship must exist. Documentory recovers that
+verified explanation before a maintainer or coding agent changes the wrong
+thing.
+
+The other four skills were created to support decisions connected to that work:
+what outcome it serves, what evidence-producing move comes next, what recurring
 behavior belongs in a skill, or whether a finished artifact is ready to trust.
+Each skill, including Documentory, remains independently installable.
 
 AI coding agents can produce convincing work while losing why it exists. They
 can start implementation before the outcome and constraints are clear, mistake
@@ -12,10 +18,10 @@ rationalize their own output into looking ready.
 
 ## What this repository offers
 
-- **[Documentory](skills/documentory/README.md):** creates, revises, audits, and
-  maintains technical documentation from an identified reader need to a
-  verified publishable result, so each reader gets the necessary truth and
-  boundaries at the lowest useful layer.
+- **[Documentory](skills/documentory/README.md):** preserves verified
+  explanations for fences—causes in lower-level implementation, another
+  process, or another point in time that are not visible where their constraint
+  affects a decision.
 - **[Skill Guidance](skills/skill-guidance/README.md):** creates and refines
   independently installable agent skills, so an agent loads the right
   instructions, makes the intended choice, and stops on observable evidence.
@@ -36,9 +42,9 @@ make them stages in one loop or runtime dependencies.
 
 | When this is the problem | Route to | Outcome | It does not prove |
 | --- | --- | --- | --- |
+| Code or system structure exposes behavior without the reason a constraint, boundary, or relationship must exist. | [Documentory](skills/documentory/README.md) | A verified explanation at the surface where the affected reader encounters the decision. | Product decisions, undocumented implementation correctness, or readiness of non-documentation artifacts. |
 | Work has become a list of tasks with no accountable path to the wider goal. | [Mind Mapper](skills/mind-mapper/README.md) | Shows why each piece of work exists, what can proceed independently, what is blocked, and which claims have evidence. | That an action caused the outcome or that the goal is valuable. |
 | The next move is plausible, but cause and effect are unclear or conditions are changing. | [Read the Terrain](skills/read-the-terrain/README.md) | One bounded move that advances the aim or produces evidence that changes the next decision. | Causality, solution correctness, or requirement coverage. |
-| Documentation is missing, stale, misplaced, or describes implementation instead of what a reader needs to understand or do. | [Documentory](skills/documentory/README.md) | Verified, publishable documentation that gives the named reader the necessary purpose, truth, and boundary. | Product decisions, undocumented implementation correctness, or readiness of non-documentation artifacts. |
 | Agent instructions contain relevant advice but do not reliably change the intended choice. | [Skill Guidance](skills/skill-guidance/README.md) | A skill that appears for matching work and changes the agent's behavior in a testable way. | Domain correctness or behavioral effectiveness from structure alone. |
 | A finished multi-file artifact looks coherent to its producer, but that producer's context may hide gaps. | [Verify Complex Artifacts](skills/verify-complex-artifacts/README.md) | An independent readiness decision that identifies blockers and decisions needing a human. | Product desirability or facts outside the contract and checks actually reviewed. |
 
@@ -83,9 +89,9 @@ flowchart TB
 
 Mind Mapper is also the management view over the collection. It can attach each
 skill to the outcome branch it may influence, expose missing or duplicated
-coverage, and maintain the action frontier. That relationship is goal lineage,
-not invocation: using a skill is activity, not proof that the wider outcome
-moved.
+coverage, and select the next map extension from current evidence and work
+state. That relationship is goal lineage, not invocation: using a skill is
+activity, not proof that the wider outcome moved.
 
 Documentory and Skill Guidance are reciprocal authoring disciplines.
 Documentory's locality and progressive-disclosure model shapes how Skill
@@ -123,16 +129,18 @@ and install locations.
 
 ### Documentory
 
-Documentation may not exist at all. When it does, it can still be written from
-the producer's implementation view instead of the reader's decision, hide why
-the subject exists, place detail at the wrong layer, or publish temporary state
-as a durable contract.
+Code usually exposes mechanics. It often does not expose why a surprising
+choice, constraint, boundary, or relationship must exist. A lower-level
+implementation detail, parallel process, or earlier or later event can affect
+the current decision without being visible here. That hidden causal edge is a
+fence: without it, a locally reasonable edit can violate a non-local
+requirement.
 
-Documentory owns the full cycle: decide whether documentation is needed; create,
-revise, or audit the appropriate README, reference, example, public contract, or
-code-local rationale; verify it against the finished system; and keep it
-maintainable. Use it wherever a named reader must act safely from the finished
-result.
+Documentory documents reefs, not cliffs. It recovers the verified hidden reason,
+omits mechanics already visible, and uses locality to place the explanation in
+the README, reference, public contract, example, or code-local rationale where
+the affected reader naturally encounters the decision. It owns the full
+documentation cycle without turning every visible detail into prose.
 
 Read [why Documentory exists and how it is maintained](skills/documentory/README.md)
 or inspect its [runtime documentation workflow](skills/documentory/SKILL.md).

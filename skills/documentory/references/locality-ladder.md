@@ -1,12 +1,14 @@
 # Documentation locality ladder
 
-Place each fact where its reader encounters it before the governed decision.
-Use the rungs as a scope vocabulary, not as a required folder tree, document
-outline, or measure of importance.
+Documentory uses locality to place verified fence explanations; locality is the
+method, not the purpose. Place each hidden reason where its reader encounters it
+before the governed decision. Use the rungs as a scope vocabulary, not as a
+required folder tree, document outline, or measure of importance.
 
 - [Existence gate](#existence-gate)
 - [Reader states](#reader-states)
 - [Reader-context rule](#reader-context-rule)
+- [Implementation level is not a documentation rung](#implementation-level-is-not-a-documentation-rung)
 - [Choose a rung](#choose-a-rung)
 - [Reader-context matrix](#reader-context-matrix)
 - [Overlapping rungs](#overlapping-rungs)
@@ -21,6 +23,11 @@ gap. Add or retain a surface only when a named reader needs a material fact for
 a real decision and cannot safely recover it from readable code, types, tests,
 package metadata, existing canonical documentation, or context they genuinely
 have.
+
+For a line, block, or file comment, missing information is not enough. Apply the
+[canonical selective-context authoring
+decision](api-jsdoc-examples.md#selective-context-authoring-decision) before
+using this ladder to place an admitted explanation.
 
 If no gap remains, add nothing. Clear code needs no comment; a package needs no
 README; a public source repository needs neither a public documentation home nor
@@ -63,6 +70,26 @@ Write the missing fact, not a narration of what the reader can already see.
 Broader rungs orient and route; narrower rungs preserve the local consequence.
 Keep detailed content with one canonical owner.
 
+## Implementation level is not a documentation rung
+
+Implementation abstraction describes where fences tend to appear; the ladder
+describes where their explanations belong.
+
+- **Low-level implementation:** fences are common where syntax cannot expose a
+  platform, representation, ordering, concurrency, ownership, or algorithmic
+  cause.
+- **Business logic:** an operation may appear foolish, but domain names,
+  conditions, and nearby policy often expose why it exists. Add nothing when
+  that reason is locally recoverable.
+- **Orchestration and system logic:** fences are especially common because a
+  lower implementation detail, parallel process, lifecycle transition, past
+  event, or future observation can constrain the current decision without
+  appearing in its local source.
+
+A remote fact qualifies here only when it changes a local choice or boundary.
+Preserve that causal edge and its local consequence; leave the remote mechanism
+with its canonical owner.
+
 ### README boundary
 
 **README.md** names a technical orientation document at the rung it serves. It
@@ -87,7 +114,9 @@ infer a presentation surface from a public repository.
 2. Name the actual reader and the decision or task they are about to make.
 3. List only context available at that encounter: nearby code, imported API,
    checkout, package metadata, system access, or public browser page.
-4. Identify the invisible fact that changes a safe decision at that point.
+4. Identify the invisible fact that changes a safe decision at that point. For
+   code-local rationale, first apply the [canonical admission and disposition
+   decision](api-jsdoc-examples.md#selective-context-authoring-decision).
 5. Choose the narrowest surface that every affected reader naturally encounters
    before the decision.
 6. State the fact in the form that rung can support: local rationale, technical
@@ -104,8 +133,8 @@ If no row is needed, add no surface.
 
 | Candidate rung | Reader and likely context | What the reader needs now | What this rung can tell them | Why and how it belongs here |
 | --- | --- | --- | --- | --- |
-| **1. Line** | A maintainer or coding agent sees one expression, branch, argument, or assignment and nearby syntax. | The non-obvious reason this exact choice, exception, or value cannot be simplified safely. | A concise local constraint, rejected alternative, or consequence. | For a qualifying hidden fact, put the reason immediately before or beside the decision; otherwise add no comment. Do not narrate syntax, types, or names already visible. |
-| **2. Block** | A reader sees one guard, transformation, loop, or sequence and understands its statements in isolation. | The invariant joining the statements: ordering, atomicity, ownership transfer, intentional duplication, synchronization, or algorithmic boundary. | The block-wide purpose and the condition that must survive edits within it. | For a qualifying block-wide fact, put one comment at the block boundary; move it up when it governs more than this block. |
+| **1. Line** | A maintainer or coding agent sees one expression, branch, argument, or assignment and nearby syntax. | An admitted rationale that must be encountered with this decision. | The shortest causal edge and local consequence this line owns. | Put an admitted line-specific reason immediately before or beside the decision; move it up when it governs more than the line. |
+| **2. Block** | A reader sees one guard, transformation, loop, or sequence and understands its statements in isolation. | An admitted invariant that governs the statements together. | The block-wide causal constraint and consequence that must survive edits within it. | Put an admitted block-wide explanation at the block boundary; move it up when it governs more than this block. |
 | **3. File** | A reader has the declarations, imports, and implementation unit, but may not know the containing subsystem. | Why this file exists, what it owns, its lifecycle or non-local relationship, and where its responsibility stops. | The cohesive implementation responsibility and a boundary that declarations cannot reliably expose. | For a qualifying unit-wide gap, use a file header or local overview; do not turn it into a declaration tour or system manual. |
 | **4. Folder** | A contributor has entered an implementation area and can see sibling names and paths, usually with a checkout. | The area's purpose, ownership, organization, shared conventions, boundary with neighboring areas, and local validation route. | A technical map of the area and how to work in it safely. | When an area-wide gap remains, use an existing folder README or authorized overview; do not make it describe the project as a whole. |
 | **5. Package or module** | An integrator, maintainer, or internal consumer knows the package or module name and may have its manifest, import, or public API, but not its parent system. | The unit's purpose, public or internal contract, supported entry points, configuration, lifecycle, failures, dependencies, and compatibility boundaries. | The technical contract and integration conditions for this reusable unit. | A package README is optional: readable exports, types, metadata, or a canonical reference may already suffice. When a reader gap remains, it may include verified installation and use without becoming a product advertisement. |
@@ -123,8 +152,9 @@ A public documentation home, when one exists or is authorized, uses the
 top-level orientation rung for a reader who arrived to find documentation, not
 to evaluate a product. It may state the
 documentation map, topic boundaries, and routes to tutorials, how-tos,
-explanations, and reference. Validate that navigation or lookup path. Do not
-give it a product-presentation posture merely because it is browser-delivered.
+explanations, and reference. At wrap-up, validate that navigation or lookup
+path. Do not give it a product-presentation posture merely because it is
+browser-delivered.
 
 ## Overlapping rungs
 
@@ -149,21 +179,25 @@ not transcribe implementation.
 
 ### Chesterton's fence
 
-A Chesterton's fence is code whose reason for existing or present form is
-unknown: an island of uncertainty.
+A fence is a present choice, constraint, boundary, relationship, or structure
+whose reason is not locally visible. A Chesterton's Fence is the unresolved
+state: its reason is still unknown.
 
 Search history, callers, tests, runtime effects, and neighboring invariants for
-the missing rationale. If evidence verifies it, document the non-local reason
-at the rung where it governs a decision. If it remains unknown and the gap is
-accepted, mark it with an explicit **TODO** or **FIXME**. Never invent rationale.
+the missing rationale. If evidence verifies it, return to the applicable
+existence decision; for code-local prose, use the [canonical authoring
+decision](api-jsdoc-examples.md#selective-context-authoring-decision). If the
+reason remains unknown and the gap is accepted, mark it with an explicit
+**TODO** or **FIXME**. Never invent rationale.
 
-### Mark reefs, not cliffs
+### Document reefs, not cliffs
 
-Document hazards hidden below the reader's normal view: non-obvious defaults,
-failure modes, security or ownership boundaries, lifecycle coupling, and
-cross-unit invariants. Do not mark cliffs already visible in code, types, names,
-signatures, or the surrounding surface. Visibility changes by rung, so judge
-from the reader context in the matrix.
+A reef is a material hazard hidden below the reader's normal view: a
+non-obvious default, failure mode, security or ownership boundary, lifecycle
+coupling, or cross-unit invariant. A cliff is meaning already visible and
+safely recoverable from code, types, names, signatures, or the surrounding
+surface. Visibility changes by rung, so judge from the reader context in the
+matrix.
 
 ## Movement tests
 
@@ -173,7 +207,12 @@ from the reader context in the matrix.
   present context and existing canonical surfaces? If not, add nothing.
 - **Need:** Which unsafe inference or expensive reconstruction does the fact
   prevent for that reader?
+- **Code-local admission:** Did the [canonical selective-context
+  decision](api-jsdoc-examples.md#selective-context-authoring-decision) admit
+  this explanation before placement?
 - **Scope:** Does the fact govern a wider or narrower unit than this surface?
+- **Owner:** Does the surface own this fact, or is it duplicating another
+  owner's detail?
 - **Capability:** Is this surface asserting only a local rationale, technical
   boundary, contract, system map, or route that it can own?
 - **Placement:** Would moving it leave an affected reader without the fact when
