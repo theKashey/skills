@@ -32,9 +32,9 @@ rationalize their own output into looking ready.
 - **[Read the Terrain](skills/read-the-terrain/README.md):** selects one
   evidence-producing move under consequential uncertainty, so action advances
   the aim or improves the next decision.
-- **[Mind Mapper](skills/mind-mapper/README.md):** maintains accountable
-  outcome-to-work-to-result lineage, so a collection of capabilities stays
-  manageable without becoming an invented pipeline.
+- **[Helix](skills/helix/README.md):** runs an expand, spike, and collapse
+  cycle over a small rewritten checkpoint, so uncertain work advances by
+  evidence instead of accumulating plans.
 - **[Screaming Reefs](skills/screaming-reefs/README.md):** makes a verified
   constraint visible in structure, so a reader can act safely without relying
   on a remote explanation.
@@ -47,7 +47,7 @@ make them stages in one loop or runtime dependencies.
 | When this is the problem | Route to | Outcome | It does not prove |
 | --- | --- | --- | --- |
 | Code or system structure exposes behavior without the reason a constraint, boundary, or relationship must exist. | [Context Docs](skills/context-docs/README.md) | A verified explanation at the surface where the affected reader encounters the decision. | Product decisions, undocumented implementation correctness, or readiness of non-documentation artifacts. |
-| Work has become a list of tasks with no accountable path to the wider goal. | [Mind Mapper](skills/mind-mapper/README.md) | Shows why each piece of work exists, what can proceed independently, what is blocked, and which claims have evidence. Requires a planning surface the user configures before mapping. | That an action caused the outcome or that the goal is valuable. |
+| Direction under uncertainty is unresolved, or work has become a list of tasks with no accountable path to the wider goal. | [Helix](skills/helix/README.md) | One selected branch probed by a bounded spike, with the result collapsed into a checkpoint that keeps verdicts and epitaphs rather than plans. Requires a checkpoint surface the user configures before the first cycle. | That an action caused the outcome or that the goal is valuable. |
 | The next move is plausible, but cause and effect are unclear or conditions are changing. | [Read the Terrain](skills/read-the-terrain/README.md) | One bounded move that advances the aim or produces evidence that changes the next decision. | Causality, solution correctness, or requirement coverage. |
 | Agent instructions contain relevant advice but do not reliably change the intended choice. | [Skill Guidance](skills/skill-guidance/README.md) | A skill that appears for matching work and changes the agent's behavior in a testable way. | Domain correctness or behavioral effectiveness from structure alone. |
 | A finished multi-file artifact looks coherent to its producer, but that producer's context may hide gaps. | [Verify Complex Artifacts](skills/verify-complex-artifacts/README.md) | An independent readiness decision that identifies blockers and decisions needing a human. | Product desirability or facts outside the contract and checks actually reviewed. |
@@ -76,7 +76,7 @@ flowchart TB
 
     subgraph F3["3 · Wider uncertain documentation work"]
         direction LR
-        C1["Wider outcome"] --> C2["Mind Mapper"]
+        C1["Wider outcome"] --> C2["Helix"]
         C2 --> C3["Read the Terrain"]
         C3 --> C4["Context Docs"]
         C4 --> C5["Supported meaning reaches the reader"]
@@ -94,17 +94,18 @@ flowchart TB
   execution; Context Docs owns reader-facing purpose, locality, and progressive
   disclosure. They shape the package together. Verify Complex Artifacts gives
   the finished multi-file result an independent refinement and readiness gate.
-- **Wider uncertain documentation work:** Mind Mapper preserves contribution
-  lineage, Read the Terrain selects an evidence-producing move on the relevant
-  uncertain branch, and Context Docs publishes only the supported meaning.
+- **Wider uncertain documentation work:** Helix selects the branch worth
+  probing and collapses what the probe returns, Read the Terrain selects an
+  evidence-producing move on that branch, and Context Docs publishes only the
+  supported meaning.
 - **Structural enforcement:** Screaming Reefs can follow Context Docs when an
   explicitly authorized structural change can carry a verified constraint more
   reliably than prose. A documentation finding is not authorization for that
   change.
 
-Mind Mapper is also the management view over the collection. It can attach each
-skill to the outcome branch it may influence, expose missing or duplicated
-coverage, and select the next map extension from current evidence and work
+Helix is also the management view over the collection. It can treat each skill
+as a candidate branch beneath an outcome, expose missing or duplicated
+coverage, and select the next branch to probe from current evidence and work
 state. That relationship is goal lineage, not invocation: using a skill is
 activity, not proof that the wider outcome moved.
 
@@ -208,19 +209,22 @@ must advance the aim or improve what can be decided next.
 Read [why to use Read the Terrain](skills/read-the-terrain/README.md) or inspect
 its [runtime decision workflow](skills/read-the-terrain/SKILL.md).
 
-### Mind Mapper
+### Helix
 
-Useful work becomes unmanageable when its path to the wider outcome is missing.
-Tasks become ends in themselves, results acquire retrospective stories, and a
-set of independent capabilities is mistaken for a pipeline.
+Planning under uncertainty decays in two directions. Plans accumulate until
+maintaining them costs more than reading them, or work proceeds with no path
+back to the outcome, so tasks become ends in themselves and results acquire
+retrospective stories.
 
-Mind Mapper connects the collection without coupling it. It maps each skill as
-a candidate attack angle beneath an outcome, preserves backlinks from results
-to that outcome, exposes weak or open edges, and distinguishes gaps that need
-understanding from moves that are ready to execute.
+Helix keeps direction and evidence in one cycle. Expand re-derives candidate
+branches fresh and drops any whose outcome would not change the next decision,
+Spike probes one branch within a declared boundary, and Collapse files what
+returned — delivered work to the stores of record, retired branches to
+epitaphs that stop the same dead branch returning under a new name, and the
+rest disposed. The checkpoint between cycles holds verdicts, not deliberation.
 
-Read [why Mind Mapper manages the collection](skills/mind-mapper/README.md) or
-inspect its [runtime goal-lineage workflow](skills/mind-mapper/SKILL.md).
+Read [why Helix keeps a cycle instead of a plan](skills/helix/README.md) or
+inspect its [runtime loop](skills/helix/SKILL.md).
 
 ### Screaming Reefs
 
