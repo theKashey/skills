@@ -12,6 +12,12 @@ before it runs; Collapse files the ended present into the sorted past —
 delivered work to the store of record, retired branches to epitaphs,
 everything else disposed. Only the sorted past deserves durable storage.
 
+Helix values cadence over activity velocity. A move is not progress until its
+situation or need, outcome contribution, boundary, observation source, review
+point, and competing readbacks were frozen before action, and its result was
+classified before another action. This prevents fast but unframed work from
+acquiring a retrospective justification after its result is known.
+
 The division of labor is deliberate. Reasoning — candidate generation,
 second-order tests, ranking — is performed fresh each cycle against current
 evidence and is never stored; stored reasoning goes stale, re-derived
@@ -19,9 +25,15 @@ reasoning cannot. The checkpoint stores only verdicts: the outcome, surviving
 branches, moves with their readbacks, appended results, open links, and one
 next.
 
+Helix selects the wider branch contribution and sequences a supplied move. It
+does not classify the causal regime or design the evidence-producing probe;
+when separately installed, Read the Terrain owns that upstream work. This is
+external composition rather than a runtime dependency.
+
 ## What survives a collapse
 
-- The outcome, with its proof and boundary — until the user changes it.
+- The supplied situation or need and outcome, with its proof, authority, and
+  boundary — until the user changes it.
 - Branches that evidence has not retired.
 - Moves and their results — appended, never rewritten; a retry is a new move,
   so repeated work cannot masquerade as a new experiment.
@@ -37,6 +49,18 @@ and spike working context are cheaper to re-derive than to read stale.
 Delivered work and closed decisions move to the environment's stores of
 record; the checkpoint never becomes a third store that other systems must
 stay consistent with.
+
+## Runtime and pre-arrival guidance
+
+The runtime keeps the transition laws and common loop inline because every
+activation needs them. Detailed checkpoint and edge-case mechanics load only
+when the current state requires them.
+
+Helix does not edit `AGENTS.md` during ordinary use. Repository guidance that
+routes uncertain work to Helix is a pre-arrival rule: install it only by an
+explicit decision at a scope every intended reader receives. Automatic
+self-install cannot cause the first activation and would tax routine work with
+Helix-specific context.
 
 ## Persistence and boundary
 

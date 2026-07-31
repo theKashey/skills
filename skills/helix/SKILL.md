@@ -1,135 +1,64 @@
 ---
 name: helix
-description: Use when uncertain or inherited work needs a planning loop — expand candidate directions, run one bounded spike, collapse the result into a small rewritten checkpoint; not for a routine task with clear scope and order.
+description: Use when uncertain or inherited work risks unframed experiments or accumulating plans and needs one bounded evidence loop plus a compact checkpoint; not for routine work with clear scope and order.
 ---
 
 # Helix
 
-Run a planning loop that keeps why, what, and how connected by moving work
-through three tenses: foresee candidate branches from the outcome, execute
-one bounded spike, file the ended present into the sorted past, repeat. The
-checkpoint between cycles stores only verdicts and stays reloadable in one
-read.
+Advance uncertain work by closing one evidence loop at a time. Cadence is a
+completed **Arrange → Act → Assert/Collapse** transition; activity volume is not
+progress.
 
-| Transition | Phase | Tense law |
-| --- | --- | --- |
-| The future is foreseen | Expand | Futures are cheap: re-derive them fresh each cycle; store only survivors. |
-| The future becomes present | Spike | The present is singular: one bounded move in flight, its readbacks declared before it runs. |
-| The present becomes past | Collapse | The past is immutable and sorted: store of record, epitaph, or deliberate disposal — nothing lingers unsorted. |
+## Keep the transition laws visible
 
-## Configure the checkpoint surface
+- **Checkpoint before work.** Require an explicitly configured surface,
+  reference, representation, and read/write authority. If any is missing,
+  return `NEEDS-HUMAN-DECISION`; never invent a file, service, or transcript
+  fallback.
+- **Arrange before Act.** Freeze the supplied situation or need, intended
+  effect and proof, authority and boundary, selected branch's contribution, one
+  move's maximum scope, observation source, review point, and expected plus
+  disconfirming readbacks. Missing framing makes **Next** a repair or block,
+  never permission to experiment.
+  Helix sequences a supplied move; it does not classify the causal regime or
+  design the probe. When installed, Read the Terrain owns that upstream work.
+- **Act once.** Keep one move in flight. Give its executor only the outcome
+  boundary, branch contribution, move, observation source, review point, and
+  readbacks. Stop at the first readback, review point, or boundary.
+- **Assert before another Act.** Append the immutable observation beside the
+  frozen readbacks, then classify it as `Expected`, `Disconfirming`, `Mixed`, or
+  `Inconclusive`. Effort, confidence, and retrospective producer narration are
+  not evidence.
+- **Collapse every ended move.** Sort delivered work to its store of record,
+  retired work to an epitaph, and everything else to deliberate disposal.
+  Rewrite the checkpoint with exactly one **Next** before another Act.
 
-Before the first cycle, require an explicitly configured checkpoint surface.
-The configuration must name its durable reference, how it represents the
-semantics below, and the available read and write authority. It may be a local
-artifact, shared system, or network integration; never select one on the
-user's behalf.
+The checkpoint stores verdicts, not deliberation: outcome, surviving branches,
+arranged moves and results, open links, epitaphs, and one **Next**. Re-derive
+candidates and ranking each cycle. A matching readback establishes only what
+was observed inside its boundary; it does not prove value, correctness, or
+causality.
 
-If configuration is missing, return `NEEDS-HUMAN-DECISION` and ask the user to
-configure the surface. Do not propose a filename, project location, task
-system, external service, MCP, or transcript as a fallback.
+## Run the current state
 
-| Checkpoint semantic | Required content |
-| --- | --- |
-| Outcome | Intended change, proof, and boundary. |
-| Branch | A distinct surviving contribution, or `unknown`. |
-| Move | Bounded action, linked branch, and expected plus disconfirming readback. |
-| Result | Immutable observation linked to its move, effect, and next decision. |
-| Open link | Orphan, unknown relationship, or blocked dependency. |
-| Next | One move, checkpoint repair, block, or `none`. |
-| Epitaph | Retired branch, the disconfirming result, and the resurrection condition that would justify a retry. |
+Start at the first incomplete transition; never repeat a completed phase.
 
-The checkpoint holds verdicts, not deliberation. Candidate lists, hypotheses,
-and ranking rationale are cheaper re-derived at expand time than read stale; a
-checkpoint that grows across cycles without a newly admitted branch is storing
-deliberation.
+1. Read the checkpoint whole.
+2. **Expand:** derive branches from the outcome and latest results; drop any
+   candidate whose possible results leave the next decision unchanged. Check
+   epitaph resurrection conditions, select one branch, and keep implementation
+   inspection behind the arranged move.
+3. **Spike:** Arrange, then Act once.
+4. **Collapse:** Assert, sort the ended move, rewrite the checkpoint, and select
+   one **Next**.
 
-Epitaphs are the one append-only region: never rewritten, never pruned, and
-not reloaded — they are consulted at expand, so they do not erode the
-one-read budget.
+Load only the applicable section of
+[checkpoint and edge cases](references/checkpoint-and-edge-cases.md):
 
-## Reload
+- configure or reconstruct a checkpoint;
+- repair an orphan or unknown link;
+- resolve `Mixed` or `Inconclusive` evidence;
+- retire, resurrect, retry, or dispose of work.
 
-1. Read the checkpoint whole. When none exists, state one outcome, its proof,
-   and its boundary; if materially different outcomes remain plausible, return
-   `NEEDS-HUMAN-DECISION`.
-2. Reconstruct supplied history as results linked to their moves and branches.
-   Keep an unknown or orphan link explicit; never write a retrospective
-   rationale just to complete the record.
-
-Reload is complete when the outcome, open links, and latest results are
-visible without consulting any other store.
-
-## Expand
-
-Re-derive direction fresh from the outcome and the latest results. Nothing
-from this phase survives except the surviving branch set and the selection.
-
-1. List the distinct candidate branches that could change the outcome,
-   including repair of an open link.
-2. Apply the second-order test to each: what would its result change about
-   the next decision? Drop a candidate whose success and failure leave the
-   next decision identical.
-3. Check the survivors against the epitaphs. A candidate that matches a
-   retired branch is admitted only by naming which part of its resurrection
-   condition now holds; without that, it is the same dead branch under a new
-   title.
-4. Select one branch to probe now. Record the survivors as branches; do not
-   record the dropped candidates or the ranking argument.
-
-Do not inspect code during expand; code can refine a move, it does not
-redefine the outcome. Expand is complete when one branch is selected and the
-checkpoint lists only surviving branches.
-
-## Spike
-
-1. Write one bounded move: linked branch, expected readback, disconfirming
-   readback. A move without a branch is an orphan — repair the link or leave
-   the move out.
-2. Give the executor, subagent or self, only the outcome boundary, the move,
-   and its readbacks — not the checkpoint history. Context beyond what the
-   move needs invites drift from probe into implementation.
-3. Execute within the move's boundary. The spike is complete when a readback
-   is observed or the boundary is hit, whichever comes first.
-
-## Collapse
-
-Collapse is mandatory after every spike; a spike without a collapse is an
-open link, not progress. Every ended move sorts to exactly one destination:
-delivered work to the store of record, a retired branch to an epitaph,
-everything else disposed with the cycle's deliberation.
-
-1. Append the result beside the move's original readback; never rewrite the
-   move. Keep observation separate from interpretation.
-
-   | Result | Checkpoint action |
-   | --- | --- |
-   | Expected | Continue only within the observed boundary. |
-   | Disconfirming | Retire the branch and its dependent moves. |
-   | Mixed | Preserve both signals; narrow or split the branch. |
-   | Inconclusive | Repair observation only when a different bounded move could decide something. |
-
-2. Prune: write each retired branch an epitaph — the branch, the result that
-   killed it, and the condition that would justify a retry — then delete the
-   branch and its dependent moves from the checkpoint. Version history shows
-   only what merged; the epitaph is the only trace of work that never landed,
-   and what stops the same dead branch from returning under a new name. A
-   retry is a new move, never a rewrite of the old one — add it only when a
-   changed condition, execution defect, or new observation can alter the next
-   decision.
-3. Move durable exhaust — delivered work, closed decisions — into the
-   environment's stores of record. The checkpoint is not a store of record;
-   an entry another store can validate belongs in that store. Epitaphs are
-   the exception: no other store holds undelivered learnings.
-4. Rewrite the checkpoint and select one **Next**: move, repair, block, or
-   `none`. After pruning, the rewritten checkpoint is the same size or
-   shorter unless expand admitted a new branch.
-
-“Worked” means the recorded readback matched under its boundary, not that the
-outcome is proved or the explanation is causal.
-
-## Return
-
-Return the checkpoint reference, the selected **Next**, and any orphan,
-unknown, or authority block. A checkpoint with explicit uncertainty is usable;
-a task list without outcome lineage is not a valid result.
+Return the checkpoint reference, **Next**, and every orphan, unknown, or
+authority block.
