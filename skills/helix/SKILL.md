@@ -34,7 +34,7 @@ progress.
   Rewrite the checkpoint with exactly one **Next** before another Act.
 
 The checkpoint stores verdicts, not deliberation: outcome, surviving branches,
-arranged moves and results, open links, epitaphs, and one **Next**. Re-derive
+active arranged moves and results, open links, epitaphs, and one **Next**. Re-derive
 candidates and ranking each cycle. A matching readback establishes only what
 was observed inside its boundary; it does not prove value, correctness, or
 causality.

@@ -22,8 +22,8 @@ The division of labor is deliberate. Reasoning — candidate generation,
 second-order tests, ranking — is performed fresh each cycle against current
 evidence and is never stored; stored reasoning goes stale, re-derived
 reasoning cannot. The checkpoint stores only verdicts: the outcome, surviving
-branches, moves with their readbacks, appended results, open links, and one
-next.
+branches, active moves with their readbacks and appended results, open links,
+and one next.
 
 Helix selects the wider branch contribution and sequences a supplied move. It
 does not classify the causal regime or design the evidence-producing probe;
@@ -35,8 +35,11 @@ external composition rather than a runtime dependency.
 - The supplied situation or need and outcome, with its proof, authority, and
   boundary — until the user changes it.
 - Branches that evidence has not retired.
-- Moves and their results — appended, never rewritten; a retry is a new move,
-  so repeated work cannot masquerade as a new experiment.
+- Moves and results while their branch remains active — appended, never
+  rewritten; a retry is a new move, so repeated work cannot masquerade as a new
+  experiment. At terminal sorting, delivered or closed records move to their
+  store of record; a retired branch's killing result remains in its epitaph,
+  while its other dependent moves and results leave the active checkpoint.
 - An epitaph for every retired branch — what killed it, and what would justify
   a retry. Version history shows only what merged; the epitaph is the only
   trace of work that never landed, and expansion checks new candidates

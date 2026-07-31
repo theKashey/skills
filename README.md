@@ -1,21 +1,36 @@
 # Agent Skills
 
-Context Docs is the cornerstone and main offering of this repository. Code and
-system structure often show what happens without preserving why a surprising
-constraint, boundary, or relationship must exist. Context Docs recovers that
-verified explanation before a maintainer or coding agent changes the wrong
-thing.
-
-The other five skills support decisions connected to that work:
-what outcome it serves, what evidence-producing move comes next, what recurring
-behavior belongs in a skill, whether a finished artifact is ready to trust, or
-when structure rather than prose should carry a documented constraint.
-Each skill, including Context Docs, remains independently installable.
+"Producing more" is no longer the problem. The harder problem is
+keeping the reason for the work, the uncertainty around the next move, and the
+evidence needed to trust the result from disappearing as the work accelerates.
 
 AI coding agents can produce convincing work while losing why it exists. They
 can start implementation before the outcome and constraints are clear, mistake
 completed tasks for progress, document mechanics instead of reader needs, or
 rationalize their own output into looking ready.
+
+Mistakes were made; lessons were learned and transformed into durable knowledge:
+
+- how to preserve intent
+- how to choose moves that produce evidence
+- how to test finished work outside the producer's own context
+- what to expect from the agent([SINS](./skills/verify-complex-artifacts/SINS.md)) 
+and how to correct behavior([LAWS](./skills/skill-guidance/LAWS.md))
+
+Code and system structure often show what happens without preserving why a surprising
+constraint, boundary, or relationship must exist. 
+The fist and the main offering - Context Docs Skill - recovers that
+verified explanation before a maintainer or coding agent changes the wrong thing.
+
+The other five skills support decisions connected to that work:
+- what outcome it serves
+- what evidence-producing move comes next
+- what recurring behavior belongs in a skill
+- whether a finished artifact is ready to trust 
+- when structure rather than prose should carry a documented constraint.
+
+Each skill, including Context Docs, remains independently installable.
+All passing LAWS, all aware of their SINS, all accepting the flaws on modern models.
 
 ## What this repository offers
 
