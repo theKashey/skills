@@ -31,6 +31,15 @@ repository.
 - Also use `skills/context-docs/SKILL.md` whenever prose, examples, references,
   comments, or reader paths change. `skill-guidance` owns agent-choice behavior;
   `context-docs` owns truth, locality, reader context, and publishable end state.
+- Before changing repository-level or skill-facing prose, use the
+  [content-persona cast](.context-docs/CONTENT-PERSONAS.md). Select the class by
+  the decision the entrant controls, then add only a proven modifier and the
+  task-local episode. Treat an assumed reader, goal, subject, or surface as
+  revisable when evidence conflicts; follow the casting result instead of
+  forcing the original document. Keep the reader goal separate from the
+  document's authorial goal, and load only applicable conditional detail. This
+  repository authoring context must not become a runtime dependency of an
+  independently installed skill.
 - Use `skills/verify-complex-artifacts/SKILL.md` after authoring a multi-file
   skill package or repository-wide governance change.
 

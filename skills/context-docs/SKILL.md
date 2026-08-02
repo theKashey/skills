@@ -9,8 +9,9 @@ Document fences: recover and preserve the verified reason for a choice,
 constraint, boundary, relationship, or structure when that reason is not
 visible where a reader encounters it. Document reefs, not cliffs—keep the
 hidden why and consequence, not mechanics already in view. Use locality to
-leave each explanation at the narrowest authorized surface every affected
-reader naturally encounters before deciding or acting. When no material gap
+explain how each explanation fits the supplied ownership and reader context,
+and to propose placement only when ownership is unresolved. The ladder does not
+authorize a new surface or override an established owner. When no material gap
 remains, add nothing.
 
 ## Universal laws
@@ -46,15 +47,15 @@ remains, add nothing.
    reader needs; do not mirror the implementation. Add the different angle
    appropriate to the rung: technical orientation, system responsibility, or
    non-obvious local why.
-6. **Place fence explanations locally.** Put each verified hidden reason at the
-   narrowest authorized documentation layer every affected reader, including a
-   coding agent working from selective context, naturally encounters before the
-   decision, task, or boundary it governs. A fence is relative to that reader's
-   genuinely available local context, not to the model's general knowledge.
-   Use an applicable canonical `AGENTS.md`, README, package document, or linked
-   contract before duplicating its explanation; do not assume a higher-level
-   document reaches a reader who arrived through a symbol, diff, or search
-   match. Orient upward or link downward instead of duplicating detail.
+6. **Fit fence explanations to established ownership.** Within the supplied or
+   authorized topology, keep each verified hidden reason where every affected
+   reader, including a coding agent working from selective context, encounters
+   it before the decision, task, or boundary it governs. A fence is relative to
+   that reader's genuinely available context, not to the model's general
+   knowledge. Follow the environment's established owner and submission route;
+   keep detail there and add only the smallest route or local consequence an
+   affected reader still needs. Use the ladder to explain or propose a fit when
+   ownership is unresolved, never to create a competing owner.
 7. **Earn every surface.** Apply the [locality ladder's existence
    gate](references/locality-ladder.md#existence-gate) before adding a README,
    page, reference, or comment. Add nothing when it finds no material reader
@@ -63,9 +64,10 @@ remains, add nothing.
    documentation homes, and visitor presentation pages by their actual reader;
    [content architecture](references/content-architecture.md) owns the
    boundary details.
-9. **Preserve topology and ownership.** Give each detailed fact one canonical
-   owner. Do not create or move pages, folders, or navigation without the
-   user's authorization; a README may own every necessary content mode.
+9. **Preserve supplied topology and ownership.** Give each detailed fact one
+   established owner. Do not create, move, replace, or duplicate pages, records,
+   folders, or navigation without authority. A README may host several content
+   modes when it is already the authorized surface; it is not a default owner.
 10. **Disclose progressively.** Add material only when it enables a priority
    task, closes a contract or operational risk, or makes an example safe.
    Delete it when removal costs no safety, clarity, findability, or support,
@@ -138,17 +140,15 @@ merely to satisfy this path.
    and next useful detail. Record the reader, available context, need, scope,
    and placement rationale before outlining; do not infer any of them from a
    filename, root location, public visibility, source host, or license.
-   Treat applicable local context as part of the decision surface. First find
-   the canonical `AGENTS.md`, README, package documentation, or linked contract
-   that the named reader actually receives before acting. An unfamiliar local
-   abstraction is a route to its owner, not a reason to document each caller.
-   When an otherwise familiar primitive has a durable, verified,
-   repository-specific convention that existing context does not explain,
-   promote only that convention to the smallest authorized local owner: usually
-   `AGENTS.md` for coding routes or conventions, and a README or package
-   document for use or integration. Do not add generic model tutoring, and do
-   not remove a narrower explanation unless the replacement context reliably
-   reaches its reader before the decision.
+   Treat applicable local context as part of the decision surface. Discover the
+   repository's established owner and submission route from the instructions,
+   links, surfaces, and tooling already supplied to the task; do not assume what
+   kind of system owns the record. An unfamiliar local abstraction is a route to
+   its owner, not a reason to document each caller. When an owner exists, update
+   it within the granted authority or return a proposal for that owner. Do not
+   promote the fact into a preferred artifact or create a parallel fallback.
+   Add no generic model tutoring, and remove no narrower explanation unless the
+   replacement context reliably reaches its reader before the decision.
 3. Select explanation density at this decision point:
    - **Guided** for a reader new to the domain or library: define unfamiliar
      terms, make prerequisites and results explicit, and show one safe primary
@@ -161,14 +161,36 @@ merely to satisfy this path.
    Density never changes truth. Keep required defaults, failures, security
    boundaries, and setup at every level; do not put Guided explanation inside
    copyable code.
-4. Read `references/content-architecture.md`. Use Diátaxis as a lens for the
-   reader's question, not as a required file or folder structure. Work in the
-   existing documentation topology. A rung or reader role never requires a new
-   document. If the README is the only available technical surface, improve it
-   in place. When the requested visitor presentation has no separate surface,
-   report the gap and request authorization for one. Propose a split with
-   benefits and maintenance cost only when distinct reader intents justify it;
-   let the user decide unless restructuring is already in scope.
+4. For a new or substantially reworked reader-facing non-inline surface, or
+   whenever the proposed reader, goal, subject, or surface is questioned, read
+   `references/casting.md` and run its intervention gate before outlining.
+   Honor its result. Do not draft after `RECAST_READER`, `REVISE_GOAL`,
+   `CHANGE_SURFACE`, `CHANGE_SUBJECT`, `NO_DOCUMENT`, or
+   `NEEDS_HUMAN_DECISION`; perform or report the required shift first. A bounded
+   revision with an explicit, unchallenged cast and story skips this gate.
+
+   Then read `references/content-architecture.md`. Use Diátaxis as a lens for
+   the reader's question, not as a required file or folder structure. Work in
+   the documentation topology supplied by the environment. A rung or reader
+   role never requires a new document. If an existing README is the authorized
+   technical surface, improve it in place. Apply visitor-presentation guidance
+   only to an actual existing or authorized presentation surface; its absence
+   creates no landing-page task. Propose a split with benefits and maintenance
+   cost only when the user requests or authorizes restructuring.
+
+   After a `PROCEED` result for a new or substantially reworked reader-facing
+   non-inline surface, apply the [authorial intent and story
+   contract](references/content-architecture.md#authorial-intent-and-story-contract)
+   before outlining, full prose, or visual implementation. Evidence determines
+   what the subject can truthfully claim; an explicit user or project decision,
+   or an established surface contract, determines why the document should
+   speak. If that authority is missing, return the smallest contract-level
+   decision instead of inferring intent from mechanics or generating complete
+   variants. Once the contract is resolved, align one opening-and-heading
+   semantic slice, collapse its readback into one contract, and produce one
+   complete route. A bounded revision with an explicit, unchallenged story
+   proceeds directly. This alignment is authoring evidence, not the final
+   documentation review.
 5. When an existing or authorized README is the right owner, treat it as
    technical orientation at its governed rung. Use the reader-contract boundary
    in `content-architecture.md`; do not infer its role from public visibility,
@@ -179,8 +201,10 @@ merely to satisfy this path.
    technical reader, and the verified route relevant to that reader's task.
    Include installation, cloning, or a source quickstart only when it is a
    necessary technical instruction in that route; do not add one as a
-   promotional default.
-7. For a public website landing page, start with visitor-facing why and lead
+   promotional default. A top-level README for an internal product remains a
+   technical surface; do not give it product-evaluation or advertising posture.
+7. For an actual existing or authorized public website landing page, start with
+   visitor-facing why and lead
    to a verified web-native visitor action, such as using the product, trying a
    demo, reading public docs, downloading a client, or contacting the team. Do
    not add a prominent source quickstart, install, clone, package-manager, or
@@ -220,7 +244,7 @@ merely to satisfy this path.
 ## Document a public contract
 
 Make material public semantics safely recoverable by the contract's consumer at
-their canonical owner. Account for every stable item without paraphrasing
+their established owner. Account for every stable item without paraphrasing
 source-owned truth or creating an unauthorized surface.
 
 1. Inventory every stable public option, export, route, command, relevant
@@ -228,17 +252,19 @@ source-owned truth or creating an unauthorized surface.
    exports, generated interfaces, route or command schemas, tests, support
    policy, or an explicit product decision. Treat unclear accidental or
    experimental status as a decision gap, not a silent exclusion.
-2. Read `references/locality-ladder.md` to choose the canonical owner, then
+2. Read `references/locality-ladder.md` to identify the established owner or
+   form a placement proposal when ownership is unresolved, then read
    `references/api-jsdoc-examples.md`. For each public item, account for the
    applicable purpose, use case, inputs, required or default state, observable
    behavior, failures, interactions, and boundary. Treat readable signatures,
    types, schemas, generated reference, and existing canonical surfaces as
    coverage when they expose those semantics safely. Add the smallest precise
    prose only for a material contract gap; do not give every field equal prose.
-3. Put each detailed fact in one existing canonical surface. Orient and link
-   elsewhere. Do not create a new reference page, folder, or navigation entry
-   unless the user authorized it. When a README is the only public surface, let
-   it own the required reference section.
+3. Put each detailed fact in its established existing surface. Orient and link
+   elsewhere. Do not create a new reference page, record, folder, or navigation
+   entry unless authorized. When an existing or authorized README is the
+   established public owner, it may contain the required reference section; do
+   not choose it over another supplied owner.
 4. Use public JSDoc or TSDoc for semantics a signature cannot encode reliably,
    such as runtime defaults, errors, lifecycle, ownership, security boundaries,
    and important interactions. Do not paraphrase types or duplicate the
@@ -287,8 +313,8 @@ mechanics, and never turn this path into documentation review.
    API, structural change, or canonical local context explanation makes the
    meaning available to the affected reader before this decision, prefer that
    cliff and remove only the prose it makes redundant. An unknown called
-   abstraction belongs with its canonical documentation; a durable local
-   convention may belong in `AGENTS.md`, a README, or package documentation.
+   abstraction belongs with its established owner; a durable local convention
+   belongs in the repository-provided context owner when one is supplied.
    Otherwise retain the smallest fence explanation and report the clarity
    opportunity when useful. Do not turn every admitted fence into a refactoring
    task.
@@ -317,8 +343,11 @@ or file comments.
 2. Read `references/locality-ladder.md` and
    `references/quality-maintenance.md`. When the scope includes a README,
    tutorial, how-to, explanation, or reader path, also read
-   `references/content-architecture.md`. When it includes a public contract,
-   configuration reference, JSDoc or TSDoc, or examples, also read
+   `references/content-architecture.md`. If the audit questions the current
+   reader, goal, subject, or surface, also read `references/casting.md`, run the
+   intervention gate, and report its outcome before judging story coherence;
+   do not silently validate the supplied cast. When the scope includes a public
+   contract, configuration reference, JSDoc or TSDoc, or examples, also read
    `references/api-jsdoc-examples.md`. Compare the evidence with the
    documentation for currentness, contract coverage, locality fit, minimum
    sufficient explanation, reader paths, claim evidence, example integrity,
@@ -381,7 +410,10 @@ applicable minimum:
    documentation surface in the stated scope. In a change-set scope, this means
    every changed or affected item.
 3. Confirm that each unit in scope gives its reader enough relevance, behavior,
-   evidence, and boundary to act without unsafe inference.
+   evidence, and boundary to act without unsafe inference. For a new or
+   substantially reworked reader-facing surface, also confirm that its opening,
+   major sections, proof and limits, and completion route agree with the
+   task-local story contract.
 4. Confirm that public JSDoc or TSDoc semantics remain attached to the intended
    exported symbol in the actual extracted or IDE-visible surface.
 5. Build or typecheck examples and documentation when supported. Validate the

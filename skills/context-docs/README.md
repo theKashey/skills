@@ -5,9 +5,10 @@ boundaries, relationships, and structures whose reason is not visible in the
 code or system surface where a reader encounters them. It documents reefs, not
 cliffs—the hidden why and consequence, not mechanics already in view.
 
-Locality is how Context Docs makes those explanations useful. It leaves each one
-at the narrowest authorized surface a human reader or coding agent naturally
-encounters before making the affected decision.
+Locality is how Context Docs makes those explanations useful. Its ladder
+explains how an explanation fits a reader and scope, and can support a placement
+proposal when ownership is unresolved. The environment's established ownership
+and submission route decide the actual home.
 
 - [Why Context Docs exists](#why-context-docs-exists)
 - [Technical role](#technical-role)
@@ -69,16 +70,39 @@ Context Docs closes that explanation gap across the full documentation
 lifecycle. At broader surfaces, a fence may be hidden purpose, contract,
 failure, interaction, or ownership boundary. At code level, it is the verified
 non-local cause that makes a locally selectable, apparently reasonable
-alternative unsafe. Context Docs leaves that explanation with its canonical
+alternative unsafe. Context Docs leaves that explanation with its established
 owner and omits facts the reader can already recover.
+
+Reader need establishes whether a broader document is relevant, but it does not
+choose why the project wants that document to speak. The supplied reader can
+also be wrong: a job title, package, task, or existing page may disguise who can
+actually make the intended decision. Without a separate authorial goal, several
+coherent sections—or several complete drafts—can each optimize a different
+story while appearing locally correct.
+
+Context Docs therefore casts before it commits to a new or substantially
+reworked story. It derives the smallest evidence-backed reader classes from
+recurring decision rights and context, keeps the reader's goal separate from
+the document's authorial goal, and tests whether documentation is the right
+intervention. Casting can replace the reader, revise the goal, change the
+surface or subject, or conclude that no document is needed. Only a surviving
+contract earns a full draft and one verified through-line.
+
+For a new or substantially reworked reader-facing surface, the skill spends one
+small alignment move before a full draft: a task-local story contract and the
+smallest opening-and-heading slice that can disconfirm it. This makes an early
+strategic correction cheap while preserving one final documentation review for
+the finished artifact. Routine bounded revisions keep the established story and
+avoid that ceremony.
 
 ## Technical role
 
 Fence discovery and explanation is the organizing decision across the complete
 documentation cycle. The module first decides whether a material, non-visible
 reason affects a reader's decision, then establishes that reason from evidence
-and chooses its canonical owner. Locality determines where the explanation
-belongs; progressive disclosure determines how much of it the reader needs.
+and discovers its established owner. When ownership is unresolved, locality
+supports a placement proposal; progressive disclosure determines how much of
+the explanation the reader needs.
 
 A fence is a present choice, constraint, boundary, relationship, or structure
 whose reason is not locally visible. Its reef is the material hidden cause and
@@ -94,6 +118,18 @@ problem affects human readers. At code level, Context Docs preserves
 evidence-backed causes that rule out a locally reasonable alternative. It does
 not narrate visible mechanics, inevitable effects, or remote behavior that has
 no material consequence for the decision here.
+
+Human-facing entry surfaces also have an attention boundary. During reading,
+eyes alternate between [fixations and
+saccades](https://pmc.ncbi.nlm.nih.gov/articles/PMC10084433/), and [visual
+salience](https://pmc.ncbi.nlm.nih.gov/articles/PMC5206280/) helps determine
+where overt attention moves next. Correct information can therefore remain
+effectively hidden when a surface gives the reader no meaningful fixation or
+scan anchors. Attention management is part of information exposure, not
+decoration: hierarchy, spacing, typography, links, and visuals can direct the
+reader toward the primary subject, route, and boundary. Those anchors serve the
+surface's established reader contract; they do not create a presentation page
+or give a technical document promotional intent.
 
 Source evidence supports documentation while it is authored, but documentation
 review and deterministic completion checks happen once at wrap-up. Line, block,
@@ -112,13 +148,20 @@ when code, structure, tooling, or a higher canonical owner makes it redundant,
 while code-local rationale remains for readers who do not receive the broader
 context.
 
+Context Docs composes with the ownership and record surfaces an environment
+already provides. When another surface owns a fact, keep the detailed record
+there and add only a route or local consequence when the affected reader still
+needs one. The skill does not choose that surface, replace it with a preferred
+document, or create a parallel fallback that both owners must keep consistent.
+
 ## Architecture and ownership
 
 | File | Owns | Change it when |
 | --- | --- | --- |
 | [SKILL.md](SKILL.md) | Universal laws, request routes, procedures, and completion criteria. | A change affects every invocation or execution order. |
-| [content architecture](references/content-architecture.md) | Reader paths, README roles, procedure structure, and progressive disclosure. | A change affects documentation surfaces or reader journeys. |
-| [locality ladder](references/locality-ladder.md) | Scope vocabulary for placing facts from a line comment to top-level documentation. | A change affects where a fact belongs. |
+| [casting](references/casting.md) | Reader discovery, goal scaffolding, reject/merge/split tests, casting outcomes, and durable cast boundaries. | A change affects how a reader, goal, subject, or surface is challenged before drafting. |
+| [content architecture](references/content-architecture.md) | Authorial intent, story contracts, reader paths, README roles, procedure structure, and progressive disclosure. | A change affects documentation surfaces, their intended story, or reader journeys after casting. |
+| [locality ladder](references/locality-ladder.md) | Scope vocabulary for explaining or proposing how facts fit from a line comment to top-level documentation. | A change affects placement reasoning without overriding established ownership. |
 | [API, JSDoc, and examples](references/api-jsdoc-examples.md) | Public contracts, JSDoc/TSDoc, code-local rationale, and examples. | A change affects API semantics, snippets, or code comments. |
 | [quality and maintenance](references/quality-maintenance.md) | Audit evidence, change triggers, drift checks, and the end-state exit gate. | A change affects how documentation quality is assessed or maintained. |
 
@@ -136,12 +179,18 @@ The skill's durable principles are:
   accepted uncertainty explicitly; never manufacture rationale.
 - **Orient before mechanism.** State purpose, relevant effect, and boundary at
   the subject's owning scope before internal method or detail.
-- **Keep truth local and canonical.** Put a fact at the lowest stable surface
-  that governs every decision it affects, then link rather than duplicate.
-- **Treat local context as living terrain.** Route readers to existing canonical
-  local documentation before adding caller prose. Promote only a durable,
-  verified repository convention that changes a safe action, and retire it when
-  a reader can recover the same boundary from a more reliable owner.
+- **Cast before committing to the story.** Treat every supplied reader class,
+  task, and surface as a hypothesis when the story is new or challenged. Use
+  project evidence to find who controls the decision, keep reader goal separate
+  from authorial goal, and honor a result that changes the reader, goal,
+  surface, subject, or need for documentation.
+- **Keep truth with its established owner.** Link rather than duplicate. When
+  ownership is unresolved, use locality to propose the lowest stable surface
+  that reaches every affected decision; do not treat the proposal as authority.
+- **Treat supplied context as living terrain.** Route readers to the established
+  owner before adding local prose. Add only a durable, verified local
+  consequence that changes a safe action, and retire it when the reader can
+  recover the same boundary from the established owner.
 - **Prefer a map to a transcript.** Preserve non-obvious constraints,
   interactions, and rationale that protect a real decision the reader cannot
   safely infer; omit visible or inevitable mechanics, callee-owned behavior,
@@ -154,13 +203,14 @@ The skill's durable principles are:
   against the finished code and artifacts, and exercise representative reader
   paths to expose context gaps. Do not review line, block, or file comments.
 
-The package separates runtime decisions from their maintenance rationale. The
+The package separates runtime decisions from their maintenance rationale.
+[Casting](references/casting.md) owns reader selection and goal shifts; the
 [locality ladder](references/locality-ladder.md) owns the reader-context model;
 [content architecture](references/content-architecture.md) owns reader paths
-and document roles; [API, JSDoc, and examples](references/api-jsdoc-examples.md)
-owns public-contract and code-local detail; and [quality and
-maintenance](references/quality-maintenance.md) owns verification and drift
-checks at wrap-up.
+and document roles after the cast survives; [API, JSDoc, and
+examples](references/api-jsdoc-examples.md) owns public-contract and code-local
+detail; and [quality and maintenance](references/quality-maintenance.md) owns
+verification and drift checks at wrap-up.
 
 This split prevents a routine documentation task from carrying unrelated
 contract, code-comment, or maintenance doctrine. It also keeps technical
@@ -174,3 +224,6 @@ Context Docs guides documentation work. It does not independently decide product
 behavior, preserve or remove code, invent facts, or authorize a documentation
 restructure. It may report a code-clarity or placement opportunity, but acts on
 code or topology only when that change is already authorized and in scope.
+It follows an established external owner without requiring knowledge of that
+owner's implementation; when the native submission route is unavailable, it
+returns the proposed content and target instead of inventing another store.

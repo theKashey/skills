@@ -4,6 +4,7 @@ Start with the reader's task and governed scope; do not infer a document's role
 from its filename, repository visibility, or marketing posture.
 
 - [Reader contexts](#reader-contexts)
+- [Authorial intent and story contract](#authorial-intent-and-story-contract)
 - [Detail level](#detail-level)
 - [Procedure paths](#procedure-paths)
 - [Classify technical documents and public sites](#classify-technical-documents-and-public-sites)
@@ -11,6 +12,7 @@ from its filename, repository visibility, or marketing posture.
 - [Public documentation homes](#public-documentation-homes)
 - [Public website presentation pages](#public-website-presentation-pages)
 - [Reader entry and scan path](#reader-entry-and-scan-path)
+- [Focus and attention management](#focus-and-attention-management)
 - [Progressive disclosure](#progressive-disclosure)
 - [Explain-before-code pattern](#explain-before-code-pattern)
 - [Meaningful visuals](#meaningful-visuals)
@@ -42,6 +44,77 @@ inventory. A package, public repository, unfamiliar reader, or code location is
 not a documentation gap by itself. If readable code, types, tests, metadata, or
 an existing canonical surface already lets the named reader act safely, add
 nothing.
+
+## Authorial intent and story contract
+
+For a new or substantially reworked non-inline reader-facing surface, form a
+task-local story contract before outlining, full prose, or visual
+implementation. A bounded revision may keep an explicit, unchallenged contract
+and proceed directly.
+
+For new, challenged, or substantially reworked stories, first run
+[casting](casting.md). It owns reader discovery, goal scaffolding, the
+intervention gate, class formation, and durable persona storage. Continue here
+only after `PROCEED`; another outcome changes or stops the documentation task.
+
+A content persona is the smallest durable reader class that survives casting,
+not the entrant's current task or an identity inferred from a job title, skill,
+package, page, workflow phase, or document type. Keep any proven modifier and
+the current task episode below the class. Choose one class-goal pair for the
+primary through-line and route materially different secondary goals without
+creating alternate versions of the same truth.
+
+Keep the reader goal—why this entrant arrives in the current episode—separate
+from the authorial goal—why the project chooses to speak at this surface. The
+story is the verified progression that joins them and produces the intended
+reader change. Evidence establishes what the subject can truthfully claim; an
+explicit user or project decision, or an established surface contract,
+establishes the authorial goal. If none is available, return
+`NEEDS_HUMAN_DECISION` with the smallest missing choice. Never let a filename,
+surface type, source mechanics, or a generic desire for polished documentation
+choose a product or editorial intent.
+
+Record only the contract needed to control the draft:
+
+- surface role, existing owner, and authority;
+- primary content-persona class, proven modifier if any, task-local episode,
+  and reader goal, plus secondary goals to route;
+- authorial goal, its decision source, and the intended reader change;
+- one evidence-backed proposition or through-line and the proof that earns it;
+- boundary or non-fit, unsupported stories to exclude, and one completion
+  decision, task, or next route;
+- expected and disconfirming readback.
+
+When the evidence and supplied decisions resolve one contract, continue without
+reconfirmation. When a strategic field remains open, present only the smallest
+contract-level alternatives that expose the missing decision and stop before a
+full draft.
+
+For a judgment-heavy new surface or substantial rewrite, align the resolved
+contract with one semantic slice before expanding it:
+
+1. Freeze the expected reader change and the observation that would disconfirm
+   the proposed through-line.
+2. Produce only the opening claim and support, an ordered heading spine with
+   each section's contribution, the necessary proof and boundary, and the
+   completion route.
+3. Classify the readback as expected, disconfirming, mixed, or inconclusive;
+   collapse what survives into one contract before writing body prose or visual
+   implementation.
+
+Complete documents are not story probes. After alignment, produce one full
+route. Every major section must advance the intended reader change, supply
+necessary proof or boundary, or serve a materially distinct routed goal. Keep
+the contract and slice as construction records, not published scaffolding. This
+alignment does not replace the single final documentation review.
+
+Story is purposeful selection and progression, not a mandatory narrative voice
+or fixed outline. A technical README connects technical purpose and boundary to
+the reader's route. A presentation page moves a verified visitor situation
+through supported outcome, proof and limits to an honest action. A documentation
+home makes a navigation promise. A tutorial or how-to progresses toward a
+working result; explanation progresses toward a mental model; reference makes a
+lookup promise and needs no book-like arc.
 
 ## Detail level
 
@@ -95,7 +168,8 @@ order, persuasion goals, browser calls to action, or source-versus-browser
 routing into a README. This does not ban verified technical commands,
 installation instructions, or routes for the README's named reader. Public
 access, root placement, a source host, and a license establish availability, not
-the reader's task.
+the reader's task. A top-level README for an internal product remains technical;
+its position does not create a product-presentation role.
 
 A document can host several technical modes when it is the authorized surface,
 but its sections must remain scannable by role. Do not create a split just to
@@ -172,7 +246,8 @@ actions on a separately classified public website presentation page.
 
 ## Public website presentation pages
 
-Use this route only for an actual public website or product page. Its browser
+Use this route only for an actual existing or authorized public website or
+product page. Its browser
 visitor may need a decision or verified web-native action, so it has a different
 reader contract from every README.
 
@@ -184,6 +259,9 @@ to neutral deeper material rather than inventing a call to action.
 A public documentation home is not automatically a marketing page. Classify it
 by whether its reader needs documentation navigation, technical reference, or a
 product decision.
+
+When no presentation page exists or is authorized, stop this route. Its absence
+does not create a landing-page task or a required follow-up proposal.
 
 ## Reader entry and scan path
 
@@ -234,6 +312,32 @@ reference path. For an internal technical surface, use the documented
 repository state and repository-native tooling. Do not silently depend on
 unstated caches, global tools, credentials, generated files, or maintainer
 knowledge. State what remained untested.
+
+## Focus and attention management
+
+On every existing or authorized, in-scope human-facing entry surface, treat
+attention as part of information exposure. From the surface's actual reader
+contract, identify the primary subject, route or task, and any boundary the
+reader must notice before acting. Give those elements perceptually distinct,
+semantically meaningful anchors before secondary detail.
+
+Choose anchors that fit the delivered medium and established conventions:
+headings, spacing, typography, compact summaries, descriptive links, tables,
+diagrams, screenshots, or other layout and visual cues. An anchor passes only
+when it helps the reader locate or interpret information; decoration and
+promotional emphasis do not substitute for hierarchy. A technical README
+anchors technical scope and routes, a documentation home anchors navigation,
+and an actual presentation page anchors its verified visitor path.
+
+Attention management never changes the surface's role, authorizes a new
+surface, or makes visual treatment the only carrier of necessary meaning. It
+does not require an image, badge, fixed section order, or presentation-page
+posture.
+
+At wrap-up, inspect the rendered or actual delivered surface. Verify that a
+reader scanning from its stated entry can notice the primary subject, path, and
+necessary boundary before secondary detail, and that text or contextual
+alternatives preserve any meaning carried by visual treatment.
 
 ## Progressive disclosure
 

@@ -1,15 +1,17 @@
 # Documentation locality ladder
 
-Context Docs uses locality to place verified fence explanations; locality is the
-method, not the purpose. Place each hidden reason where its reader encounters it
-before the governed decision. Use the rungs as a scope vocabulary, not as a
-required folder tree, document outline, or measure of importance.
+Context Docs uses locality to explain how verified fence explanations fit their
+reader and scope; locality is the method, not the purpose. The ladder can
+propose a placement when ownership is unresolved, but the environment's
+established owner and submission route decide the actual home. Use the rungs as
+a scope vocabulary, not as a required folder tree, document outline, migration
+plan, or measure of importance.
 
 - [Existence gate](#existence-gate)
 - [Reader states](#reader-states)
 - [Reader-context rule](#reader-context-rule)
 - [Implementation level is not a documentation rung](#implementation-level-is-not-a-documentation-rung)
-- [Choose a rung](#choose-a-rung)
+- [Form a placement proposal](#form-a-placement-proposal)
 - [Reader-context matrix](#reader-context-matrix)
 - [Overlapping rungs](#overlapping-rungs)
 - [Three heuristics](#three-heuristics)
@@ -24,15 +26,16 @@ a real decision and cannot safely recover it from readable code, types, tests,
 package metadata, existing canonical documentation, or context they genuinely
 have.
 
-For coding work, applicable local context documentation is part of what the
-reader may have: inspect the governing `AGENTS.md`, README, package
-documentation, and linked canonical contract before deciding that an unfamiliar
-use needs explanation. An unfamiliar local abstraction normally needs a route
-to its canonical owner, not invocation-by-invocation prose. Conversely, a
-durable repository-specific convention can earn the smallest local context
-owner when it changes a safe action and is not recoverable elsewhere. Count a
-document only when the reader naturally encounters it before the decision; a
-symbol, diff, or search-match reader may still need code-local rationale.
+For coding work, context supplied by the repository's existing documentation or
+record system is part of what the reader may have. Discover its established
+owner and native submission route from the instructions, links, surfaces, and
+tooling available to the task without assuming what kind of system it is. An
+unfamiliar local abstraction normally needs a route to that owner, not
+invocation-by-invocation prose or a second record. When the owner is not
+available to update, return a proposal for it rather than inventing a fallback.
+Count a document only when the reader naturally encounters it before the
+decision; a symbol, diff, or search-match reader may still need code-local
+rationale.
 
 For a line, block, or file comment, missing information is not enough. Apply the
 [canonical selective-context authoring
@@ -49,7 +52,9 @@ a fact that has earned one.
 Reader labels describe available context, not a rank or required audience. One
 person or agent can hold several states, and a coding agent may be acting as a
 developer, coder, integrator, or operator. None requires its own page, README,
-or comment.
+or comment. These states are casting evidence or modifiers, not a preselected
+content-persona taxonomy; use [casting](casting.md) when a durable class is
+actually needed.
 
 | Reader state | May already know | Needs before acting, if a gap exists |
 | --- | --- | --- |
@@ -115,7 +120,7 @@ A public website or product landing page is a separate presentation surface with
 a browser visitor's reader contract. Classify it independently; its detailed
 boundary is owned by `content-architecture.md`.
 
-## Choose a rung
+## Form a placement proposal
 
 1. Pass the existence gate. If no material reader gap remains, add nothing.
 2. Name the actual reader and the decision or task they are about to make.
@@ -124,14 +129,17 @@ boundary is owned by `content-architecture.md`.
 4. Identify the invisible fact that changes a safe decision at that point. For
    code-local rationale, first apply the [canonical admission and disposition
    decision](api-jsdoc-examples.md#selective-context-authoring-decision).
-5. Choose the narrowest surface that every affected reader naturally encounters
-   before the decision.
-6. State the fact in the form that rung can support: local rationale, technical
-   boundary, contract, system map, or route. Link to the canonical owner for
-   deeper detail.
+5. Identify the narrowest existing or authorized surface that fits every
+   affected reader before the decision. If the environment already supplies an
+   owner, that owner wins even when another rung looks attractive.
+6. State the fact in the form that established owner can support: local
+   rationale, technical boundary, contract, system map, or route. Link to it for
+   deeper detail when the reader can follow that route.
 
-Do not create a missing surface without authorization. Report the placement gap
-and propose the smallest useful surface instead.
+This result is an explanation or proposal, not authority to create, move,
+replace, or duplicate a surface. If no suitable surface is authorized, report
+the fact, reader, and proposed target; do not manufacture the target or a
+parallel record.
 
 ## Reader-context matrix
 
@@ -208,8 +216,9 @@ matrix.
   they genuinely see or know there?
 - **Existence:** Does a material fact remain unavailable from the reader's
   present context and existing canonical surfaces they actually encounter? If
-  not, add nothing. Route an unfamiliar abstraction to its owner; promote only
-  a verified local convention that needs a durable local explanation.
+  not, add nothing. Route an unfamiliar abstraction to its owner; propose a
+  local explanation only for a verified convention whose affected reader still
+  cannot recover its local consequence.
 - **Need:** Which unsafe inference or expensive reconstruction does the fact
   prevent for that reader?
 - **Code-local admission:** Did the [canonical selective-context
@@ -220,7 +229,7 @@ matrix.
   owner's detail?
 - **Capability:** Is this surface asserting only a local rationale, technical
   boundary, contract, system map, or route that it can own?
-- **Placement:** Would moving it leave an affected reader without the fact when
-  they need it, or would keeping it duplicate the canonical owner?
+- **Placement:** Would the proposed fit leave an affected reader without the
+  fact when they need it, displace the established owner, or create a duplicate?
 - **README separation:** Has a technical README been kept separate from any
   public website presentation page and its visitor journey?

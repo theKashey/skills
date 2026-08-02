@@ -20,6 +20,7 @@ Report documentation quality with evidence and counts.
 | Gate | Pass condition |
 | --- | --- |
 | Currentness | At wrap-up, checked evidence shows no contradiction between the documented finished state and the completed exports, types, defaults, routes, tests, or supported versions in scope. |
+| Casting validity | When the reader, goal, subject, or surface was new or challenged, the recorded casting outcome is supported by entrant, context, decision-right, trust-boundary, and intervention evidence. A non-`PROCEED` outcome was followed instead of being drafted around; a persisted class predicts a material content choice and is not merely a skill, package, page, task, workflow phase, or job title. |
 | Entry relevance | The document opens with the reader-relevant entry need defined in the reader entry and scan path section of `content-architecture.md` while keeping the governed subject inferable. Every compact chooser or catalog entry names the subject, what it provides, and why the reader would choose it before mechanism. |
 | Selection context and impact | Before methodology, workflow, taxonomy, or components, the intended reader can infer the relevant situation or pressure, affected party or system, observable impact or changed decision, and boundary. A chooser may own this context for compact catalog entries; a standalone subject page and a detailed owning section orient themselves locally. |
 | Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is accounted for by a discoverable canonical source or has an explicit justified exclusion; prose fills only material semantic gaps. |
@@ -28,14 +29,14 @@ Report documentation quality with evidence and counts.
 | Surface necessity | The surface passes the [locality ladder's existence gate](locality-ladder.md#existence-gate). |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
 | Remote-truth stability | Non-inline prose that depends on another owner preserves a stable contract or causal edge and its local consequence; it does not narrate remote mechanics that can change independently. |
-| Scan-path usability | The named reader can identify the document's purpose, task or destination from headings and links, primary path, and next useful detail without relying on decorative formatting. For a public website presentation page, a browser visitor can identify the intended context, supported outcome, and first verified action; any boundary needed to avoid a likely false expectation appears before it matters. For a public documentation home, a reader can find the relevant topic or exact fact without a product-presentation detour. For a README, the named technical reader can identify the governed scope, boundary, and route for their task without marketing posture. |
-| Locality fit | Each fact has a canonical owner at the narrowest governed scope visible to affected readers; overlapping physical and logical roles are explicit rather than duplicated or forced apart. |
+| Scan-path usability | On a human-facing entry surface, inspection of the rendered or actual delivered form shows semantically meaningful [focus and attention anchors](content-architecture.md#focus-and-attention-management) that make the primary subject, path, and necessary boundary perceptible before secondary detail without relying on decoration. For a public website presentation page, a browser visitor can identify the intended context, supported outcome, and first verified action; any boundary needed to avoid a likely false expectation appears before it matters. For a public documentation home, a reader can find the relevant topic or exact fact without a product-presentation detour. For a README, the named technical reader can identify the governed scope, boundary, and route for their task without marketing posture. |
+| Locality fit | Each fact remains with its established owner. When ownership is unresolved, the ladder supports a placement proposal at the narrowest governed scope visible to affected readers; it does not justify displacing another owner or creating a parallel record. |
 | Entry-point validity | Commands, links, paths, prerequisites, and assumed context work from the documented starting state; any additional access or knowledge is explicit. |
 | Reader-path usability | A representative intended reader can complete the documented outcome from the stated starting state without undocumented setup, unsafe inference, or a required condition or warning that arrives after the action it governs; any untested assumptions are explicit. |
 | Level fit | Guided, Balanced, or Compressed matches the stated reader; explanatory detail is neither withheld from a reader who needs it nor repeated for one who does not. |
 | Example integrity | Every fenced example is runnable and validated, illustrative and syntax-checked, partial with stated omissions, or explicitly pseudocode. |
-| Intent clarity | Different reader questions remain distinguishable within the existing structure; mixed intent may be reported as an optional split candidate. |
-| Progressive disclosure | Each surface orients its named reader at its governed scope; detailed facts remain at their canonical owner and are reached through contextual links. |
+| Authorial intent and story coherence | Different reader questions remain distinguishable. The finished surface keeps the primary class and episode's reader goal distinct from the established authorial goal and expresses one evidence-backed through-line, intended reader change, proof, boundary, and completion route. Every major section advances that change, supplies necessary proof or boundary, or serves a materially distinct routed goal; incompatible intents are not blended into a committee story. When a task-local contract governed the change, the finished surface agrees with it. |
+| Progressive disclosure | Each surface orients its named reader at its governed scope; detailed facts remain with their established owner and are reached through contextual links when that route is available to the reader. |
 | Navigation health | Links resolve; docs build where supported; essential pages are not orphaned; facts needed to act are not available only through a visual. |
 | Publishable end state | Non-inline documentation represents the completed result and requires no cleanup operation to remove draft scaffolding, temporary caveats, or promises of future completion. |
 
@@ -48,11 +49,16 @@ table such as:
 
 For the judgment-heavy gates, record the observation:
 
+- **Casting validity:** casting outcome, observed entrant and entry context,
+  controlled decision, authority or trust boundary, rejected or merged
+  candidates, and the evidence that supports or would overturn the result.
 - **Locality fit:** governed scope, chosen owner, and the plausible competing
   rung.
 - **Level fit:** named reader and one detail deliberately included or removed
   for that reader.
 - **Reader path:** starting state, task attempted, and observed result.
+- **Scan-path usability:** actual delivered view inspected, primary subject,
+  path, and boundary located, and the semantic anchors that exposed them.
 - **Progressive disclosure:** canonical detail owner and the route used to
   reach it.
 - **Entry relevance:** the reader-relevant entry need served by the opening;
@@ -61,6 +67,10 @@ For the judgment-heavy gates, record the observation:
 - **Selection context and impact:** one row per subject with its situation or
   pressure, affected party or system, intended impact or changed decision,
   boundary, and selection-context location.
+- **Authorial intent and story coherence:** primary class, proven modifier and
+  task-local episode, reader goal, established authorial goal, intended reader
+  change, through-line, proof, boundary, completion route, and major sections
+  accounted for over total.
 - **Relationship coverage:** verified edges over total edges, authoritative
   evidence for both endpoints or the explicit product decision, and every
   exclusion.
@@ -92,9 +102,11 @@ every section and public item in that stated scope:
 2. Does the text describe the present contract, a historical change, or implementation rationale? Is it in the right kind of content and an authorized existing surface?
 3. Can the reader infer a capability, security property, or ownership boundary that is not actually guaranteed?
 4. Does a code block prove a claim only after surrounding prose explains its role?
-5. Is this fact duplicated elsewhere, and which location is canonical?
+5. Is this fact duplicated elsewhere, and which established owner already holds it?
 6. What source evidence verifies it? For an evaluative or comparative claim, is the evidence adjacent and are its conditions clear?
-7. Which ladder rung contains everything this fact governs, and is the current surface serving that role rather than a broader or narrower one?
+7. Which established owner holds this fact? If ownership is unresolved, which
+   ladder rung best fits a placement proposal, and would the current surface
+   duplicate or displace another owner?
 8. What material named-reader gap justifies this surface? If readable code,
    types, tests, metadata, local context, or an existing canonical surface
    already covers it, should no addition—or a deletion—be the result?
@@ -123,6 +135,16 @@ every section and public item in that stated scope:
     remain true if that implementation changed without changing its contract,
     and does the statement preserve a material consequence here rather than
     remote mechanics?
+18. For a new, challenged, or substantially reworked reader-facing surface,
+    what casting outcome did the entrant, available context, controlled
+    decision, authority or trust boundary, and intervention evidence support?
+    Did the work follow a result that changed the reader, goal, surface,
+    subject, or need for a document, or did it preserve the original brief by
+    force?
+19. Which explicit decision establishes why the document speaks and what should
+    change for its primary class in this episode? Do the opening, every major
+    section, proof and limits, and completion route advance that through-line or
+    route a materially different goal without competing with it?
 
 Flag bare verbs such as supports, handles, claims, configure, use, secure, or works when nearby text does not supply behavior, condition, and boundary.
 
