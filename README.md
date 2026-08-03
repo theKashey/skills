@@ -72,15 +72,23 @@ make them stages in one loop or runtime dependencies.
 
 There are four supported compositions, not one complete loop:
 
+**Documentation:** Context Docs can complete a documentation task on its own.
+
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph F1["1 · Documentation"]
-        direction LR
         A1["Documentation problem"] --> A2["Context Docs"] --> A3["Truthful reader-facing result"]
     end
+```
 
+**Agent-skill package:** Skill Guidance owns agent-facing activation and
+execution; Context Docs owns reader-facing purpose, locality, and progressive
+disclosure. They shape the package together. Verify Complex Artifacts gives
+the finished multi-file result an independent refinement and readiness gate.
+
+```mermaid
+flowchart LR
     subgraph F2["2 · Agent-skill package"]
-        direction LR
         B1["Agent-skill problem"] --> B2["Skill Guidance"]
         B1 --> B3["Context Docs"]
         B2 -->|"agent-facing contract"| B4["Finished skill package"]
@@ -88,35 +96,35 @@ flowchart TB
         B4 --> B5["Verify Complex Artifacts"]
         B5 --> B6["Refine, block, or hand off"]
     end
+```
 
+**Wider uncertain documentation work:** Helix selects the branch worth
+probing and collapses what the probe returns, Read the Terrain selects an
+evidence-producing move on that branch, and Context Docs publishes only the
+supported meaning.
+
+```mermaid
+flowchart LR
     subgraph F3["3 · Wider uncertain documentation work"]
-        direction LR
         C1["Wider outcome"] --> C2["Helix"]
         C2 --> C3["Read the Terrain"]
         C3 --> C4["Context Docs"]
         C4 --> C5["Supported meaning reaches the reader"]
     end
+```
 
+**Structural enforcement:** Screaming Reefs gives a documented constraint a
+structural owner—such as a name, type, API, ownership boundary, or filesystem
+location—when that change is explicitly authorized. A documentation finding
+does not authorize the change.
+
+```mermaid
+flowchart LR
     subgraph F4["4 · Structural enforcement"]
-        direction LR
         D1["Documented reef"] --> D2["Screaming Reefs"]
         D2 -->|"authorized change"| D3["Constraint visible in structure"]
     end
 ```
-
-- **Documentation:** Context Docs can complete a documentation task on its own.
-- **Agent-skill package:** Skill Guidance owns agent-facing activation and
-  execution; Context Docs owns reader-facing purpose, locality, and progressive
-  disclosure. They shape the package together. Verify Complex Artifacts gives
-  the finished multi-file result an independent refinement and readiness gate.
-- **Wider uncertain documentation work:** Helix selects the branch worth
-  probing and collapses what the probe returns, Read the Terrain selects an
-  evidence-producing move on that branch, and Context Docs publishes only the
-  supported meaning.
-- **Structural enforcement:** Screaming Reefs can follow Context Docs when an
-  explicitly authorized structural change can carry a verified constraint more
-  reliably than prose. A documentation finding is not authorization for that
-  change.
 
 Helix is also the management view over the collection. It can treat each skill
 as a candidate branch beneath an outcome, expose missing or duplicated
