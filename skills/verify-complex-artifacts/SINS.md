@@ -1,14 +1,15 @@
 # The Sins of the LLM
 
 The [Laws](SKILL.md#laws) bind the one who writes the chart. The Sins belong
-to the one who sails by it. They are not moral failures; they are mechanisms. You cannot scold
-them out—only design around them.
+to the one who sails by it. They are not moral failures or diagnoses of
+intent; they are named deformations visible in outcomes.
 
-Use this reference only after a gate has found a defect and the evidence makes
-one of these mechanisms a useful repair lead. Name the problem in the gate
-record as `sin → observed evidence → countermeasure → invalidated gate`. Apply
-the countermeasure, then rerun the gate that owns the affected property. A sin
-is neither proof of cause nor a substitute for verification.
+Use this reference only after a gate has found a defect and the evidence matches
+one of these deformations. Name its presence in the gate record as
+`sin → observed evidence → invalidated gate`. Naming a sin neither proves its
+cause nor requires a repair. When repair is authorized, a **Counter** may
+provide a repair lead; the owning gate still determines whether the affected
+property passes.
 
 ## I. The Pink Elephant
 
@@ -142,7 +143,21 @@ green CI on a hollow test.
 **Counter:** Use verification the sinner does not control: the gate, not the
 claim.
 
-Nine, if the Tunnel and the Reformer are one sin with two faces: Wrong Scope.
-Ten if they are not. The number is not the point: there are exactly as many
-sins as there are mechanisms, and a list padded past its mechanisms commits the
+## X. The Insider
+
+The authoring room becomes the artifact's world; private context is written as
+though every reader shared it.
+
+**Tell:** A document introduces a problem or solution whose relevance to its
+reader exists only in the prompt, leaves “we,” shorthand, premises, or terms to
+be resolved from the conversation, or carries conversational wording or
+speaker attribution into a durable record. An ADR that cites a requester's
+informal or profane remark instead of stating the durable decision and rationale
+has this shape. An intentionally informal voice or exact quotation does not
+qualify when the artifact's established contract requires that voice or
+provenance.
+
+Ten, if the Tunnel and the Reformer are one sin with two faces: Wrong Scope.
+Eleven if they are not. The number is not the point: name only deformations
+evidenced in outcomes; a list padded beyond those distinctions commits the
 Confabulator’s sin against itself.

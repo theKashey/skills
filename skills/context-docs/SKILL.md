@@ -28,11 +28,14 @@ remains, add nothing.
    types, tests, generated artifacts, or an explicit product decision as
    evidence. An unexplained Chesterton's Fence triggers investigation, not a
    plausible story. Put evidence beside evaluative or comparative claims.
-3. **Describe the finished state.** Current documentation represents what is
-   true when the requested work is complete, not the temporary state or
-   sequence used to get there. At wrap-up, verify that account against the
-   finished code and artifacts. Changelogs, migration guides, and release
-   documentation explain what changed or used to be true.
+3. **Describe the finished state.** Anchor current documentation in the
+   authorized contract expected when the requested work is complete. Present
+   artifacts are evidence for implementing or verifying that contract; they do
+   not choose the story. A mismatch in checkout, registry, branch, rollout, or
+   release state is a work item or validation failure, not current-documentation
+   content, unless the completed product intentionally supports that
+   transitional state. Changelogs, migration guides, and release documentation
+   explain what changed or used to be true.
 4. **Lead with reader-relevant why; orient before mechanism.** Open a
    reader-facing surface with the pressure, consequence, responsibility,
    supported outcome, boundary, or changed decision its entering reader needs.
@@ -90,6 +93,13 @@ remains, add nothing.
     handoff. Include a concrete component map, ownership boundary, or framework
     distinction when it changes the reader's decision or is part of the
     reader's subject or contract.
+14. **Separate source register from artifact register.** Treat prompts,
+    conversations, interviews, and working notes as evidence and intent, not
+    automatically publishable wording. Render their meaning in the established
+    register and reader context of the authorized surface. Preserve informal
+    phrasing, profanity, speaker attribution, or exact quotation only when the
+    artifact's durable contract requires that voice or provenance; do not import
+    a conversational “we” whose referent the reader cannot recover.
 
 ## Route the request
 
@@ -122,13 +132,18 @@ non-inline surface so the completed purpose, behavior, boundary, and next route
 are safely recoverable. Do not create a surface or publish work-in-progress
 merely to satisfy this path.
 
-1. Establish the verified starting truth and the authorized state expected when
-   the work is complete from package metadata, public exports, types,
-   configuration, defaults, errors, tests, explicit decisions, and
-   repository-native documentation tooling. Write current documentation toward
-   that completed state. At wrap-up, verify that the finished implementation
-   matches it. Do not publish a mid-process snapshot or treat an example,
-   private helper, or identifier name as proof of public behavior.
+1. Establish the authorized completed contract from explicit product decisions,
+   established public contracts, and the in-scope implementation target. Use
+   package metadata, public exports, types, configuration, defaults, errors,
+   tests, generated artifacts, and repository-native documentation tooling to
+   implement or verify it. When that evidence still disagrees with the
+   authorized completed contract, resolve the mismatch within scope or report
+   it as a validation failure; do not turn it into a caveat, prerequisite, or
+   starting condition in current documentation. Do not investigate or narrate
+   publication or delivery state unless the requested reader contract includes
+   it. At wrap-up, verify that the finished implementation matches the
+   documentation. Do not treat an example, private helper, or identifier name
+   as proof of public behavior.
 2. Before adding a surface or comment, establish a material reader gap. If
    readable code, types, tests, metadata, local context, or an existing
    canonical surface already lets that reader act safely, add nothing; do not
@@ -198,11 +213,17 @@ merely to satisfy this path.
 6. For a top-level repository or project README that is the right owner, start
    with technical why:
    what the system or repository is for, its scope, major boundaries, intended
-   technical reader, and the verified route relevant to that reader's task.
-   Include installation, cloning, or a source quickstart only when it is a
-   necessary technical instruction in that route; do not add one as a
-   promotional default. A top-level README for an internal product remains a
-   technical surface; do not give it product-evaluation or advertising posture.
+   technical reader, and the route in the authorized completed contract that is
+   relevant to that reader's task. Keep that orientation and a concise primary
+   route in the opening scan path. Include installation, cloning, or a source
+   quickstart only when it is a necessary technical instruction in that route;
+   do not derive it from incidental checkout, registry, or rollout state. When
+   an established example or how-to owner contains a secondary demo, link to it
+   with enough context to choose it instead of reproducing its setup or
+   procedure. Retain the procedure here only when the demo is itself the
+   reader's primary technical task and this README is its established owner. A
+   top-level README for an internal product remains a technical surface; do not
+   give it product-evaluation or advertising posture.
 7. For an actual existing or authorized public website landing page, start with
    visitor-facing why and lead
    to a verified web-native visitor action, such as using the product, trying a
@@ -423,7 +444,8 @@ applicable minimum:
    documentation home; entry points and technical workflows for an internal
    surface. Otherwise report the assumptions that remain untested.
 6. Check links, code-fence status, terminology, defaults, historical leakage,
-   mid-process wording, and copy-paste integrity.
+   source-to-artifact register leakage, mid-process wording, and copy-paste
+   integrity.
 7. Apply the [end-state exit
    gate](references/quality-maintenance.md#end-state-exit-gate).
 8. Report updated surfaces, intentional omissions, validation run, counts,

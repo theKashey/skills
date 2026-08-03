@@ -97,10 +97,10 @@ nearby lines, search matches, and that genuinely available context were visible:
    choice and consequence locally recoverable:
    - When that change is already authorized and in scope, prefer the visible
      constraint and remove only the prose made redundant.
-   - Otherwise, place the smallest durable explanation at the decision. A
-     canonical `AGENTS.md`, README, or package document can replace it only
-     when the affected reader encounters that context before acting; otherwise
-     retain code-local rationale and report the clarity opportunity when useful.
+   - Otherwise, place the smallest durable explanation at the decision. An
+     established context owner can replace it only when the affected reader
+     encounters that context before acting; otherwise retain code-local
+     rationale and report the clarity opportunity when useful.
    - Do not turn every admitted fence into a refactoring task. Clear mechanics
      may still carry non-local system meaning that code at this site cannot
      expose.

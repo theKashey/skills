@@ -180,6 +180,10 @@ Reject a result that requires another edit merely to:
 
 - replace future tense with the completed contract;
 - remove notes about temporary repository, branch, rollout, or access state;
+- remove caveats, prerequisites, or version narration caused only by a
+  temporary mismatch among checkout, registry, publication, or release state;
+- move a secondary demo procedure out of a top-level README's primary scan path
+  when an established example or how-to owner can carry the detail;
 - delete draft labels, placeholders, commented-out scaffolding, or instructions
   to finish the work later;
 - reveal content that was intentionally hidden during implementation.

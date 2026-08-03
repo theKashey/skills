@@ -95,6 +95,15 @@ strategic correction cheap while preserving one final documentation review for
 the finished artifact. Routine bounded revisions keep the established story and
 avoid that ceremony.
 
+Authoring sources create another selective-context boundary. A live
+conversation can rely on shorthand, emotion, shared referents, and an informal
+voice that a durable reader-facing surface does not own. Copying that register
+can turn a private exchange into the apparent subject, turn a participant's
+provisional wording into a durable attributed statement, or force readers to
+reconstruct a conversation they never saw. Context Docs carries the verified
+meaning into the surface's established register; exact voice and attribution
+remain only when their provenance is part of the durable contract.
+
 ## Technical role
 
 Fence discovery and explanation is the organizing decision across the complete
@@ -195,13 +204,21 @@ The skill's durable principles are:
   interactions, and rationale that protect a real decision the reader cannot
   safely infer; omit visible or inevitable mechanics, callee-owned behavior,
   and unneeded surface area.
+- **Separate source register from artifact register.** Treat informal prompts,
+  conversations, interviews, and working notes as sources of meaning rather
+  than the document's default voice. Preserve exact wording, profanity, or
+  speaker attribution only when the established surface contract requires that
+  voice or provenance.
 - **Use explanations as clarity signals.** Protect an invisible constraint
   first, then notice when code, types, an API, or structure could expose it
   directly. Keep the explanation when the significance remains non-local; do
   not treat every documented fence as a mandatory refactor.
-- **Treat documentation as a completed-system claim.** At wrap-up, verify it
-  against the finished code and artifacts, and exercise representative reader
-  paths to expose context gaps. Do not review line, block, or file comments.
+- **Treat documentation as a completed-system claim.** Use present artifacts to
+  implement and verify the authorized finished contract, not to promote a
+  temporary checkout, delivery, or publication mismatch into reader-facing
+  content. At wrap-up, verify the claim against the finished code and artifacts,
+  and exercise representative reader paths to expose context gaps. Do not review
+  line, block, or file comments.
 
 The package separates runtime decisions from their maintenance rationale.
 [Casting](references/casting.md) owns reader selection and goal shifts; the

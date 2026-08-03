@@ -199,15 +199,22 @@ State only what that reader needs at top level:
 2. Its major components, boundaries, and any system-wide constraints that change
    a safe technical decision.
 3. The technical audience or audiences served by the documented routes.
-4. The verified route relevant to the task: using a published package, running
-   the system, contributing, operating it, or finding deeper documentation.
+4. The route in the authorized completed contract that is relevant to the task:
+   using the system or a package, running it, contributing, operating it, or
+   finding deeper documentation.
 5. Links to canonical package, domain, API, configuration, operation, and
    contribution material as applicable.
 
 A source or package start belongs here only when it is the verified technical
 task for the reader. It is an instruction, not a conversion call to action.
 Do not add a generic source quickstart merely because source exists, and do not
-turn this README into a product advertisement or a monorepo manual.
+infer the route from temporary checkout, registry, rollout, or release state.
+Keep the opening scan path on purpose, scope, boundaries, and the primary
+technical route. When an established example or how-to owner contains a
+secondary demo, give it a concise contextual link instead of copying its setup
+or procedure into that critical space. Retain the procedure only when the demo
+is itself the verified primary task and this README is its established owner.
+Do not turn this README into a product advertisement or a monorepo manual.
 
 ### Package README
 
@@ -319,7 +326,9 @@ On every existing or authorized, in-scope human-facing entry surface, treat
 attention as part of information exposure. From the surface's actual reader
 contract, identify the primary subject, route or task, and any boundary the
 reader must notice before acting. Give those elements perceptually distinct,
-semantically meaningful anchors before secondary detail.
+semantically meaningful anchors before secondary detail. Detail volume is part
+of that hierarchy: a secondary setup or demonstration fails this rule when its
+procedure occupies the scan path needed for the primary orientation or task.
 
 Choose anchors that fit the delivered medium and established conventions:
 headings, spacing, typography, compact summaries, descriptive links, tables,
@@ -349,7 +358,8 @@ Use a canonical-owner rule within the existing documentation topology. The
 following modes may be sections in one README:
 
 - Put exact defaults, type shapes, error details, and exhaustive option facts in reference.
-- Put task-specific setup and procedure in how-tos.
+- Put task-specific setup and procedure in their established how-to or example
+  owner when one exists.
 - Put concepts and trade-offs in explanations.
 - Put only a short contextual summary plus a link in other surfaces.
 

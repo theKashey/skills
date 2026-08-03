@@ -37,8 +37,9 @@ named gate.
 | **Collateral regression** | A focused improvement degrades an adjacent behavior, representation, mode, edge case, or previously correct region. The artifact becomes better on the optimized axis and worse overall. | Compare the frozen baseline with the candidate across neighboring paths and non-target invariants. Exercise unchanged modes and at least one counterexample to the focal improvement. | Deterministic, factual, and consumer-surface gates. |
 
 This table owns signature detection: the observable evidence and adversarial
-check. When a gate then establishes the defect and the repair needs a named
-mechanism, the matching [Sin](../SINS.md) owns the repair countermeasure:
+check. After a gate establishes the defect, a matching [Sin](../SINS.md) may
+name the deformation visible in the outcome. One signature can express more
+than one sin; name only what the observed evidence supports:
 
 - Pink-elephant amplification → The Pink Elephant;
 - Proxy completion → The Djinn, or The Potemkin when completion is claimed
@@ -47,11 +48,16 @@ mechanism, the matching [Sin](../SINS.md) owns the repair countermeasure:
 - Collateral regression → The Reformer;
 - Uniformity collapse → The Prior;
 - Confabulated support → The Confabulator;
-- Proof leakage → The Potemkin.
+- Proof leakage → The Potemkin when completion is performed rather than earned,
+  or The Insider when authoring-conversation context is written as consumer
+  context;
+- Offering and subject-order loss or source contamination → The Insider when
+  relevance, wording, attribution, or referents exist only in the authoring
+  conversation.
 
-Implementation-time recording, offering and subject-order loss, placement
-drift, and source contamination map to no single sin; name their mechanism
-from the observed evidence instead.
+Implementation-time recording and placement drift map to no single sin. Other
+instances of offering and subject-order loss or source contamination may also
+remain unnamed or match another evidence-backed deformation.
 
 ## Cross-artifact checks
 

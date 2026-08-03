@@ -12,9 +12,10 @@ review so the producer cannot explain the artifact into passing.
 ## Point at the problem
 
 After a gate establishes a defect, name the matching [Sin](SINS.md) in the gate
-record: `sin → observed evidence → countermeasure → invalidated gate`. Naming
-the mechanism gives the repair a target; it does not turn a plausible mechanism
-into proof of cause or completion.
+record: `sin → observed evidence → invalidated gate`. Naming the deformation
+accepts its presence in the outcome; it does not prove a cause, require a
+repair, or establish completion. When repair is authorized, a Sin's optional
+counter may inform the repair plan.
 
 ## Laws
 
@@ -183,8 +184,9 @@ transition on a failed required check. If repair is authorized, fix the
 candidate and restart from the earliest invalidated gate; otherwise report
 `BLOCK`.
 
-Apply the named sin's countermeasure to the repair plan, then rerun every
-invalidated gate. The owning gate still proves whether the defect is repaired.
+When repair is authorized and the named sin provides a counter, use it as a
+repair lead, then rerun every invalidated gate. The owning gate still proves
+whether the defect is repaired.
 
 A command exiting successfully proves only the property it actually checks.
 Do not relabel a build as semantic, visual, security, or requirement

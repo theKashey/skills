@@ -65,9 +65,10 @@ signature.
 ## Point at a discovered problem
 
 When a gate has established a defect, name the matching [Sin in *The Sins of
-the LLM*](SINS.md) as `sin → observed evidence → countermeasure → invalidated gate`.
-The name gives the repair a target; it never replaces target evidence or the
-gate that proves the repair.
+the LLM*](SINS.md) as `sin → observed evidence → invalidated gate`. The name
+records an accepted deformation of the outcome; it never replaces target
+evidence, proves a cause, requires repair, or substitutes for the gate. When
+repair is authorized, an entry's optional counter may provide a repair lead.
 
 ## What the gate establishes
 
