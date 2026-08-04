@@ -26,11 +26,14 @@ repository.
   observations and results, and remove uncertainty from both code and planning.
   A skill may cover one of these moves without pretending to own the whole
   development lifecycle.
-- Use `skills/skill-guidance/SKILL.md` for every skill creation, runtime-content
-  revision, routing decision, or skill audit.
+- Use the host-provided skill creator for every skill creation or
+  runtime-content revision. Consult `skills/skill-guidance/SKILL.md` for
+  advisory review of activation, runtime choices, routing, isolation, or
+  behavioral evaluation; Skill Guidance does not own file creation or mutation.
 - Also use `skills/context-docs/SKILL.md` whenever prose, examples, references,
-  comments, or reader paths change. `skill-guidance` owns agent-choice behavior;
-  `context-docs` owns truth, locality, reader context, and publishable end state.
+  comments, or reader paths change. `skill-guidance` reviews agent-choice
+  behavior; `context-docs` owns truth, locality, reader context, and
+  publishable end state.
 - Before changing repository-level or skill-facing prose, use the
   [content-persona cast](.context-docs/CONTENT-PERSONAS.md). Select the class by
   the decision the entrant controls, then add only a proven modifier and the

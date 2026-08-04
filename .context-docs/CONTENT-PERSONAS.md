@@ -18,6 +18,31 @@ default taxonomy: agent is usually a delivery mode, while engineer and
 architect describe overlapping roles or decision altitude. None yet predicts
 three stable sibling reader classes for this repository.
 
+## Expected frequency and service priority
+
+The ordering below is a provisional editorial expectation, not observed
+traffic. It follows the current surface contracts and usage sequence; no
+analytics, interviews, or support-volume sample establishes a numeric rate.
+
+The repository-wide compact direct set is currently `N = 2`: **Actor** and
+**Evaluator** receive first-class paths on the surfaces they enter. **Owner**
+remains fully supported through the deeper governance and maintainer route, but
+its distinct rationale is not repeated in routine runtime or evaluation paths.
+
+| Priority | Class | Expected relative frequency and basis | Service disposition |
+| --- | --- | --- | --- |
+| 1 | **Actor** | Highest expected: an installed skill exposes its Actor route on each activation; this is a topology-based expectation, not a usage count. | Keep the runtime core compact and direct; reveal branch references only when their condition occurs. |
+| 2 | **Evaluator** | Recurring: selection and installation precede use but do not repeat on every activation. | Serve fit, boundary, and choice directly in repository and package README entry paths. |
+| 3 | **Owner** | Occasional and high-consequence: ownership work occurs when a skill or repository is revised, reviewed, or distributed. | Route from shared entry surfaces to package rationale, repository governance, and validation detail. |
+
+This top-`N` budget applies across the surface portfolio, not as a requirement
+to tell two complete stories on every page. Each surface still selects one
+primary class and through-line. Add another direct class only when recurring
+evidence shows that a contextual route cannot serve it without material loss;
+otherwise stop at the point of diminishing returns and keep the long tail
+behind its canonical route. A lower-frequency safety boundary stays direct
+when delaying it would make action unsafe.
+
 ## Goal scaffold
 
 | Layer | Current evidence-backed answer |
@@ -39,6 +64,7 @@ three stable sibling reader classes for this repository.
 The same human or agent can move between classes when their decision right
 changes. Select one primary class for a surface or major route; a secondary
 class earns only a route to its established owner, not another complete story.
+Frequency changes exposure priority, not facts, guarantees, or authority.
 
 ## Add only proven context
 
@@ -81,5 +107,6 @@ This cast is reconstructed from current repository content and governance, not
 from interviews, analytics, support volume, or market research. Recast when a
 recurring entrant cannot fit without distortion; two classes produce no
 different content choice; a class starts mapping one-to-one to skills or pages;
-or entry context, decision rights, trust boundaries, supported outcomes, or
-authoring consequences change.
+the expected frequency order or top-`N` cutoff no longer matches observed entry
+evidence; or entry context, decision rights, trust boundaries, supported
+outcomes, or authoring consequences change.

@@ -1,9 +1,9 @@
 # Read the Terrain
 
-Read the Terrain prevents uncertainty from hardening into a confident but
-untested course of action. It gives an agent a compact orientation loop that
-turns a consequential unknown into the smallest safe move that can change what
-is known.
+Read the Terrain gives an agent a compact orientation loop intended to keep
+uncertainty from hardening into a confident but untested course of action. It
+frames a consequential unknown as the smallest bounded move that can change
+what is known.
 
 ## Why the skill exists
 
@@ -23,6 +23,12 @@ maximum scope, an expected signal, a disconfirming signal, and a review point.
 That outcome lets an agent reduce uncertainty through evidence while keeping the
 work recoverable and proportionate.
 
+A clean diagnostic puzzle makes the unknown and relevant evidence unusually
+easy to hold in attention. It can test whether the route distinguishes an
+observation from a hypothesis, but not whether that distinction survives
+competing signals, urgency, or a model's commitment to an earlier story. The
+intended effect needs representative stressed investigations to evaluate.
+
 ## Principles that shape the runtime
 
 - **Orientation stays revisable.** Observations, interpretations, causes, and
@@ -37,9 +43,10 @@ work recoverable and proportionate.
   new signal is not progress.
 - **Independent reconstruction tests problem alignment.** Before a candidate
   crosses a costly or trust boundary, an isolated reader may infer its intended
-  change and assumptions from the candidate alone. This reveals whether the
-  candidate communicates the same terrain; it does not prove causality,
-  requirement coverage, or downstream acceptability.
+  change and assumptions from the candidate alone. This tests whether the
+  candidate communicates the same terrain to that reader; it does not reproduce
+  the producer's overloaded state or prove causality, requirement coverage, or
+  downstream acceptability.
 - **Scope is a safety control.** Prefer reversible, bounded moves unless a
   proven response, immediate containment, or the cost of delay selects another
   shape.

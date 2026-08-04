@@ -5,12 +5,12 @@ description: Use when an authorized change should enforce a documented constrain
 
 # Screaming Reefs
 
-Turn a verified reef into a cliff: give a documented constraint a
-structural owner the affected reader cannot miss.
+Turn a verified **invisible reef** into a **visible cliff**: give a documented
+constraint a structural owner the affected reader cannot miss.
 
-- **Reef** — the material hidden cause and consequence behind a documented
+- **Invisible reef** — the material hidden cause and consequence behind a documented
   constraint: what makes an apparently reasonable local action unsafe.
-- **Cliff** — meaning already visible and safely recoverable from the
+- **Visible cliff** — meaning already visible and safely recoverable from the
   reader's local context: code, names, types, signatures, structure.
 - **Readback** — re-reading the changed decision with only the affected
   reader's genuinely available context (a file, diff, symbol, or search

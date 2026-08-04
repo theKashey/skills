@@ -1,8 +1,9 @@
 # Skill Guidance
 
-Skill Guidance creates, revises, audits, and validates independently installable
-agent skills, so an agent loads the right instruction, makes the intended
-post-trigger choice, and stops on observable evidence.
+Skill Guidance advises a host-provided skill creator and audits or evaluates
+independently installable agent skills. It reviews whether activation, runtime
+choices, completion, and package isolation support the intended behavior; it
+does not create or edit the target skill.
 
 ## Why it exists
 
@@ -12,21 +13,33 @@ why the skill loaded, maintainer rationale leaks into every invocation, and a
 structurally valid package is mistaken for changed agent behavior.
 
 Skill Guidance exists to keep those surfaces separate and make every retained
-instruction earn its recurring context cost. Its intended effect is a
-standalone package that loads for the right problem, changes one consequential
+instruction earn its recurring context cost. Its advice aims at a standalone
+package that loads for the right problem, changes one consequential
 post-trigger choice, and stops on observable evidence rather than on prose,
 tool use, or structural validity alone.
 
-Context Docs supplies the reader-locality and progressive-disclosure discipline
-used to decide what a maintainer needs to understand about that package. Skill
-Guidance supplies the agent-instruction discipline used to package and maintain
-Context Docs as a skill. They are used to build each other, but neither runtime
-package invokes or depends on the other.
+That cost belongs to the flow an activation actually loads, not to
+`SKILL.md` size in isolation. Moving material behind a pointer discloses it
+progressively only when some applicable flow avoids it. Nested conditional
+references can improve clarity and signal-to-noise, but each serial discovery
+adds latency; the main `SKILL.md` should expose materially long journeys so the
+agent can plan the required reads.
+
+A tidy single-turn exercise gives an instruction unusually little competition
+and is weak evidence for that intended effect. Structural validation and clean
+comparisons can expose packaging, routing, or interpretation regressions; they
+do not establish behavior under long-context stress. That requires a
+representative task with the plausible wrong default and competing context
+still present.
+
+A host skill creator may use Context Docs for reader-facing truth, locality, and
+progressive disclosure, and Skill Guidance for advisory review of the
+agent-facing contract. Neither runtime package invokes or depends on the other.
 
 ## When to use this skill
 
-Use Skill Guidance while creating, revising, restructuring, pruning, repairing,
-or auditing an agent skill. It also owns decisions about:
+Use Skill Guidance for design advice while a host skill creator is creating or
+revising a skill, or to audit and evaluate an existing skill. It reviews:
 
 - whether guidance belongs in a skill at all;
 - whether content belongs in activation metadata, runtime instructions,
@@ -46,8 +59,8 @@ prose, examples, references, or reader paths change.
 | File | Owns |
 | --- | --- |
 | [The Laws of Agent Instruction](LAWS.md) | Canonical Law identifiers, titles, and universal decision constraints |
-| [SKILL.md](SKILL.md) | Activation boundary, package isolation, route selection, obligation admission, and completion |
-| [Build or revise](references/build-or-revise.md) | Capability ownership, activation/runtime separation, authoring, pruning, and structural validation |
+| [SKILL.md](SKILL.md) | Activation boundary, package isolation, route selection, obligation tests, and completion |
+| [Advisory design assessment](references/build-or-revise.md) | Capability ownership, activation/runtime separation, pruning recommendations, and required validation |
 | [Audit a skill](references/audit-skill.md) | Evidence-backed review without mutation |
 | [Validate changed choices](references/validate-changes.md) | Frozen behavioral evaluation and verdicts |
 | [Validator](scripts/validate_skill.py) | Standalone structural and isolation checks |
@@ -57,14 +70,13 @@ reference, but it must not point here.
 
 ## Law alignment
 
-While forming a skill, name the exact [Agent Instruction
-Law](LAWS.md) identifier and title that materially constrains its design—for
-example,
+While reviewing a skill design, name the exact [Agent Instruction
+Law](LAWS.md) identifier and title that materially constrains it—for example,
 [`Law VII — Enforce or delete mechanical rules`](LAWS.md#law-vii--enforce-or-delete-mechanical-rules).
 Each citation carries the target-skill choice it governs and evidence for that
-choice. This creates a short, reviewable design checklist without copying the
-full law set into every package, and lets an audit point to one broken law
-rather than a vague principle.
+choice. This gives the host creator a short, reviewable design checklist without
+copying the full law set into every package, and lets an audit point to one
+broken law rather than a vague principle.
 
 The alignment record stays in the handoff by default. A target runtime may name
 a law only when the law and its local consequence tell its agent what to do;
@@ -72,11 +84,11 @@ a bare law or framework label is not an instruction. Naming selected laws does
 not exempt the skill from any other law whose conditions arise, and it never
 creates a runtime dependency on Skill Guidance.
 
-## Changing the contract
+## Reviewing a contract change
 
 Start with an observed wrong activation, execution choice, premature stop, or
 maintenance failure. Identify the surface that owned the missing decision
-before adding prose.
+before recommending prose or structure to the host skill creator.
 
 For any changed sentence, ask:
 
@@ -86,6 +98,7 @@ For any changed sentence, ask:
 3. Is another surface already the canonical owner?
 4. Can a gate enforce it more reliably than prose?
 
-Move the sentence to its owner or delete it when those answers do not justify
-runtime context. Git history records superseded wording; the README records
-current design, not the edit narrative.
+Recommend moving the sentence to its owner or deleting it when those answers do
+not justify runtime context. The host skill creator owns any resulting file
+change. Git history records superseded wording; the README records current
+design, not the edit narrative.

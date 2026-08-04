@@ -1,235 +1,124 @@
 # Documentation locality ladder
 
-Context Docs uses locality to explain how verified fence explanations fit their
-reader and scope; locality is the method, not the purpose. The ladder can
-propose a placement when ownership is unresolved, but the environment's
-established owner and submission route decide the actual home. Use the rungs as
-a scope vocabulary, not as a required folder tree, document outline, migration
-plan, or measure of importance.
+Use this guide only when documentation existence, ownership, governed scope, or
+placement remains unresolved. Locality can explain or propose a fit; the
+environment's established owner and submission route decide the actual home.
+The ladder is not a folder tree, document inventory, measure of importance, or
+persona catalog.
 
-- [Existence gate](#existence-gate)
-- [Reader states](#reader-states)
-- [Reader-context rule](#reader-context-rule)
-- [Implementation level is not a documentation rung](#implementation-level-is-not-a-documentation-rung)
-- [Form a placement proposal](#form-a-placement-proposal)
-- [Reader-context matrix](#reader-context-matrix)
-- [Overlapping rungs](#overlapping-rungs)
-- [Three heuristics](#three-heuristics)
-- [Movement tests](#movement-tests)
+## Pass the existence and ownership gates
 
-## Existence gate
+1. When the purpose of an existing choice or structure is unknown, treat it as
+   Chesterton's Fence and investigate before changing or removing it. Once the
+   rationale is verified, name the decision the reader must make and the
+   invisible reef—the non-local cause and material consequence—that changes it.
+2. List only context the reader actually encounters before that decision:
+   nearby code, types, tests, package metadata, system access, and canonical
+   documentation reached through the project's normal route.
+3. Add nothing when that context already makes the decision safe. An unfamiliar
+   abstraction normally needs a route to its owner, not a second explanation at
+   every use.
+4. Follow the established owner. If it cannot be updated, return a placement
+   proposal for that owner instead of inventing a fallback record.
+5. For line, block, or file comments, first apply the [selective-context
+   authoring decision](api-jsdoc-examples.md#selective-context-authoring-decision).
+   Place only an explanation that passes that admission gate.
 
-First decide whether any documentation belongs. A reader state, package,
-repository root, public source, or code location is not itself evidence of a
-gap. Add or retain a surface only when a named reader needs a material fact for
-a real decision and cannot safely recover it from readable code, types, tests,
-package metadata, existing canonical documentation, or context they genuinely
-have.
+## Connect encounter points to the owner
 
-For coding work, context supplied by the repository's existing documentation or
-record system is part of what the reader may have. Discover its established
-owner and native submission route from the instructions, links, surfaces, and
-tooling available to the task without assuming what kind of system it is. An
-unfamiliar local abstraction normally needs a route to that owner, not
-invocation-by-invocation prose or a second record. When the owner is not
-available to update, return a proposal for it rather than inventing a fallback.
-Count a document only when the reader naturally encounters it before the
-decision; a symbol, diff, or search-match reader may still need code-local
-rationale.
+One canonical owner holds the complete contract and remote mechanics; it need
+not be the only place that names the relationship. Map the independent paths
+the repository actually puts before an affected reader: a symbol or diff,
+folder-local instructions, package documentation, and the canonical owner. Do
+not count repository-wide semantic search or indexing as available context
+unless the actual workflow reliably supplies the relevant result before the
+decision.
 
-For a line, block, or file comment, missing information is not enough. Apply the
-[canonical selective-context authoring
-decision](api-jsdoc-examples.md#selective-context-authoring-decision) before
-using this ladder to place an admitted explanation.
+When an encounter path does not reach the owner and the gap would cause an
+unsafe action or repeated reconstruction, leave a compact breadcrumb at the
+narrowest existing or authorized surface. Include only:
 
-If no gap remains, add nothing. Clear code needs no comment; a package needs no
-README; a public source repository needs neither a public documentation home nor
-a presentation page. The ladder only selects the existing or authorized home of
-a fact that has earned one.
+- the local decision and invisible reef with its material consequence;
+- the shortest verified causal edge showing why the remote owner matters; and
+- a direct, descriptive route to the canonical detail.
 
-## Reader states
+Keep procedure, configuration, and implementation mechanics with the owner.
+Multiple breadcrumbs are intentional when each serves an independent encounter
+path; the number of callers alone proves nothing. Prefer one broader local
+breadcrumb when every affected reader receives it, but retain a code-local one
+when a symbol or diff reader can bypass that context.
 
-Reader labels describe available context, not a rank or required audience. One
-person or agent can hold several states, and a coding agent may be acting as a
-developer, coder, integrator, or operator. None requires its own page, README,
-or comment. These states are casting evidence or modifiers, not a preselected
-content-persona taxonomy; use [casting](casting.md) when a durable class is
-actually needed.
+**Illustrative topology, not a required file layout:** a pipeline field is the
+likely entry for configuring a pull-request trigger, while the working hook
+mechanics live in a remote webhook or deployment service. Keep the full hook
+pattern with that service, put a short route in the pipeline area's local
+instructions, and add a field comment only when the selective-context gate
+establishes a hidden local consequence. These are three encounter surfaces but
+one mechanics owner.
 
-| Reader state | May already know | Needs before acting, if a gap exists |
-| --- | --- | --- |
-| **Stranger** | Only an entry point or name; their intent may be technical, product-facing, or exploratory. | Whether the subject is relevant and the safest next route, without assumed topology, credentials, or domain knowledge. |
-| **Developer** | General development practice and a task, perhaps a checkout. | System or repository scope, boundaries, and the route relevant to that task. |
-| **Integrator** | A package name, manifest, import, or API and an integration goal. | Supported contract, configuration, versions, failures, and compatibility boundary. |
-| **Coder** | Target code, language, nearby tests, and a change goal. | Local ownership, hidden invariant, and validation route—not a system manual. |
-| **Maintainer** | Ongoing ownership and some system or history context. | Durable why, lifecycle or compatibility consequence, and responsibility boundary. |
-| **Coding agent** | A task, diff, selective source, or search matches, without tacit organizational memory. | Explicit non-local constraints and canonical context only where the local view cannot make a change safe. |
-| **Operator or support engineer** | Runtime access and a service or recovery goal. | Health, lifecycle, failure recovery, escalation, and operational boundaries. |
-| **End user** | A desired product outcome and product access. | How to achieve it, eligibility or limits, and recovery or support routes without source assumptions. |
+## Use the project's reader context
 
-## Reader-context rule
+Load a project-owned reader cast when one exists. Do not substitute built-in
+roles. When no durable cast is available, keep the decision task-local and
+record only:
 
-For every fact, establish five things before deciding its home:
+- the entrant who reaches the surface;
+- context available at that encounter;
+- the decision or task they control;
+- the material fact still missing; and
+- the point at which they need it.
 
-1. **Reader:** who naturally encounters this surface while doing real work?
-2. **Available context:** what code, system, task, access, and prior knowledge
-   can that reader reasonably have at this point?
-3. **Need:** which purpose, condition, boundary, or decision would remain
-   unsafe or costly to reconstruct from that context?
-4. **Scope:** what can this surface state truthfully without pretending to own a
-   broader contract or duplicating a narrower one?
-5. **Placement:** why must the reader see this fact here, before the governed
-   decision, rather than only in a parent, sibling, or later document?
+When several durable classes share an entry surface, follow the project's
+frequency and service priority: keep the highest-frequency applicable path
+direct and compact, then route lower-frequency deltas to their canonical deeper
+owner. Use [casting](casting.md) when the class or priority itself is in doubt.
 
-Write the missing fact, not a narration of what the reader can already see.
-Broader rungs orient and route; narrower rungs preserve the local consequence.
-Keep detailed content with one canonical owner.
+**Illustrative example, not a default persona model:** a project may find that
+most package-page entrants need the supported contract and first use, while a
+smaller maintainer group needs lifecycle rationale. The package page can serve
+the common path directly and link maintainers to the established lifecycle
+owner. Another project may have the opposite distribution and should reverse
+that priority.
 
-## Implementation level is not a documentation rung
+## Choose the narrowest fitting scope
 
-Implementation abstraction describes where fences tend to appear; the ladder
-describes where their explanations belong.
+Use the narrowest existing or authorized surface encountered by every affected
+reader before the governed decision.
 
-- **Low-level implementation:** fences are common where syntax cannot expose a
-  platform, representation, ordering, concurrency, ownership, or algorithmic
-  cause.
-- **Business logic:** an operation may appear foolish, but domain names,
-  conditions, and nearby policy often expose why it exists. Add nothing when
-  that reason is locally recoverable.
-- **Orchestration and system logic:** fences are especially common because a
-  lower implementation detail, parallel process, lifecycle transition, past
-  event, or future observation can constrain the current decision without
-  appearing in its local source.
+| Scope | Use it when the missing fact governs |
+| --- | --- |
+| Line | One expression, argument, branch, or assignment. |
+| Block | One guard, transformation, loop, or sequence. |
+| File | The implementation unit's responsibility, lifecycle, or non-local relationship. |
+| Folder | An implementation area's ownership, organization, boundary, or local route. |
+| Package or module | A reusable unit's contract, integration conditions, failures, or compatibility boundary. |
+| Domain or service | Cross-unit responsibility, flow, lifecycle, operations, or escalation boundary. |
+| Top level | System or repository scope, major boundaries, and routes to canonical detail. |
 
-A remote fact qualifies here only when it changes a local choice or boundary.
-Preserve that causal edge and its local consequence; leave the remote mechanism
-with its canonical owner.
+Broader scopes orient and route; narrower scopes preserve the local
+consequence. Keep detailed truth with one canonical owner. Exported-symbol
+JSDoc is a public-contract overlay, not another scope. Implementation altitude
+is also not a scope: low-level, business, and orchestration code can each
+contain a Chesterton's Fence or a verified invisible reef, but any explanation
+belongs at the scope that owns the decision.
 
-### README boundary
+Physical layout may overlap logical scope: a module can be a file and a package
+can be a folder. Co-locate scopes only when they genuinely coincide, and do not
+manufacture files to mirror the ladder. When the distinction among a technical
+README, documentation home, and public presentation page is unresolved, load
+[content architecture](content-architecture.md#classify-technical-documents-and-public-sites).
 
-**README.md** names a technical orientation document at the rung it serves. A
-repository README, package README, and folder README differ because their
-technical readers, available context, and tasks differ—not because one is more
-public. The presentation boundary is defined in `content-architecture.md`.
+## Form the result
 
-A README is optional. A package, repository root, or public source does not
-create a README task when its reader can safely act from readable code, types,
-metadata, and existing canonical documentation.
+Return one of:
 
-A public website or product landing page is a separate presentation surface with
-a browser visitor's reader contract. Classify it independently; its detailed
-boundary is owned by `content-architecture.md`.
+- `No-op` — the reader can already act safely;
+- `Update established owner` — the owner and fitting scope are known; or
+- `Placement proposal` — state the reader, available context, missing fact,
+  governed scope, proposed owner, and unresolved authority.
 
-## Form a placement proposal
-
-1. Pass the existence gate. If no material reader gap remains, add nothing.
-2. Name the actual reader and the decision or task they are about to make.
-3. List only context available at that encounter: nearby code, imported API,
-   checkout, package metadata, system access, or public browser page.
-4. Identify the invisible fact that changes a safe decision at that point. For
-   code-local rationale, first apply the [canonical admission and disposition
-   decision](api-jsdoc-examples.md#selective-context-authoring-decision).
-5. Identify the narrowest existing or authorized surface that fits every
-   affected reader before the decision. If the environment already supplies an
-   owner, that owner wins even when another rung looks attractive.
-6. State the fact in the form that established owner can support: local
-   rationale, technical boundary, contract, system map, or route. Link to it for
-   deeper detail when the reader can follow that route.
-
-This result is an explanation or proposal, not authority to create, move,
-replace, or duplicate a surface. If no suitable surface is authorized, report
-the fact, reader, and proposed target; do not manufacture the target or a
-parallel record.
-
-## Reader-context matrix
-
-Each row is a candidate home for a qualifying gap, not an artifact checklist.
-If no row is needed, add no surface.
-
-| Candidate rung | Reader and likely context | What the reader needs now | What this rung can tell them | Why and how it belongs here |
-| --- | --- | --- | --- | --- |
-| **1. Line** | A maintainer or coding agent sees one expression, branch, argument, or assignment and nearby syntax. | An admitted rationale that must be encountered with this decision. | The shortest causal edge and local consequence this line owns. | Put an admitted line-specific reason immediately before or beside the decision; move it up when it governs more than the line. |
-| **2. Block** | A reader sees one guard, transformation, loop, or sequence and understands its statements in isolation. | An admitted invariant that governs the statements together. | The block-wide causal constraint and consequence that must survive edits within it. | Put an admitted block-wide explanation at the block boundary; move it up when it governs more than this block. |
-| **3. File** | A reader has the declarations, imports, and implementation unit, but may not know the containing subsystem. | Why this file exists, what it owns, its lifecycle or non-local relationship, and where its responsibility stops. | The cohesive implementation responsibility and a boundary that declarations cannot reliably expose. | For a qualifying unit-wide gap, use a file header or local overview; do not turn it into a declaration tour or system manual. |
-| **4. Folder** | A contributor has entered an implementation area and can see sibling names and paths, usually with a checkout. | The area's purpose, ownership, organization, shared conventions, boundary with neighboring areas, and local validation route. | A technical map of the area and how to work in it safely. | When an area-wide gap remains, use an existing folder README or authorized overview; do not make it describe the project as a whole. |
-| **5. Package or module** | An integrator, maintainer, or internal consumer knows the package or module name and may have its manifest, import, or public API, but not its parent system. | The unit's purpose, public or internal contract, supported entry points, configuration, lifecycle, failures, dependencies, and compatibility boundaries. | The technical contract and integration conditions for this reusable unit. | A package README is optional: readable exports, types, metadata, or a canonical reference may already suffice. When a reader gap remains, it may include verified installation and use without becoming a product advertisement. |
-| **6. Domain or service** | An engineer, operator, or collaborator works across several packages and knows the wider product area, but not every implementation detail. | Responsibility and ownership, major flows, cross-unit contracts, state, lifecycle, failures, operational entry points, and escalation boundaries. | A map of one capability or service and routes to the owning packages, APIs, and operations material. | When a cross-unit gap remains, keep mechanics in their canonical package or file owner; document the collaboration and boundary here. |
-| **7. Top level** | A technical reader arrives at a repository, system, or documentation root with little or no topology knowledge. They may know the project's name and their own task, but not its internals. | What the system or repository is for, its scope and major boundaries, its technical audience, the relevant starting route, and where deeper detail lives. | A technical orientation: system map, supported technical entry points, global constraints, and routes for using, contributing to, operating, or learning the system. | When an existing or authorized top-level technical surface is needed, keep it broad and factual; do not duplicate package mechanics, infer a browser journey, or turn the README into an advertisement. |
-
-The matrix is deliberately asymmetric: each higher rung can explain a wider
-relationship, but must not overwrite the detailed contract of a lower owner.
-Each lower rung can preserve a closer rationale, but must not reconstruct the
-whole system.
-
-### Public documentation home
-
-A public documentation home, when one exists or is authorized, uses the
-top-level orientation rung for a reader who arrived to find documentation, not
-to evaluate a product. It may state the
-documentation map, topic boundaries, and routes to tutorials, how-tos,
-explanations, and reference. At wrap-up, validate that navigation or lookup
-path. Do not give it a product-presentation posture merely because it is
-browser-delivered.
-
-## Overlapping rungs
-
-Physical layout and logical scope do not always align. A language module can be
-a file, a package can be a folder, and a one-service repository can also be the
-top-level system. One technical document may therefore contain sections serving
-more than one rung.
-
-Classify each section by reader and governed scope. Make different roles
-scannable, keep one canonical owner for detail, and co-locate only when the
-scopes genuinely coincide. Do not manufacture files or repeat prose merely to
-make the ladder look physically nested.
-
-## Three heuristics
-
-### A map is not the territory
-
-Source and runtime behavior are the territory and evidence. Documentation is a
-selective map for a reader and task. Expose purpose, relationships, observable
-contract, and boundaries that raw implementation does not give that reader; do
-not transcribe implementation.
-
-### Chesterton's fence
-
-A fence is a present choice, constraint, boundary, relationship, or structure
-whose reason is not locally visible. A Chesterton's Fence is the unresolved
-state: its reason is still unknown. Investigate it with the [Chesterton's
-fence test](api-jsdoc-examples.md#chestertons-fence-test), then return to the
-applicable existence decision. Never invent rationale.
-
-### Document reefs, not cliffs
-
-A reef is the material hidden cause and consequence below the reader's normal
-view—for example a non-obvious default, failure mode, security or ownership
-boundary, lifecycle coupling, or cross-unit invariant—that can make an
-apparently reasonable action unsafe. A cliff is meaning already visible and
-safely recoverable from code, types, names, signatures, or the surrounding
-surface. Visibility changes by rung, so judge from the reader context in the
-matrix.
-
-## Movement tests
-
-- **Reader:** Who encounters this before the governed decision, and what can
-  they genuinely see or know there?
-- **Existence:** Does a material fact remain unavailable from the reader's
-  present context and existing canonical surfaces they actually encounter? If
-  not, add nothing. Route an unfamiliar abstraction to its owner; propose a
-  local explanation only for a verified convention whose affected reader still
-  cannot recover its local consequence.
-- **Need:** Which unsafe inference or expensive reconstruction does the fact
-  prevent for that reader?
-- **Code-local admission:** Did the [canonical selective-context
-  decision](api-jsdoc-examples.md#selective-context-authoring-decision) admit
-  this explanation before placement?
-- **Scope:** Does the fact govern a wider or narrower unit than this surface?
-- **Owner:** Does the surface own this fact, or is it duplicating another
-  owner's detail?
-- **Capability:** Is this surface asserting only a local rationale, technical
-  boundary, contract, system map, or route that it can own?
-- **Placement:** Would the proposed fit leave an affected reader without the
-  fact when they need it, displace the established owner, or create a duplicate?
-- **README separation:** Has a technical README been kept separate from any
-  public website presentation page and its visitor journey?
+For an update or proposal, write the smallest verified fact that changes the
+decision. Preserve the local causal edge and consequence; leave remote
+mechanics with their owner. Check that every evidenced encounter path reaches
+the local consequence and canonical detail before action, without copying a
+narrower or broader contract or claiming authority to create or move a surface.

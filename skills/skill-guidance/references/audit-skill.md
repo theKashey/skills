@@ -1,8 +1,8 @@
 # Audit a skill
 
 Determine whether an existing skill predictably changes the right agent choices
-at justified recurring cost. Review only; do not edit unless the user expands
-the mutation scope.
+at justified recurring cost. Review only; route any authorized repair to the
+host-provided skill creator.
 
 ## Completion contract
 

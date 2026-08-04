@@ -46,6 +46,12 @@ evidence; otherwise skip that gate. Do not repeat its checks here. Verify:
   before package architecture or methodology;
 - each route satisfies the parent locality, ownership, and conditional-pointer
   contracts;
+- each representative activated flow is traced from the main `SKILL.md` through
+  its transitive references, recording mandatory loads, conditional loads and
+  their conditions, and serial discovery depth; a disclosure claim leaves the
+  extracted material unloaded on at least one relevant flow, and a materially
+  long nested journey is exposed in the main `SKILL.md` so its reads can be
+  planned rather than discovered one at a time;
 - the completed package satisfies the parent reader contract and has a
   publishable end state.
 
@@ -57,6 +63,10 @@ not establish semantic or behavioral correctness.
 Use independent clean-context runs when behavior depends on instruction
 interpretation. Give each observer only the inputs available in real use.
 Compare the candidate and relevant baseline against the same frozen task.
+Treat these runs as routing, interpretation, and preservation checks. They do
+not establish behavior under accumulated-context stress unless the frozen task
+actually retains the competing context, plausible wrong default, and target
+harness conditions that create that pressure.
 
 Assess:
 
@@ -66,8 +76,8 @@ Assess:
 4. distinction between user intent, current behavior, and mechanical facts;
 5. authorized scope and avoidance of unrelated ritual;
 6. satisfaction of the checkable completion criterion;
-7. reduction in traversal or decision work sufficient to justify recurring
-   context and cognitive cost.
+7. reduction in activated information or decision work sufficient to justify
+   recurring context, cognitive cost, and traversal latency.
 
 Reference loading, tool use, produced files, and literal instruction compliance
 are evidence only when they contribute to the frozen outcome.

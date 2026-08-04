@@ -70,6 +70,8 @@ observed reader paths. For each material episode, record:
 - decision or action they control;
 - authority or trust boundary;
 - stakes and smallest successful outcome;
+- observed frequency and measurement window when available, otherwise an
+  explicitly unmeasured expected frequency with its decision source;
 - next route and supporting evidence.
 
 Do not create a class from one skill, package, page, workflow stage, current
@@ -117,7 +119,7 @@ shift:
 Record secondary consequences, but do not turn them into parallel drafting or
 separate clarification rounds before the primary shift is resolved.
 
-### 4. Freeze the smallest cast
+### 4. Freeze and prioritize the smallest cast
 
 Cluster only episodes that share durable starting context, decision rights,
 trust or authority boundary, generic goal, and materially similar needs for
@@ -138,12 +140,31 @@ density, proof, boundary, or next route while leaving facts and guarantees
 unchanged. If the cast cannot admit a recurring entrant without distortion, or
 causes contradictory promises or one bespoke narrative per route, recast it.
 
+After the classes survive, rank their expected service frequency for the
+project or surface:
+
+- Prefer an observed count or rate with its source and window. Otherwise use a
+  qualitative band such as `high`, `medium`, `low`, or `unknown`, label it as
+  expected rather than measured, and name the decision source.
+- Choose `N` as the smallest highest-frequency set that deserves compact direct
+  paths. Stop adding classes when the next class's distinct need can be reached
+  through one descriptive route without weakening shared truth or a safety
+  boundary.
+- Route lower-frequency deltas to an existing or authorized deeper owner.
+  Promote one only when delaying its necessary safety boundary behind that
+  route would make action unsafe, and record the exception.
+
+Frequency selects exposure order and detail, never facts or guarantees. Keep
+one primary class and through-line per surface; project-wide top-`N` support
+does not require every page to tell `N` complete stories.
+
 ### 5. Form and rehearse one story contract
 
 After `PROCEED`, record:
 
 ```text
 Primary class:
+Frequency evidence and direct/deeper disposition:
 Proven modifier, if any:
 Task-local episode:
 Reader goal:
@@ -168,11 +189,13 @@ authorizes a durable owner and recurring evidence makes future selection safer.
 The user or project chooses `.agents` or `.context-docs`; never create a persona
 catalog at repository root.
 
-Use a compact `CONTENT-PERSONAS.md` as the selector and evidence boundary. Link
-a subclass or modifier behind a direct condition only when its recurring
-content delta no longer fits compactly in the selector. A child record contains
-only what differs from its parent. Do not create one record per skill, package,
-surface, task, or workflow, and do not load every detail because one applies.
+Use a compact `CONTENT-PERSONAS.md` as the selector and evidence boundary.
+Record each retained class's frequency evidence or explicitly unmeasured band,
+direct/deeper disposition, and canonical route. Keep the top-`N` selector
+compact. Link a subclass or modifier behind a direct condition only when its
+recurring content delta no longer fits there; a child contains only what
+differs from its parent. Do not create one record per skill, package, surface,
+task, or workflow, and do not load every detail because one applies.
 
 Revisit or retire a durable class when entry evidence, decision rights, trust
 boundaries, supported outcomes, or authoring consequences change. A cast is

@@ -1,14 +1,15 @@
 # Screaming Reefs
 
-Screaming Reefs turns a verified reef into a cliff: it gives a documented
-constraint a structural owner — names, types, APIs, ownership boundaries,
-or filesystem topology — so humans and coding agents acting from selective
-context decide safely without reconstructing the remote explanation.
+Screaming Reefs turns a verified **invisible reef** into a **visible cliff**:
+it gives a documented constraint a structural owner — names, types, APIs,
+ownership boundaries, or filesystem topology — so humans and coding agents
+acting from selective context can recover the constraint without
+reconstructing the remote explanation.
 
 The name joins two ideas: screaming architecture (structure should scream
-its domain) and "document reefs, not cliffs" (prose should carry only
-hidden hazards). Where documentation preserves a reef, this skill makes
-the structure scream it.
+its domain) and "preserve invisible reefs, omit visible cliffs" (prose should
+carry only hidden hazards). Where documentation preserves an invisible reef,
+this skill makes the constraint visible in structure.
 
 ## Why it exists
 
@@ -17,12 +18,21 @@ agent instruction explains them. That prose protects the decision, but it
 can be missed in selective context, duplicated away from its owner, or
 drift as the repository changes. Screaming Reefs treats the verified
 explanation as evidence for an authorized structural change that carries
-the same meaning more reliably.
+the same meaning with a local structural owner.
 
-The fence comes first: the constraint and its consequence stay protected
-while the repository is reshaped, and prose is retired only after the new
-owner passes a readback from the affected reader's local context. A reef
-whose significance is irreducibly non-local remains documented.
+Chesterton's Fence comes first: an existing constraint with an unknown purpose
+stays protected while its rationale is investigated. Once verified, the
+constraint and its consequence stay protected while the repository is reshaped,
+and prose is retired only after the new owner passes a readback from the
+affected reader's local context. An invisible reef whose significance is
+irreducibly non-local remains documented.
+
+A toy example keeps the remote constraint and structural countermeasure in the
+same small context, so it is weak evidence for the intended selective-context
+effect. Evaluation needs a fresh reader or agent facing the changed structure
+without the producer's explanation, under realistic competing context. Even a
+successful local readback establishes recoverability, not safer runtime
+behavior in general.
 
 ## Worked example
 
@@ -76,7 +86,7 @@ terms it uses.
 
 ## Boundaries
 
-Screaming Reefs does not invent a reason for an unexplained fence, decide
+Screaming Reefs does not invent a reason for Chesterton's Fence, decide
 product or ownership policy, widen the mutation scope silently, or claim
 that structure proves behavior. It preserves existing meaning by default
 and stops when authority, evidence, contract compatibility, or the local

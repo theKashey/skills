@@ -1,16 +1,18 @@
-# Build or revise a skill
+# Advise a skill design
 
-Create or amend a skill only when it owns a distinct unresolved agent choice.
-The finished package must expose the smallest procedure that selects the
-supported move and proves completion.
+Assess whether a proposed or existing skill owns a distinct unresolved agent
+choice and whether its package exposes the smallest procedure that selects the
+supported move and proves completion. Return advice and evidence to the
+host-provided skill creator; do not edit the target package.
 
 ## Completion contract
 
-Finish when the capability has a justified owner, every retained obligation
-passes admission, every route has a checkable stopping condition, the runtime
-body and references contain no activation guidance, support prose, duplicated
-territory, or drafting residue, and the required validation passes or has an
-explicit non-pass status.
+Finish with one evidence-backed recommendation—`No-op`, `Amend`, `Create
+reference`, `Create skill`, `Split or merge`, or
+`Needs-human-decision`—plus the applicable validation result for any existing
+candidate. The report must identify the justified owner, admitted obligations,
+route stopping conditions, and any activation guidance, support prose,
+duplicated territory, or drafting residue that the host creator should address.
 
 ## 1. Freeze the capability
 
@@ -33,9 +35,9 @@ Use repository evidence and representative runs for current behavior. Keep
 intended policy separate from observed behavior. Stop for authority when the
 preferred choice cannot be established safely.
 
-## 2. Choose the canonical owner
+## 2. Recommend the canonical owner
 
-Apply the admission questions from `SKILL.md`, then select:
+Apply the admission questions from `SKILL.md`, then recommend:
 
 - `No-op` when existing context or enforcement already resolves the choice.
 - `Amend` when an existing skill owns the missing decision.
@@ -46,40 +48,52 @@ Apply the admission questions from `SKILL.md`, then select:
 - `Split or merge` when current boundaries hide a required route or duplicate
   one owner.
 
-Continue only within the user's authorized mutation scope. When the selected
-outcome requires package mechanics, create or edit files only inside the target
-skill directory, then return here for unresolved runtime choices.
+Keep the recommendation within the user's authorized mutation scope. The host
+skill creator owns package mechanics and any file changes. If authority is
+missing, return `Needs-human-decision` instead of designing around it.
 
-## 3. Design invocation and disclosure
+## 3. Assess invocation and disclosure
 
-Choose model discovery only when an agent or another skill must reach the
-capability without a user naming it. Otherwise prefer explicit invocation and
-avoid permanent description load.
+Recommend model discovery only when an agent or another skill must reach the
+capability without a user naming it. Otherwise recommend explicit invocation
+and avoid permanent description load.
 
-Put all skill-level activation conditions in the frontmatter description.
-Inline choices and invariants every activated run needs. Disclose branch-specific
-procedures behind a pointer whose wording names the condition that requires the
-material. Treat the pointer as behavioral: if must-have guidance loads
-unreliably, sharpen the condition before moving the guidance inline.
+Check that all skill-level activation conditions are in the frontmatter
+description, every-run choices and invariants are inline, and branch-specific
+procedures sit behind a pointer whose wording names the condition that requires
+the material. Treat the pointer as behavioral: if must-have guidance loads
+unreliably, recommend sharpening the condition before recommending inline
+guidance.
 
-Treat line count as a signal, not a placement rule. Split by invocation when a
-branch needs independent discovery. Split by sequence only after a sharper
-completion criterion fails to prevent observed premature completion.
+Trace representative activated flows through every transitively required
+reference. Judge a split by what a flow leaves unloaded, not by the size of
+`SKILL.md`: when every relevant flow still reads the extracted material, do not
+claim progressive disclosure, and recommend the nearest every-run owner unless
+a separate ownership constraint justifies the file boundary.
 
-## 4. Write the runtime contract
+A reference may point to narrower references when explicit child conditions let
+other subflows avoid them and the split improves clarity or signal-to-noise. If
+serial discovery through a nested route would materially delay work, recommend
+listing the complete journey in the main `SKILL.md`, marking required and
+conditional steps so independent reads can be planned together. Treat line
+count as a signal, not a placement rule. Split by invocation when a branch needs
+independent discovery. Split by sequence only after a sharper completion
+criterion fails to prevent observed premature completion.
 
-Write the frontmatter description to the activation boundary contract in the
-parent `SKILL.md`. Omit capability summaries, implementation details,
-resources, benefits, reasons, and output promises unless a detail
-distinguishes the activation. Keep all skill-level "when to use" and "when not
-to use" guidance out of the body.
+## 4. Review the runtime contract
 
-Open the body at the first post-trigger decision or action. Use imperative
-language for actions and declarative language for execution facts and decision
-criteria. Preserve conditions that select an internal route after activation;
-they are execution logic, not skill triggers.
+Check the frontmatter description against the activation boundary contract in
+the parent `SKILL.md`. Recommend omitting capability summaries, implementation
+details, resources, benefits, reasons, and output promises unless a detail
+distinguishes activation. Skill-level "when to use" and "when not to use"
+guidance belongs outside the body.
 
-For every procedure:
+The body should open at the first post-trigger decision or action, use
+imperative language for actions and declarative language for execution facts
+and decision criteria, and preserve conditions that select an internal route
+after activation.
+
+For every procedure, check:
 
 1. State its internal branch condition and authorized scope.
 2. Apply each named [Agent Instruction Law](../LAWS.md) that constrains its
@@ -89,48 +103,46 @@ For every procedure:
 4. End each meaningful step with a checkable completion condition.
 5. Use an example only when it resolves ambiguity left by the decision laws.
 
-Remove explanations, excuses, defenses, anticipated objections, authoring help,
-and design history from the body and runtime references. Keep a verified causal
-rationale beside an instruction only when it materially improves compliance,
-choice transfer, or the outcome on an unseen case.
+Recommend removing explanations, excuses, defenses, anticipated objections,
+authoring help, and design history from the body and runtime references. Retain
+a verified causal rationale beside an instruction only when it materially
+improves compliance, choice transfer, or the outcome on an unseen case.
 
-Put durable reasons about the governed capability, its rejected alternatives,
-reader-relevant boundaries, and concrete component ownership in `README.md`.
-Keep authoring and review history, generic surface-selection rationale, and
-framework provenance in the handoff, which also holds the authoring record;
-neither ships with the package. Do not publish claims
-such as “this README explains,” “this skill follows,” or “this documentation
-uses Diátaxis” merely because they are true of the build. A framework belongs
-in the final artifact when its distinction changes the reader's choice or it is
-part of the reader's governed subject or contract. Keep the README outside the
-runtime dependency graph: `SKILL.md` and its runtime references must execute
-correctly without reading it.
+Durable reasons about the governed capability, its rejected alternatives,
+reader-relevant boundaries, and concrete component ownership belong in
+`README.md`. Authoring and review history, generic surface-selection
+rationale, and framework provenance belong in the handoff. Recommend against
+publishing claims such as “this README explains,” “this skill follows,” or
+“this documentation uses Diátaxis” merely because they are true of the build.
+A framework belongs in the final artifact only when its distinction changes the
+reader's choice or is part of the governed subject or contract. The README must
+remain outside the runtime dependency graph.
 
-When the package has an existing or authorized maintainer README, open with the
-skill's name, what it provides, and why a reader would use it. Follow that
-simple offer with the recurring failure, affected agent or reader, intended
-observable impact, and boundary before describing runtime architecture or
-authoring mechanics. State relationships to other skills only when both
-package contracts or an explicit product decision establish them. A
-relationship in maintainer prose never creates a runtime dependency.
+When the package has an existing or authorized maintainer README, check that it
+opens with the skill's name, what it provides, and why a reader would use it.
+The recurring failure, affected agent or reader, intended observable impact,
+evaluation boundary, and responsibility boundary should precede runtime
+architecture or authoring mechanics. Relationships to other skills require
+both package contracts or an explicit product decision and never create a
+runtime dependency.
 
-## 5. Prune and verify the package
+## 5. Form the recommendation and validation record
 
 Apply
 [Law II — Spend the instruction budget](../LAWS.md#law-ii--spend-the-instruction-budget)
 sentence by sentence: if deletion changes no invocation, choice, scope,
-execution, or completion, delete the sentence.
-Leave each surviving meaning with one canonical owner.
+execution, or completion, recommend deleting the sentence. Leave each surviving
+meaning with one canonical owner.
 
 Classify every retained prose unit as description trigger, runtime execution,
-behavior-improving causal rationale, or README support. Move or delete anything
-without a valid surface.
+behavior-improving causal rationale, or README support. Identify anything
+without a valid surface for the host creator to move or delete.
 
-Keep the law-alignment record in the handoff. Use the exact law identifier and
-title so a reviewer can cite a violated rule precisely. Add a named law to the
-target runtime only when its title and local consequence directly select an
-agent action; do not publish a bare list of frameworks or create a cross-skill
-runtime dependency.
+Keep the law-alignment record in the advisory report. Use the exact law
+identifier and title so the host creator can act on a precise violation.
+Recommend a named law in the target runtime only when its title and local
+consequence directly select an agent action; never recommend a bare framework
+list or cross-skill runtime dependency.
 
 Apply
 [Law VIII — Keep every claim falsifiable](../LAWS.md#law-viii--keep-every-claim-falsifiable)
@@ -138,5 +150,8 @@ and
 [Law VII — Enforce or delete mechanical rules](../LAWS.md#law-vii--enforce-or-delete-mechanical-rules)
 to every retained repository-specific claim.
 
-Apply the validation selected by the parent router. Structural validity is not
-evidence that the skill changes the intended choice.
+Apply the validation selected by the parent router to an existing candidate.
+When no candidate exists, specify the checks the host skill creator must run.
+Structural validity and clean isolated comparisons are regression evidence, not
+evidence that the skill changes the intended choice under accumulated-context
+stress.

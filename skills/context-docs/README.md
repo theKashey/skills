@@ -1,14 +1,16 @@
 # Context Docs
 
-Context Docs preserves verified explanations for fences: choices, constraints,
-boundaries, relationships, and structures whose reason is not visible in the
-code or system surface where a reader encounters them. It documents reefs, not
-cliffs—the hidden why and consequence, not mechanics already in view.
+Context Docs starts with Chesterton's Fence: do not change or remove an existing
+choice, constraint, boundary, relationship, or structure before understanding
+why it is there. After investigation, it preserves a verified **invisible
+reef**—a non-local cause and material local consequence—and omits the **visible
+cliff**, meaning the reader can already recover safely from current context.
 
-Locality is how Context Docs makes those explanations useful. Its ladder
-explains how an explanation fits a reader and scope, and can support a placement
-proposal when ownership is unresolved. The environment's established ownership
-and submission route decide the actual home.
+Locality is how Context Docs resolves an explanation whose existence, owner,
+scope, or placement is still uncertain. Its compact ladder can support a
+placement proposal; routine work follows the established owner and story
+without loading that branch. The environment's ownership and submission route
+decide the actual home.
 
 - [Why Context Docs exists](#why-context-docs-exists)
 - [Technical role](#technical-role)
@@ -24,23 +26,26 @@ relationship necessary here. Without that causal edge, a maintainer or coding
 agent can make a locally reasonable change that violates an invisible
 requirement.
 
-Fences appear differently across implementation levels:
+Unknown purposes and invisible constraints appear differently across
+implementation levels:
 
 - **Low-level code** is their usual home. Syntax exposes an operation but not
   the platform, representation, ordering, concurrency, ownership, or algorithmic
   constraint that makes an apparent alternative unsafe.
 - **Business logic** can look foolish for no visible reason, but its domain
   names, conditions, and nearby policy more often make the reason recoverable.
-  When they do, there is no fence to document.
-- **Orchestration and system code** contain fences especially often. A lower
+  When they do, there is no documentation gap.
+- **Orchestration and system code** hide non-local causes especially often. A lower
   implementation detail, parallel process, lifecycle transition, or event that
   happened earlier or will happen later can constrain a decision without
   appearing in its local source.
 
-These are implementation abstraction levels, not documentation rungs. At every
-level, the fence is the same shape: a cause not locally visible has a material
-effect here. Document the causal edge and local consequence; keep remote
-mechanics with their canonical owner.
+These are implementation abstraction levels, not documentation scopes. At
+every level, ask the Chesterton's Fence question first: is the purpose of the
+present form understood? When investigation verifies a cause that is not
+locally visible and has a material effect here, preserve that invisible reef's
+causal edge and local consequence; keep remote mechanics with their canonical
+owner.
 
 Prose duplicates system truth and can decay independently from it. Prose about
 a remote action is especially fragile because its owner can change without the
@@ -66,12 +71,19 @@ followed the instructions, explored and reasoned more, and incurred higher
 inference cost without significantly improved task performance. Unnecessary
 instruction is therefore active context, not neutral background.
 
-Context Docs closes that explanation gap across the full documentation
-lifecycle. At broader surfaces, a fence may be hidden purpose, contract,
-failure, interaction, or ownership boundary. At code level, it is the verified
-non-local cause that makes a locally selectable, apparently reasonable
-alternative unsafe. Context Docs leaves that explanation with its established
-owner and omits facts the reader can already recover.
+Context Docs addresses that explanation gap across the full documentation
+lifecycle. At broader surfaces, investigation may uncover a hidden purpose,
+contract, failure, interaction, or ownership boundary. At code level, the
+result may be a verified non-local cause that makes a locally selectable,
+apparently reasonable alternative unsafe. Context Docs leaves that explanation
+with its established owner and omits facts the reader can already recover.
+
+The intended pressure is inherited or long-running work where the relevant
+cause competes with accumulated context and a plausible invented rationale can
+sound coherent. A clean isolated prompt makes the evidence unusually prominent
+and is therefore only a routing or preservation check. Whether this procedure
+improves agent behavior under that pressure remains an evaluation question for
+representative target-harness work.
 
 Reader need establishes whether a broader document is relevant, but it does not
 choose why the project wants that document to speak. The supplied reader can
@@ -88,6 +100,13 @@ intervention. Casting can replace the reader, revise the goal, change the
 surface or subject, or conclude that no document is needed. Only a surviving
 contract earns a full draft and one verified through-line.
 
+Those reader classes and their expected frequency belong to the project, not
+the distributed skill. A project can keep its highest-frequency classes on
+compact direct paths and route lower-frequency deltas to deeper canonical
+owners. The direct set stops growing when another complete path costs more
+recurring attention than a contextual route saves; frequency changes exposure,
+not facts, guarantees, or safety boundaries.
+
 For a new or substantially reworked reader-facing surface, the skill spends one
 small alignment move before a full draft: a task-local story contract and the
 smallest opening-and-heading slice that can disconfirm it. This makes an early
@@ -101,25 +120,25 @@ voice that a durable reader-facing surface does not own. Copying that register
 can turn a private exchange into the apparent subject, turn a participant's
 provisional wording into a durable attributed statement, or force readers to
 reconstruct a conversation they never saw. Context Docs carries the verified
-meaning into the surface's established register; exact voice and attribution
-remain only when their provenance is part of the durable contract.
+meaning into the surface's established register; exact voice or attribution
+remains only when the durable contract requires that voice or provenance.
 
 ## Technical role
 
-Fence discovery and explanation is the organizing decision across the complete
-documentation cycle. The module first decides whether a material, non-visible
-reason affects a reader's decision, then establishes that reason from evidence
-and discovers its established owner. When ownership is unresolved, locality
-supports a placement proposal; progressive disclosure determines how much of
-the explanation the reader needs.
+Chesterton's Fence investigation is the first preservation decision across the
+documentation cycle. The module first asks why an existing choice, constraint,
+boundary, relationship, or structure has its present form, and does not casually
+alter or remove it while that purpose remains unknown. It establishes the
+reason from evidence and discovers its established owner. When ownership is
+unresolved, locality supports a placement proposal; progressive disclosure
+determines how much explanation the reader needs.
 
-A fence is a present choice, constraint, boundary, relationship, or structure
-whose reason is not locally visible. Its reef is the material hidden cause and
-consequence that can make an apparently reasonable action unsafe. A cliff is
-meaning already visible and safely recoverable from local context. A
-Chesterton's Fence is a fence whose reason remains unresolved. Context Docs
-investigates that uncertainty; it records only a verified explanation or an
-explicit accepted `TODO` or `FIXME`, never an invented rationale.
+After investigation, an **invisible reef** is the verified non-local cause and
+material consequence that can make an apparently reasonable action unsafe. A
+**visible cliff** is meaning already visible and safely recoverable from the
+reader's local context. Context Docs documents only a verified invisible reef
+or records explicitly accepted uncertainty—using `TODO` or `FIXME` for code—
+and never invents rationale.
 
 A coding agent may enter through a task, diff, README, public contract, symbol,
 or search match without tacit organizational memory. The same selective-context
@@ -145,6 +164,12 @@ review and deterministic completion checks happen once at wrap-up. Line, block,
 and file comments are admitted and written from evidence but never enter
 documentation review; exported-symbol JSDoc remains a public contract.
 
+The package does not assume that adding JSDoc improves an agentic workflow by
+itself. JSDoc is useful here as a delivery surface: a host can extract it with
+the exported symbol, index it, and retrieve the public semantics into the
+agent's actual working context. Any behavioral benefit depends on the factual
+quality of that contract and on the host providing that retrieval path.
+
 Local documentation is part of that context engineering. A local `AGENTS.md`,
 README, package document, or linked contract can turn a model-surprising use
 into a normal repository primitive when the intended reader actually encounters
@@ -158,21 +183,27 @@ while code-local rationale remains for readers who do not receive the broader
 context.
 
 Context Docs composes with the ownership and record surfaces an environment
-already provides. When another surface owns a fact, keep the detailed record
-there and add only a route or local consequence when the affected reader still
-needs one. The skill does not choose that surface, replace it with a preferred
-document, or create a parallel fallback that both owners must keep consistent.
+already provides. One canonical owner does not mean one physical mention. When
+another surface owns a fact, keep the detailed record and remote mechanics
+there, then leave a compact local consequence and route at each evidence-backed
+symbol, diff, folder, or package encounter that would otherwise strand the
+reader. Several such breadcrumbs do not create parallel records because none
+owns or repeats the remote procedure. The breadcrumbs prevent repeated
+cross-folder reconstruction; the canonical owner prevents mechanics from
+drifting. The skill does not choose those surfaces, replace an owner with a
+preferred document, or create an unauthorized fallback.
 
 ## Architecture and ownership
 
 | File | Owns | Change it when |
 | --- | --- | --- |
-| [SKILL.md](SKILL.md) | Universal laws, request routes, procedures, and completion criteria. | A change affects every invocation or execution order. |
-| [casting](references/casting.md) | Reader discovery, goal scaffolding, reject/merge/split tests, casting outcomes, and durable cast boundaries. | A change affects how a reader, goal, subject, or surface is challenged before drafting. |
-| [content architecture](references/content-architecture.md) | Authorial intent, story contracts, reader paths, README roles, procedure structure, and progressive disclosure. | A change affects documentation surfaces, their intended story, or reader journeys after casting. |
-| [locality ladder](references/locality-ladder.md) | Scope vocabulary for explaining or proposing how facts fit from a line comment to top-level documentation. | A change affects placement reasoning without overriding established ownership. |
-| [API, JSDoc, and examples](references/api-jsdoc-examples.md) | Public contracts, JSDoc/TSDoc, code-local rationale, and examples. | A change affects API semantics, snippets, or code comments. |
-| [quality and maintenance](references/quality-maintenance.md) | Audit evidence, change triggers, drift checks, and the end-state exit gate. | A change affects how documentation quality is assessed or maintained. |
+| [SKILL.md](SKILL.md) | Cross-route contract, compact established-document path, and direct conditional workflow pointers. | A change affects every activation, the routine path, or which deeper workflow loads. |
+| [casting](references/casting.md) | Reader discovery, goal scaffolding, class-frequency evidence, top-`N` service priority, casting outcomes, and durable cast boundaries. | A change affects how a reader, goal, subject, surface, or service priority is challenged before drafting. |
+| [content architecture](references/content-architecture.md) | Deep alignment for authorial intent, story contracts, reader paths, document roles, procedure structure, and progressive disclosure. | A change affects a new or challenged story, surface role, scan path, or multi-reader alignment decision. |
+| [locality ladder](references/locality-ladder.md) | Compact existence, ownership, scope, and placement reasoning from a line comment to top-level documentation. | A change affects unresolved existence, ownership, scope, or placement without overriding an established owner. |
+| [API, JSDoc, and examples](references/api-jsdoc-examples.md) | Public-contract workflow, JSDoc/TSDoc, code-local rationale, and example framing and integrity. | A change affects API semantics, snippets, or code comments. |
+| [review at wrap-up](references/review-documentation-at-wrap-up.md) | One-time minimum completion checks, the compact end-state gate, and the condition for loading the full scorecard. | A change affects routine non-inline completion. |
+| [quality and maintenance](references/quality-maintenance.md) | Audit workflow and evidence, change triggers, and release and drift checks. | A change affects audits, releases, or how documentation quality is assessed or maintained. |
 
 Keep each behavior in one canonical owner. Link to it from other files rather
 than restating it with slightly different wording.
@@ -181,11 +212,12 @@ than restating it with slightly different wording.
 
 The skill's durable principles are:
 
-- **Document fences; preserve reefs, not cliffs.** Keep the verified reason and
-  consequence that code or the current surface does not reveal; omit visible
-  mechanics.
-- **Investigate Chesterton's Fences.** Recover the reason from evidence or mark
-  accepted uncertainty explicitly; never manufacture rationale.
+- **Investigate Chesterton's Fences before alteration.** Recover the purpose of
+  the existing form from evidence, preserve it while unresolved, record any
+  accepted uncertainty, and never manufacture rationale.
+- **Preserve invisible reefs; omit visible cliffs.** Keep the verified reason
+  and consequence that code or the current surface does not reveal; omit
+  mechanics and meaning already visible to the reader.
 - **Orient before mechanism.** State purpose, relevant effect, and boundary at
   the subject's owning scope before internal method or detail.
 - **Cast before committing to the story.** Treat every supplied reader class,
@@ -193,9 +225,15 @@ The skill's durable principles are:
   project evidence to find who controls the decision, keep reader goal separate
   from authorial goal, and honor a result that changes the reader, goal,
   surface, subject, or need for documentation.
-- **Keep truth with its established owner.** Link rather than duplicate. When
-  ownership is unresolved, use locality to propose the lowest stable surface
-  that reaches every affected decision; do not treat the proposal as authority.
+- **Prioritize the project cast.** Record measured frequency when available or
+  label a qualitative expectation. Give the smallest high-frequency set direct
+  paths, route the long tail to canonical detail, and keep one primary
+  through-line per surface.
+- **Keep truth with its established owner.** Keep complete mechanics there and
+  route from each evidenced encounter that would otherwise strand its reader;
+  a compact local consequence is not a second owner. When ownership is
+  unresolved, use locality to propose the lowest stable surface that reaches
+  every affected decision; do not treat the proposal as authority.
 - **Treat supplied context as living terrain.** Route readers to the established
   owner before adding local prose. Add only a durable, verified local
   consequence that changes a safe action, and retire it when the reader can
@@ -209,10 +247,10 @@ The skill's durable principles are:
   than the document's default voice. Preserve exact wording, profanity, or
   speaker attribution only when the established surface contract requires that
   voice or provenance.
-- **Use explanations as clarity signals.** Protect an invisible constraint
+- **Use explanations as clarity signals.** Protect an invisible reef
   first, then notice when code, types, an API, or structure could expose it
   directly. Keep the explanation when the significance remains non-local; do
-  not treat every documented fence as a mandatory refactor.
+  not treat every documented reef as a mandatory refactor.
 - **Treat documentation as a completed-system claim.** Use present artifacts to
   implement and verify the authorized finished contract, not to promote a
   temporary checkout, delivery, or publication mismatch into reader-facing
@@ -220,17 +258,22 @@ The skill's durable principles are:
   and exercise representative reader paths to expose context gaps. Do not review
   line, block, or file comments.
 
-The package separates runtime decisions from their maintenance rationale.
-[Casting](references/casting.md) owns reader selection and goal shifts; the
-[locality ladder](references/locality-ladder.md) owns the reader-context model;
-[content architecture](references/content-architecture.md) owns reader paths
-and document roles after the cast survives; [API, JSDoc, and
+The package separates the frequent runtime path from conditional alignment and
+maintenance detail. [Casting](references/casting.md) owns reader selection,
+frequency evidence, and goal shifts; the [locality
+ladder](references/locality-ladder.md) owns unresolved existence, scope, and
+placement; [content architecture](references/content-architecture.md) owns deep
+reader-path and document-role alignment after the cast survives; [API, JSDoc, and
 examples](references/api-jsdoc-examples.md) owns public-contract and code-local
-detail; and [quality and maintenance](references/quality-maintenance.md) owns
-verification and drift checks at wrap-up.
+detail; [review at
+wrap-up](references/review-documentation-at-wrap-up.md) owns routine completion;
+and [quality and maintenance](references/quality-maintenance.md) owns audits,
+release evidence, and drift checks.
 
-This split prevents a routine documentation task from carrying unrelated
-contract, code-comment, or maintenance doctrine. It also keeps technical
+This split keeps an established-document edit on the compact runtime and
+wrap-up path. It exposes content architecture, locality, casting, specialist
+contract guidance, and comprehensive audit doctrine only when the choice they
+own becomes live. It also keeps technical
 READMEs, public documentation homes, and product presentation pages distinct
 because they serve different readers and entry contexts. Diátaxis supplies a
 reader-question vocabulary, not a required file tree.

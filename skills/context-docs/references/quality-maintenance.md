@@ -1,17 +1,51 @@
 # Quality and maintenance
 
 Non-inline documentation can look complete while stale contracts, broken reader
-paths, or copied remote mechanics remain. Use this reference at final wrap-up
-or release to decide from evidence whether the finished documentation is
-publishable and to expose any remaining risk. An explicit non-inline
-documentation audit or review is itself this final task. This reference never
-applies to line, block, or file comments.
+paths, or copied remote mechanics remain. Use this full reference for an audit,
+release, work spanning multiple non-inline surfaces, or a material risk that
+needs the detailed scorecard. Routine single-surface completion uses [Review
+documentation at wrap-up](review-documentation-at-wrap-up.md) instead. An
+explicit non-inline audit or review is itself the final task. This reference
+never applies to line, block, or file comments.
 
+- [Audit documentation](#audit-documentation)
 - [Evidence scorecard](#evidence-scorecard)
 - [Audit questions](#audit-questions)
 - [Change triggers](#change-triggers)
-- [End-state exit gate](#end-state-exit-gate)
+- [End-state exit gate](review-documentation-at-wrap-up.md#end-state-exit-gate)
 - [Release and drift review](#release-and-drift-review)
+
+## Audit documentation
+
+Use this workflow only at final work wrap-up or release, or when the user
+explicitly requests a non-inline documentation audit, review, or maintenance
+plan. That request is itself the final documentation task.
+
+1. State the audit mode and boundary. For a change-set audit, inventory every
+   changed public item and affected non-inline surface. For a completeness
+   audit, inventory every stable public item and relevant non-inline surface in
+   scope. Establish current truth, canonical facts, examples, and
+   repository-native verification commands. Exclude line, block, and file
+   comments; exported-symbol JSDoc remains a public-contract surface.
+2. Read the [locality ladder](locality-ladder.md) only when documentation
+   existence, ownership, governed scope, or placement is unresolved. Read
+   [content architecture](content-architecture.md) only when a story,
+   surface-role, scan-path, or multi-reader alignment question is live. When the
+   audit questions the reader, goal, subject, or surface, read
+   [casting](casting.md), honor its outcome, and report it before judging story
+   coherence. When the scope includes a public contract, configuration
+   reference, public JSDoc or TSDoc, or an example, also read [public contracts,
+   JSDoc, and examples](api-jsdoc-examples.md).
+3. Apply the [evidence scorecard](#evidence-scorecard) only to the gates in the
+   stated scope. Distinguish a present-contract defect from missing change
+   history; do not recommend the same prose in both places.
+4. Report evidence and counts by surface, intentional exclusions, untested
+   assumptions, and remaining risks. Do not infer completeness from tone,
+   length, or a generic readability score.
+5. Do not edit during a review-only request. If changes are separately
+   authorized, route each defect through its authoring workflow, then re-run
+   only the affected scorecard gates. This full scorecard owns terminal
+   completion; do not invoke the compact wrap-up guide afterward.
 
 ## Evidence scorecard
 
@@ -20,13 +54,13 @@ Report documentation quality with evidence and counts.
 | Gate | Pass condition |
 | --- | --- |
 | Currentness | At wrap-up, checked evidence shows no contradiction between the documented finished state and the completed exports, types, defaults, routes, tests, or supported versions in scope. |
-| Casting validity | When the reader, goal, subject, or surface was new or challenged, the recorded casting outcome is supported by entrant, context, decision-right, trust-boundary, and intervention evidence. A non-`PROCEED` outcome was followed instead of being drafted around; a persisted class predicts a material content choice and is not merely a skill, package, page, task, workflow phase, or job title. |
+| Casting validity | When the reader, goal, subject, or surface was new or challenged, the recorded casting outcome is supported by entrant, context, decision-right, trust-boundary, and intervention evidence. A non-`PROCEED` outcome was followed instead of being drafted around; a persisted class predicts a material content choice and is not merely a skill, package, page, task, workflow phase, or job title. Any service priority cites an observation source and window or is explicitly labeled as an unmeasured expectation; lower-frequency classes retain a reachable route. |
 | Entry relevance | The document opens with the reader-relevant entry need defined in the reader entry and scan path section of `content-architecture.md` while keeping the governed subject inferable. Every compact chooser or catalog entry names the subject, what it provides, and why the reader would choose it before mechanism. |
 | Selection context and impact | Before methodology, workflow, taxonomy, or components, the intended reader can infer the relevant situation or pressure, affected party or system, observable impact or changed decision, and boundary. A chooser may own this context for compact catalog entries; a standalone subject page and a detailed owning section orient themselves locally. |
 | Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is accounted for by a discoverable canonical source or has an explicit justified exclusion; prose fills only material semantic gaps. |
 | Relationship coverage | Within the stated audit scope, every consumer-visible assertion connecting named subjects that a reader could act on—capability, compatibility, dependency, causation, ordering, or ownership claims—is inventoried by source, relation, target, direction, modality, and condition, then verified against authoritative contracts for both endpoints or an explicit product decision. Record the bound applied and its exclusions. Internal coherence, co-location, and repeated prose are not evidence. |
 | Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. |
-| Surface necessity | The surface passes the [locality ladder's existence gate](locality-ladder.md#existence-gate). |
+| Surface necessity | The surface passes the [locality ladder's existence and ownership gates](locality-ladder.md#pass-the-existence-and-ownership-gates). |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
 | Remote-truth stability | Non-inline prose that depends on another owner preserves a stable contract or causal edge and its local consequence; it does not narrate remote mechanics that can change independently. |
 | Scan-path usability | On a human-facing entry surface, inspection of the rendered or actual delivered form shows semantically meaningful [focus and attention anchors](content-architecture.md#focus-and-attention-management) that make the primary subject, path, and necessary boundary perceptible before secondary detail without relying on decoration. For a public website presentation page, a browser visitor can identify the intended context, supported outcome, and first verified action; any boundary needed to avoid a likely false expectation appears before it matters. For a public documentation home, a reader can find the relevant topic or exact fact without a product-presentation detour. For a README, the named technical reader can identify the governed scope, boundary, and route for their task without marketing posture. |
@@ -43,17 +77,18 @@ Report documentation quality with evidence and counts.
 Record evidence capable of falsifying qualitative judgments. Use a task-local
 table such as:
 
-| Surface | Role and rung | Reader path tested | Contract coverage | Examples and links | Open risks |
+| Surface | Role and governed scope | Reader path tested | Contract coverage | Examples and links | Open risks |
 | --- | --- | --- | ---: | --- | --- |
-| Runtime reference | Package reference, rung 5 | Integrator finds a default and failure mode | 12 of 12 | 2 examples, 8 links | None |
+| Runtime reference | Package or module reference | Integrator finds a default and failure mode | 12 of 12 | 2 examples, 8 links | None |
 
 For the judgment-heavy gates, record the observation:
 
 - **Casting validity:** casting outcome, observed entrant and entry context,
   controlled decision, authority or trust boundary, rejected or merged
-  candidates, and the evidence that supports or would overturn the result.
+  candidates, frequency evidence or unmeasured expectation, direct/deeper
+  disposition, and the evidence that supports or would overturn the result.
 - **Locality fit:** governed scope, chosen owner, and the plausible competing
-  rung.
+  scope.
 - **Level fit:** named reader and one detail deliberately included or removed
   for that reader.
 - **Reader path:** starting state, task attempted, and observed result.
@@ -105,15 +140,14 @@ every section and public item in that stated scope:
 5. Is this fact duplicated elsewhere, and which established owner already holds it?
 6. What source evidence verifies it? For an evaluative or comparative claim, is the evidence adjacent and are its conditions clear?
 7. Which established owner holds this fact? If ownership is unresolved, which
-   ladder rung best fits a placement proposal, and would the current surface
+   governed scope best fits a placement proposal, and would the current surface
    duplicate or displace another owner?
 8. What material named-reader gap justifies this surface? If readable code,
    types, tests, metadata, local context, or an existing canonical surface
    already covers it, should no addition—or a deletion—be the result?
-9. Can the named reader—stranger, developer, coding agent, coder, maintainer,
-   integrator, operator, administrator, support engineer, end user, or browser
-   visitor—find the purpose, primary path, and next detail appropriate to their
-   role?
+9. Can the project-defined reader—or the explicit task reader when no durable
+   cast exists—find the purpose, primary path, and next detail appropriate to
+   their available context and decision?
 10. From where does the intended reader encounter this document, and which context, paths, credentials, tools, or prerequisites are actually available there?
 11. If the primary reader path changed, was it checked from its stated starting state, and which assumptions remain untested?
 12. For a procedure, does the heading state the task and does each step give one meaningful action after its necessary location, condition, and warning? For a tutorial, can the reader see its meaningful checkpoints?
@@ -166,30 +200,11 @@ Choose one result and record the evidence:
 
 - update current docs;
 - update changelog or migration docs;
-- update public JSDoc or other non-inline documentation;
+- update public JSDoc or code-local rationale;
 - no user-facing documentation impact.
 
-## End-state exit gate
-
-Write current documentation as the contract expected when the requested work is
-complete. It may temporarily lead the implementation while both are being
-edited, but it must not claim completion until the final code, generated
-artifacts, and documented behavior agree.
-
-Reject a result that requires another edit merely to:
-
-- replace future tense with the completed contract;
-- remove notes about temporary repository, branch, rollout, or access state;
-- remove caveats, prerequisites, or version narration caused only by a
-  temporary mismatch among checkout, registry, publication, or release state;
-- move a secondary demo procedure out of a top-level README's primary scan path
-  when an established example or how-to owner can carry the detail;
-- delete draft labels, placeholders, commented-out scaffolding, or instructions
-  to finish the work later;
-- reveal content that was intentionally hidden during implementation.
-
-A supported transitional state in the finished product is not implementation
-residue. Document it when it is part of the verified contract.
+Record each affected non-inline surface during the work so final coverage does
+not depend on reconstructing the change from memory.
 
 ## Release and drift review
 
@@ -205,6 +220,11 @@ At release cadence:
 5. Re-check that public defaults, errors, supported versions, and security boundaries match source.
 6. Re-check non-inline statements about another owner against the stable
    contract they depend on; remove narration of remote mechanics.
-7. Apply the end-state exit gate before declaring the documentation releasable.
+7. Apply the [end-state exit
+   gate](review-documentation-at-wrap-up.md#end-state-exit-gate) before
+   declaring the documentation releasable.
 
 Prefer generated inventory or repository-native documentation tooling. Introduce a maintained API map only if coverage cannot otherwise be derived, because every additional index is another drift risk.
+
+Add custom automation only after repeated use shows that a mechanical check
+cannot otherwise be performed reliably.

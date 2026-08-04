@@ -5,452 +5,116 @@ description: Use when creating, revising, or auditing a README, tutorial, how-to
 
 # Context Docs
 
-Document fences: recover and preserve the verified reason for a choice,
-constraint, boundary, relationship, or structure when that reason is not
-visible where a reader encounters it. Document reefs, not cliffs—keep the
-hidden why and consequence, not mechanics already in view. Use locality to
-explain how each explanation fits the supplied ownership and reader context,
-and to propose placement only when ownership is unresolved. The ladder does not
-authorize a new surface or override an established owner. When no material gap
-remains, add nothing.
+Treat an existing choice, constraint, boundary, relationship, or structure
+whose purpose is not yet understood as **Chesterton's Fence**: investigate its
+rationale before changing or removing it. Once evidence verifies a non-local
+cause with a material consequence, preserve that **invisible reef** where the
+reader must act; omit the **visible cliff**—meaning already recoverable from the
+reader's context. When no material gap remains, add nothing.
 
-## Universal laws
+## Keep the cross-route contract
 
-1. **Document fences; preserve reefs, not cliffs.** Explain the verified cause
-   that is not locally visible and the material constraint it creates here. The
-   cause may live in lower-level implementation, another process, or an earlier
-   or later event. Preserve its local consequence, not remote mechanics. The
-   hidden reason may govern a code-local choice or a wider purpose, contract,
-   failure, interaction, or ownership boundary. Phrase a remote cause at the
-   stable contract edge that remains true while its implementation changes. Do
-   not transcribe mechanics already visible at the reader's encounter.
-2. **Ground claims; never invent.** During authoring, use source, exported
-   types, tests, generated artifacts, or an explicit product decision as
-   evidence. An unexplained Chesterton's Fence triggers investigation, not a
-   plausible story. Put evidence beside evaluative or comparative claims.
-3. **Describe the finished state.** Anchor current documentation in the
-   authorized contract expected when the requested work is complete. Present
-   artifacts are evidence for implementing or verifying that contract; they do
-   not choose the story. A mismatch in checkout, registry, branch, rollout, or
-   release state is a work item or validation failure, not current-documentation
-   content, unless the completed product intentionally supports that
-   transitional state. Changelogs, migration guides, and release documentation
-   explain what changed or used to be true.
-4. **Lead with reader-relevant why; orient before mechanism.** Open a
-   reader-facing surface with the pressure, consequence, responsibility,
-   supported outcome, boundary, or changed decision its entering reader needs.
-   Make the governed subject and capability inferable, but do not let artifact
-   self-description displace the reason to care. A compact chooser or catalog
-   entry uses `name: what and why` so a reader can select among subjects. Before
-   methodology, taxonomy, workflow, or components, establish the affected
-   reader or system, intended observable effect or changed decision, and
-   boundary at the subject's owning section. A parent summary does not replace
-   local orientation on a standalone subject page.
-5. **Make a map, not a transcript.** Select and relate the present truths the
-   reader needs; do not mirror the implementation. Add the different angle
-   appropriate to the rung: technical orientation, system responsibility, or
-   non-obvious local why.
-6. **Fit fence explanations to established ownership.** Within the supplied or
-   authorized topology, keep each verified hidden reason where every affected
-   reader, including a coding agent working from selective context, encounters
-   it before the decision, task, or boundary it governs. A fence is relative to
-   that reader's genuinely available context, not to the model's general
-   knowledge. Follow the environment's established owner and submission route;
-   keep detail there and add only the smallest route or local consequence an
-   affected reader still needs. Use the ladder to explain or propose a fit when
-   ownership is unresolved, never to create a competing owner.
-7. **Earn every surface.** Apply the [locality ladder's existence
-   gate](references/locality-ladder.md#existence-gate) before adding a README,
-   page, reference, or comment. Add nothing when it finds no material reader
-   gap.
-8. **Keep reader contracts distinct.** Classify technical READMEs, public
-   documentation homes, and visitor presentation pages by their actual reader;
-   [content architecture](references/content-architecture.md) owns the
-   boundary details.
-9. **Preserve supplied topology and ownership.** Give each detailed fact one
-   established owner. Do not create, move, replace, or duplicate pages, records,
-   folders, or navigation without authority. A README may host several content
-   modes when it is already the authorized surface; it is not a default owner.
-10. **Disclose progressively.** Add material only when it enables a priority
-   task, closes a contract or operational risk, or makes an example safe.
-   Delete it when removal costs no safety, clarity, findability, or support,
-   including when code or canonical local context actually available to the
-   affected reader now carries the same decision and boundary.
-11. **Leave non-inline documentation publishable.** At wrap-up, meet the
-    [end-state exit
-    gate](references/quality-maintenance.md#end-state-exit-gate). Code-local
-    gaps follow the code-local authoring route, not this gate.
-12. **Review once at wrap-up.** Use source evidence while authoring, but run
-    documentation review and deterministic documentation completion checks only
-    after the in-scope implementation and documentation are complete. Review
-    the final non-inline documentation once. Never review line, block, or file
-    comments.
-13. **Keep construction outside the document.** Document the governed subject,
-    not the process used to document it. Do not publish generic claims about
-    why a document exists, its maintenance role, or the drafting, review, or
-    validation process; nor a bare declaration that it follows Diátaxis or
-    another framework. Keep those build-time facts in the authoring record or
-    handoff. Include a concrete component map, ownership boundary, or framework
-    distinction when it changes the reader's decision or is part of the
-    reader's subject or contract.
-14. **Separate source register from artifact register.** Treat prompts,
-    conversations, interviews, and working notes as evidence and intent, not
-    automatically publishable wording. Render their meaning in the established
-    register and reader context of the authorized surface. Preserve informal
-    phrasing, profanity, speaker attribution, or exact quotation only when the
-    artifact's durable contract requires that voice or provenance; do not import
-    a conversational “we” whose referent the reader cannot recover.
+- Ground every claim in source, exported types, tests, generated artifacts, or
+  an explicit decision. If a Chesterton's Fence remains unresolved, preserve
+  its current form and record accepted uncertainty instead of inventing a
+  rationale. Recovering the reason does not by itself justify prose; the reader
+  must still have a material gap.
+- Write current documentation as the authorized state expected when the work is
+  complete. Keep former behavior in changelogs, migration guides, or release
+  documentation.
+- Follow the environment's established owner and submission route. Locality can
+  explain or propose a fit; it cannot authorize a surface, displace an owner,
+  or widen the requested topology or mutation scope.
+- Keep complete truth and remote mechanics with one canonical owner, not one
+  physical mention. For each independent symbol/diff, folder, or package path
+  that lacks the owner's context before action, leave the smallest local
+  consequence and direct route. Caller count alone does not justify multiple
+  breadcrumbs: prefer one broader breadcrumb when every affected reader
+  receives it, and retain a code-local route only when a symbol or diff reader
+  can bypass that context. Count search or indexing only when the actual
+  workflow supplies the relevant result before action.
+- Orient before mechanism. Lead an entry surface or owning section with the
+  reader-relevant purpose, pressure, consequence, responsibility, or boundary;
+  keep the governed subject inferable there.
+- Make a selective map, not an implementation transcript. Preserve invisible
+  causes, relationships, contracts, and boundaries that change a decision;
+  omit visible mechanics and facts the reader can safely recover.
+- Choose explanation density for the actual reader: Guided when unfamiliar
+  terms and prerequisites need a safe primary path, Balanced for a mixed or
+  unspecified audience, and Compressed for a known expert. Never compress away
+  required defaults, failures, security boundaries, setup, or public contracts.
+- Keep reader contracts distinct. A technical README orients its technical
+  reader, a documentation home supports navigation and lookup, and a public
+  presentation page serves a verified browser-visitor decision or action.
+- For a new, substantially reworked, or challenged story, test the supplied
+  reader, goal, subject, and surface before drafting. A bounded revision with an
+  explicit, unchallenged story keeps that contract.
+- Follow a project-owned reader cast and service priority when one exists. With
+  no durable cast, serve the explicit task reader; do not import a universal
+  persona taxonomy.
+- Treat prompts, conversations, interviews, and working notes as evidence and
+  intent, not publishable wording. Use the authorized surface's register;
+  preserve exact voice or attribution only when its durable contract requires
+  that voice or provenance. Do not import a conversational `we` whose referent
+  the durable reader cannot recover.
+- Document the governed subject, not the drafting or validation process. Add a
+  framework distinction only when it changes the reader's decision.
+- Review finished non-inline documentation once at wrap-up. Never run that
+  review for line, block, or file comments; exported-symbol JSDoc remains a
+  public-contract surface. Once an audit or release route selects the full
+  quality scorecard, that scorecard owns terminal completion; do not return to
+  the compact wrap-up guide.
 
-## Route the request
+## Select one route
 
-Choose one primary path. Start its procedure before loading branch-specific
-references; the procedure names each reference at the decision where it is
-needed. Combine paths only when the request genuinely spans them.
+Choose one primary route and load only its references. Combine routes only when
+the requested artifact genuinely spans them.
 
-For a post-generation readiness gate over a mixed deliverable, keep this
-procedure scoped to documentation truth, coverage, reader paths, and locality.
-Do not present its result as verification of the non-documentation parts.
-
-| Request | Start here |
+| Task | Load and follow |
 | --- | --- |
-| Top-level repository or project README | [Create or revise current documentation](#create-or-revise-current-documentation) |
-| Public website landing page | [Create or revise current documentation](#create-or-revise-current-documentation) |
-| Public documentation home or docs-site navigation | [Create or revise current documentation](#create-or-revise-current-documentation) |
-| Internal folder, package, module, domain, or service README or technical overview | [Create or revise current documentation](#create-or-revise-current-documentation) |
-| Tutorial, how-to, explanation, or examples within them | [Create or revise current documentation](#create-or-revise-current-documentation) |
-| API or configuration reference, or public JSDoc/TSDoc | [Document a public contract](#document-a-public-contract) |
-| Line, block, or file comments | [Document code-local rationale](#document-code-local-rationale) |
-| Documentation audit, review, release check, or maintenance plan | [Audit documentation](#audit-documentation) |
-| Changelog, migration guide, or release documentation | [Document a change](#document-a-change) |
+| Bounded revision to an established README, landing page, documentation home or site, tutorial, how-to, or explanation | Follow the [routine current-document path](#edit-an-established-current-document). Load a specialist guide only for a condition named there. |
+| New, substantially reworked, or challenged story; unresolved authorial goal; conflicting reader paths; or uncertain surface role | Follow [casting](references/casting.md). After `PROCEED`, load [content architecture](references/content-architecture.md) only while a story, surface-role, scan-path, or multi-reader alignment decision remains live. Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. |
+| API or configuration reference, public JSDoc/TSDoc, or standalone public API, configuration, or code example | Follow [Document a public contract or standalone example](references/api-jsdoc-examples.md#document-a-public-contract-or-standalone-example). Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. Finish non-inline work with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
+| Line, block, or file comment | Apply the [selective-context authoring decision](references/api-jsdoc-examples.md#selective-context-authoring-decision). Load the [locality ladder](references/locality-ladder.md) only when the owner or line/block/file placement remains unresolved. Stop after the code-local disposition; do not run documentation review. |
+| Documentation audit, review, release check, or maintenance plan | Follow [Audit documentation](references/quality-maintenance.md#audit-documentation), which names the additional guide required by each in-scope surface. Review only; do not edit unless the user separately authorizes changes. |
+| Changelog, migration guide, or release documentation | Apply the [change triggers and dispositions](references/quality-maintenance.md#change-triggers), keep historical and current time domains separate, and route each affected current surface through the applicable row above. Finish with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
 
-Apply another path only when its artifact is also in scope.
+For a mixed deliverable, assess only documentation truth, coverage, reader
+paths, and locality. Do not present that result as verification of the
+non-documentation parts.
 
-## Create or revise current documentation
+## Edit an established current document
 
-Close a material gap for the named reader in an existing or authorized
-non-inline surface so the completed purpose, behavior, boundary, and next route
-are safely recoverable. Do not create a surface or publish work-in-progress
-merely to satisfy this path.
+Use this path only when the authorized surface, owner, reader task, and story
+are already settled. If one becomes disputed, return to the route table and
+take the named conditional path.
 
-1. Establish the authorized completed contract from explicit product decisions,
-   established public contracts, and the in-scope implementation target. Use
-   package metadata, public exports, types, configuration, defaults, errors,
-   tests, generated artifacts, and repository-native documentation tooling to
-   implement or verify it. When that evidence still disagrees with the
-   authorized completed contract, resolve the mismatch within scope or report
-   it as a validation failure; do not turn it into a caveat, prerequisite, or
-   starting condition in current documentation. Do not investigate or narrate
-   publication or delivery state unless the requested reader contract includes
-   it. At wrap-up, verify that the finished implementation matches the
-   documentation. Do not treat an example, private helper, or identifier name
-   as proof of public behavior.
-2. Before adding a surface or comment, establish a material reader gap. If
-   readable code, types, tests, metadata, local context, or an existing
-   canonical surface already lets that reader act safely, add nothing; do not
-   manufacture a layer because a project, package, public source, or reader role
-   exists. Read `references/locality-ladder.md`. Classify the governed scope and
-   the surface's actual role from its reader, available context, and
-   responsibility before writing. Identify the reader's prior knowledge, task or
-   question, smallest successful outcome, prerequisites, dangerous assumptions,
-   and next useful detail. Record the reader, available context, need, scope,
-   and placement rationale before outlining; do not infer any of them from a
-   filename, root location, public visibility, source host, or license.
-   Treat applicable local context as part of the decision surface. Discover the
-   repository's established owner and submission route from the instructions,
-   links, surfaces, and tooling already supplied to the task; do not assume what
-   kind of system owns the record. An unfamiliar local abstraction is a route to
-   its owner, not a reason to document each caller. When an owner exists, update
-   it within the granted authority or return a proposal for that owner. Do not
-   promote the fact into a preferred artifact or create a parallel fallback.
-   Add no generic model tutoring, and remove no narrower explanation unless the
-   replacement context reliably reaches its reader before the decision.
-3. Select explanation density at this decision point:
-   - **Guided** for a reader new to the domain or library: define unfamiliar
-     terms, make prerequisites and results explicit, and show one safe primary
-     path.
-   - **Balanced** for a mixed or unspecified audience: give concise orientation,
-     non-obvious choices, boundaries, and contextual links. This is the default.
-   - **Compressed** for a known expert audience: retain the contract,
-     prerequisites, effect, boundary, and only the example or link needed to
-     remove ambiguity.
-   Density never changes truth. Keep required defaults, failures, security
-   boundaries, and setup at every level; do not put Guided explanation inside
-   copyable code.
-4. For a new or substantially reworked reader-facing non-inline surface, or
-   whenever the proposed reader, goal, subject, or surface is questioned, read
-   `references/casting.md` and run its intervention gate before outlining.
-   Honor its result. Do not draft after `RECAST_READER`, `REVISE_GOAL`,
-   `CHANGE_SURFACE`, `CHANGE_SUBJECT`, `NO_DOCUMENT`, or
-   `NEEDS_HUMAN_DECISION`; perform or report the required shift first. A bounded
-   revision with an explicit, unchallenged cast and story skips this gate.
+1. Freeze the requested scope, current source evidence, and state expected when
+   the work completes. Keep product intent distinct from observed
+   implementation.
+2. Check the material gap from the context the reader actually has at the
+   decision. Use the established owner and topology. If the reader can already
+   act safely, add nothing; if the owner cannot be updated, return a proposal
+   for that owner instead of creating a fallback.
+3. Preserve the established through-line. Write the minimum missing purpose,
+   behavior, evidence, boundary, and next route without repeating recoverable
+   facts. Give the project-prioritized reader a compact direct path; route a
+   materially different lower-frequency need to its canonical detail.
+4. Load [public contracts, JSDoc, and
+   examples](references/api-jsdoc-examples.md) only when the requested change
+   affects a public API, configuration contract, or non-trivial code example.
+   After completed non-inline work, follow [Review documentation at
+   wrap-up](references/review-documentation-at-wrap-up.md) once.
 
-   Then read `references/content-architecture.md`. Use Diátaxis as a lens for
-   the reader's question, not as a required file or folder structure. Work in
-   the documentation topology supplied by the environment. A rung or reader
-   role never requires a new document. If an existing README is the authorized
-   technical surface, improve it in place. Apply visitor-presentation guidance
-   only to an actual existing or authorized presentation surface; its absence
-   creates no landing-page task. Propose a split with benefits and maintenance
-   cost only when the user requests or authorizes restructuring.
+## Complete the selected route
 
-   After a `PROCEED` result for a new or substantially reworked reader-facing
-   non-inline surface, apply the [authorial intent and story
-   contract](references/content-architecture.md#authorial-intent-and-story-contract)
-   before outlining, full prose, or visual implementation. Evidence determines
-   what the subject can truthfully claim; an explicit user or project decision,
-   or an established surface contract, determines why the document should
-   speak. If that authority is missing, return the smallest contract-level
-   decision instead of inferring intent from mechanics or generating complete
-   variants. Once the contract is resolved, align one opening-and-heading
-   semantic slice, collapse its readback into one contract, and produce one
-   complete route. A bounded revision with an explicit, unchallenged story
-   proceeds directly. This alignment is authoring evidence, not the final
-   documentation review.
-5. When an existing or authorized README is the right owner, treat it as
-   technical orientation at its governed rung. Use the reader-contract boundary
-   in `content-architecture.md`; do not infer its role from public visibility,
-   an open-source license, or the existence of a source repository.
-6. For a top-level repository or project README that is the right owner, start
-   with technical why:
-   what the system or repository is for, its scope, major boundaries, intended
-   technical reader, and the route in the authorized completed contract that is
-   relevant to that reader's task. Keep that orientation and a concise primary
-   route in the opening scan path. Include installation, cloning, or a source
-   quickstart only when it is a necessary technical instruction in that route;
-   do not derive it from incidental checkout, registry, or rollout state. When
-   an established example or how-to owner contains a secondary demo, link to it
-   with enough context to choose it instead of reproducing its setup or
-   procedure. Retain the procedure here only when the demo is itself the
-   reader's primary technical task and this README is its established owner. A
-   top-level README for an internal product remains a technical surface; do not
-   give it product-evaluation or advertising posture.
-7. For an actual existing or authorized public website landing page, start with
-   visitor-facing why and lead
-   to a verified web-native visitor action, such as using the product, trying a
-   demo, reading public docs, downloading a client, or contacting the team. Do
-   not add a prominent source quickstart, install, clone, package-manager, or
-   code path merely because source exists. Keep source as a secondary route
-   only when it is verified useful for contribution or self-hosting; when no
-   web-native action is verified, use a neutral deeper route rather than invent
-   a conversion call to action.
-8. For a public documentation home, start with the documentation reader's
-   subject, available navigation, and route to the relevant tutorial, how-to,
-   explanation, or reference. Browser delivery does not make it a product
-   presentation page. At wrap-up, validate a documentation-navigation or
-   reference task, not a browser-product conversion path.
-9. For an internal folder, package, module, domain, or service surface that is
-   the right owner, start with technical why: its responsibility in the
-   containing system, owned boundary, interactions, and constraints. Do not
-   inject project-level sales copy. Include external installation only when the
-   unit is independently published and that instruction is necessary for its
-   technical reader.
-10. Write the minimum sufficient explanation. For a repository, collection, or
-    other chooser surface, lead with why that collection matters to its reader,
-    including any organizing relationship needed to interpret it. Present each
-    independently selectable subject in compact `name: what and why` form. Before
-    internal mechanism, make the fuller situation, impact, and boundary
-    inferable at each subject's owning section. A compact catalog entry does not
-    need to carry the full diagnosis. Put evidence beside evaluative or
-    comparative claims. Add material only when it enables a priority task,
-    closes a contract or operational risk, or makes an example safe. Apply a
-    deletion test to everything else.
-11. For API or configuration reference, continue with [Document a public
-   contract](#document-a-public-contract). For an example inside another
-   document, read the example section of `references/api-jsdoc-examples.md` and
-   apply only steps 6–7 of [Document a public
-   contract](#document-a-public-contract). Defer review and deterministic
-   documentation checks until [Review documentation at
-   wrap-up](#review-documentation-at-wrap-up).
+Write the minimum explanation that exposes purpose, behavior, evidence, and
+boundary without repeating facts already available to the reader. At final
+wrap-up for non-inline authoring, follow the compact wrap-up guide once against
+the completed artifacts; load the full quality scorecard only when that guide
+requires it. An audit or release route already using the full scorecard ends
+there instead.
 
-## Document a public contract
-
-Make material public semantics safely recoverable by the contract's consumer at
-their established owner. Account for every stable item without paraphrasing
-source-owned truth or creating an unauthorized surface.
-
-1. Inventory every stable public option, export, route, command, relevant
-   error, and example in scope. Determine stability from declared package
-   exports, generated interfaces, route or command schemas, tests, support
-   policy, or an explicit product decision. Treat unclear accidental or
-   experimental status as a decision gap, not a silent exclusion.
-2. Read `references/locality-ladder.md` to identify the established owner or
-   form a placement proposal when ownership is unresolved, then read
-   `references/api-jsdoc-examples.md`. For each public item, account for the
-   applicable purpose, use case, inputs, required or default state, observable
-   behavior, failures, interactions, and boundary. Treat readable signatures,
-   types, schemas, generated reference, and existing canonical surfaces as
-   coverage when they expose those semantics safely. Add the smallest precise
-   prose only for a material contract gap; do not give every field equal prose.
-3. Put each detailed fact in its established existing surface. Orient and link
-   elsewhere. Do not create a new reference page, record, folder, or navigation
-   entry unless authorized. When an existing or authorized README is the
-   established public owner, it may contain the required reference section; do
-   not choose it over another supplied owner.
-4. Use public JSDoc or TSDoc for semantics a signature cannot encode reliably,
-   such as runtime defaults, errors, lifecycle, ownership, security boundaries,
-   and important interactions. Do not paraphrase types or duplicate the
-   reference manual.
-5. For public JSDoc or TSDoc, at wrap-up verify that the semantics appear on
-   the actual exported symbol through re-exports, overloads, inheritance, and
-   the repository's generated-reference, emitted-declaration, or IDE-visible
-   surface. A successful code or documentation build alone is not proof.
-6. Explain a non-trivial example before its code: state the reader goal,
-   prerequisites, and why its meaningful choices exist. Keep runnable code
-   complete and free of commentary readers must delete. After it, state the
-   result, relevant limit, and next path.
-7. At wrap-up, classify each sample as Runnable, Illustrative, Partial, or
-   Pseudocode using the reference requirements. Never call a sample Runnable
-   unless it was validated unchanged with its imports, setup, public names,
-   options, and expected behavior.
-8. During authoring, record explicit, justified exclusions as they are
-   identified. Defer the wrap-up items above (steps 5 and 7), inventory
-   accounting, review, and deterministic documentation checks until [Review
-   documentation at wrap-up](#review-documentation-at-wrap-up).
-
-## Document code-local rationale
-
-Protect a maintainer or coding agent from an unsafe local edit by preserving an
-admitted non-local cause at the decision it governs. Add nothing for visible
-mechanics, and never turn this path into documentation review.
-
-1. Inspect the governed symbol or block, nearby lines, relevant types and tests,
-   search matches, and any applicable local context the intended reader actually
-   receives before editing. Assume the next maintainer or coding agent may see
-   only the selective context of a symbol, diff, or search match; do not credit
-   it with a README or `AGENTS.md` it would not naturally encounter.
-2. Apply the canonical selective-context authoring decision in the code-local
-   documentation section of `references/api-jsdoc-examples.md`; it owns
-   detailed admission, remote ownership, stability, and the reef-to-cliff
-   disposition. If it rejects prose, add no comment. Then use
-   `references/locality-ladder.md` to place an admitted explanation.
-3. Treat code whose reason for existing or taking its present form is unknown as
-   a Chesterton's fence. Search history, callers, tests, runtime effects, and
-   neighboring invariants for its rationale, then return to the canonical
-   admission decision. Discovering a reason does not by itself justify prose.
-4. Place an admitted explanation at the line, block, or file rung that owns the
-   decision. Treat exported-symbol JSDoc as a public-contract overlay, not
-   another locality rung.
-5. Protect the verified constraint in the completed result. When a code, type,
-   API, structural change, or canonical local context explanation makes the
-   meaning available to the affected reader before this decision, prefer that
-   cliff and remove only the prose it makes redundant. An unknown called
-   abstraction belongs with its established owner; a durable local convention
-   belongs in the repository-provided context owner when one is supplied.
-   Otherwise retain the smallest fence explanation and report the clarity
-   opportunity when useful. Do not turn every admitted fence into a refactoring
-   task.
-6. If the reason remains unknown and the gap is accepted, record that
-   uncertainty with an explicit `TODO` or `FIXME`. Do not manufacture rationale.
-7. Internal symbols need no JSDoc by default. Stop after the evidence-backed
-   local disposition is complete. Do not run documentation review or completion
-   checks for line, block, or file comments, during authoring or at wrap-up.
-
-## Audit documentation
-
-Decide whether finished non-inline documentation agrees with its current
-contract and lets its named reader act safely. Report evidence, coverage, and
-remaining risk without editing a review-only scope or inspecting line, block,
-or file comments.
-
-1. Run this path only at final work wrap-up or release, or when the user
-   explicitly requests a non-inline documentation audit or review; that request
-   is the wrap-up task. State the audit mode and scope. For a change-set audit,
-   inventory every changed public item and affected non-inline surface. For a
-   completeness audit, inventory every stable public item and relevant
-   non-inline surface in the stated boundary. Establish current truth,
-   canonical facts, examples, and repository-native verification commands.
-   Exclude line, block, and file comments. Exported-symbol JSDoc remains a
-   public-contract surface.
-2. Read `references/locality-ladder.md` and
-   `references/quality-maintenance.md`. When the scope includes a README,
-   tutorial, how-to, explanation, or reader path, also read
-   `references/content-architecture.md`. If the audit questions the current
-   reader, goal, subject, or surface, also read `references/casting.md`, run the
-   intervention gate, and report its outcome before judging story coherence;
-   do not silently validate the supplied cast. When the scope includes a public
-   contract, configuration reference, JSDoc or TSDoc, or examples, also read
-   `references/api-jsdoc-examples.md`. Compare the evidence with the
-   documentation for currentness, contract coverage, locality fit, minimum
-   sufficient explanation, reader paths, claim evidence, example integrity,
-   and navigation health.
-3. Distinguish present-contract defects from missing change history. Do not
-   recommend the same prose in both places.
-4. Report evidence and counts by surface, plus intentional exclusions, untested
-   assumptions, and remaining risks. Do not claim completeness from tone,
-   length, or a generic readability score.
-5. Do not edit during a review-only request. If changes are authorized, route
-   each defect to the applicable procedure above before editing. Use [Review
-   documentation at wrap-up](#review-documentation-at-wrap-up) as this path's
-   completion procedure.
-
-## Document a change
-
-Keep the current contract and any historical transition accurate for affected
-readers by routing each verified impact to its canonical time domain and
-existing or authorized surface.
-
-1. Inspect the changed behavior and its evidence. Determine whether it affects
-   public exports, types, configuration, defaults, CLI, routes, errors,
-   security, persistence, lifecycle, compatibility, installation, supported
-   runtimes, examples, or generated API inputs.
-2. Record one outcome for each impact: update current documentation; update a
-   changelog or migration guide; update public JSDoc or code-local rationale; or
-   no documentation impact, with evidence.
-3. Keep time domains separate. Write current documentation in present tense as
-   the completed change: what the library is and does when the work exits.
-   Changelogs, migration guides, and release documentation describe what
-   changed or used to be true. Do not leave former names, removed behavior,
-   mid-process caveats, or vague temporal phrases in current reference
-   material.
-4. Use only existing or explicitly authorized surfaces. Route current-contract,
-   public-API, and code-local updates through their procedures above.
-5. Record the affected non-inline documentation during the work. At wrap-up,
-   read `references/quality-maintenance.md`, perform the applicable drift and
-   release checks, and use [Review documentation at
-   wrap-up](#review-documentation-at-wrap-up).
-
-## Review documentation at wrap-up
-
-Establish whether the completed non-inline documentation is publishable for its
-named readers, and expose any unverified assumption or remaining risk.
-
-Run this procedure once, only after the in-scope implementation and
-documentation are complete. A user request specifically for a non-inline
-documentation audit or review is itself a wrap-up task. Never invoke this
-procedure on intermediate work. Exclude line, block, and file comments,
-including from wrap-up review.
-
-For audits, release preparation, or work spanning multiple non-inline
-documentation surfaces, read `references/quality-maintenance.md` for the
-complete scorecard. For the final non-inline documentation, verify the
-applicable minimum:
-
-1. Check the completed behavior against code, types, tests, generated artifacts,
-   or an approved product decision.
-2. Account for every public export, option, route, error, command, and
-   documentation surface in the stated scope. In a change-set scope, this means
-   every changed or affected item.
-3. Confirm that each unit in scope gives its reader enough relevance, behavior,
-   evidence, and boundary to act without unsafe inference. For a new or
-   substantially reworked reader-facing surface, also confirm that its opening,
-   major sections, proof and limits, and completion route agree with the
-   task-local story contract.
-4. Confirm that public JSDoc or TSDoc semantics remain attached to the intended
-   exported symbol in the actual extracted or IDE-visible surface.
-5. Build or typecheck examples and documentation when supported. Validate the
-   primary path from its documented starting state: the stated technical task
-   for any README; a web-native visitor action for a public website landing
-   page; a documentation-navigation or reference task for a public
-   documentation home; entry points and technical workflows for an internal
-   surface. Otherwise report the assumptions that remain untested.
-6. Check links, code-fence status, terminology, defaults, historical leakage,
-   source-to-artifact register leakage, mid-process wording, and copy-paste
-   integrity.
-7. Apply the [end-state exit
-   gate](references/quality-maintenance.md#end-state-exit-gate).
-8. Report updated surfaces, intentional omissions, validation run, counts,
-   wrap-up result, remaining risks, and future maintenance triggers.
-
-Prefer repository-native link, documentation-build, typecheck, doctest, and
-example commands. Add custom automation only after repeated use shows that a
-mechanical check cannot otherwise be performed reliably.
+Complete with the authorized documentation change, an evidence-backed no-op, a
+proposal for the established owner, or the smallest unresolved decision. Never
+turn missing truth or authority into plausible prose.

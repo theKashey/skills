@@ -9,50 +9,50 @@ can start implementation before the outcome and constraints are clear, mistake
 completed tasks for progress, document mechanics instead of reader needs, or
 rationalize their own output into looking ready.
 
-Mistakes were made; lessons were learned and transformed into durable knowledge:
+This repository packages six bounded responses to those failures as
+independently installable Markdown skills. Each skill defines a decision
+procedure with observable completion or an explicit non-pass state; none owns
+the whole development lifecycle.
 
-- how to preserve intent
-- how to choose moves that produce evidence
-- how to test finished work outside the producer's own context
-- what to expect from the agent([SINS](./skills/verify-complex-artifacts/SINS.md)) 
-and how to correct behavior([LAWS](./skills/skill-guidance/LAWS.md))
+Context Docs is the main skill. It recovers verified reasons that code or
+system structure cannot show where a decision is made, putting an invisible
+requirement back in view before a locally reasonable change. Five independent
+companion skills address outcome lineage, evidence-producing moves, advisory
+agent-instruction review, independent final review, and structural enforcement
+of documented constraints.
 
-Code and system structure often show what happens without preserving why a surprising
-constraint, boundary, or relationship must exist. 
-The fist and the main offering - Context Docs Skill - recovers that
-verified explanation before a maintainer or coding agent changes the wrong thing.
-
-The other five skills support decisions connected to that work:
-- what outcome it serves
-- what evidence-producing move comes next
-- what recurring behavior belongs in a skill
-- whether a finished artifact is ready to trust 
-- when structure rather than prose should carry a documented constraint.
-
-Each skill, including Context Docs, remains independently installable.
-All passing LAWS, all aware of their SINS, all accepting the flaws on modern models.
+These interventions are designed for stressed work: context has accumulated,
+competing information dilutes attention, and a model can rationalize a
+plausible account of its own output. A clean isolated exercise removes those
+conditions. It can test routing, structure, or reconstructability, but it does
+not establish that a skill improves behavior under production stress; that
+requires representative target-harness observations that this repository does
+not yet provide.
 
 ## What this repository offers
 
-- **[Context Docs](skills/context-docs/README.md):** preserves verified
-  explanations for fences—causes in lower-level implementation, another
-  process, or another point in time that are not visible where their constraint
-  affects a decision.
-- **[Skill Guidance](skills/skill-guidance/README.md):** creates and refines
-  independently installable agent skills, so an agent loads the right
-  instructions, makes the intended choice, and stops on observable evidence.
+- **[Context Docs](skills/context-docs/README.md):** applies the Chesterton's
+  Fence test before alteration, then preserves verified invisible reefs—non-local
+  causes and material consequences that are not visible where they affect a
+  decision.
+- **[Skill Guidance](skills/skill-guidance/README.md):** advises a host skill
+  creator on activation, runtime choices, isolation, and behavioral evaluation.
+  Its [Laws of Agent Instruction](skills/skill-guidance/LAWS.md) name the
+  design constraints used in that review.
 - **[Verify Complex Artifacts](skills/verify-complex-artifacts/README.md):**
-  independently examines finished complex artifacts, so gaps hidden by
-  producer context become actionable before a handoff or trust transition.
+  independently examines finished complex artifacts and records gaps hidden by
+  producer context before a handoff or trust transition. Its
+  [SINS taxonomy](skills/verify-complex-artifacts/SINS.md) gives recurring
+  observed defects stable names.
 - **[Read the Terrain](skills/read-the-terrain/README.md):** selects one
-  evidence-producing move under consequential uncertainty, so action advances
-  the aim or improves the next decision.
+  bounded move under consequential uncertainty and requires it to advance the
+  aim or improve the next decision.
 - **[Helix](skills/helix/README.md):** runs an expand, spike, and collapse
-  cycle over a small rewritten checkpoint, so uncertain work advances by
-  evidence instead of accumulating plans.
+  cycle over a small rewritten checkpoint and requires evidence before treating
+  uncertain work as progress.
 - **[Screaming Reefs](skills/screaming-reefs/README.md):** makes a verified
-  constraint visible in structure, so a reader can act safely without relying
-  on a remote explanation.
+  constraint recoverable from names, types, APIs, ownership boundaries, or
+  filesystem structure instead of only from a remote explanation.
 
 Each skill is independently installable. Their support relationships do not
 make them stages in one loop or runtime dependencies.
@@ -64,7 +64,7 @@ make them stages in one loop or runtime dependencies.
 | Code or system structure exposes behavior without the reason a constraint, boundary, or relationship must exist. | [Context Docs](skills/context-docs/README.md) | A verified explanation at the surface where the affected reader encounters the decision. | Product decisions, undocumented implementation correctness, or readiness of non-documentation artifacts. |
 | Direction under uncertainty is unresolved, or work has become a list of tasks with no accountable path to the wider goal. | [Helix](skills/helix/README.md) | One selected branch probed by a bounded spike, with the result collapsed into a checkpoint that keeps verdicts and epitaphs rather than plans. Requires a checkpoint surface the user configures before the first cycle. | That an action caused the outcome or that the goal is valuable. |
 | The next move is plausible, but cause and effect are unclear or conditions are changing. | [Read the Terrain](skills/read-the-terrain/README.md) | One bounded move that advances the aim or produces evidence that changes the next decision. | Causality, solution correctness, or requirement coverage. |
-| Agent instructions contain relevant advice but do not reliably change the intended choice. | [Skill Guidance](skills/skill-guidance/README.md) | A skill that appears for matching work and changes the agent's behavior in a testable way. | Domain correctness or behavioral effectiveness from structure alone. |
+| A proposed or existing skill needs an evidence-backed review of activation, runtime choices, isolation, or context cost. | [Skill Guidance](skills/skill-guidance/README.md) | Advisory findings and validation evidence for the host-provided skill creator. | Domain correctness, authority to mutate the skill, or behavioral effectiveness from structure alone. |
 | A finished multi-file artifact looks coherent to its producer, but that producer's context may hide gaps. | [Verify Complex Artifacts](skills/verify-complex-artifacts/README.md) | An independent readiness decision that identifies blockers and decisions needing a human. | Product desirability or facts outside the contract and checks actually reviewed. |
 | A verified constraint is still carried only by prose, and an authorized structural change can make it visible to local readers. | [Screaming Reefs](skills/screaming-reefs/README.md) | The smallest structural owner for the constraint, with the irreducibly remote cause retained as prose. | That structure proves behavior or authorizes a wider redesign. |
 
@@ -81,20 +81,21 @@ flowchart LR
     end
 ```
 
-**Agent-skill package:** Skill Guidance owns agent-facing activation and
-execution; Context Docs owns reader-facing purpose, locality, and progressive
-disclosure. They shape the package together. Verify Complex Artifacts gives
-the finished multi-file result an independent refinement and readiness gate.
+**Agent-skill package:** The host-provided skill creator owns creation and
+mutation. Skill Guidance can advise on the agent-facing contract, while Context
+Docs governs reader-facing truth, locality, and progressive disclosure. Verify
+Complex Artifacts gives the finished multi-file result an independent
+refinement and readiness gate.
 
 ```mermaid
 flowchart LR
     subgraph F2["2 · Agent-skill package"]
-        B1["Agent-skill problem"] --> B2["Skill Guidance"]
-        B1 --> B3["Context Docs"]
-        B2 -->|"agent-facing contract"| B4["Finished skill package"]
-        B3 -->|"reader-facing contract"| B4
-        B4 --> B5["Verify Complex Artifacts"]
-        B5 --> B6["Refine, block, or hand off"]
+        B1["Agent-skill problem"] --> B2["Host skill creator"]
+        B3["Skill Guidance"] -->|"advisory review"| B2
+        B4["Context Docs"] -->|"reader-facing contract"| B2
+        B2 --> B5["Finished skill package"]
+        B5 --> B6["Verify Complex Artifacts"]
+        B6 --> B7["Refine, block, or hand off"]
     end
 ```
 
@@ -132,15 +133,16 @@ coverage, and select the next branch to probe from current evidence and work
 state. That relationship is goal lineage, not invocation: using a skill is
 activity, not proof that the wider outcome moved.
 
-Context Docs and Skill Guidance are reciprocal authoring disciplines.
-Context Docs' locality and progressive-disclosure model shapes how Skill
-Guidance separates maintainer support from runtime instructions. Skill Guidance
-supplies the agent-skill packaging discipline used to maintain Context Docs.
-Each package still works when installed alone.
+Context Docs and Skill Guidance offer independent review lenses to a host skill
+creator. Context Docs covers reader-facing truth and locality; Skill Guidance
+advises on activation, runtime decisions, isolation, and evaluation. Neither
+package creates or mutates the other, and each still works when installed
+alone.
 
-Compatible agents route to whichever installed skill matches the problem. The
-diagram describes how their outcomes can relate; it is not a prompt recipe or a
-required execution order.
+The host agent decides which installed skill description matches the problem;
+this repository does not orchestrate that selection. The diagrams describe how
+the resulting outcomes can relate; they are not a prompt recipe or required
+execution order.
 
 ## Install
 
@@ -169,17 +171,18 @@ and install locations.
 ### Context Docs
 
 Code usually exposes mechanics. It often does not expose why a surprising
-choice, constraint, boundary, or relationship must exist. A lower-level
-implementation detail, parallel process, or earlier or later event can affect
-the current decision without being visible here. That hidden causal edge is a
-fence: without it, a locally reasonable edit can violate a non-local
-requirement.
+choice, constraint, boundary, or relationship must exist. Context Docs treats
+that unknown purpose as Chesterton's Fence and investigates it before changing
+or removing the present form. A lower-level implementation detail, parallel
+process, or earlier or later event may then establish an invisible reef: a
+verified non-local cause with a material consequence here.
 
-Context Docs documents reefs, not cliffs. It recovers the verified hidden reason,
-omits mechanics already visible, and uses locality to place the explanation in
-the README, reference, public contract, example, or code-local rationale where
-the affected reader naturally encounters the decision. It owns the full
-documentation cycle without turning every visible detail into prose.
+Context Docs preserves invisible reefs, not visible cliffs. It keeps the
+verified hidden reason, omits meaning already recoverable, and uses locality to
+place the explanation in the README, reference, public contract, example, or
+code-local rationale where the affected reader naturally encounters the
+decision. It owns the full documentation cycle without turning every visible
+detail into prose.
 
 Read [why Context Docs exists and how it is maintained](skills/context-docs/README.md)
 or inspect its [runtime documentation workflow](skills/context-docs/SKILL.md).
@@ -191,14 +194,14 @@ choice. Mixing activation, runtime action, maintainer explanation, and
 mechanical enforcement makes the package expensive to load and difficult to
 route, while a structural pass can hide that behavior never changed.
 
-Skill Guidance decides whether an unresolved agent choice belongs in a skill,
+Skill Guidance reviews whether an unresolved agent choice belongs in a skill,
 reference, README, deterministic gate, amendment, split, or no runtime content.
-It keeps the admitted package independently installable and requires behavioral
-evidence for the choice it is meant to change.
+It returns evidence-backed advice to the host-provided skill creator; it does
+not create or edit the target package.
 
 Read [why Skill Guidance exists and how its surfaces divide
 responsibility](skills/skill-guidance/README.md) or inspect its
-[runtime skill-authoring workflow](skills/skill-guidance/SKILL.md).
+[runtime advisory workflow](skills/skill-guidance/SKILL.md).
 
 ### Verify Complex Artifacts
 
@@ -207,7 +210,7 @@ that artifact. Local checks and producer self-review can therefore pass a
 polished result whose subject is unclear, whose relationships are invented, or
 whose consumer paths disagree.
 
-Verify Complex Artifacts treats those gaps as expected refinement signals. It
+Verify Complex Artifacts tests for those gaps as refinement signals. It
 separates factual, deterministic, consumer-surface, isolated subject, and human
 acceptance evidence so one kind of confidence cannot stand in for another. A
 fresh reviewer—not the producer—must reconstruct the delivered result from the
@@ -256,11 +259,11 @@ instruction explains them. That prose protects the decision, but a reader
 acting from selective context—a diff, a symbol, a search match—can miss it,
 and a copy far from its owner can drift as the repository changes.
 
-Screaming Reefs turns a verified reef into a cliff: it gives a documented
-constraint a structural owner—names, types, API shape, ownership boundaries,
-or filesystem topology—under an explicit authorization test. Prose is retired
-only after a fresh-context readback passes; a constraint whose significance is
-irreducibly non-local stays documented.
+Screaming Reefs turns a verified invisible reef into a visible cliff: it gives
+a documented constraint a structural owner—names, types, API shape, ownership
+boundaries, or filesystem topology—under an explicit authorization test. Prose
+is retired only after a fresh-context readback passes; a constraint whose
+significance is irreducibly non-local stays documented.
 
 Read [why Screaming Reefs exists and where its
 boundaries are](skills/screaming-reefs/README.md) or inspect its

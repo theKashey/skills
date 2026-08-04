@@ -16,8 +16,14 @@ incorrectly.
 
 Make every sentence avert a named wrong turn or premature stop. Delete no-ops,
 sediment, duplicated meaning, and context that is merely relevant. Length and
-repetition both consume a bounded attention budget; put the most frequently
-missed, highest-consequence choices first.
+repetition both consume a bounded attention budget. Measure that budget over
+the selected flow—`SKILL.md` plus every transitively required reference—not an
+individual file. Moving always-read material behind a pointer is not progressive
+disclosure: it preserves the load and adds traversal. Split when a condition
+lets at least one relevant flow leave material unloaded; nested conditional
+references may sharpen signal, but expose materially long read journeys in the
+main `SKILL.md` so the agent can plan them without serial discovery. Put the
+most frequently missed, highest-consequence choices first.
 
 ## Law III — Recruit shared priors
 

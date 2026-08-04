@@ -1,20 +1,20 @@
 # Verify Complex Artifacts
 
 Verify Complex Artifacts independently gates finished multi-file deliverables
-before a handoff or trust transition, so hidden cross-file and
-producer-context gaps become exact refinement signals instead of false
-confidence.
+before a handoff or trust transition and reports observed cross-file or
+producer-context gaps as exact refinement signals instead of a reassuring
+summary.
 
 ## Why it exists
 
-Model-assisted work is produced from selective context, so gaps are expected:
+Model-assisted work is produced from selective context, so gaps are plausible:
 the result may be polished while its subject is unclear, one file may be
 correct while the bundle contradicts it, or a focused revision may quietly
-distort the whole. The producing model cannot reliably find those gaps by
-explaining its own intent back to itself.
+distort the whole. The producing model may be poorly positioned to find those
+gaps when it explains its own intent back to itself.
 
-Verify Complex Artifacts exists to turn those expected blind spots into an
-independent refinement signal before a complex deliverable crosses into
+Verify Complex Artifacts provides an independent way to test those plausible
+blind spots before a complex deliverable crosses into
 publication, merge, deployment, delivery, or acceptance. Its intended effect is
 not a reassuring pass. It is an evidence-separated decision that either exposes
 the exact gap to repair, records what could not be validated, asks for the
@@ -30,6 +30,12 @@ artifact's subject or output-context integrity. A fresh review subagent must
 reconstruct the problem, intended impact, boundary, and internal relationships
 from the delivered target alone. Relationship truth is checked separately
 against the contracts of both endpoints or an explicit product decision.
+
+That isolated review is a target-only coherence and reconstruction control,
+not a simulation of the producer's overloaded context. A tidy toy artifact can
+test the gate's routing but does not show that the protocol catches failures
+created by diluted attention or self-rationalization. Evaluating that intended
+effect requires stressed producer work followed by the same independent gate.
 
 Do not add the complete gate to a request for one narrow property such as
 syntax, links, formulas, or tests. Use the repository-native check for that

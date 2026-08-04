@@ -1,5 +1,8 @@
 # Content architecture
 
+Use this guide when a new or challenged story, surface role, scan path, or
+multi-reader route needs alignment.
+
 Start with the reader's task and governed scope; do not infer a document's role
 from its filename, repository visibility, or marketing posture.
 
@@ -119,6 +122,7 @@ lookup promise and needs no book-like arc.
 ## Detail level
 
 Choose Guided, Balanced, or Compressed for the intended reader before writing.
+Use Balanced when the audience is mixed or unspecified.
 
 | Level | Include | Avoid |
 | --- | --- | --- |
@@ -149,9 +153,10 @@ decisions in the normal flow immediately before they matter.
 
 ## Classify technical documents and public sites
 
-Read locality-ladder.md. Classify only a surface that exists or whose creation
-or change is authorized, by its governed scope, reader, available context, and
-task:
+Classify only a surface that exists or whose creation or change is authorized,
+by its governed scope, reader, available context, and task. If existence,
+ownership, governed scope, or placement is unresolved, read the [locality
+ladder](locality-ladder.md) first:
 
 - A top-level repository or project README, when present, is technical orientation for the
   whole technical system or repository.
@@ -233,11 +238,11 @@ reference owner.
 
 ### Folder, module, domain, and service README
 
-Use the locality ladder's reader-context matrix only when a scope-wide reader
-gap remains. Then explain responsibility, ownership, boundary, interactions, and
-the technical route appropriate to that scope. A folder-level reader may have a
-checkout; a package-level reader may not; a service-level reader may need
-operational context. Do not borrow assumptions from a broader or narrower rung.
+Use the [locality ladder](locality-ladder.md) only when a scope-wide existence,
+ownership, or placement gap remains. Then explain responsibility, boundary,
+interactions, and the technical route appropriate to the project-defined
+reader's actual context. Do not borrow assumptions from a broader or narrower
+scope.
 
 ## Public documentation homes
 
@@ -273,7 +278,7 @@ does not create a landing-page task or a required follow-up proposal.
 ## Reader entry and scan path
 
 Model the reader at the surface where they first encounter the documentation.
-Assume only context genuinely available at that rung.
+Assume only context genuinely available at that surface.
 
 Open with the pressure, consequence, responsibility, supported outcome,
 boundary, or changed decision the entering reader needs. Make the governed
@@ -369,23 +374,10 @@ level.
 
 ## Explain-before-code pattern
 
-Use prose before a non-trivial example to state:
-
-- the reader outcome;
-- prerequisites and assumed surrounding context;
-- why the selected API or option belongs in this example.
-
-Use prose after it to state:
-
-- expected result;
-- meaningful limit, ownership boundary, or failure case;
-- next useful page.
-
-Do not narrate every line inside a runnable sample. Apply the [canonical
-selective-context authoring
-decision](api-jsdoc-examples.md#selective-context-authoring-decision) to its
-comments, and preserve an admitted comment only when it remains true after the
-sample is copied.
+For a non-trivial example, follow [Prepare a non-trivial
+example](api-jsdoc-examples.md#prepare-a-non-trivial-example). That section owns
+example framing and code-comment admission; this reference owns where the
+example fits the document's reader path.
 
 ## Meaningful visuals
 

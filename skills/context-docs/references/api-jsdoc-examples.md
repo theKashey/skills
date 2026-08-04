@@ -6,17 +6,58 @@ their setup or result. Use this reference to account for those material gaps,
 admit only code-local rationale that protects a real choice, and classify
 examples without paraphrasing mechanics already visible to their reader.
 
+- [Document a public contract or standalone example](#document-a-public-contract-or-standalone-example)
 - [Contract checklist](#contract-checklist)
+- [Prepare a non-trivial example](#prepare-a-non-trivial-example)
 - [Code-local documentation](#code-local-documentation)
 - [Selective-context authoring decision](#selective-context-authoring-decision)
-- [Chesterton's fence test](#chestertons-fence-test)
+- [Chesterton's Fence test](#chestertons-fence-test)
 - [Example integrity](#example-integrity)
 - [Source evidence](#source-evidence)
+
+## Document a public contract or standalone example
+
+Use this workflow for an API or configuration reference, public JSDoc or
+TSDoc, or a standalone public API, configuration, or code example.
+
+1. Inventory every stable public option, export, route, command, relevant
+   error, and example in scope. Determine stability from the evidence below;
+   treat unclear accidental or experimental status as a decision gap, not a
+   silent exclusion.
+2. Put each detailed fact in its established existing owner and orient and link
+   elsewhere. Read the [locality ladder](locality-ladder.md) only when
+   existence, ownership, scope, or placement remains unresolved; return its
+   placement proposal rather than creating a reference page, record, folder, or
+   navigation entry without authority.
+3. Apply the [contract checklist](#contract-checklist) to every inventoried
+   item. Count readable signatures, types, schemas, generated references, and
+   existing canonical surfaces as coverage when they expose the semantics
+   safely. An example, private helper, or identifier name is not proof of
+   public behavior.
+4. Use public JSDoc or TSDoc only for semantics the signature cannot encode
+   reliably. Keep type narration and duplicate reference prose out of the
+   symbol contract.
+5. For a non-trivial example, follow [Prepare a non-trivial
+   example](#prepare-a-non-trivial-example). During authoring, record each
+   explicit, justified exclusion when it is identified.
+6. After implementation and non-inline documentation are complete, follow
+   [Review documentation at wrap-up](review-documentation-at-wrap-up.md). At
+   that point, reconcile the inventory, verify public JSDoc on the actual
+   exported surface, classify examples, and run supported deterministic checks.
+
+Complete with accounted-for public semantics, an evidence-backed exclusion or
+no-op, a proposal for the established owner, or the smallest unresolved
+stability or product decision.
 
 ## Contract checklist
 
 For every stable public option, function, class, type, route, command, or error,
 account for the applicable facts:
+
+Determine stability from declared package exports, generated interfaces, route
+or command schemas, tests, support policy, or an explicit product decision.
+Treat unclear accidental or experimental status as a decision gap, not a silent
+exclusion.
 
 | Field | Question |
 | --- | --- |
@@ -35,6 +76,18 @@ canonical surfaces count as coverage when they expose a fact safely. Do not
 give every field equal prose. Add only the smallest precise explanation needed
 for safe use. Use a predictable field order and stable terms for comparable
 entries. Omit inapplicable fields rather than filling them with vague prose.
+
+## Prepare a non-trivial example
+
+Before the code, state the reader outcome, prerequisites and assumed surrounding
+context, and why the selected API or option belongs in this example. Keep
+runnable code complete and free of commentary readers must delete.
+
+After the code, state the expected result, a meaningful limit, ownership
+boundary, or failure case, and the next useful path. Do not narrate every line.
+Apply the [selective-context authoring
+decision](#selective-context-authoring-decision) to code comments, and retain an
+admitted comment only when it remains true after the sample is copied.
 
 ## Code-local documentation
 
@@ -57,8 +110,9 @@ signature. At wrap-up, verify the prose on the exposed symbol after barrel
 re-exports, overloads, inheritance, declaration emission, or reference
 generation; a successful build can still lose it.
 
-Read `locality-ladder.md` before choosing placement. The code-specific rungs
-are refined here:
+Use the code-specific placement below. Read the [locality
+ladder](locality-ladder.md) only when the owner or line/block/file scope remains
+unresolved:
 
 | Locality | Document | Omit |
 | --- | --- | --- |
@@ -91,9 +145,10 @@ nearby lines, search matches, and that genuinely available context were visible:
    while the remote implementation changes under the same contract. Keep deeper
    mechanics with their owner.
 5. Protect the verified constraint in the completed result, then settle the
-   reef-to-cliff disposition: ask whether clearer names, code, types, API
+   invisible-reef-to-visible-cliff disposition: ask whether clearer names,
+   code, types, API
    shape, structure, or an already-authorized canonical local context
-   explanation can turn the hidden reef into a visible cliff by making the
+   explanation can turn the invisible reef into a visible cliff by making the
    choice and consequence locally recoverable:
    - When that change is already authorized and in scope, prefer the visible
      constraint and remove only the prose made redundant.
@@ -101,7 +156,8 @@ nearby lines, search matches, and that genuinely available context were visible:
      established context owner can replace it only when the affected reader
      encounters that context before acting; otherwise retain code-local
      rationale and report the clarity opportunity when useful.
-   - Do not turn every admitted fence into a refactoring task. Clear mechanics
+   - Do not turn every admitted invisible reef into a refactoring task. Clear
+     mechanics
      may still carry non-local system meaning that code at this site cannot
      expose.
 
@@ -114,8 +170,8 @@ alternate architectures do not create a comment obligation.
 Documentation clustered around an area is evidence of uncertainty, not proof
 of bad code. It may reveal accidental opacity, essential concurrency or
 lifecycle complexity, or an irreducibly non-local influence. Apply the
-authoring decision to each encountered fence rather than creating an automatic
-comment-removal or refactoring queue.
+authoring decision to each candidate invisible reef rather than creating an
+automatic comment-removal or refactoring queue.
 
 Useful rationale connects a constraint to its non-local cause and, when useful,
 the consequence of the apparent alternative. This illustrative comment omits
@@ -135,8 +191,8 @@ Business logic more often explains itself. A guard such as
 `if (order.isCancelled) return` needs no comment when the domain state and
 surrounding policy already reveal why processing stops.
 
-At orchestration level, a future observation in another process can create a
-fence here:
+At orchestration level, a future observation in another process can create an
+invisible reef here:
 
 ```ts
 // Publish the index before exposing its pointer; readers resolve new pointers immediately.
@@ -158,10 +214,10 @@ That statement would describe the selected abstraction's contract, not a
 caller-owned choice. If the contract is unclear, its owning API is the
 documentation location.
 
-### Chesterton's fence test
+### Chesterton's Fence test
 
-When the reason for code's existence or present form is unknown, treat it as a
-Chesterton's fence:
+When the reason for code's existence or present form is unknown, treat it as
+Chesterton's Fence and preserve the current form while investigating:
 
 1. Inspect history, callers, tests, runtime effects, and neighboring invariants.
 2. If the rationale is verified, return to the selective-context authoring
