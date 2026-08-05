@@ -19,6 +19,18 @@ classified before another action. The freeze is intended to expose fast but
 unframed work before it acquires a retrospective justification after its result
 is known.
 
+Helix shares a premise with agent-loop techniques such as Geoffrey Huntley's
+[Ralph Wiggum loop](https://ghuntley.com/ralph/) and goal-driven loops: long
+work should not depend on one heroic context window. It answers a different
+question. Ralph persists execution — how the agent keeps working; a goal loop
+persists intent — what it keeps working toward; Helix persists learning — what
+is different now. A loop amplifies whatever it preserves, including a
+contaminated explanation, and can travel just as far in the wrong direction;
+that risk, not storage economy alone, is why the checkpoint carries verdicts
+and epitaphs rather than the reasoning that produced them. Helix does not
+compete with or replace such a loop; it disciplines what survives between
+iterations.
+
 The division of labor is deliberate. Reasoning — candidate generation,
 second-order tests, ranking — is performed fresh each cycle against current
 evidence and is never stored; stored reasoning can go stale, while re-derivation

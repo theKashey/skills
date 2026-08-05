@@ -26,6 +26,12 @@ relationship necessary here. Without that causal edge, a maintainer or coding
 agent can make a locally reasonable change that violates an invisible
 requirement.
 
+The opposite default fails the same way. A consistent shape can be accumulated
+evidence of a sound decision or of a repeated mistake, and repetition alone
+does not distinguish them: a reader that aligns with whatever recurs—including
+earlier generated work—promotes an inherited mistake into apparent precedent.
+The Fence is therefore investigated, not merely followed.
+
 Unknown purposes and invisible constraints appear differently across
 implementation levels:
 
@@ -50,9 +56,12 @@ owner.
 Prose duplicates system truth and can decay independently from it. Prose about
 a remote action is especially fragile because its owner can change without the
 copy beside this decision changing. Prefer code, names, types, API shape, or
-structure when they can make the constraint locally visible. When the
-significance remains irreducibly non-local, retain only the stable causal edge
-and its local consequence.
+structure when they can make the constraint locally visible. Robert C.
+Martin's rule that a comment exists to "compensate for our failure to express
+ourself in code" marks the same boundary; the invisible reef is the case where
+the failure is not the author's, because the cause is real but non-local and
+code here cannot express it. When the significance remains irreducibly
+non-local, retain only the stable causal edge and its local consequence.
 
 Documentation density is therefore a diagnostic signal, not proof of bad code.
 It can reveal accidental opacity, essential concurrency or lifecycle

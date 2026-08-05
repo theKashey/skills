@@ -14,7 +14,9 @@ progress.
 - **Checkpoint before work.** Require an explicitly configured surface,
   reference, representation, and read/write authority. If any is missing,
   return `NEEDS-HUMAN-DECISION`; never invent a file, service, or transcript
-  fallback.
+  fallback. A Ralph-style or goal loop's persisted prompt or plan file carries
+  execution and intent, not learning; treat it as the checkpoint only when the
+  user has configured it as the surface.
 - **Arrange before Act.** Freeze the supplied situation or need, intended
   effect and proof, authority and boundary, selected branch's contribution, one
   move's maximum scope, observation source, review point, and expected plus
