@@ -13,7 +13,7 @@ Recast when the actual entrant or controlled decision conflicts with a row.
 The repository's primary story is that producing more output is not the hard
 part of AI-assisted engineering. Work becomes unsafe when its reason,
 uncertainty, evidence, or non-local constraints disappear. The main offering,
-Context Docs, and five companion skills are independently installable and
+Context Docs, and the companion skills are independently installable and
 address different decision failures. A practitioner should recognize the
 current problem, select the bounded skill that owns it, understand what that
 skill does not prove, and install only what the project and agent need. The
@@ -32,7 +32,7 @@ route](../README.md#install) establish that story.
 
 | Surface | Current primary class and episode | Authorial goal | Required through-line |
 | --- | --- | --- | --- |
-| Root `README.md` | **Evaluator** choosing a bounded intervention | Help a practitioner recognize their failure, select a bounded offering, understand its limits, and install deliberately. | AI-assisted work loses intent or evidence → six skills own different failures → choose by problem and boundary → install only what applies. |
+| Root `README.md` | **Evaluator** choosing a bounded intervention | Help a practitioner recognize their failure, select a bounded offering, understand its limits, and install deliberately. | AI-assisted work loses intent or evidence → each skill owns a different failure → choose by problem and boundary → install only what applies. |
 | `skills/*/README.md` | **Evaluator** deciding fit, with an **Owner** route for durable rationale | Preserve why the skill exists, who is affected, what changes, important tradeoffs, and where responsibility stops. | Recurring failure → affected actor and stakes → intended observable effect → evaluation boundary → rejected shortcuts and responsibility boundary → route to the runtime. |
 | `skills/*/SKILL.md` | **Actor**, usually with selective context, executing the triggered task | Change the intended post-trigger choice and make completion observable without requiring repository context. | Active condition → bounded decision and action → evidence or readback → explicit completion or unresolved status. |
 | Runtime branch reference | **Actor** resolving one conditional task episode | Resolve one conditional choice without taxing unrelated activations. | Branch condition → necessary method and rationale → checkable branch completion → return to the owning route. |

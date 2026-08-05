@@ -48,7 +48,7 @@ when delaying it would make action unsafe.
 | Layer | Current evidence-backed answer |
 | --- | --- |
 | Project outcome | Keep AI-assisted engineering from losing the reason, uncertainty, evidence, or non-local constraint that makes work safe. |
-| Subject promise | Six standalone skills address bounded decision failures; no skill owns the whole development lifecycle. |
+| Subject promise | Standalone skills address bounded decision failures; no skill owns the whole development lifecycle. |
 | Authorial goal | Help an entrant recognize, use, or safely govern the smallest applicable intervention without overstating what it proves. |
 | Evidence | The [repository story](CONTENT-SURFACE-STORIES.md#repository-story), [problem chooser](../README.md#choose-by-problem), package rationales, runtime contracts, and [repository governance](../AGENTS.md). |
 | Non-fit | This cast does not establish downstream product audiences, market segments, contributor demand, or one reader per skill. |

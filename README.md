@@ -9,17 +9,18 @@ can start implementation before the outcome and constraints are clear, mistake
 completed tasks for progress, document mechanics instead of reader needs, or
 rationalize their own output into looking ready.
 
-This repository packages six bounded responses to those failures as
+This repository packages bounded responses to those failures as
 independently installable Markdown skills. Each skill defines a decision
 procedure with observable completion or an explicit non-pass state; none owns
 the whole development lifecycle.
 
 Context Docs is the main skill. It recovers verified reasons that code or
 system structure cannot show where a decision is made, putting an invisible
-requirement back in view before a locally reasonable change. Five independent
+requirement back in view before a locally reasonable change. Independent
 companion skills address outcome lineage, evidence-producing moves, advisory
-agent-instruction review, independent final review, and structural enforcement
-of documented constraints.
+agent-instruction review, independent final review, structural enforcement of
+documented constraints, and an agent-generated architecture chart that keeps
+place and boundary addressable.
 
 These interventions are designed for stressed work: context has accumulated,
 competing information dilutes attention, and a model can rationalize a
@@ -53,6 +54,10 @@ not yet provide.
 - **[Screaming Reefs](skills/screaming-reefs/README.md):** makes a verified
   constraint recoverable from names, types, APIs, ownership boundaries, or
   filesystem structure instead of only from a remote explanation.
+- **[Compass](skills/compass/README.md):** maintains an agent-generated,
+  human-ratified architecture chart — scoped L0–L4 levels, a tiered compass
+  registry, viewports, and code attribution — so every file and boundary has
+  an address on the path of work.
 
 Each skill is independently installable. Their support relationships do not
 make them stages in one loop or runtime dependencies.
@@ -67,6 +72,7 @@ make them stages in one loop or runtime dependencies.
 | A proposed or existing skill needs an evidence-backed review of activation, runtime choices, isolation, or context cost. | [Skill Guidance](skills/skill-guidance/README.md) | Advisory findings and validation evidence for the host-provided skill creator. | Domain correctness, authority to mutate the skill, or behavioral effectiveness from structure alone. |
 | A finished multi-file artifact looks coherent to its producer, but that producer's context may hide gaps. | [Verify Complex Artifacts](skills/verify-complex-artifacts/README.md) | An independent readiness decision that identifies blockers and decisions needing a human. | Product desirability or facts outside the contract and checks actually reviewed. |
 | A verified constraint is still carried only by prose, and an authorized structural change can make it visible to local readers. | [Screaming Reefs](skills/screaming-reefs/README.md) | The smallest structural owner for the constraint, with the irreducibly remote cause retained as prose. | That structure proves behavior or authorizes a wider redesign. |
+| Work starts without knowing where things live, which boundary it is inside, or which external systems are real peers. | [Compass](skills/compass/README.md) | A generated, human-ratified architecture chart with a compass registry, viewports, and code attribution that keeps place and purpose addressable. | Boundary quality, code behavior beyond the checked gates, or that the finished chart gets used. |
 
 ## How the skills support each other
 
@@ -268,6 +274,27 @@ significance is irreducibly non-local stays documented.
 Read [why Screaming Reefs exists and where its
 boundaries are](skills/screaming-reefs/README.md) or inspect its
 [runtime structural-change workflow](skills/screaming-reefs/SKILL.md).
+
+### Compass
+
+To a coding agent, structure that is not on the path of work does not exist:
+decisions recorded in passive files get sailed past, and locally reasonable
+changes land inside the wrong boundary. Compass maintains the missing chart —
+a C4-inspired architecture knowledge base under a chart root the host project
+declares, with a scoped L0–L4 level stack, a tiered compass registry that
+records demotions so nothing is silently re-elevated, viewports for
+cross-cutting flows, and `// compass:` code attribution under gravity rules that
+keep the binding between code and chart minimal and checkable.
+
+Every chart document is agent-generated; the human contributes judgment
+through explicit checkpoints and never writes chart content by hand.
+Verification gates — the single-box rule, two orthogonal L1 tests, per-level
+checklists, and an anti-drift spot check — measure completion instead of
+prose confidence.
+
+Read [why Compass exists and which failures it
+answers](skills/compass/README.md) or inspect its
+[runtime chart workflow](skills/compass/SKILL.md).
 
 ## License
 
