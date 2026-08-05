@@ -40,10 +40,11 @@ evidence; otherwise skip that gate. Do not repeat its checks here. Verify:
 - the body and runtime references begin after activation and contain only
   execution content or behavior-improving causal rationale;
 - README support and design reasons are not required by any runtime route;
-- an existing or authorized maintainer README first makes the skill's name,
-  offering, and reader-relevant reason inferable, then makes the driving
+- a maintainer README, when present or requested, first makes the skill's
+  name, offering, and reader-relevant reason inferable, then makes the driving
   failure, affected agent or reader, intended impact, and boundary inferable
-  before package architecture or methodology;
+  before package architecture or methodology — its absence alone fails
+  nothing;
 - each route satisfies the parent locality, ownership, and conditional-pointer
   contracts;
 - each representative activated flow is traced from the main `SKILL.md` through

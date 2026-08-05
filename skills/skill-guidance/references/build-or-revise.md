@@ -118,8 +118,9 @@ A framework belongs in the final artifact only when its distinction changes the
 reader's choice or is part of the governed subject or contract. The README must
 remain outside the runtime dependency graph.
 
-When the package has an existing or authorized maintainer README, check that it
-opens with the skill's name, what it provides, and why a reader would use it.
+A maintainer README is generated on the user's request and then to the parent
+reader contract: it opens with the skill's name, what it provides, and why a
+reader would use it; a missing README is not a defect.
 The recurring failure, affected agent or reader, intended observable impact,
 evaluation boundary, and responsibility boundary should precede runtime
 architecture or authoring mechanics. Relationships to other skills require

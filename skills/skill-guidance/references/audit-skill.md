@@ -44,7 +44,10 @@ Law identifier and title for each failure. Also check that:
 - the body and runtime references contain no skill-level triggers, support,
   explanations, or excuses;
 - retained causal rationale improves behavior;
-- README support is not a runtime dependency;
+- an existing maintainer README holds only the durable subject-facing reasons
+  the parent reader contract assigns it and is not a runtime dependency — its
+  absence alone is not a finding, and a contaminated README's repair direction
+  is relocation, never deletion;
 - description-to-route coverage, direct and conditional reference pointers,
   present-state wording, clean end-state, and route-specific completion
   criteria hold.

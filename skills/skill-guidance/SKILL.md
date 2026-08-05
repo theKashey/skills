@@ -113,6 +113,15 @@ subject-facing reasons belong in `README.md`; authoring history, validation
 narration, review records, generic surface-selection rationale, and
 non-operational framework provenance belong in the handoff.
 
+A standalone package carries a maintainer `README.md` that owns those durable
+reasons — recurring problem, affected reader, intended effect, boundaries,
+rejected alternatives, and component ownership — and stays outside the runtime
+dependency graph. A missing README is never a blocking finding; when the
+user asks for one, generate it to exactly that contract. A README holding
+handoff material (authoring narrative, validation records, pending work,
+environment deixis) is repaired by relocating that content, never by deleting
+the file.
+
 Complete with an evidence-backed advisory report, audit verdict, or behavioral
 evaluation. A clean-context comparison can expose routing or interpretation
 regressions but does not establish behavior under accumulated-context stress.
