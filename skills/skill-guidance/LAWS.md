@@ -16,7 +16,12 @@ incorrectly.
 
 Make every sentence avert a named wrong turn or premature stop. Delete no-ops,
 sediment, duplicated meaning, and context that is merely relevant. Length and
-repetition both consume a bounded attention budget. Measure that budget over
+repetition both consume a bounded attention budget, and so does representation:
+the runtime reader is a model, so prefer the cheapest encoding that still
+carries the decision. Keep a diagram, tree, or aligned block only where its
+geometry carries what prose cannot — a directory hierarchy, a navigation chain.
+A picture of a claim a sentence already makes is decoration billed to every
+activation. Measure that budget over
 the selected flow—`SKILL.md` plus every transitively required reference—not an
 individual file. Moving always-read material behind a pointer is not progressive
 disclosure: it preserves the load and adds traversal. Split when a condition
