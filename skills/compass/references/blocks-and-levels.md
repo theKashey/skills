@@ -1,6 +1,8 @@
-# Blocks, Levels, and Documentation Formats
+# Roots, Blocks, Levels, and Documentation Formats
 
 File placement is fixed by the canonical layout in `SKILL.md` §File Layout (directory-as-zoom under the project's declared chart root). This reference defines the *contents* of those files.
+
+Every semantic entity defined here must first pass the rewrite test in `SKILL.md` §The Rewrite Test, and every semantic boundary change must run the invariance test in §The Invariance Test. Those two gates are not restated below.
 
 ## Block Definition
 
@@ -15,77 +17,303 @@ L3  block = component (service, repository, gateway)
 
 Not everything is a block. Infrastructure, utilities, and shared helpers are the ground (L5). Forcing block identity onto shared code creates false boundaries.
 
+---
+
+## Roots
+
+A **root** is a stable logical starting point from which *where am I?* has a useful independent answer. The five-part admission test and the rebuild-from-scratch challenge live in `SKILL.md` §Scope and Roots. This section covers what roots look like in practice.
+
+Roots do not correspond to repositories, deployables, services, folders, or C4 systems. Nothing about a package boundary, a separate service, or a second language creates a root; only independent logical identity does.
+
+### Valid multi-root cases
+
+**Two products in one monorepo** — unrelated logical systems sharing a repository:
+
+```text
+COMPASS
+├── Customer Product
+└── Merchant Product
+```
+
+**A substantial domain inside larger product scaffolding** — the domain is a block of the product *and* a root in its own right:
+
+```text
+Product
+└── Payments
+```
+
+may coexist with:
+
+```text
+Payments
+├── Authorisation
+├── Capture
+├── Refunds
+└── Reconciliation
+```
+
+**A top-level or "secret sauce" domain** surrounded by ordinary scaffolding:
+
+```text
+Product
+├── Accounts
+├── Admin
+├── Billing
+└── Ranking Engine
+```
+
+may expose an independent root:
+
+```text
+Ranking Engine
+├── Candidates
+├── Eligibility
+├── Ranking
+└── Feedback
+```
+
+### Overlap is expected
+
+The last two cases overlap deliberately: the same logical material appears as an interior block of one root and as the whole of another. That is what multi-coordinate attribution records — the same code carries `compass: product.payments` and `compass: payments.authorisation.card-routing`, and both are true. Overlap is not duplication to be resolved; it is two useful orientations over one system.
+
+Roots do not need to agree with each other on naming, levels, or boundaries. The registry connects them.
+
+### Root lifecycle
+
+- **Proposing.** An agent may propose a root, with the five admission answers and evidence from product or domain reality. It writes nothing until a human ratifies.
+- **Ratifying.** A human ratifies; the root gets a row in `COMPASS.md` naming that human, and a `{root}/` directory.
+- **Retiring.** A root that no longer earns independent orientation is retired by a human, its row kept with a retired status so it is not silently re-created. Its coordinates are remapped, not deleted in place.
+
+---
+
 ## BEM Principle (Block–Element–Modifier)
 
 A block describes only itself. A parent defines why it uses a block. Relationship context never lives in the block's self-document — it lives in the consumer.
 
 ---
 
-## SCOPE.md Template
+## Markdown Conventions
 
-The first chart file written (Phase 0), and the first one a reader opens.
+### Semantic fields are Markdown structure
 
+Every semantic field is a heading. Sets are lists, homogeneous collections are tables, navigation is links, diagrams are Mermaid. Never encode a field as prose punctuation:
+
+```markdown
+<!-- wrong: the schema is invisible to the Markdown AST -->
+Responsibility — computes the price a customer will be charged
+Boundary — does not take payment
+
+<!-- right -->
+## Responsibility
+
+Computes the price a customer will be charged.
+
+## Boundary
+
+Does not take payment.
 ```
-Scope — one sentence: what is the system
-Systems — the L1 folder(s) under this chart root, linked; normally one
-Out of scope — what a reader might expect here but must not look for
+
+An agent reading a chart document should recover its schema from the heading structure, not from parsing dashes out of sentences.
+
+**Where a bold-labelled bullet is admissible.** `- **name** — note` is correct when the bullets are *instances of one kind* and the bold text is an instance's name: a list of dependencies, actors, or communicating blocks. It is wrong when the bullets are *distinct named fields* of one entity — that is the pseudo-field form wearing a list marker, and it hides the schema exactly the same way. Fields become headings however deeply they nest.
+
+### Cross-references are Markdown links
+
+**All cross-references in chart docs MUST use markdown links — never plain backtick names.** A plain backtick name is a dead end; a link is a hop, and it makes the docs navigable by humans and agents without grep.
+
+- `CONTAINERS.md` block table entries → link to `{block}/README.md`
+- Block "Communicates with" entries → link to a sibling `../other-block/README.md` or `../other-block/{component}/README.md`
+- Component "Depends on" / "Used by" entries → link to `../../other-block/README.md` or a sibling `../other-component/README.md`
+- Component "Bounded context" entry → link to that context's heading in `DOMAIN.md`
+- Glossary "Bounded context" entry → link to that context's heading in `DOMAIN.md`
+- `VIEWPORTS.md` participant names → link where possible
+
+```markdown
+## Communicates with
+
+- → [`api-client`](../api-client/README.md) — `getSystemStatus()` every 5s for live backend connection state
+- → [`design-system`](../design-system/README.md) — `PageBoundary`, layout primitives
+- ← [`billing-core`](../billing-core/README.md) — receives `InvoiceIssued` via the order event stream
+```
+
+Every entry above is written from a block document, so every hop is one level (`../sibling/`). From a component document the same sibling block is two levels up (`../../other-block/README.md`) — count from the document you are writing in, not from the example.
+
+**Rule:** If you cannot form a relative link because the target doesn't exist yet, write the name in backticks and add `<!-- TODO: link when created -->` — do not leave it as plain text.
+
+### Semantic rendering
+
+When a term defined in the root's `GLOSSARY.md` is used semantically in chart prose, render it in **bold**:
+
+```markdown
+A **Matter** contains **Documents** and may produce **Findings**.
+```
+
+Bold marks *this word carries its glossary meaning here*. Never bold filenames, paths, source identifiers, code, or Mermaid syntax — those take backticks, links, or code fences.
+
+---
+
+## `{chart-root}/README.md` Template
+
+The first chart file written (Phase 0), and the first one a reader opens. It answers *where am I?* for the chart as a whole.
+
+```markdown
+# {chart name}
+
+## Scope
+
+One sentence: what is the system this chart covers.
+
+## Roots
+
+| Root | What it is | Chart |
+|---|---|---|
+| {name} | {one sentence} | [{name}/](./{name}/README.md) |
+
+## Out of scope
+
+What a reader might expect here but must not look for.
+
+## Navigating
+
+Registry: [COMPASS.md](./COMPASS.md). Every architectural directory's
+identity document is its `README.md`.
 ```
 
 ---
 
 ## Compass Registry Template
 
-`COMPASS.md` is tiered — true L1 entries in one table, demoted L2/L3 externals in a second, human-declared lens roots in a third — so a demotion stays recorded, nothing gets silently re-elevated, and every second stack has a named owner:
+`COMPASS.md` is tiered — ratified roots in one table, true L1 externals in a second, demoted L2/L3 externals in a third — so every root has a named ratifier, a demotion stays recorded, and nothing gets silently re-elevated:
 
 ```markdown
 # Compass
 
-## Systems and L1 externals — every external here passed both L1 tests
-| Name | Owner | Scope boundary | Shared domain terms | Stack |
+Registry owner: {the one person accountable for this page}
+
+## Roots — human-ratified logical roots of orientation
+
+| Root | Ratified by | What it is | Why an independent root | Status |
+|---|---|---|---|---|
+| [{name}](./{name}/README.md) | {the human} | {one sentence} | {which independent orientation it gives} | active / retired |
+
+## L1 externals — every external here passed both L1 tests
+
+| Name | Owner | Scope boundary | Shared domain terms | Their chart |
 |---|---|---|---|---|
 | [{name}](externals/{name}.md) | {who} | {one sentence: what is inside} | {terms} | {link to its own chart root, or —} |
 
-For an external, the Name cell links to this chart's `externals/{name}.md`; for a system in scope, to its `{system}/CONTEXT.md`. `Stack` links to the entry's own chart root if it publishes one — a different destination.
-
 ## Touched externals (L2/L3 tier) — named here, documented in the adapter that uses them
+
 | Name | Used by | Why not L1 |
 |---|---|---|
 | {name} | {component address} | {which L1 test it fails} |
-
-## Lenses — human-declared second stacks
-| Name | Owner | Why a separate stack |
-|---|---|---|
-| {lens-root} | {the human who declared it} | {what makes its L1 sound} |
 ```
+
+For an external, the Name cell links to this chart's `externals/{name}.md`; `Their chart` links to the entry's own chart root if it publishes one — a different destination.
 
 ---
 
 ## L0 — Domain Model
 
-**Format:** Prose markdown. No code. Context map in mermaid is acceptable.
+**Format:** Prose markdown under semantic headings. No code. Context map in mermaid is acceptable.
 
-**Contains:** Bounded contexts with ubiquitous language. Aggregates and value objects per context. Invariants per aggregate. Context map with relationship types (upstream/downstream, shared kernel, ACL, customer/supplier, conformist). Domain events crossing context boundaries. This is Domain-Driven Design's strategic vocabulary (Evans), unmodified — recruit that prior; compass adds nothing to it.
+**Contains:** Bounded contexts with their ubiquitous language. Aggregates and value objects per context. Invariants per aggregate. Context map with relationship types (upstream/downstream, shared kernel, ACL, customer/supplier, conformist). Domain events crossing context boundaries. This is Domain-Driven Design's strategic vocabulary (Evans), unmodified — recruit that prior; compass adds nothing to it.
 
-**Does not contain:** Technology, code paths, database schemas, API shapes.
+**Does not contain:** Technology, code paths, database schemas, API shapes, implementation coordinates.
 
-**Written by:** Agent, from human-taught domain knowledge. Agent scans codebase, identifies candidate bounded contexts from naming patterns, import clusters, and data flow, presents as falsifiable claims. Human confirms, corrects, or redraws boundaries; the agent writes the document.
+**Written by:** Agent, from human-taught domain knowledge and product/domain evidence. The agent scans the codebase for candidates and presents them as falsifiable claims; the human confirms, corrects, or redraws boundaries; the agent writes the document. Code proposes; product and domain reality ratify.
 
-**Revision trigger:** New bounded context emerges, two contexts merge, or ubiquitous language shifts. Human initiates.
+**Revision trigger:** New bounded context emerges, two contexts merge, or ubiquitous language shifts — a semantic change, never a repository reorganization. Human initiates.
 
-Each bounded context is a `##` heading inside `DOMAIN.md` — the link target for `COMPONENT.md` bounded-context entries. Concepts are subsections within their context; neither contexts nor concepts get separate files.
+Each bounded context is a `##` heading inside `DOMAIN.md` — the link target for component and glossary entries. Under it, concepts are `####` headings beneath one `### Concepts` container, and their fields are `#####`; neither contexts nor concepts get separate files.
 
-### L0 domain concept doc format
+### DOMAIN.md format
 
-```
-Name
-What it is — one or two sentences, domain language only
-Invariants — what must always be true
-Lifecycle — states it moves through (if entity)
-Composed of — value objects and entities within
-Domain events — what it publishes when things happen
+```markdown
+# Domain — {root}
+
+## {Bounded Context}
+
+### What it is
+
+One or two sentences, domain language only.
+
+### Concepts
+
+#### {Concept}
+
+##### What it is
+
+One or two sentences.
+
+##### Invariants
+
+What must always be true.
+
+##### Lifecycle
+
+States it moves through, if an entity.
+
+##### Composed of
+
+Value objects and entities within.
+
+##### Domain events
+
+What it publishes when things happen.
+
+### Relationships
+
+- → [{Other Context}](#other-context) — {upstream/downstream, ACL, shared kernel, …}
+
+## Context map
+
+Mermaid context map (optional).
 ```
 
 No technology. No storage. No code paths.
+
+---
+
+## GLOSSARY.md Format
+
+`{root}/GLOSSARY.md` is the canonical owner of that root's ubiquitous language. Every local product or domain term used architecturally must appear here. Implementation terminology belongs here only when humans genuinely use it as part of the domain — otherwise it is recorded as an alias.
+
+One `##` heading per term, the term itself in bold:
+
+```markdown
+# Glossary — {root}
+
+## **Matter**
+
+### Meaning
+
+A unit of legal work handled for a client.
+
+### Bounded context
+
+[**Matter Management**](./DOMAIN.md#matter-management)
+
+### Product appearance
+
+Appears as a matter in the matter list and workspace.
+
+### Implementation aliases
+
+`Case`, `MatterRecord`
+```
+
+**Context-specific meaning.** Do not force globally unique definitions. When the same word means different things in different bounded contexts, give the term one `##` heading with one `### Meaning` / `### Bounded context` pair per context, each labelled — the collision is a fact about the domain, and hiding it behind one blended definition loses it.
+
+**Implementation aliases** record where code and product disagree. The product or domain term is canonical; the code term is the alias, never the reverse. When the difference is discovered during exploration, record it rather than resolving it silently:
+
+```text
+Product/domain language: **Workspace**
+Implementation language: `Tenant`
+
+Canonical Compass language: **Workspace**
+Implementation alias: `Tenant`
+```
 
 ---
 
@@ -93,16 +321,40 @@ No technology. No storage. No code paths.
 
 **Format:** Mermaid context diagram + brief prose per actor.
 
-**Contains:** The system as one box. 2–5 actors (human-defined). External systems (discovered from dependencies, named per compass). Relationships with verb labels. Each external system links to its own documentation stack if one exists.
+**Contains:** The root as one box. 2–5 actors (human-defined). External systems admitted by the two L1 tests. Relationships with verb labels. Each external system links to its own documentation stack if one exists.
 
-### CONTEXT.md format
+L1 describes a recognizable interaction surface, not a dependency inventory. Actors are the people, organisations, and roles humans would name when asked who uses this; external systems are the things they would name as tools and services they possess. A dependency manifest is evidence about mechanism, never an L1 admission.
 
-```
-Scope — the one-sentence scope, restated from SCOPE.md
-Diagram — mermaid: the system as one box, actors, L1 externals, labelled edges
-Actors — one line of prose per actor (2–5, human-defined)
-External systems table — one row per L1 external: name linked to
-  ../externals/{name}.md, what crosses the boundary
+### `{root}/README.md` format (L1)
+
+```markdown
+# {Root}
+
+## Scope
+
+One sentence: what this root is.
+
+## Diagram
+
+Mermaid: the root as one box, actors, L1 externals, labelled edges.
+
+## Actors
+
+- **{Actor}** — one line: who they are and what they get out of the system
+
+## External systems
+
+| System | What crosses the boundary |
+|---|---|
+| [{name}](../externals/{name}.md) | {data or action} |
+
+## Inside this root
+
+- [Domain](./DOMAIN.md) — bounded contexts and context map
+- [Glossary](./GLOSSARY.md) — ubiquitous language
+- [Blocks](./CONTAINERS.md) — how the root is decomposed
+- [Viewports](./VIEWPORTS.md) — cross-cutting flows (omit this line until
+  VIEWPORTS.md exists; L4 may be skipped)
 ```
 
 The external systems table is what the L1 external-system checks run over.
@@ -111,19 +363,22 @@ The external systems table is what the L1 external-system checks run over.
 
 Use these tests before assigning anything to a level. Default down when uncertain.
 
+**To be a root:** the five-part admission test in `SKILL.md` §Scope and Roots, all five, with a human ratification.
+
 **To appear at L1 (external system):**
 - Both L1 tests pass — User-Possession and Control Boundary (defined in `SKILL.md` §L1 Abstraction Guardrails, checked via the L1 checklist in [`verification.md`](verification.md))
 - It has an identity independent of this system (it exists without you)
-- The system's value proposition explicitly includes integrating with or serving it
+- The root's value proposition explicitly includes integrating with or serving it
 
 **To appear at L2 (isolated block):**
 - It is internal to the system boundary
-- It owns a persistent responsibility and a code root directory
+- It owns a persistent logical responsibility that maps upward to a stable responsibility or phenomenon of the root
+- Its identity survives a structure-only refactor (invariance test)
 - It could be replaced or redesigned without changing the L1 context diagram
 
 **To appear at L3 (component):**
 - It is a logical module within one L2 block
-- It maps directly to code paths
+- It maps to code paths
 - It is not user-visible as a top-level service
 
 **Default rule:** when unsure, go one level down — an unsure external → L3 adapter (externals never get block documents); an unsure internal L2 candidate → L3. Promote only with explicit justification.
@@ -135,51 +390,39 @@ Use these tests before assigning anything to a level. Default down when uncertai
 
 Before adding any node to the L1 external systems table, run the external system checks in [`verification.md`](verification.md) §L1 System Context Verification — every item must pass.
 
-### External system doc format (L1 doc, or embedded in the demoted external's adapter)
+### External system doc format
 
-```
-Name — must match the compass entry
-What it is — its nature, not what it does for you
-Good at — the grain it works with
-Bad at — the grain it fights
-How it breaks — actual failure modes
-How you talk to it — protocol, interface
-Their stack — link to this system's own L0-L4 documentation (if it exists)
-```
-
----
-
-## Markdown Link Convention
-
-**All cross-references in chart docs MUST use markdown links — never plain backtick names.**
-
-This applies to every level:
-- `CONTAINERS.md` container table entries → link to `{container}/BLOCK.md`
-- `BLOCK.md` communicates-with entries → link to sibling `../other-container/BLOCK.md` or `../other-container/{component}/COMPONENT.md`
-- `COMPONENT.md` depends-on / used-by entries → link to `../../other-container/BLOCK.md` or sibling `../other-component/COMPONENT.md`
-- `COMPONENT.md` bounded-context entry → link to that context's heading in `DOMAIN.md`
-- `VIEWPORTS.md` participant names → link where possible
-
-**Why:** Markdown links make the docs navigable by humans and agents without grep. A plain backtick name is a dead end; a link is a hop.
-
-**Format examples:**
+`externals/{name}.md` for an L1 external; the same fields embedded in the adapter's own document for a demoted one.
 
 ```markdown
-## Communicates-with
+# {Name}
 
-- → [`api-client`](../api-client/BLOCK.md) — `getSystemStatus()` every 5s for live backend connection state
-- → [`design-system`](../design-system/BLOCK.md) — `PageBoundary`, layout primitives
-- ← [`billing-core`](../../order-core/billing-core/BLOCK.md) — receives `InvoiceIssued` via the order event stream
+Must match the compass entry.
+
+## What it is
+
+Its nature, not what it does for you.
+
+## Good at
+
+The grain it works with.
+
+## Bad at
+
+The grain it fights.
+
+## How it breaks
+
+Actual failure modes.
+
+## How you talk to it
+
+Protocol, interface.
+
+## Their chart
+
+Link to this system's own chart, if it publishes one.
 ```
-
-```markdown
-## Depends-on
-
-- [`event-bus`](../event-bus/COMPONENT.md) — Event routing
-- [`pricing-engine`](../../pricing-engine/BLOCK.md) — `PriceQuote` protocol
-```
-
-**Rule:** If you cannot form a relative link because the target doesn't exist yet, write the name in backticks and add `<!-- TODO: link when created -->` — do not leave it as plain text.
 
 ---
 
@@ -187,38 +430,88 @@ This applies to every level:
 
 **Format:** Mermaid flowchart + block documents.
 
-**Contains:** Major isolated parts within the system boundary. External systems (referenced). Technology choices per block. Communication between blocks.
+**Contains:** Major isolated parts within the root's boundary. External systems (referenced). Technology choices per block. Communication between blocks.
 
 Each isolated block gets a block document; external systems never do — an L1 external is documented in `externals/{name}.md`, and a demoted external inside the adapter that uses it. Consumer relationships documented in the consuming block.
 
-**Written by:** Agent proposes from project structure. Human confirms.
+**Written by:** Agent proposes from structural evidence and product/domain reality. Human confirms.
+
+**A block's identity is semantic; its technology and code paths are coordinates.** Implementation decomposition is not product decomposition: decomposing one block into several services, merging two services, or replacing a framework changes coordinates only. A block splits or merges when its *logical responsibility* splits or merges.
 
 ### CONTAINERS.md format (L2 overview)
 
-```
-Purpose — one sentence: how the system is decomposed and why along this seam
-Container table — one row per container: name linked to its BLOCK.md,
-  responsibility (one sentence)
-Diagram — mermaid: every container and what crosses each boundary (the wiring)
-```
+```markdown
+# Blocks — {root}
 
-The container table and the diagram show the same set — a container present in one and missing from the other is drift.
+## Decomposition
 
-### L2 isolated block doc format
+One sentence: how the root is decomposed and why along this seam.
 
-```
-Name
-Responsibility — what this block owns
-Root — filesystem subtree (e.g. Sources/Billing/, src/components/timeline/)
-Technology — language, framework, runtime
-Boundary — what it does NOT do
-Communicates with — other blocks, protocol, direction
-Components — table of the block's L3 components, each linked to its
-  COMPONENT.md, plus any subtree recorded as L5 infrastructure — not attributed
-Diagram — mermaid: the block's components and what crosses its boundary
+## Blocks
+
+| Block | Responsibility |
+|---|---|
+| [{name}](./{name}/README.md) | {one sentence} |
+
+## Diagram
+
+Mermaid: every block and what crosses each boundary (the wiring).
 ```
 
-Root is the agent's entry point. An agent reading an L2 document should be able to map the block to a directory without searching.
+The block table and the diagram show the same set — a block present in one and missing from the other is drift.
+
+### `{block}/README.md` format (L2 self-doc)
+
+```markdown
+# {Block}
+
+## Responsibility
+
+What this block owns.
+
+## Logical role
+
+Which stable responsibility or phenomenon of the root this block realizes —
+stated without reference to source topology.
+
+## Boundary
+
+What it does NOT do.
+
+## Technology
+
+Language, framework, runtime. Coordinate detail: expected to change.
+
+## Implementation coordinates
+
+Filesystem subtree(s) this block currently occupies, e.g.
+`Sources/Billing/`, `src/components/timeline/`. May be several, across
+packages or services. Coordinate detail: expected to change.
+
+## Communicates with
+
+- → [`{block}`](../{block}/README.md) — {protocol, what crosses}
+- ← [`{block}`](../{block}/README.md) — {protocol, what crosses}
+
+## Uses
+
+One `###` per block this block depends on, with Why / What I need from it /
+What would make me leave — see §Consumer Relationship. Outbound (`→`)
+communications need an entry here; inbound ones belong to the caller.
+
+## Components
+
+| Component | Responsibility |
+|---|---|
+| [{name}](./{name}/README.md) | {one sentence} |
+| `{subtree}` | L5 — {what it is: formatter, logger, config loader, generic UI, shared types} |
+
+## Diagram
+
+Mermaid: the block's components and what crosses its boundary.
+```
+
+Implementation coordinates are the agent's entry point. An agent reading a block document should be able to reach code without searching — and should read a changed subtree as a remapping, not as evidence the block is wrong.
 
 ---
 
@@ -228,29 +521,55 @@ Root is the agent's entry point. An agent reading an L2 document should be able 
 
 **Contains:** Logical modules within one isolated block. Dependencies between components. Mapping to code paths. Leaks, debt, and boundary violations (honest). Color-coded diagrams (red=leak, yellow=debt).
 
-Each L3 component must reference which L0 bounded context it serves. If a component serves two contexts, that's a finding. Bounded contexts have no address — addresses run from L1 down — so a component names its context by that context's heading in `DOMAIN.md` and links to it.
+Each L3 component must reference which L0 bounded context it serves. If a component serves two contexts, that's a finding. Bounded contexts have no address — addresses run from the root down — so a component names its context by that context's heading in `DOMAIN.md` and links to it.
+
+L3 is the coordinate layer: it is expected to move, split, and be renamed as the implementation changes, and doing so is not a semantic event.
 
 **Written by:** Agent, validated by human. Use dependency tooling (not file reading) to discover actual relationships. When unavailable, import scanning (grep, build adjacency list manually).
 
-### L3 component doc format
+### `{component}/README.md` format (L3)
 
-```
-Name
-«stereotype» — service, entity, repository, handler, gateway, factory
-Responsibility — one sentence; if you need two, the module does too much
-Bounded context — the one L0 context this component serves, linked to its
-  heading in DOMAIN.md; two contexts is a finding, not a longer field
-Inputs / Outputs — what crosses the boundary
-Depends on — other blocks
-Used by — what consumes this block
-Boundary — what it does NOT do
-Code paths — directories, key files, entry functions
-  `e.g. OrderService.swift, InvoiceRepository.save(),
-  Sources/Billing/Pipeline/`
-Diagram — mermaid: who calls it and what it calls
+```markdown
+# {Component}
+
+«service» | «entity» | «repository» | «handler» | «gateway» | «factory»
+
+## Responsibility
+
+One sentence. If you need two, the module does too much.
+
+## Bounded context
+
+[{Context}](../../DOMAIN.md#context) — exactly one. Two contexts is a
+finding, not a longer section.
+
+## Inputs and outputs
+
+What crosses the boundary.
+
+## Depends on
+
+- [`{name}`](../{name}/README.md) — {what it relies on}
+
+## Used by
+
+- [`{name}`](../{name}/README.md) — {what it provides}
+
+## Boundary
+
+What it does NOT do.
+
+## Implementation coordinates
+
+Directories, key files, entry functions — e.g. `OrderService.swift`,
+`InvoiceRepository.save()`, `Sources/Billing/Pipeline/`.
+
+## Diagram
+
+Mermaid: who calls it and what it calls.
 ```
 
-Code paths are the agent's grep targets. An agent reading an L3 document should be able to open the right file without scanning the codebase.
+Implementation coordinates are the agent's grep targets. An agent reading a component document should be able to open the right file without scanning the codebase.
 
 ---
 
@@ -267,6 +586,38 @@ L3 answers "what exists." L4 answers "how does it work across boundaries."
 **Boundary** — contract between two isolated blocks. What crosses, in what shape, through what mechanism. The first viewport type to create when L4 is warranted: every communicating pair is a candidate, within the 3–4 cap — the skip rule still wins for small, loosely coupled systems.
 
 **Lifecycle** — data from creation to consumption. Diagonal cut. Create when debugging requires understanding a full data path.
+
+### VIEWPORTS.md format (L4)
+
+All of a root's viewports live in one `VIEWPORTS.md`, one `##` per viewport, named for its question. The 3–4 cap counts those headings.
+
+```markdown
+# Viewports — {root}
+
+## {question the viewport answers}
+
+Type: runtime | domain | boundary | lifecycle
+
+### Question
+
+The concrete question that justified this viewport.
+
+### Participants
+
+- [`{component}`](./{block}/{component}/README.md) — {its part in the flow}
+
+### Diagram
+
+Mermaid. Sequence for runtime and lifecycle; the shape that fits the cut for
+domain and boundary.
+
+### Seams
+
+Concrete types, serialization functions, bridging types, and the entry point on
+the receiving side, at each place the data shape changes.
+```
+
+A viewport whose `### Question` is missing has no reason to exist — retire it rather than backfilling a question to match the diagram.
 
 ### Creating a viewport
 
@@ -290,35 +641,36 @@ L3 answers "what exists." L4 answers "how does it work across boundaries."
 
 ---
 
-## L5 — Infrastructure / Shared Code
+## L5 — The Floor
 
-Not documented at architecture level. Acknowledged in the enclosing block's `BLOCK.md` component table as "infrastructure — not attributed", which is what makes the L5 exemption in the Phase F gate explicit.
+Formatters, loggers, config loaders, generic UI components, shared type definitions. Compass does not describe them: they carry no logical responsibility, so there is nothing for a semantic chart to say. Whether and how they are documented for a code reader belongs to Context Docs, not here.
 
-These are the floor: formatters, loggers, config loaders, generic UI components, shared type definitions. If infrastructure becomes complex enough to need docs, promote to L3.
-
----
-
-## Shared Kernel
-
-The shared kernel is **domain concepts**, not infrastructure. Not the database schema, not the API contract, not the wire format.
-
-**Contains:** Named concepts with plain-language definitions. Invariants that hold regardless of implementation. Which bounded contexts share each concept.
-
-**Does not contain:** Types, structs, interfaces. Database columns or schemas. API shapes or wire formats. Code paths.
-
-Each side produces its own **projection** of the kernel. The backend projects a domain concept into a class or struct, the frontend into a view model type, and persistence into tables or documents. All valid, all different, all derived from the same kernel concept.
-
-Validation: type checking, tests, and annotation-based tooling — not document cross-references.
+The one thing Compass needs from the floor is a closable coordinate gate. A subtree recorded in its block's component table as `L5 — {what it is}` is exempt from coordinates; the naming is what stops the exemption from becoming a hatch that swallows un-attributed components.
 
 ---
 
 ## Consumer Relationship
 
-When block A uses block B, the relationship is documented in A, never in B.
+When block A uses block B, the relationship is documented in A, never in B. It lives under `## Uses` in A's `README.md`, one `###` per block used:
 
+```markdown
+## Uses
+
+### [{BlockName}](../{block}/README.md)
+
+#### Why
+
+The decision, the tradeoff.
+
+#### What I need from it
+
+Specific capabilities relied upon.
+
+#### What would make me leave
+
+Conditions for replacement.
 ```
-Uses: <BlockName>
-  Why — the decision, the tradeoff
-  What I need from it — specific capabilities relied upon
-  What would make me leave — conditions for replacement
-```
+
+`## Communicates with` records *that* A and B talk and what crosses; `## Uses` records *why* A accepted the dependency and what would end it. A block that lists a communication with no matching `## Uses` entry has recorded the wire and lost the decision — the L2 gate checks for this.
+
+The "why" recorded here is a logical dependency reason and belongs to Compass. A reason that would disappear if the same product were reimplemented belongs to Context Docs instead — see [`ownership-boundary.md`](ownership-boundary.md).

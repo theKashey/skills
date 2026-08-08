@@ -1,13 +1,19 @@
 ---
 name: compass
-description: Use when establishing, exploring, or maintaining a C4-inspired architecture chart—scoped L0–L4 levels, compass registry, viewports, code attribution—or checking chart-vs-code drift; not for reader-facing documentation or code changes.
+description: Use when establishing, exploring, or maintaining a semantic architecture chart—roots, L0–L4 levels, glossary, viewports, and code coordinates—or classifying chart-vs-code disagreement; not for reader-facing documentation or code changes.
 ---
 
 # Compass
 
 ## Core Principle
 
-Give every file, tool, and move in the codebase a place and a purpose: a place is an address in the stack, a purpose is a documented responsibility with a boundary. Document architecture as a scoped L0–L4 stack. Scope is chosen first; each level adds fidelity without contradicting higher levels. The map is not the territory — exploration loops keep the chart honest against the code, and drift is classified, never trusted to either side. Viewports answer cross-cutting questions that individual component docs cannot.
+Compass answers three questions about a codebase: **where am I, what is this thing, and why does it exist?** It answers them about the *system* — the logical thing the product is — not about the repository that currently realizes it. The codebase is one current realization; a Compass chart that survives a complete implementation rewrite is the one that was describing the system.
+
+Compass is meta-code: a persistent logical model with two children — product behaviour and implementation coordinates — from which implementations can be understood, navigated, validated, discarded, and rebuilt.
+
+Compass owns the logical system — concepts, phenomena, responsibilities, capabilities, rules, invariants, relationships, logical boundaries, ubiquitous language, and the reasons those things exist. Code owns the executable realization of that system. Implementation coordinates connect the two.
+
+**Authority rule.** Repository structure is evidence about implementation, not authority over semantic architecture. Code may suggest architectural hypotheses. Code alone must not ratify L0–L2 semantic identity.
 
 The deliverable is the chart — the architecture knowledge base itself — the first stop for an agent starting work, so recorded decisions sit on the path of work instead of being missed in passing. The method below is only how that information is produced and kept true.
 
@@ -15,61 +21,125 @@ Every chart document is agent-generated. The human teaches, validates, consults,
 
 Two nested things share the name: the compass skill (this package) and the compass registry (`COMPASS.md`, the L- artifact) — the skill is named after the first file worth having.
 
+## The Rewrite Test
+
+The admission gate for everything semantic. For every proposed root, bounded context, actor, or block, ask:
+
+> If all current source code were deleted and the same product rebuilt in another language, framework, repository layout, and deployment topology, would this thing still need to exist?
+
+**Yes** → strong semantic Compass candidate. **No** → it is implementation metadata, a technical mechanism, a deployment decision, or Context Docs material.
+
+Survive a TypeScript → Rust rewrite: **Eligibility**, **Checkout**, **Document Review**, **Ranking**, **Settlement**. Usually do not, absent a separate logical reason: `ReactQueryProvider`, `CloudflareWorkerRouter`, `PrismaAdapter`, `src/features/orders/`.
+
+**Strong invariant.** A pure implementation rewrite should permit `semantic Compass before == semantic Compass after` while replacing most or all implementation coordinates. The more semantic Compass changes merely because technology or topology changed, the more implementation structure has leaked into the model.
+
+## The Invariance Test
+
+Before creating, deleting, splitting, merging, promoting, or renaming any L0–L2 entity:
+
+1. Describe what it represents without referring to source topology.
+2. State its logical responsibility or phenomenon.
+3. Identify important rules, inputs, outputs, effects, or invariants.
+4. Identify how humans recognize it in the product or domain.
+5. Only then map today's implementation locations.
+
+Then ask: *would this boundary still make sense after a structure-only refactor?* If no, it is probably not a semantic boundary.
+
 ## Chart Root
 
 The chart lives in one directory the host project declares in its agent instructions (`AGENTS.md`, `CLAUDE.md`, or equivalent) — for example a `.compass/` directory at the repository root. Read the declared root before any chart work. If no chart root is declared, ask the user to configure one; never invent a location or write chart files to an undeclared path. All layouts below are relative to `{chart-root}`.
 
 ## Quick Reference: Levels
 
-| Level | Name | Contains | Volatility | Budget |
-|-------|------|----------|-----------|--------|
-| L- | Compass | Org-wide system registry | org changes | ≤100w/entry |
-| L0 | Domain | Bounded contexts, aggregates, context map. No tech. | years | ≤500w/context |
-| L1 | System Context | Actors + external systems. Human-ratified. | quarters | ≤400w + diagram |
-| L2 | Isolated Blocks | Major internal blocks. Tech enters here. | months | ≤300w + diagram + component table |
-| L3 | Components | Logical modules mapped to code paths. | weeks | ≤200w |
-| L4 | Viewports | Cross-cutting flows. 3–4 active max. | weeks | ≤500w/viewport |
-| L5 | Infrastructure | Shared code. Not documented. | — | — |
+| Level | Name | Contains | Kind | Volatility | Budget |
+|-------|------|----------|------|-----------|--------|
+| L- | Compass | Registry of roots and externals | semantic | org changes | ≤100w/entry |
+| L0 | Domain | Bounded contexts, aggregates, context map. No tech. | semantic | years | ≤500w/context |
+| L1 | System Context | Actors + external systems. Human-ratified. | semantic | quarters | ≤400w + diagram |
+| L2 | Isolated Blocks | Major internal blocks. Tech enters here. | semantic identity, coordinate detail | months | ≤300w + diagram + component table |
+| L3 | Components | Logical modules mapped to code paths. | coordinate | weeks | ≤200w |
+| L4 | Viewports | Cross-cutting flows. 3–4 active max. | either | weeks | ≤500w/viewport |
+| L5 | Infrastructure | Shared code. Not documented. | — | — | — |
 
-The stack is Simon Brown's C4 model — read the levels with that prior — bent at both ends. Deltas from standard C4: L0 (DDD's strategic layer) sits below the stack; L2 "isolated blocks" **are** C4 containers, and the file layout keeps C4's name (`CONTAINERS.md`); C4's Level 4 (code diagrams) is replaced by viewports — code diagrams rot fastest, so the chart stops at L3 and wires to code by attribution instead; L- and L5 bracket the stack, above and below C4's reach.
+**Kind decides who may change a thing and what evidence is required.** Semantic identity (L0–L2) must pass the rewrite test and follows the human ratification path. Coordinates (an L2 block's technology and implementation coordinates, all of L3, every `compass:` marker) are expected to churn as the implementation changes; an agent may remap them without a semantic ratification.
+
+The zoom vocabulary is Simon Brown's C4 model — read context/container/component with that prior — bent at both ends. Deltas: L0 (DDD's strategic layer) sits below the stack; L2 "isolated blocks" **are** C4 containers, and the file layout keeps C4's name (`CONTAINERS.md`); C4's Level 4 (code diagrams) is replaced by viewports — code diagrams rot fastest, so the chart stops at L3 and wires to code by coordinates instead; L- and L5 bracket the stack, above and below C4's reach. C4 supplies notation and zoom vocabulary; it does not define Compass's source of truth. Re-evaluate any C4-derived rule that conflicts with semantic orientation.
 
 Propagation: top → down only. If L3 contradicts L0, L3 is wrong.
 
-## Scope
+## Scope and Roots
 
 Declare before anything: `Scope: [what is the system]`.
 - Scope defines internal (L2–L4) vs external (L1 box).
 - Levels are relative to the chosen scope, not absolute.
 - The method is fractal: every external system is someone else's L1.
-- One deployable product is one system, whatever languages it mixes — a
-  Python backend and a TypeScript frontend are two containers, not two
-  systems. Declare multiple systems only when the human names multiple scopes.
+
+A chart exposes one or more **roots** — stable logical starting points from which *where am I?* has a useful independent answer. Roots do not need to correspond to repositories, deployables, services, folders, or C4 systems. A Python backend and a TypeScript frontend are two blocks of one root unless each carries independent logical identity.
+
+**Root admission test — all five required:**
+
+1. Humans recognize it as a coherent area of reasoning or work.
+2. Its logical identity survives implementation restructuring (rewrite test).
+3. It has meaningful internal responsibilities or phenomena.
+4. Independent *where am I?* navigation is useful.
+5. A human ratifies the root.
+
+The strong challenge: *if this repository were rebuilt from scratch, would humans still say "I am working on X"?*
+
+Roots may overlap. A domain living inside a wider product can also be its own root, and the same code then carries a coordinate in each. Overlap is expected, not a defect. Agents may propose roots; agents must not invent them.
+
+→ Multi-root cases and worked examples: [`references/blocks-and-levels.md`](references/blocks-and-levels.md#roots)
 
 ## Compass Registry (L-)
 
-Organization-wide registry, owned by one principal engineer — and the first artifact worth having: one page from which every system, external, and demoted almost-system is reachable. For single-system use, maintain a local compass of external systems touched.
+The registry is the first artifact worth having: one page from which every root, external, and demoted almost-external is reachable, owned by one principal engineer.
 
-`COMPASS.md` is tiered — true L1 entries in one table, demoted L2/L3 externals in a second, human-declared lens roots in a third — so a demotion stays recorded, nothing gets silently re-elevated, and every second stack has a named owner.
+`COMPASS.md` is tiered — ratified roots in one table, true L1 externals in a second, demoted L2/L3 externals in a third — so every root has a named ratifier, a demotion stays recorded, and nothing gets silently re-elevated.
 
 → Registry template: [`references/blocks-and-levels.md`](references/blocks-and-levels.md#compass-registry-template)
 
+## Ubiquitous Language
+
+Each root owns `{root}/GLOSSARY.md`, the canonical owner of that root's ubiquitous language. Every local product or domain term used architecturally appears there. Do not fill it with implementation terminology unless humans genuinely use that terminology as part of the domain.
+
+When a glossary-defined term is used semantically in chart prose, render it in **bold**: "A **Matter** contains **Documents** and may produce **Findings**." Never bold filenames, paths, source identifiers, code, or Mermaid syntax.
+
+Terms need not be globally unique. When one word means different things in different bounded contexts, record each meaning with its context explicitly.
+
+Where product language and implementation language differ, the product or domain term is canonical and the code term is recorded as an implementation alias. Source naming never silently wins.
+
+`GLOSSARY.md` owns terminology. `DOMAIN.md` owns relationships, contexts, aggregates, events, and invariants.
+
+→ Glossary format: [`references/blocks-and-levels.md`](references/blocks-and-levels.md#glossarymd-format)
+
 ## Exploration Loop
 
-Continuous loop: **orient → scan → probe → adjust**.
-What changes across knowledge states is depth, source of truth, and human role.
+Continuous loop: **orient → scan → probe → adjust**, triangulating three sources rather than comparing two — product/domain reality, the chart, and the implementation. Code yields a candidate model; product and domain reality verify it. Never derive L0/L1 semantics from code shape alone.
 
 | State | What exists | Human role | Exit when |
 |-------|------------|------------|-----------|
-| 0 Clean slate | Nothing | Teacher | Scope + 2–5 blocks + externals + actors on scratchpad |
-| 1 First pass | Scratchpad | Validator | L0 reviewed, L2 docs, boundaries resolved |
+| 0 Clean slate | Nothing | Teacher | Scope + candidate roots + 2–5 blocks + externals + actors on scratchpad |
+| 1 First pass | Scratchpad | Validator | L0 + glossary reviewed, L2 docs, boundaries resolved, levels calibrated |
 | 2 Documented | L0–L2 | Consultant | L3 docs, boundary viewport (or L4 skipped) |
 | 3 Deep knowledge | L0–L4 | Ratifier | No exit (steady state) |
 
-States can regress per-block (new block → state 0, refactor → state 1).
+States can regress per-block (new block → state 0, semantic change → state 1). A pure restructuring does not regress a state — it remaps coordinates.
 
 Always state confidence explicitly: "I believe X based on [evidence]. Confidence: medium."
 
-→ Full procedures, scratchpad format, and examples: [`references/exploration.md`](references/exploration.md)
+→ Full procedures, product/domain evidence sources, scratchpad format: [`references/exploration.md`](references/exploration.md)
+
+## Level Calibration
+
+Calibration is about **semantic scale** — breadth of logical responsibility — never lines of code, module count, or implementation complexity. After any decomposition, check whether siblings at one level sit at comparable semantic scale:
+
+- oversized concept → consider promoting it (its own level, or its own root if it passes admission);
+- several overly fine-grained concepts → consider grouping them under one named umbrella;
+- uneven siblings → verify whether they actually belong at the same semantic zoom.
+
+Run calibration as a pass after discovery. The first decomposition is not assumed correctly scaled.
+
+→ Procedure: [`references/exploration.md`](references/exploration.md#level-calibration)
 
 ## Viewports (L4)
 
@@ -89,94 +159,115 @@ Skip L4 if L3 components are small and loosely coupled.
 
 Blocks document themselves. Consumers document relationships: when block A uses block B, the why, the relied capabilities, and the replacement conditions live in A, never in B.
 
-→ Per-level doc formats, consumer-relationship block, shared kernel, and promotion criteria: [`references/blocks-and-levels.md`](references/blocks-and-levels.md)
+→ Per-level doc formats, the consumer-relationship block, and promotion criteria: [`references/blocks-and-levels.md`](references/blocks-and-levels.md)
 
 ## Coordinate System
 
-- Address: dot-separated `l1.l2.l3` (unique names per parent).
-- Attribution: `compass: <address>` in a code comment, written in the host language's comment syntax (`//`, `#`, `--`, …).
-- Gravity: annotate at coarsest accurate level (package > folder > file).
-- Domain controllers: composition-only files at L1/L2/L3 that wire the architecture.
-- Validate: address exists, code path matches, no stale comments.
+- Address: dot-separated path from the root down — `root`, `root.block`, or `root.block.component`, as deep as the coordinate is accurate (unique names per parent).
+- Coordinate: `compass: <address>` in a code comment, written in the host language's comment syntax (`//`, `#`, `--`, …).
+- Validate: address exists, code path still matches, no stale markers.
 
-**Attribution laws (treat as invariants):**
-- **Attribution bubbles up.** Prefer package/folder attribution over file attribution whenever one accurate attribution covers the whole subtree.
-- **File-level attribution is exceptional.** Use it only when the file is an imposter or when no sound folder/package attribution can be established.
-- **Folder/package attribution is enough** when all files in that subtree belong to the same primitive; exclude tests when they do not belong to that primitive.
-- **Dual-stack is exceptional.** Max two attributions from different stacks on one file, typically `product` + `subproduct`.
-- **Second stack is human-decided.** Agents must not create parallel stacks; they may only honor an existing human-created lens.
-- **Second stack must be objectively sound.** A human-created lens is valid only when it forms a sound C4 construct, which means its L1 is complex enough to deserve its own stack.
+**Coordinate laws (treat as invariants):**
+- **A coordinate is a location, not a definition.** `// compass: checkout.payment.authorisation` means *the logic implemented here participates in this Compass location*. It does not mean *this source file defines that semantic boundary*. Coordinates may change while the place stays the same.
+- **Coordinates bubble up.** Prefer one accurate coordinate covering a whole subtree (package > folder > file) — but never manufacture a source boundary solely to make attribution coarse.
+- **File-level coordinates are for files whose location differs** from the enclosing one, not a default.
+- **Multiple coordinates are legitimate** when code genuinely participates in more than one logical orientation, typically across roots. Prefer the smallest useful set; there is no fixed maximum.
+- **Multiple coordinates trigger verification, not refactoring.** The question is whether these are genuinely independent logical orientations.
+- **Coordinate density points; it does not sentence.** Where coordinates refuse to bubble up, physical and logical grouping disagree — a real lead, usually toward decluttering (a stray file moved to the subtree that shares its address, a two-job file split, a helper recognized as L5). Follow it, and prefer the move that makes the coordinate coarser when the code is better for it. But only independent cohesion or coupling evidence closes it as debt: a phenomenon may legitimately span packages and services, one module may serve several phenomena, and `repository topology != semantic topology` is the normal condition — never a demand to reshape the implementation until it resembles the chart.
+- **Roots are human-ratified.** Agents propose roots; agents never invent one.
 
-→ Full rules, examples, domain controllers, and validation: [`references/coordinate-system.md`](references/coordinate-system.md)
+→ Full rules, examples, and validation: [`references/coordinate-system.md`](references/coordinate-system.md)
+
+## Classifying Disagreement
+
+Never infer `code != Compass, therefore Compass is stale`. Classify first:
+
+- **Semantic change** — the logical system changed: business rule, invariant, capability, responsibility, domain meaning, actor interaction, meaningful effect. Compass may need to change; high-level semantic change requires the human ratification process.
+- **Implementation remapping** — the same logical system is now implemented differently: files moved, package split, service extracted or merged, framework replaced, repository reorganized, database or language changed. Preserve semantic Compass; update coordinates.
+- **Implementation violation** — the executable implementation contradicts ratified Compass semantics. Investigate whether the implementation is wrong, or whether an intentional semantic change happened without ratification.
+
+Source code is authoritative evidence of what currently executes. It is not automatically authoritative evidence of what the system means or is intended to do.
+
+→ Detection, response priority, and the full classification table: [`references/growth-and-drift.md`](references/growth-and-drift.md)
+
+## Boundary with Context Docs
+
+Both skills preserve "why", at different levels. The classifier is the rewrite test:
+
+> Would this reason still matter if we threw away the implementation and rebuilt the same logical product?
+
+**Yes** → Compass is a candidate canonical owner (*why does Payment Authorisation exist? why must Eligibility obey this invariant?*). **No** → if the reason still constrains the current implementation, it belongs to Context Docs or the code (*why must this acknowledgement happen after persistence? why is this retry here?*).
+
+This is an ownership test, not a writing-style preference. Do not duplicate in either direction: Compass does not carry implementation fences, and implementation docs do not restate semantics Compass already owns — a coordinate is often the whole breadcrumb a local reader needs.
+
+→ Both directions, the investigation flow, and worked cases: [`references/ownership-boundary.md`](references/ownership-boundary.md)
 
 ## Growth Pattern
 
-```
-0   → Scope + compass registration
-0.5 → Explore (state 0 loop) → scratchpad
-A   → Establish domain (L0) — human-checkpointed
-B   → Frame system (L1 + L2) — closes by installing the usage hook
-      into the host's agent instructions (human-approved)
-C   → Map components (L3) — agent-driven
-D   → Define viewports (L4, if needed)
-E   → Maintain — re-run exploration on diffs
-F   → Seal connections — attributions after stability
-```
+- **0** — Scope + chart root + compass registration
+- **0.5** — Explore (state 0 loop) → scratchpad; roots proposed, then ratified at the state-0 checkpoint, never before there is evidence
+- **A** — Establish domain (L0 + `GLOSSARY.md`), human-checkpointed
+- **B** — Frame system (L1 + L2); closes by installing the human-approved usage hook into the host's agent instructions
+- **C** — Map components (L3), agent-driven
+- **D** — Define viewports (L4, if needed)
+- **E** — Maintain: re-run exploration on diffs, classify disagreement
+- **F** — Seal coordinates, after semantic boundaries stabilize
 
-→ Full phase details, anti-drift procedures, and rules: [`references/growth-and-drift.md`](references/growth-and-drift.md)
+→ Full phase details, disagreement procedures, and rules: [`references/growth-and-drift.md`](references/growth-and-drift.md)
 
 ## File Layout (directory-as-zoom)
 
-Architecture docs live at `{chart-root}/`. **The directory structure IS the zoom hierarchy** — descending into a subfolder = zooming in one level. Every folder is named after the entity it describes.
+Architecture docs live at `{chart-root}/`. **The directory structure IS the zoom hierarchy** — descending into a subfolder = zooming in one level. Every folder is named after the entity it describes, and **the identity document of every architectural directory is its `README.md`**, so opening any Compass directory on GitHub immediately answers *where am I?*
 
 ```
 {chart-root}/
-  SCOPE.md                    ← scope declaration
-  COMPASS.md                  ← compass registry (tiered: L1 / L2-L3 / lenses)
-  externals/                  ← one doc per L1 external system, linked from its COMPASS.md row
+  README.md                   ← chart identity: scope + the roots below
+  COMPASS.md                  ← registry (roots / L1 externals / demoted externals)
+  externals/                  ← one doc per L1 external, linked from its COMPASS.md row
     {external-name}.md
-  {system-name}/              ← L1 folder (one per system in scope)
+  {root}/                     ← one ratified logical root of orientation
+    README.md                 ← L1: the root as a black box + actors + externals
     DOMAIN.md                 ← L0: bounded contexts, aggregates, context map — no tech
-    CONTEXT.md                ← L1: black box + actors + external systems only
-    CONTAINERS.md             ← L2: opens the system — all containers wired together
-    VIEWPORTS.md              ← L4: cross-cutting flows (sequence diagrams, 3–4 active max)
-    {container-name}/         ← L2 folder (one per container/block)
-      BLOCK.md                ← L2 self-doc: responsibility, root, tech, boundary,
-                                communicates-with, components, diagram
-      {component-name}/       ← L3 folder (one per component)
-        COMPONENT.md          ← L3 self-doc: stereotype, context, I/O, depends-on,
-                                used-by, boundary, code paths, diagram
+    GLOSSARY.md               ← the root's ubiquitous language
+    CONTAINERS.md             ← L2: opens the root — all blocks wired together
+    VIEWPORTS.md              ← L4: cross-cutting flows (3–4 active max)
+    {block}/                  ← L2 folder (one per block/container)
+      README.md               ← L2 self-doc: responsibility, logical role, boundary,
+                                coordinates, communicates-with, components, diagram
+      {component}/            ← L3 folder (one per component)
+        README.md             ← L3 self-doc: stereotype, context, I/O, depends-on,
+                                used-by, boundary, coordinates, diagram
 ```
 
-**Standard file names per level:**
-- L0: `DOMAIN.md` — bounded contexts and context map. Domain language only, no technology.
-- L1: `CONTEXT.md` — black box only. Actors + external systems. No internal structure.
-- L1 external: `externals/{external-name}.md` — one external-system doc, linked from its compass row. Demoted L2/L3 externals get no doc here; they live in the adapter that uses them.
-- L2 overview: `CONTAINERS.md` — opens the black box. All containers + wiring. The zoom-in from L1.
-- L2 self-doc: `BLOCK.md` — one container's self-description. Lives inside the container folder.
-- L3: `COMPONENT.md` — one component. Lives inside the component folder.
-- L4: `VIEWPORTS.md` — cross-cutting sequence diagrams. Lives at system folder level.
+Three constraints the tree cannot carry: `{root}/README.md` is a black box — actors and external systems only, never internal structure; `DOMAIN.md` carries domain language only, never technology or coordinates; and a demoted external gets no `externals/` doc at all — it lives in the adapter that uses it.
+
+`README.md` is promoted, never duplicated: an entity's identity document *is* its `README.md`. There is no `SCOPE.md`, `CONTEXT.md`, `BLOCK.md`, or `COMPONENT.md`. Explicitly named alternate views — `COMPASS.md`, `DOMAIN.md`, `GLOSSARY.md`, `CONTAINERS.md`, `VIEWPORTS.md` — keep their names because they are views, not identities.
+
+**Semantic fields are real Markdown.** Use headings for fields, lists for sets, tables for homogeneous collections, links for navigation, Mermaid for diagrams. Never pseudo-fields (`Responsibility — …`) — the Markdown AST should expose the schema instead of forcing an agent to infer it from prose punctuation.
 
 **Zoom chain (never skip a level):**
 ```
-CONTEXT.md (L1)
-  └→ CONTAINERS.md (L2 overview — opens the system)
-       └→ {container}/BLOCK.md (L2 self-doc)
-            └→ {container}/{component}/COMPONENT.md (L3)
-  └→ VIEWPORTS.md (L4)
+{chart-root}/README.md
+  └→ COMPASS.md — which roots exist
+       └→ {root}/README.md (L1)
+            ├→ {root}/DOMAIN.md + GLOSSARY.md (L0 + language)
+            ├→ {root}/CONTAINERS.md (L2 overview — opens the root)
+            │    └→ {block}/README.md (L2)
+            │         └→ {block}/{component}/README.md (L3)
+            └→ {root}/VIEWPORTS.md (L4)
 ```
 
-**Every zoom-chain doc has a Mermaid diagram.** The chart is primarily visual: `CONTEXT.md`, `CONTAINERS.md`, `BLOCK.md`, `COMPONENT.md`, and `VIEWPORTS.md` each require a diagram showing inputs, outputs, and key relationships at their level of abstraction. `DOMAIN.md` (L0) stays prose — a mermaid context map is acceptable, never required — and `SCOPE.md`/`COMPASS.md` carry none.
+**Five document kinds require a Mermaid diagram:** `{root}/README.md`, `CONTAINERS.md`, every block `README.md`, every component `README.md`, and `VIEWPORTS.md` — each showing inputs, outputs, and key relationships at its level of abstraction. The rest of the chain carries none: `DOMAIN.md` (L0) stays prose, where a mermaid context map is acceptable but never required, and `{chart-root}/README.md`, `COMPASS.md`, and `GLOSSARY.md` have nothing to draw.
 
 ## L1 Abstraction Guardrails (Hard Rules)
 
 Violations here are the most common lead/bleed failure mode. Memorise these before writing any L1 diagram.
 
-**The single-box rule:** The L1 system context diagram must contain exactly **one** system node inside the boundary — the scoped system itself. Count the nodes inside the subgraph: if the answer is not 1, the diagram is wrong.
+**The single-box rule:** The L1 system context diagram must contain exactly **one** system node inside the boundary — the root itself. Count the nodes inside the subgraph: if the answer is not 1, the diagram is wrong.
 
 **Allowed at L1:**
-- The system (one box)
-- Actors (people, organisations, roles that interact with the system)
+- The root (one box)
+- Actors (people, organisations, roles that interact with it)
 - External systems that pass the User-Possession Test
 - Relationships between the above, labelled with what data or action crosses
 
@@ -197,11 +288,13 @@ Violations here are the most common lead/bleed failure mode. Memorise these befo
 - Yes → it lives outside the application control boundary → L1 candidate
 - No → it's bundled with or owned by the system → L2/L3
 
+An external system is admitted because the product or operator reality shows it, not because a dependency manifest names it. A declared dependency is evidence of a mechanism; only the two tests admit an L1 node.
+
 **Critical distinction — engine vs. store:**
 - **Database engine** (SQLite, Postgres process, embedded library) → always L3 or lower — it's the mechanism
 - **Database / data store / file** (the data at rest, user-owned, survives process restart) → L1 if the user consciously owns it and it outlives the system process
 
-The same product can be L1 in one system and L3 in another. The test is always relative to the chosen scope and control boundary — never a fixed lookup table. Worked contrast examples: [`references/blocks-and-levels.md`](references/blocks-and-levels.md#level-promotion-criteria).
+The same product can be L1 in one root and L3 in another. The test is always relative to the chosen scope and control boundary — never a fixed lookup table. Worked contrast examples: [`references/blocks-and-levels.md`](references/blocks-and-levels.md#level-promotion-criteria).
 
 The runnable form of these rules is the L1 checklist in [`references/verification.md`](references/verification.md) — the canonical owner of all completion checklists.
 
@@ -210,24 +303,25 @@ The runnable form of these rules is the L1 checklist in [`references/verificatio
 → Full guide: [`references/how-to-use.md`](references/how-to-use.md)
 
 Quick patterns:
-- **Starting a task** → read `SCOPE.md` → `{system}/CONTEXT.md` → `{system}/CONTAINERS.md` → find block → read `{container}/BLOCK.md` → find component → read `{component}/COMPONENT.md`
-- **Debugging a flow** → open `{system}/VIEWPORTS.md` → find the viewport that covers the flow → trace participants
-- **Estimating a task** → identify which blocks/components are touched → count boundary crossings → check viewport for surprise dependencies
-- **Reviewing a PR** → check if changes fit declared boundaries → if not, update doc OR flag boundary violation
+- **Starting a task** → read `{chart-root}/README.md` → `COMPASS.md` → `{root}/README.md` → `{root}/CONTAINERS.md` → find block → read `{block}/README.md` → find component → read `{component}/README.md`
+- **Changing domain meaning** → `{root}/DOMAIN.md` + `{root}/GLOSSARY.md`
+- **Debugging a flow** → open `{root}/VIEWPORTS.md` → find the viewport that covers the flow → trace participants
+- **"Why is this code weird?"** → follow its `compass:` coordinate first; if the reason is implementation-specific and unresolved, continue under Context Docs
+- **Reviewing a PR** → classify any chart/code disagreement before changing either side
 
 ## Verification
 
-Before declaring L1, L2, L3, or Phase F complete, run the mandatory checks:
+Before declaring a root, L0, L1, L2, L3, or Phase F complete, run the mandatory checks:
 
-→ Full checklists, lead/bleed detection, anti-drift spot check: [`references/verification.md`](references/verification.md)
+→ Full checklists, lead/bleed detection, spot check: [`references/verification.md`](references/verification.md)
 
 There is no summary of those checklists here. A condensed second copy is what
 diverges, and the divergent copy is the one an agent finds — read the gate.
 
 ## Boundaries
 
-✅ Always: read the declared chart root before chart work; declare scope before L0; propagate top → down; document relationships in consumers; keep within size budgets; state confidence explicitly.
+✅ Always: read the declared chart root before chart work; declare scope before L0; apply the rewrite test to every semantic candidate; propagate top → down; document relationships in consumers; keep within size budgets; classify disagreement before repairing it; state confidence explicitly.
 
-⚠️ Ask first: changes to scope or compass ownership; introducing viewports beyond 3–4; L0 boundary changes; writing or updating the usage hook in the host's agent instructions (the only file the skill touches outside the chart root and source-code comments).
+⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope or compass ownership; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; writing or updating the usage hook in the host's agent instructions (the only file the skill touches outside the chart root and source-code comments).
 
-🚫 Never: write chart files outside the declared chart root or invent a root when none is configured; document infrastructure as architecture (L5); contradict higher levels; attribute files before boundaries stabilize; skip human checkpoint at state 0 exit — when no human is available, stop there and report; do not proceed past any checkpoint unattended.
+🚫 Never: write chart files outside the declared chart root or invent a root when none is configured; invent a logical root without human ratification; let code alone ratify L0–L2 semantic identity; document infrastructure as architecture (L5); contradict higher levels; treat a moved code path as evidence the semantics are wrong; demand implementation reshaping because topology and chart differ; seal coordinates before boundaries stabilize; skip human checkpoint at state 0 exit — when no human is available, stop there and report; do not proceed past any checkpoint unattended.

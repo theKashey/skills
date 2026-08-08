@@ -1,18 +1,18 @@
-# Coordinate System: Addresses, Attribution, and Domain Controllers
+# Coordinate System: Addresses, Coordinates, and Validation
 
-The coordinate system gives every piece of code an address in the architecture — the wiring between documentation and codebase that makes the architecture navigable, not just describable.
+Implementation coordinates are the wiring between the semantic chart and today's code. They make the architecture navigable from a source file and a source file locatable from the architecture. They are the *replaceable* half of the model: coordinates change whenever the implementation moves, and that is normal operation, not damage.
 
 ## Addresses
 
-Names are unique within their parent:
+An address names a place in the semantic chart. Names are unique within their parent:
 
 ```
-L1 names are globally unique        (one "webshop" in the compass)
-L2 names are unique within their L1 (one "order-core" in webshop)
-L3 names are unique within their L2 (one "billing-gateway" in order-core)
+Root names are unique within the chart   (one "webshop" in the compass)
+Block names are unique within their root (one "order-core" in webshop)
+Component names are unique within block  (one "billing-gateway" in order-core)
 ```
 
-Address: dot-separated path from L1 down:
+Address: dot-separated path from the root down:
 
 ```
 webshop.order-core.billing-gateway
@@ -20,33 +20,45 @@ webshop.storefront.checkout
 partner-portal.api-core.account-sync
 ```
 
-Unambiguous without context. An agent or human reading `webshop.order-core.billing-gateway` anywhere knows exactly what it refers to.
+Unambiguous without context. An agent or human reading `webshop.order-core.billing-gateway` anywhere knows exactly which place it refers to.
+
+An address is a place, not a file. Two different files may sit at one address; one file may sit at addresses in two different roots. Neither fact is a defect.
 
 ---
 
-## Attribution
+## Coordinates
 
-Attribution connects code to its address via a comment:
+A coordinate connects code to an address via a comment:
 
 ```swift
 // compass: webshop.order-core.billing-gateway
 ```
 
 ```typescript
-// compass: webshop.storefront.checkout
+// compass: checkout.payment.authorisation
 ```
+
+**What a coordinate means:**
+
+> The logic implemented here participates in this Compass location.
+
+**What it does not mean:**
+
+> This source file defines the semantic boundary.
+
+Treat these comments like coordinates on a map. Coordinates may change while the place remains the same — a package move rewrites the coordinate and leaves the semantics untouched.
 
 The `//` above is "a comment" — write the marker in the host language's own comment syntax (`# compass:` in Python, `-- compass:` in SQL). The marker body is always `compass: <address>`, so search for it without a comment prefix:
 
 ```
-grep -r "compass: webshop.order-core"   # every file in the order core block
+grep -r "compass: webshop.order-core"   # every file participating in the order core block
 ```
 
 ---
 
 ## Gravity
 
-Attribution wants to bubble up. Annotate at the coarsest level that's still true:
+Coordinates want to bubble up. Annotate at the coarsest level that's still accurate:
 
 ```
 Package level     // compass: webshop.order-core
@@ -60,99 +72,88 @@ File level        // compass: webshop.order-core.pricing-engine
 ```
 
 Treat these as laws:
-- Attribution bubbles up.
-- Prefer one attribution that covers the whole subtree.
-- Use file-level attribution only when the file is an imposter or when no sound folder/package attribution can be established.
-- Folder/package attribution is enough when all files in that subtree belong to the same primitive; exclude tests when they do not belong to that primitive.
+- Coordinates bubble up.
+- Prefer one coordinate that accurately covers the whole subtree.
+- Use file-level coordinates only when the file's address differs from the enclosing one.
+- Folder/package coordinates are enough when everything in that subtree participates in the same place; exclude tests when they do not.
 
-A folder or package attribution is carried by that level's domain controller (below). A folder with no controller has nowhere to host one: if the enclosing attribution is still accurate for it, the folder needs nothing; if it is not, the folder's files take the file-level exception.
+A folder needs no coordinate of its own when the enclosing one is still accurate for it; when it is not, the folder's files take the file-level exception.
 
-Gravity is a refactoring signal:
-- Folder with 3 different attributions → pressure to reorganize (structure ≠ architecture).
-- Single file with 2 attributions → pressure to split (serves two masters).
+### Coordinate density points; it does not sentence
 
-Ideal state: every folder uniform, attribution at folder/package level, individual file annotations rare (boundary exceptions only). Gap between current and ideal = structural debt map.
+Where coordinates refuse to bubble up, physical grouping and logical grouping disagree at that spot. That is real information and worth acting on — it is the cheapest standing signal the method produces, and it usually points toward decluttering:
+
+| Observation | What it suggests looking at | Healthy outcome when it holds up |
+|---|---|---|
+| A folder's files carry three different coordinates | Whether one file is simply filed in the wrong place | Move the stray file to the subtree that shares its address — the coordinate then bubbles up on its own |
+| A file carries two coordinates within one root | Whether it does two jobs, or bridges two places | Split a file that does two jobs; keep and name a genuine bridge |
+| A file resists every enclosing coordinate | Whether it belongs to the floor | Recognize it as L5 and drop the coordinate |
+
+Follow the lead, and prefer the move that makes the coordinate coarser **when the code is better for it**. Decluttering toward coarse attribution is a good default direction of travel.
+
+What it must never become is a verdict or an obligation:
+
+- The signal is a prior toward looking, not proof. Independent cohesion or coupling evidence decides — a module that changes for unrelated reasons, a boundary crossed on every change, a dependency cycle. Record that evidence, not the coordinate count, as the reason.
+- None of these is by itself a defect. A semantic phenomenon may legitimately span frontend, API, workers, storage, several packages, and several services; one technical module may legitimately participate in several phenomena; two ratified roots may both claim the same file.
+- `repository topology != semantic topology` is the normal condition of a real system, not a backlog. Compass maps that relationship. It never requires maintainers to reshape the implementation until it resembles the chart, and a non-uniform folder is not by itself a debt entry.
+- **Do not manufacture a source boundary solely to make a coordinate coarse.** Coarse attribution is worth reaching for when it also improves the code, and worth nothing when it only tidies the marker.
+
+The gate that keeps both halves honest: a density observation may open an investigation, and only cohesion or coupling evidence may close one as debt.
 
 ---
 
-## Domain Controllers
+## Where a Folder-Level Coordinate Lives
 
-Each level wants a wiring point — a real code file that composes and re-exports, making the architecture visible in the code itself. Follows the Abstraction Layered Architecture (ALA) pattern.
-
-**L1 controller:** Top-level file composing L2 blocks. The app's main entry point, root router, composition root. Shows which blocks exist and how they connect.
-
-**L2 controller:** One per block, composing L3 components. The block's public interface. Imports components, wires dependencies, exports what the block offers.
-
-**L3 controller:** One per component, composing internals. The component's entry point. Imports classes, functions, types.
-
-Domain controllers:
-- Contain no logic. If they gain conditionals, feature flags, or branching → the level is too complex.
-- Are the first file an agent reads when entering a level.
-- Carry the level's attribution:
+Where the implementation already has a composition root — an entry point, a root router, a barrel that imports and re-exports a level's parts — that file is the natural carrier for the folder's coordinate, and the first file an agent reads on entering the level.
 
 ```swift
 // compass: webshop.order-core
-// Domain controller for the order core block.
+// Composition root for the order core block.
 
 import BillingGateway
 import PricingEngine
 import InvoiceRepository
-import OrderEvents
 ```
+
+**Do not create one to satisfy Compass.** Where no such file exists, use folder or file coordinates; a missing composition root is an implementation style, not a chart finding.
 
 ---
 
-## Single Attribution Principle
+## Multiple Coordinates
 
-Every file wants exactly one attribution per stack — the architectural equivalent of single responsibility.
+The same executable code may have several legitimate orientations:
 
-When a file has two attributions from the same stack:
+```ts
+// compass: commerce.checkout.payment
+// compass: payments.authorisation.card-routing
+```
 
-1. The file does two things → split it.
-2. The file is a boundary file (bridge, adapter, ACL) → attribute to whichever side owns the contract.
-3. The file is infrastructure → remove attribution (L5).
+Both may be true. There is no universal maximum; prefer the smallest useful set that keeps navigation honest.
 
-Two attributions from the same stack is a refactoring signal. It can persist for months — it doesn't demand immediate action — but it maintains the pressure.
+**Multiple coordinates trigger verification, not refactoring.** The question to answer is:
+
+> Are these genuinely independent logical orientations?
+
+- **Across roots** (different first segments) — usually yes. Two ratified roots each have a valid claim on the same code; that is what multi-root overlap looks like in the source. Confirm both roots are ratified in `COMPASS.md`; an unratified second root is an invented stack — remove it.
+- **Within one root** (same first segment) — investigate. A boundary file, bridge, or anti-corruption layer legitimately participates in two places, and the honest answer is to keep both or attribute to the side that owns the contract. Two coordinates because nobody could decide is a signal to resolve the ambiguity in the chart, not an order to split the file.
+- **Infrastructure** — if the code turns out to be L5, remove the coordinates entirely.
+
+Other orientations can exist in documentation without appearing in code comments. The set of coordinates on a file is a navigation choice, not the analysis limit.
 
 ---
 
-## Dual-Stack Limit
+## Coordinate Validation (Remapping, Not Repair)
 
-A file carries at most two attribution comments from two **different** stacks.
+Coordinates are code. Validate:
 
-- **Top stack:** widest scope, typically product-wide.
-- **Scoped stack:** a human-created subproduct lens. Independent view, not a child of top.
+- Does the address correspond to a real place in the chart?
+- Does the file's location still match the coordinates recorded for that place?
+- Has the place been renamed or removed since the comment was written?
+- Are there files with no coordinate that should have one?
+- Are there coordinates pointing to places that no longer exist?
 
-```
-// compass: acme-platform.payments.stripe-gateway
-// compass: checkout-flow.payment-step.stripe-adapter
-```
+**A failure here is a remapping problem by default.** A moved package, a renamed directory, or an extracted service makes coordinates stale; it does not make the semantic chart wrong. Update the coordinates and the block's `## Implementation coordinates` section, and leave L0–L2 identity alone unless the *logical* system changed — the classification in [`growth-and-drift.md`](growth-and-drift.md#classifying-disagreement) decides which case you are in.
 
-Dual-stack attribution is exceptional, not normal.
-- Humans decide whether a second stack exists.
-- Agents do not create parallel stacks; they only honor an existing lens.
-- The second stack is valid only when it forms an objectively sound C4 construct — its L1 is complex enough to deserve its own stack.
-- The usual shape is `product` + `subproduct` or `application` + `service`.
-- A human-created lens is registered in the compass's lens tier: its L1 root gets a row naming the declaring human as Owner. A second root with no lens row is an invented stack — remove it.
+The exception is an address that no longer exists in the chart at all: that is either a semantic change nobody recorded or a coordinate written against a place that was never ratified. Investigate rather than deleting the comment.
 
-The two stacks don't need to agree on naming, levels, or boundaries. The compass connects them.
-
-**Distinguishing same-stack from cross-stack:** Check whether the two addresses share the same L1 root.
-- Same root = same stack = refactoring signal (split the file).
-- Different roots = different stacks = allowed only as the bounded human-decided exception above.
-
-Other stacks can exist in documentation but don't get code comments. Two is the persistence limit, not the analysis limit.
-
----
-
-## Attribution Validation (Anti-Drift)
-
-Attribution comments are code. Validate:
-
-- Does the address correspond to a real node in the docs?
-- Does the file's directory match the expected code path for that node?
-- Has the node been renamed or removed since the comment was written?
-- Are there files with no attribution that should have one?
-- Are there attributions pointing to nodes that no longer exist?
-
-This is the sealing mechanism (Phase F of growth pattern). Attribution wires code to docs. Validation scripts check the wiring. But the wiring is only useful after architecture stabilizes — premature attribution locks in wrong boundaries.
+This is the sealing mechanism (Phase F of the growth pattern). Coordinates wire code to the chart; validation checks the wiring. But the wiring is only useful after semantic boundaries stabilize — premature sealing multiplies the cost of correcting a boundary that was wrong.

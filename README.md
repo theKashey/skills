@@ -55,9 +55,10 @@ not yet provide.
   constraint recoverable from names, types, APIs, ownership boundaries, or
   filesystem structure instead of only from a remote explanation.
 - **[Compass](skills/compass/README.md):** maintains an agent-generated,
-  human-ratified architecture chart — scoped L0–L4 levels, a tiered compass
-  registry, viewports, and code attribution — so every file and boundary has
-  an address on the path of work.
+  human-ratified semantic architecture chart — logical roots, scoped L0–L4
+  levels, a glossary, viewports, and code coordinates — so every file and
+  boundary has an address on the path of work, and the chart survives a
+  reimplementation of the code beneath it.
 
 Each skill is independently installable. Their support relationships do not
 make them stages in one loop or runtime dependencies.
@@ -72,7 +73,7 @@ make them stages in one loop or runtime dependencies.
 | A proposed or existing skill needs an evidence-backed review of activation, runtime choices, isolation, or context cost. | [Skill Guidance](skills/skill-guidance/README.md) | Advisory findings and validation evidence for the host-provided skill creator. | Domain correctness, authority to mutate the skill, or behavioral effectiveness from structure alone. |
 | A finished multi-file artifact looks coherent to its producer, but that producer's context may hide gaps. | [Verify Complex Artifacts](skills/verify-complex-artifacts/README.md) | An independent readiness decision that identifies blockers and decisions needing a human. | Product desirability or facts outside the contract and checks actually reviewed. |
 | A verified constraint is still carried only by prose, and an authorized structural change can make it visible to local readers. | [Screaming Reefs](skills/screaming-reefs/README.md) | The smallest structural owner for the constraint, with the irreducibly remote cause retained as prose. | That structure proves behavior or authorizes a wider redesign. |
-| Work starts without knowing where things live, which boundary it is inside, or which external systems are real peers. | [Compass](skills/compass/README.md) | A generated, human-ratified architecture chart with a compass registry, viewports, and code attribution that keeps place and purpose addressable. | Boundary quality, code behavior beyond the checked gates, or that the finished chart gets used. |
+| Work starts without knowing where things live, which boundary it is inside, or which external systems are real peers. | [Compass](skills/compass/README.md) | A generated, human-ratified semantic chart with a registry, glossary, viewports, and code coordinates that keeps place and purpose addressable across implementation change. | Boundary quality, code behavior beyond the checked gates, or that the finished chart gets used. |
 
 ## How the skills support each other
 
@@ -280,17 +281,24 @@ boundaries are](skills/screaming-reefs/README.md) or inspect its
 To a coding agent, structure that is not on the path of work does not exist:
 decisions recorded in passive files get sailed past, and locally reasonable
 changes land inside the wrong boundary. Compass maintains the missing chart —
-a C4-inspired architecture knowledge base under a chart root the host project
-declares, with a scoped L0–L4 level stack, a tiered compass registry that
-records demotions so nothing is silently re-elevated, viewports for
-cross-cutting flows, and `// compass:` code attribution under gravity rules that
-keep the binding between code and chart minimal and checkable.
+a semantic architecture knowledge base under a chart root the host project
+declares, with one or more human-ratified logical roots, a scoped L0–L4 level
+stack borrowing C4's zoom vocabulary, a per-root glossary, a tiered registry
+that records demotions so nothing is silently re-elevated, viewports for
+cross-cutting flows, and `// compass:` coordinates that bind code to the chart
+minimally and checkably.
+
+The chart describes what the system is, not how the repository is arranged: a
+codebase is one realization, and the design test is that the chart survives its
+complete rewrite while the coordinates are replaced. Chart/code disagreement is
+therefore classified — semantic change, implementation remapping, or
+implementation violation — rather than repaired by assuming code is right.
 
 Every chart document is agent-generated; the human contributes judgment
 through explicit checkpoints and never writes chart content by hand.
-Verification gates — the single-box rule, two orthogonal L1 tests, per-level
-checklists, and an anti-drift spot check — measure completion instead of
-prose confidence.
+Verification gates — root admission, the single-box rule, two orthogonal L1
+tests, per-level checklists, level calibration, and a spot check — measure
+completion instead of prose confidence.
 
 Read [why Compass exists and which failures it
 answers](skills/compass/README.md) or inspect its
