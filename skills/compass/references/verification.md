@@ -8,7 +8,7 @@ Formal checks that must pass before ratifying a root or advancing L0, L1, L2, L3
 
 Run before a root is ratified and given a `{root}/` directory.
 
-- [ ] A human ratified this root, and `COMPASS.md` names them
+- [ ] A human ratified this root — in the conversation or the commit, never as a field in `COMPASS.md`
 - [ ] Humans recognize it as a coherent area of reasoning or work — evidenced from product, domain, or human explanation, not from the file tree
 - [ ] Its logical identity is stated without reference to source topology
 - [ ] It survives the rewrite test: rebuilt in another language, framework, layout, and topology, humans would still say "I am working on X"
@@ -142,7 +142,7 @@ Run before declaring Phase F complete on any block, and whenever the implementat
 - [ ] No source boundary was created solely to make a coordinate coarse
 
 ### Multiple coordinates
-- [ ] Every file carrying coordinates from **different roots** has both roots ratified in `COMPASS.md`, and the two orientations are genuinely independent — an unratified second root is an invented stack; remove it
+- [ ] Every file carrying coordinates from **different roots** has both roots registered in `COMPASS.md` and ratified, and the two orientations are genuinely independent — an unratified second root is an invented stack; remove it
 - [ ] Every file carrying two coordinates within **one root** has been investigated: it is a boundary, bridge, or ACL participating in two places, or the chart's ambiguity has been resolved. Record which — do not leave it unexamined
 - [ ] No file was split, and no code was moved, solely to reduce a coordinate count
 

@@ -183,31 +183,37 @@ identity document is its `README.md`.
 
 ## Compass Registry Template
 
-`COMPASS.md` is tiered — ratified roots in one table, true L1 externals in a second, demoted L2/L3 externals in a third — so every root has a named ratifier, a demotion stays recorded, and nothing gets silently re-elevated:
+`COMPASS.md` is tiered — roots in one table, external systems in a second, named dependencies that are not external systems in a third — so a demotion stays recorded and nothing gets silently re-elevated:
 
 ```markdown
 # Compass
 
-Registry owner: {the one person accountable for this page}
+## Roots
 
-## Roots — human-ratified logical roots of orientation
+| Root | What it is | The orientation it gives |
+|---|---|---|
+| [{name}](./{name}/) | {one sentence} | {the independent answer it gives to *where am I*} |
 
-| Root | Ratified by | What it is | Why an independent root | Status |
-|---|---|---|---|---|
-| [{name}](./{name}/README.md) | {the human} | {one sentence} | {which independent orientation it gives} | active / retired |
-
-## L1 externals — every external here passed both L1 tests
+## External systems
 
 | Name | Owner | Scope boundary | Shared domain terms | Their chart |
 |---|---|---|---|---|
 | [{name}](externals/{name}.md) | {who} | {one sentence: what is inside} | {terms} | {link to its own chart root, or —} |
 
-## Touched externals (L2/L3 tier) — named here, documented in the adapter that uses them
+## Named dependencies that are not external systems
 
-| Name | Used by | Why not L1 |
+| Name | Used by | Why it is not one |
 |---|---|---|
-| {name} | {component address} | {which L1 test it fails} |
+| {name} | {component address} | {the fact about the dependency — not the name of the test it failed} |
 ```
+
+**Ratification is a gate on the work, not a column in the artifact.** A root still requires a human before an agent writes it, and that requirement is stated where it governs behaviour: the boundaries in `SKILL.md`, and the state-0 checkpoint in `references/growth-and-drift.md`. It does not belong in `COMPASS.md`, because who approved a boundary and when is a fact about the chart's production rather than about the system. The same reasoning excludes three fields a registry attracts:
+
+- **`Registry owner:`** — a page-ownership line answers no question a reader of the chart has, and it is a field nobody ever changes.
+- **`Ratified by` / `Status`** — provenance and lifecycle metadata. A retired root is removed from the table; that it once existed is the commit history's job.
+- **Headings naming the method** — *"human-ratified logical roots of orientation"*, *"every external here passed both L1 tests"*. A chart that explains the procedure it was built by teaches every reader that the artifact is about its own production. State the fact about the subject: what a root is, and why a thing is outside the boundary.
+
+Give the reason a dependency is not an external system in terms of the dependency — *"an engine for a model we deploy"*, *"nobody who works with this system would name it as a tool they use"* — rather than as a test name. The tests are how **you** decide; the reason is what the **reader** needs.
 
 For an external, the Name cell links to this chart's `externals/{name}.md`; `Their chart` links to the entry's own chart root if it publishes one — a different destination.
 

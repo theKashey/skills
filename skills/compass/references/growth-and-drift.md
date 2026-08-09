@@ -19,7 +19,9 @@ Phase F   — Seal coordinates
 
 The human declares scope and the chart root. If the organization already keeps a compass, register there; otherwise create a local `COMPASS.md` with its tiers empty.
 
-**Roots are not ratified here.** Root admission needs product and domain evidence, and Root Verification explicitly refuses file-tree evidence — which is all Phase 0 has. Candidate roots are named on the scratchpad during Phase 0.5, brought to the state-0 human checkpoint with their five admission answers, and ratified there. Only then does a root get its `COMPASS.md` row naming its ratifier and its `{root}/` directory, whose `README.md` is written in Phase B.
+**Roots are not ratified here.** Root admission needs product and domain evidence, and Root Verification explicitly refuses file-tree evidence — which is all Phase 0 has. Candidate roots are named on the scratchpad during Phase 0.5, brought to the state-0 human checkpoint with their five admission answers, and ratified there. Only then does a root get its `COMPASS.md` row and its `{root}/` directory, whose `README.md` is written in Phase B.
+
+**The ratification is a precondition, not content.** The row records what the root is and the orientation it gives; who approved it and when belong to the commit that added the row. A chart carrying its own approval trail is describing its production rather than the system.
 
 No root exists until a human ratifies it. A package, service, or second language is not a root proposal.
 

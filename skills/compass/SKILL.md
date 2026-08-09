@@ -92,9 +92,11 @@ Roots may overlap. A domain living inside a wider product can also be its own ro
 
 ## Compass Registry (L-)
 
-The registry is the first artifact worth having: one page from which every root, external, and demoted almost-external is reachable, owned by one principal engineer.
+The registry is the first artifact worth having: one page from which every root, external, and demoted almost-external is reachable.
 
-`COMPASS.md` is tiered — ratified roots in one table, true L1 externals in a second, demoted L2/L3 externals in a third — so every root has a named ratifier, a demotion stays recorded, and nothing gets silently re-elevated.
+`COMPASS.md` is tiered — roots in one table, external systems in a second, named dependencies that are not external systems in a third — so a demotion stays recorded and nothing gets silently re-elevated.
+
+**The registry describes the system's boundary, never its own approval trail.** Root ratification is a gate on the agent's behaviour (see *Boundaries*), and recording who ratified what, when, or whether a page has an owner puts the chart's production into the chart. Name the fact a reader needs — what a root is, why a thing sits outside the boundary — never the test that decided it.
 
 → Registry template: [`references/blocks-and-levels.md`](references/blocks-and-levels.md#compass-registry-template)
 
