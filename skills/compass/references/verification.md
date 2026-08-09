@@ -4,6 +4,92 @@ Formal checks that must pass before ratifying a root or advancing L0, L1, L2, L3
 
 ---
 
+## First: move the mechanizable checks out of this file
+
+**An agent ticking its own checkbox is self-certification, and roughly a dozen items below do not need judgment at all.** They are decidable by a script, they go stale silently, and the moment they live in a checklist they are only as reliable as the attention of whoever last ran it. Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review:
+
+| Decidable by a script | Owning checklist item |
+|---|---|
+| every `compass:` address resolves to a chart document | §Coordinate Verification → Correctness |
+| every path named in a `## Implementation coordinates` section exists on disk | §Coordinate Verification → Staleness |
+| every block folder appears in its root's `CONTAINERS.md`, and every listed block has a folder | §L2 |
+| every relative link and heading anchor inside the chart resolves | §Markdown and Navigation |
+| every zoom-chain document carries a Mermaid fence | §Markdown and Navigation |
+| no forbidden filename (`SCOPE.md`, `CONTEXT.md`, `BLOCK.md`, `COMPONENT.md`) exists under the chart root | §Markdown and Navigation |
+
+```python
+# chart_check.py — decidable chart invariants. Adapt the two constants; run it in CI.
+import pathlib, re, sys
+CHART = pathlib.Path(".compass")          # the declared chart root
+SRC_SUFFIXES = {".py", ".ts", ".tsx", ".go", ".rs", ".java", ".rb"}
+
+fail, seen = [], {"addresses": 0, "links": 0, "coordinates": 0, "blocks": 0, "diagrams": 0}
+# every line, not just the first: a marker legitimately sits under a comment, a licence
+# header or an import block, and a file may carry a second coordinate for another root
+addr_re = re.compile(r"^\s*(?:#|//|--)\s*compass:\s*(\S+)", re.M)
+anchors = lambda t: {re.sub(r"[^a-z0-9 -]", "", h.lower()).replace(" ", "-")
+                     for h in re.findall(r"^#{1,6} (.+)$", t, re.M)}
+
+def doc_for(address):                      # root | root.block | root.block.component
+    return CHART.joinpath(*address.split(".")) / "README.md"
+
+for p in pathlib.Path(".").rglob("*"):
+    # any dotted directory: .git, .venv, and — the one that bites — a nested git worktree,
+    # which otherwise counts every marker in the repository twice
+    if p.is_dir() or any(x.startswith(".") for x in p.parts[:-1]): continue
+    if "node_modules" in p.parts or p.suffix not in SRC_SUFFIXES: continue
+    for address in addr_re.findall(p.read_text(errors="ignore")):
+        seen["addresses"] += 1
+        if not doc_for(address).exists():
+            fail.append(f"{p}: compass: {address} resolves to nothing")
+
+for root in (d for d in CHART.iterdir() if d.is_dir() and d.name != "externals"):
+    containers = root / "CONTAINERS.md"
+    if not containers.exists(): continue
+    listed = set(re.findall(r"\]\(\./([^/)]+)/README\.md\)", containers.read_text()))
+    dirs = {d.name for d in root.iterdir() if d.is_dir()}
+    seen["blocks"] += len(dirs)
+    for miss in dirs - listed: fail.append(f"{root.name}: block '{miss}' is not in CONTAINERS.md")
+    for miss in listed - dirs: fail.append(f"{root.name}: CONTAINERS.md lists '{miss}', no folder")
+
+for md in CHART.rglob("*.md"):
+    body = md.read_text()
+    for href in re.findall(r"\]\(([^)\s]+)\)", body):
+        if href.startswith(("http", "mailto:")): continue
+        path, _, anchor = href.partition("#")
+        target = (md.parent / path) if path else md
+        seen["links"] += 1
+        if path and not target.exists(): fail.append(f"{md}: dead link {href}")
+        elif anchor and anchor not in anchors(target.read_text()):
+            fail.append(f"{md}: dead anchor {href}")
+    # coordinates only. A token with no separator is prose; one with a placeholder is a shape
+    section = re.search(r"^## Implementation coordinates\n(.*?)(?=^## |\Z)", body, re.S | re.M)
+    for coord in re.findall(r"`([^`]+)`", section.group(1) if section else ""):
+        if "/" not in coord or any(c in coord for c in "<>{}*"): continue
+        seen["coordinates"] += 1
+        if not pathlib.Path(coord).exists(): fail.append(f"{md}: coordinate {coord} not on disk")
+    # the five zoom-chain kinds each require a diagram
+    zoom = md.name in ("CONTAINERS.md", "VIEWPORTS.md") or (
+        md.name == "README.md" and md.parent != CHART)
+    if zoom:
+        seen["diagrams"] += 1
+        # written as `{3} on purpose — a literal triple backtick would close this code block
+        if not re.search(r"^`{3}\s*mermaid", body, re.M):
+            fail.append(f"{md}: no mermaid diagram")
+
+for name in ("SCOPE.md", "CONTEXT.md", "BLOCK.md", "COMPONENT.md"):
+    for p in CHART.rglob(name): fail.append(f"{p}: identity documents are README.md")
+
+print("\n".join(fail) or "chart: clean — " + ", ".join(f"{v} {k}" for k, v in seen.items()))
+sys.exit(1 if fail else 0)
+```
+
+**Print the counts, and read them.** A check that scanned nothing exits zero exactly like a check that scanned everything — which is how a chart whose markers were all deleted keeps a green build. If `addresses` drops to 0 after Phase F, the script is passing because it stopped looking.
+
+**What a passing run does and does not establish.** It proves the chart is internally consistent and still points at real code. It proves nothing about whether the boundaries are right, whether a rule the chart records is the rule the product enforces, or whether a name is one a human would use. Those are the rest of this file, and they stay judgment. Never report a green script as verification of the chart.
+
+---
+
 ## Root Verification
 
 Run before a root is ratified and given a `{root}/` directory.
@@ -27,6 +113,7 @@ Run before declaring Phase A complete.
 - [ ] Every important concept maps to a human-recognizable phenomenon or rule in the product or domain, with the evidence named
 - [ ] No mechanism visible only in code was promoted to a domain concept without a separate semantic justification
 - [ ] `DOMAIN.md` contains no technology, code paths, schemas, API shapes, or implementation coordinates
+- [ ] The context list passes the Derivation Test (`SKILL.md` §The Derivation Test) — contexts mapping ~1:1 onto packages or onto the layer stack were read off the code, whatever their names now say
 - [ ] `GLOSSARY.md` exists and covers every term used architecturally anywhere in this root's chart
 - [ ] Terminology is consistent across `DOMAIN.md`, block documents, and component documents — one concept, one word
 - [ ] Where product and code names differ, the product term is canonical and the code term is recorded as an implementation alias
@@ -87,6 +174,9 @@ Run before declaring Phase B complete.
 - [ ] Every block survives the invariance test: its boundary still makes sense after a structure-only refactor
 - [ ] No block exists only because a package, service, or deployable exists — implementation decomposition is not product decomposition
 - [ ] No block was split or merged because deployment topology, framework, or repository layout changed
+- [ ] **The block list passes the Derivation Test** (`SKILL.md` §The Derivation Test): laid beside the deployables, the packages, and the layers of the stack, it pairs off one-to-one with none of them. This is a check on the *set* — every member can pass the rewrite test while the cut was still read off topology
+- [ ] **No residue block.** Every block name is one a practitioner would say out loud, unprompted. A category name (`*-intelligence`, `*-services`, `core`, `shared`, `common`) or a layer name (`foundation`, `platform`, `packages`) means the block was computed from what the other blocks did not absorb
+- [ ] At least one block's implementation coordinates span more than one package, layer, or language — if every block maps to exactly one subtree, the cut is the file tree wearing semantic names
 - [ ] Every external system referenced in L2 is either listed at L1 (passed eligibility) or explicitly marked as "L3 adapter" in the block doc
 - [ ] No component is documented as a block (if it maps to a single file or a single class, it's L3)
 - [ ] No circular block dependencies (A → B → A)
@@ -96,6 +186,7 @@ Run before declaring Phase B complete.
 - [ ] Block diagram exists and reflects all communicates-with entries
 - [ ] `CONTAINERS.md` exists, carries a wiring diagram, and lists every block folder
 - [ ] The host's agent instructions carry the usage hook (chart root + entry pattern), human-approved — a chart no agent is routed to does not exist
+- [ ] The hook says **when** to read the chart, not that it precedes all code work — an unconditional claim is disbelieved after the third one-line fix, and then it is skipped for the change that needed it
 - [ ] Every block's component table is present
 
 ---

@@ -49,8 +49,12 @@ Phase B is done only when the root, L1, and L2 checklists in [`verification.md`]
 
 ```markdown
 ## Architecture chart
-An architecture chart lives in {chart-root}/ — read it before code work.
-It describes the logical system, not how the repository is arranged.
+An architecture chart lives in {chart-root}/. It describes the logical system,
+not how the repository is arranged.
+- Read it when the work is not local: it crosses a boundary, changes a rule or
+  an invariant, adds a party, or asks whether something belongs here. A one-file
+  fix, a rename, or a bug with a stack trace pointing at the line does not need
+  it — read the code.
 - Where am I: {chart-root}/README.md → COMPASS.md → {root}/README.md →
   CONTAINERS.md → {block}/README.md → {component}/README.md
 - Domain meaning or vocabulary: {root}/DOMAIN.md + {root}/GLOSSARY.md
@@ -61,6 +65,8 @@ It describes the logical system, not how the repository is arranged.
 - If code and chart disagree, classify before changing either side:
   semantic change / implementation remapping / implementation violation
 ```
+
+**The first bullet is load-bearing, not a hedge** (`SKILL.md` §Core Principle, Applicability). A hook claiming the chart is worth reading before every edit is disbelieved after the third one-line fix, and a reader who learns to skip it skips it for the change that needed it.
 
 Keep the hook this size: it routes, it does not restate the chart, and it does not reproduce any other skill. Phase E maintains it — if the chart root moves or a root is added, the hook is part of the diff.
 

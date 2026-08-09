@@ -9,6 +9,10 @@ description: Use when establishing, exploring, or maintaining a semantic archite
 
 Compass answers three questions about a codebase: **where am I, what is this thing, and why does it exist?** It answers them about the *system* — the logical thing the product is — not about the repository that currently realizes it. The codebase is one current realization; a Compass chart that survives a complete implementation rewrite is the one that was describing the system.
 
+**The durable half is the third question, and that is where the value is.** A capable agent reconstructs *where am I* on demand, from the code, and gets better at it every release — repository maps, call graphs and hierarchical summaries are a crowded and improving field, and a chart competing on orientation is competing where its advantage shrinks. What no amount of reading reconstructs is **which of two readings of the system a human agreed to**. Given today's code, an agent can tell you what the system does; it cannot tell you whether that is the system anybody decided to have. Compass exists so that when code and intent disagree, the disagreement is *visible and classifiable* rather than silently resolved in the code's favour — §Classifying Disagreement is the product, not a maintenance procedure.
+
+**Applicability.** The chart earns its keep in proportion to how *non-local* the work is. A one-file fix, a rename, a bug with a stack trace pointing at the line — read the code. Work that crosses a boundary, changes a rule, adds a party, or asks *should this live here* is what the chart is for. Say so in the host's usage hook: a chart that claims to be worth reading before every edit trains agents to skip it before any.
+
 Compass is meta-code: a persistent logical model with two children — product behaviour and implementation coordinates — from which implementations can be understood, navigated, validated, discarded, and rebuilt.
 
 Compass owns the logical system — concepts, phenomena, responsibilities, capabilities, rules, invariants, relationships, logical boundaries, ubiquitous language, and the reasons those things exist. Code owns the executable realization of that system. Implementation coordinates connect the two.
@@ -44,6 +48,23 @@ Before creating, deleting, splitting, merging, promoting, or renaming any L0–L
 5. Only then map today's implementation locations.
 
 Then ask: *would this boundary still make sense after a structure-only refactor?* If no, it is probably not a semantic boundary.
+
+## The Derivation Test
+
+The two tests above interrogate one entity at a time, and **a decomposition can fail while every member passes.** Run this one over the finished list, at L0 and again at L2, before the level is ratified.
+
+> **Where did this list come from?** Lay the block (or context) names beside the deployables, the packages, and the layers of the stack. If a set pairs off one-to-one with any of those, the cut was read off topology — however many members individually survive the rewrite test.
+
+Individually they will survive. A vault survives a rewrite; a worker survives a rewrite. That is precisely why entity-level tests cannot catch this: the *derivation* is wrong, not the members.
+
+**The tell is a residue block.** Once the deployables have taken the block slots, whatever they compose has nowhere left to go, so a container is invented to hold it — and its name is always a category rather than a responsibility: `*-intelligence`, `*-services`, `core`, `shared`, `common`, `platform`. Ask of every name: **would a practitioner say this out loud, unprompted, to another practitioner?** A name nobody says is a name nobody chose; it was computed from what was left over.
+
+Two further shapes of the same failure:
+
+- **A layer promoted to a block.** `foundation`, `platform`, `packages` are positions in a dependency stack. A block carrying one of those names almost certainly holds members answering to different responsibilities — check by asking what each one *refuses*, and watch the answers fail to rhyme.
+- **A one-to-one map onto the language split.** Two blocks because there is a python side and a TypeScript side is a topology cut wearing two hats. One responsibility spanning two languages is the normal condition, not a defect.
+
+**The repair is not renaming.** Redraw from the domain: name the responsibilities first, from `DOMAIN.md` and the product, then ask where each currently lives. Expect *several places, across layers* — that is what a semantic cut looks like from a file tree, and it is why coordinates exist.
 
 ## Chart Root
 
@@ -204,6 +225,22 @@ This is an ownership test, not a writing-style preference. Do not duplicate in e
 
 → Both directions, the investigation flow, and worked cases: [`references/ownership-boundary.md`](references/ownership-boundary.md)
 
+## Boundary with Tools
+
+The second boundary, and the one a thorough chart crosses without noticing. The classifier is one question:
+
+> **Can a live source answer this better than a paragraph can?**
+
+If yes, **the chart names the source and does not restate it.** A summary of something that changes on its own is a second copy with no owner, and it is wrong from the next commit. This applies to build graphs, dependency graphs, CI configuration, service catalogues, ownership and on-call data, schema registries, API specifications, test results, metrics and traces. Where the host exposes one to agents directly — a tool, an MCP server, a CLI — point into it rather than paraphrasing it.
+
+**`## Implementation coordinates` is not a counter-example**, and the distinction is worth stating because it looks like one. That section is authored on purpose: it exists so an agent reaches code *without* scanning, it is written at Phase B and C while sealing happens at Phase F or never, and it names entry points no marker scan produces. It is a claim to be checked, not a summary to be avoided.
+
+Three things are outside the chart entirely, and saying so keeps them from being smuggled into a viewport:
+
+- **Runtime state.** Component hierarchies, live signals, backend state, what the process is actually doing. Not in the repository at all, so no amount of better summarising recovers it. It belongs to observability tooling.
+- **Task memory.** What this session has read, tried, and learned. A chart that accumulates working state stops being the stable thing it existed to be — repository knowledge and trajectory memory are different artifacts with different lifetimes.
+- **Whether the work is correct.** The chart can say *this is expected to be idempotent*; only a test, a build or a run establishes that an implementation is. Instruction is not evidence. Never let a chart-side checklist stand in for a verifier — see §Verification for which of this skill's own checks are mechanizable and therefore belong to the host's test suite rather than to an agent's judgment.
+
 ## Growth Pattern
 
 - **0** — Scope + chart root + compass registration
@@ -324,6 +361,6 @@ diverges, and the divergent copy is the one an agent finds — read the gate.
 
 ✅ Always: read the declared chart root before chart work; declare scope before L0; apply the rewrite test to every semantic candidate; propagate top → down; document relationships in consumers; keep within size budgets; classify disagreement before repairing it; state confidence explicitly.
 
-⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope or compass ownership; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; writing or updating the usage hook in the host's agent instructions (the only file the skill touches outside the chart root and source-code comments).
+⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope or compass ownership; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; writing or updating the usage hook in the host's agent instructions; installing the chart check into the host's test suite (§Verification). Those two, plus `compass:` comments in source, are everything the skill touches outside the chart root.
 
 🚫 Never: write chart files outside the declared chart root or invent a root when none is configured; invent a logical root without human ratification; let code alone ratify L0–L2 semantic identity; document infrastructure as architecture (L5); contradict higher levels; treat a moved code path as evidence the semantics are wrong; demand implementation reshaping because topology and chart differ; seal coordinates before boundaries stabilize; skip human checkpoint at state 0 exit — when no human is available, stop there and report; do not proceed past any checkpoint unattended.
