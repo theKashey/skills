@@ -81,8 +81,8 @@ Roots do not need to agree with each other on naming, levels, or boundaries. The
 ### Root lifecycle
 
 - **Proposing.** An agent may propose a root, with the five admission answers and evidence from product or domain reality. It writes nothing until a human ratifies.
-- **Ratifying.** A human ratifies; the root gets a row in `COMPASS.md` naming that human, and a `{root}/` directory.
-- **Retiring.** A root that no longer earns independent orientation is retired by a human, its row kept with a retired status so it is not silently re-created. Its coordinates are remapped, not deleted in place.
+- **Ratifying.** A human ratifies; the root gets a row in `COMPASS.md` and a `{root}/` directory. Who ratified it, and when, belong to the commit that added the row.
+- **Retiring.** A root that no longer earns independent orientation is retired by a human, and its row is removed — that it once existed is the commit history's job. Its coordinates are remapped, not deleted in place.
 
 ---
 

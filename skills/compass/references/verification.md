@@ -73,7 +73,7 @@ For each node in the external systems table, confirm ALL:
 ### Cut Loose Ends (after every L1 pass)
 1. List every external system referenced anywhere in L1 and L2 docs
 2. Apply the external system checklist to each
-3. Any that fail → demote immediately (usually an L3 adapter; an internal implementation is L2, a shared helper L5); record the demotion in the compass's L2/L3 tier (name, used-by, which L1 test it fails) so it cannot be silently re-elevated
+3. Any that fail → demote immediately (usually an L3 adapter; an internal implementation is L2, a shared helper L5); record the demotion in the compass's L2/L3 tier — name, used-by, and the fact about the dependency that puts it there, never the name of the test it failed — so it cannot be silently re-elevated
 4. Re-run diagram checks after all demotions
 
 ---

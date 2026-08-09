@@ -13,7 +13,7 @@ The chart describes the logical system. The code is one realization of it. Read 
 Follow the zoom chain — never skip a level:
 
 1. Open `{chart-root}/README.md` — confirm scope and see which roots exist
-2. Open `{chart-root}/COMPASS.md` — see which roots exist, which are retired, and which externals were demoted; where more than one root could own the work, pick the orientation that matches how you're thinking about the task
+2. Open `{chart-root}/COMPASS.md` — see which roots exist and which externals were demoted; where more than one root could own the work, pick the orientation that matches how you're thinking about the task
 3. Open `{chart-root}/{root}/README.md` — orient: who uses this, what external systems exist
 4. Open `{root}/CONTAINERS.md` — find which block(s) own the area of work; read the wiring diagram
 5. Open `{root}/{block}/README.md` — read responsibility, logical role, boundary, communicates-with, component list
