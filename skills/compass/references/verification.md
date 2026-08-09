@@ -4,14 +4,14 @@ Formal checks that must pass before ratifying a root or advancing L0, L1, L2, L3
 
 ---
 
-## First: move the mechanizable checks out of this file
+## First: the mechanizable checks belong to the host's test suite
 
-**An agent ticking its own checkbox is self-certification, and roughly a dozen items below do not need judgment at all.** They are decidable by a script, they go stale silently, and the moment they live in a checklist they are only as reliable as the attention of whoever last ran it. Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review:
+**An agent ticking its own checkbox is self-certification, and the items the table below maps need no judgment at all.** They are decidable by a script, they go stale silently, and the moment they live in a checklist they are only as reliable as the attention of whoever last ran it. Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review. They keep their checklist rows all the same — installing the check is ask-first (`SKILL.md` §Boundaries), and before it lands the rows are run by hand like everything else — but once the script is in CI, a green run is the only honest tick:
 
 | Decidable by a script | Owning checklist item |
 |---|---|
 | every `compass:` address resolves to a chart document | §Coordinate Verification → Correctness |
-| every path named in a `## Implementation coordinates` section exists on disk | §Coordinate Verification → Staleness |
+| every path-shaped coordinate in a `## Implementation coordinates` section — backticked, containing `/`, no placeholder — exists on disk | §Coordinate Verification → Staleness |
 | every block folder appears in its root's `CONTAINERS.md`, and every listed block has a folder | §L2 |
 | every relative link and heading anchor inside the chart resolves | §Markdown and Navigation |
 | every zoom-chain document carries a Mermaid fence | §Markdown and Navigation |
@@ -21,7 +21,8 @@ Formal checks that must pass before ratifying a root or advancing L0, L1, L2, L3
 # chart_check.py — decidable chart invariants. Adapt the two constants; run it in CI.
 import pathlib, re, sys
 CHART = pathlib.Path(".compass")          # the declared chart root
-SRC_SUFFIXES = {".py", ".ts", ".tsx", ".go", ".rs", ".java", ".rb"}
+SRC_SUFFIXES = {".py", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".go", ".rs",
+                ".java", ".rb", ".swift", ".sql"}
 
 fail, seen = [], {"addresses": 0, "links": 0, "coordinates": 0, "blocks": 0, "diagrams": 0}
 # every line, not just the first: a marker legitimately sits under a comment, a licence
@@ -45,7 +46,8 @@ for p in pathlib.Path(".").rglob("*"):
 
 for root in (d for d in CHART.iterdir() if d.is_dir() and d.name != "externals"):
     containers = root / "CONTAINERS.md"
-    if not containers.exists(): continue
+    if not containers.exists():
+        fail.append(f"{root.name}: no CONTAINERS.md"); continue
     listed = set(re.findall(r"\]\(\./([^/)]+)/README\.md\)", containers.read_text()))
     dirs = {d.name for d in root.iterdir() if d.is_dir()}
     seen["blocks"] += len(dirs)
@@ -60,7 +62,9 @@ for md in CHART.rglob("*.md"):
         target = (md.parent / path) if path else md
         seen["links"] += 1
         if path and not target.exists(): fail.append(f"{md}: dead link {href}")
-        elif anchor and anchor not in anchors(target.read_text()):
+        elif anchor and not target.is_file():
+            fail.append(f"{md}: anchor into a non-document {href}")
+        elif anchor and anchor not in anchors(target.read_text(errors="ignore")):
             fail.append(f"{md}: dead anchor {href}")
     # coordinates only. A token with no separator is prose; one with a placeholder is a shape
     section = re.search(r"^## Implementation coordinates\n(.*?)(?=^## |\Z)", body, re.S | re.M)
@@ -73,8 +77,9 @@ for md in CHART.rglob("*.md"):
         md.name == "README.md" and md.parent != CHART)
     if zoom:
         seen["diagrams"] += 1
-        # written as `{3} on purpose — a literal triple backtick would close this code block
-        if not re.search(r"^`{3}\s*mermaid", body, re.M):
+        # written as `{3} on purpose — a literal triple backtick would close this code block;
+        # up to three leading spaces is still a fence in CommonMark (common inside lists)
+        if not re.search(r"^ {0,3}`{3}\s*mermaid", body, re.M):
             fail.append(f"{md}: no mermaid diagram")
 
 for name in ("SCOPE.md", "CONTEXT.md", "BLOCK.md", "COMPONENT.md"):
@@ -160,7 +165,7 @@ For each node in the external systems table, confirm ALL:
 ### Cut Loose Ends (after every L1 pass)
 1. List every external system referenced anywhere in L1 and L2 docs
 2. Apply the external system checklist to each
-3. Any that fail → demote immediately (usually an L3 adapter; an internal implementation is L2, a shared helper L5); record the demotion in the compass's L2/L3 tier — name, used-by, and the fact about the dependency that puts it there, never the name of the test it failed — so it cannot be silently re-elevated
+3. Any that fail → demote immediately (usually an L3 adapter; an internal implementation is L2, a shared helper L5); record the demotion in the registry's named-dependencies table — name, used-by, and the fact about the dependency that puts it there, never the name of the test it failed — so it cannot be silently re-elevated
 4. Re-run diagram checks after all demotions
 
 ---
@@ -176,7 +181,7 @@ Run before declaring Phase B complete.
 - [ ] No block was split or merged because deployment topology, framework, or repository layout changed
 - [ ] **The block list passes the Derivation Test** (`SKILL.md` §The Derivation Test): laid beside the deployables, the packages, and the layers of the stack, it pairs off one-to-one with none of them. This is a check on the *set* — every member can pass the rewrite test while the cut was still read off topology
 - [ ] **No residue block.** Every block name is one a practitioner would say out loud, unprompted. A category name (`*-intelligence`, `*-services`, `core`, `shared`, `common`) or a layer name (`foundation`, `platform`, `packages`) means the block was computed from what the other blocks did not absorb
-- [ ] At least one block's implementation coordinates span more than one package, layer, or language — if every block maps to exactly one subtree, the cut is the file tree wearing semantic names
+- [ ] A block list where every block maps to exactly one subtree was investigated as a Derivation Test lead, and the disposition is recorded: a repository deliberately shaped around the ratified boundaries is *legitimate* (with what makes it so); a cut read off the file tree is *derived* (redraw from the domain). The pattern opens the question; only derivation evidence closes it
 - [ ] Every external system referenced in L2 is either listed at L1 (passed eligibility) or explicitly marked as "L3 adapter" in the block doc
 - [ ] No component is documented as a block (if it maps to a single file or a single class, it's L3)
 - [ ] No circular block dependencies (A → B → A)

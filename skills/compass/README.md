@@ -67,12 +67,14 @@ shrinking. A one-file fix does not want a chart; work that crosses a boundary,
 changes a rule, or asks whether something belongs here does. Claiming otherwise
 trains readers to skip it entirely. **And it never carries a fact a command can
 answer.** Build graphs, dependency edges, CI configuration, ownership data,
-schemas, test results, runtime state: where an authoritative machine-readable
+schemas, test results: where an authoritative machine-readable
 source exists the chart points into it, because a summary of a live source is a
 second copy with no owner and it is wrong from the next commit. Implementation
 coordinates are the deliberate exception and stay authored: they exist so an
 agent reaches code without scanning, they are written before any marker is
-sealed, and they name entry points no scan produces.
+sealed, and they name entry points no scan produces. Runtime state, task
+memory, and whether the work is correct sit outside the chart entirely — not
+carried, and not pointed into.
 
 ## Design decisions and rejected alternatives
 

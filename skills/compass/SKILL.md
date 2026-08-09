@@ -19,7 +19,7 @@ Compass owns the logical system — concepts, phenomena, responsibilities, capab
 
 **Authority rule.** Repository structure is evidence about implementation, not authority over semantic architecture. Code may suggest architectural hypotheses. Code alone must not ratify L0–L2 semantic identity.
 
-The deliverable is the chart — the architecture knowledge base itself — the first stop for an agent starting work, so recorded decisions sit on the path of work instead of being missed in passing. The method below is only how that information is produced and kept true.
+The deliverable is the chart — the architecture knowledge base itself — the first stop for non-local work (**Applicability** above), so recorded decisions sit on the path of the work that crosses them instead of being missed in passing. The method below is only how that information is produced and kept true.
 
 Every chart document is agent-generated. The human teaches, validates, consults, and ratifies through the exploration loop's checkpoints; the human never writes chart content by hand.
 
@@ -342,7 +342,7 @@ The runnable form of these rules is the L1 checklist in [`references/verificatio
 → Full guide: [`references/how-to-use.md`](references/how-to-use.md)
 
 Quick patterns:
-- **Starting a task** → read `{chart-root}/README.md` → `COMPASS.md` → `{root}/README.md` → `{root}/CONTAINERS.md` → find block → read `{block}/README.md` → find component → read `{component}/README.md`
+- **Starting a non-local task** → read `{chart-root}/README.md` → `COMPASS.md` → `{root}/README.md` → `{root}/CONTAINERS.md` → find block → read `{block}/README.md` → find component → read `{component}/README.md`
 - **Changing domain meaning** → `{root}/DOMAIN.md` + `{root}/GLOSSARY.md`
 - **Debugging a flow** → open `{root}/VIEWPORTS.md` → find the viewport that covers the flow → trace participants
 - **"Why is this code weird?"** → follow its `compass:` coordinate first; if the reason is implementation-specific and unresolved, continue under Context Docs
@@ -361,6 +361,6 @@ diverges, and the divergent copy is the one an agent finds — read the gate.
 
 ✅ Always: read the declared chart root before chart work; declare scope before L0; apply the rewrite test to every semantic candidate; propagate top → down; document relationships in consumers; keep within size budgets; classify disagreement before repairing it; state confidence explicitly.
 
-⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope or compass ownership; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; writing or updating the usage hook in the host's agent instructions; installing the chart check into the host's test suite (§Verification). Those two, plus `compass:` comments in source, are everything the skill touches outside the chart root.
+⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; writing or updating the usage hook in the host's agent instructions; installing the chart check into the host's test suite (§Verification). Those two, plus `compass:` comments in source, are everything the skill touches outside the chart root.
 
 🚫 Never: write chart files outside the declared chart root or invent a root when none is configured; invent a logical root without human ratification; let code alone ratify L0–L2 semantic identity; document infrastructure as architecture (L5); contradict higher levels; treat a moved code path as evidence the semantics are wrong; demand implementation reshaping because topology and chart differ; seal coordinates before boundaries stabilize; skip human checkpoint at state 0 exit — when no human is available, stop there and report; do not proceed past any checkpoint unattended.

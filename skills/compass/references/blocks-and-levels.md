@@ -82,7 +82,7 @@ Roots do not need to agree with each other on naming, levels, or boundaries. The
 
 - **Proposing.** An agent may propose a root, with the five admission answers and evidence from product or domain reality. It writes nothing until a human ratifies.
 - **Ratifying.** A human ratifies; the root gets a row in `COMPASS.md` and a `{root}/` directory. Who ratified it, and when, belong to the commit that added the row.
-- **Retiring.** A root that no longer earns independent orientation is retired by a human, and its row is removed — that it once existed is the commit history's job. Its coordinates are remapped, not deleted in place.
+- **Retiring.** A root that no longer earns independent orientation is retired by a human, and its row is removed — that it once existed is the commit history's job, and the ratification gate is what stops a retired root from coming back silently. (A demoted dependency keeps its row for exactly the missing half of that guard: nothing gates re-elevation but the record.) Its coordinates are remapped, not deleted in place.
 
 ---
 
@@ -198,7 +198,7 @@ identity document is its `README.md`.
 
 | Name | Owner | Scope boundary | Shared domain terms | Their chart |
 |---|---|---|---|---|
-| [{name}](externals/{name}.md) | {who} | {one sentence: what is inside} | {terms} | {link to its own chart root, or —} |
+| [{name}](externals/{name}.md) | {who — point into a live ownership source where one exists} | {one sentence: what is inside} | {terms} | {link to its own chart root, or —} |
 
 ## Named dependencies that are not external systems
 

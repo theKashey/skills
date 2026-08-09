@@ -134,7 +134,7 @@ Both may be true. There is no universal maximum; prefer the smallest useful set 
 
 > Are these genuinely independent logical orientations?
 
-- **Across roots** (different first segments) — usually yes. Two ratified roots each have a valid claim on the same code; that is what multi-root overlap looks like in the source. Confirm both roots are ratified in `COMPASS.md`; an unratified second root is an invented stack — remove it.
+- **Across roots** (different first segments) — usually yes. Two ratified roots each have a valid claim on the same code; that is what multi-root overlap looks like in the source. Confirm both roots are registered in `COMPASS.md` and ratified; an unratified second root is an invented stack — remove it.
 - **Within one root** (same first segment) — investigate. A boundary file, bridge, or anti-corruption layer legitimately participates in two places, and the honest answer is to keep both or attribute to the side that owns the contract. Two coordinates because nobody could decide is a signal to resolve the ambiguity in the chart, not an order to split the file.
 - **Infrastructure** — if the code turns out to be L5, remove the coordinates entirely.
 

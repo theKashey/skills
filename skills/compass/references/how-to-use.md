@@ -10,7 +10,7 @@ The chart describes the logical system. The code is one realization of it. Read 
 
 ### Starting a new task
 
-Follow the zoom chain — never skip a level:
+Follow the zoom chain when the work is not local (`SKILL.md` §Core Principle, **Applicability**) — and never skip a level:
 
 1. Open `{chart-root}/README.md` — confirm scope and see which roots exist
 2. Open `{chart-root}/COMPASS.md` — see which roots exist and which externals were demoted; where more than one root could own the work, pick the orientation that matches how you're thinking about the task

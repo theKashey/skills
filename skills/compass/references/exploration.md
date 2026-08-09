@@ -198,7 +198,7 @@ The orient → scan → probe → adjust cycle runs again, narrower and deeper:
 ### Exit to State 2 when
 
 1. L0 draft and `GLOSSARY.md` exist and the human has reviewed both
-2. Each root is ratified and recorded in `COMPASS.md`
+2. Each root is registered in `COMPASS.md` and ratified
 3. L2 block documents exist with logical roles and implementation coordinates
 4. Levels are calibrated — siblings sit at comparable semantic scale
 5. No open questions about scope, roots, or block boundaries
