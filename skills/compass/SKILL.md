@@ -1,6 +1,6 @@
 ---
 name: compass
-description: Use when establishing, exploring, or maintaining a semantic architecture chart—roots, L0–L4 levels, glossary, viewports, and code coordinates—or classifying chart-vs-code disagreement; not for reader-facing documentation or code changes.
+description: Use when establishing, exploring, maintaining, or consulting a semantic architecture chart for non-local work—its roots, levels, viewports, code coordinates, or chart-vs-code disagreements; not for reader-facing docs or implementing code.
 ---
 
 # Compass

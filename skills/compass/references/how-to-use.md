@@ -20,7 +20,7 @@ Follow the zoom chain when the work is not local (`SKILL.md` §Core Principle, *
 6. Open the specific `{component}/README.md` files that will be touched
 7. Check `VIEWPORTS.md` — does any viewport cross the area of change?
 
-**Signal that you're ready:** you can name every component you'll touch and every boundary you'll cross before writing a line.
+**Signal that you're ready:** you can restate the task in semantic terms, name every component you'll touch and every boundary you'll cross, and classify any chart/code disagreement. Keep reproduction details and the implementation plan with the project task, not in the chart.
 
 ---
 
