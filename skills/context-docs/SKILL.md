@@ -19,9 +19,18 @@ reader's context. When no material gap remains, add nothing.
   its current form and record accepted uncertainty instead of inventing a
   rationale. Recovering the reason does not by itself justify prose; the reader
   must still have a material gap.
-- Write current documentation as the authorized state expected when the work is
-  complete. Keep former behavior in changelogs, migration guides, or release
-  documentation.
+- Freeze the authorized completed product and distribution contract before
+  gathering evidence. Treat an observation as transient delivery state when an
+  ordinary publish, tag, deploy, propagation, or rollout operation could change
+  it without a product or distribution-contract decision. Exclude that
+  proposition from evidence, reasoning, findings, risks, caveats,
+  prerequisites, and route selection regardless of whether it appears in
+  repository prose, manifests, metadata, tags, history, a registry, or a
+  deployment. Inspect it only when the user explicitly makes current delivery
+  state the subject. An explicit decision that the completed product remains
+  source-only is an enduring boundary, not transient state. Keep former
+  behavior in changelogs, migration guides, or release documentation, and
+  verify historical claims with durable historical evidence.
 - Follow the environment's established owner and submission route. Locality can
   explain or propose a fit; it cannot authorize a surface, displace an owner,
   or widen the requested topology or mutation scope.

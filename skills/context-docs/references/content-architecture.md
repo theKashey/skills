@@ -295,8 +295,12 @@ for compact catalog entries. A parent summary or sibling section cannot orient
 a standalone subject page.
 
 For a README, state the technical reader, task, and starting context before
-giving a route. A repository checkout, package registry, command line, runtime,
-credentials, or source access is available only when stated or verified. For a
+giving a route. Establish that context from the authorized completed product
+and distribution contract. Missing current packages, versions, tags, releases,
+or deployments cannot redirect the completed package route to a source
+checkout; an explicit decision that the product remains source-only can. A
+repository checkout, package registry, command line, runtime, credentials, or
+source access is available only when the completed contract provides it. For a
 public website presentation page, the primary route is browser-native. Do not
 swap those contracts. For a public documentation home, the primary route is
 documentation navigation or reference lookup, not a product conversion path.

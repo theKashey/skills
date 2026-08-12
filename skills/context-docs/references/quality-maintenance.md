@@ -21,12 +21,21 @@ Use this workflow only at final work wrap-up or release, or when the user
 explicitly requests a non-inline documentation audit, review, or maintenance
 plan. That request is itself the final documentation task.
 
-1. State the audit mode and boundary. For a change-set audit, inventory every
-   changed public item and affected non-inline surface. For a completeness
-   audit, inventory every stable public item and relevant non-inline surface in
-   scope. Establish current truth, canonical facts, examples, and
-   repository-native verification commands. Exclude line, block, and file
-   comments; exported-symbol JSDoc remains a public-contract surface.
+1. State the audit mode, boundary, and evidence horizon before collecting
+   evidence. Audit current product documentation against the authorized
+   completed product and distribution contract. Exclude any proposition that
+   an ordinary publish, tag, deploy, propagation, or rollout operation could
+   change without a product or distribution-contract decision, regardless of
+   its source; do not report it as a defect, risk, caveat, prerequisite, route,
+   or untested assumption. Inspect current delivery state only when the user
+   explicitly makes that state the subject. Treat an explicit enduring
+   source-only decision as product truth, and audit historical claims against
+   durable historical evidence. For a change-set audit, inventory every changed
+   public item and affected non-inline surface. For a completeness audit,
+   inventory every stable public item and relevant non-inline surface in scope.
+   Establish canonical facts, examples, and repository-native verification
+   commands. Exclude line, block, and file comments; exported-symbol JSDoc
+   remains a public-contract surface.
 2. Read the [locality ladder](locality-ladder.md) only when documentation
    existence, ownership, governed scope, or placement is unresolved. Read
    [content architecture](content-architecture.md) only when a story,
@@ -148,7 +157,11 @@ every section and public item in that stated scope:
 9. Can the project-defined reader—or the explicit task reader when no durable
    cast exists—find the purpose, primary path, and next detail appropriate to
    their available context and decision?
-10. From where does the intended reader encounter this document, and which context, paths, credentials, tools, or prerequisites are actually available there?
+10. In the authorized completed delivery, where does the intended reader
+    encounter this document, and which context, paths, credentials, tools, or
+    prerequisites does that contract provide? Omit transient delivery-state
+    propositions from the answer and report regardless of where they were
+    observed, unless current delivery is the explicit audit subject.
 11. If the primary reader path changed, was it checked from its stated starting state, and which assumptions remain untested?
 12. For a procedure, does the heading state the task and does each step give one meaningful action after its necessary location, condition, and warning? For a tutorial, can the reader see its meaningful checkpoints?
 13. Could this state enter its intended review, merge, or publication without editing away a temporary caveat, placeholder, draft marker, or promise about what will happen later?
