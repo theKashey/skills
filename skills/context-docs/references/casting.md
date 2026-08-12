@@ -4,6 +4,14 @@ Use casting when a reader-facing surface is new or substantially reworked, or
 when the proposed reader, goal, subject, or surface is in doubt. A bounded edit
 with an explicit, unchallenged story contract does not need to recast it.
 
+An upstream validation—product contract, PRD, accepted RFC or ADR—keeps a
+story unchallenged only while later decisions preserve its material reader,
+distribution, scope, and product assumptions. When a decision has revoked an
+external-consumer surface's topology, audition the post-decision consumer set;
+`RECAST_READER` and `CHANGE_SURFACE` are the topology verdicts. Do not
+re-litigate the validated intent itself—only the consequences the later
+decision created.
+
 Casting is allowed to reject the brief. Its purpose is not to make prose fit a
 supplied persona; it is to discover whether a document can help a real entrant
 make a decision the project has reason and authority to influence.
@@ -62,11 +70,12 @@ not that its reader or intent is correct.
 ### 2. Audition real episodes
 
 Collect episodes from repository entry points, support or issue evidence,
-examples, public contracts, tests, navigation, explicit product decisions, and
-observed reader paths. For each material episode, record:
+examples, public contracts, tests, navigation, explicit product decisions,
+PRDs, RFCs, ADRs, and observed reader paths. For each material episode,
+record:
 
 - entrant and trigger;
-- context actually available at entry;
+- context actually delivered at entry and what remains reachable from it;
 - decision or action they control;
 - authority or trust boundary;
 - stakes and smallest successful outcome;
@@ -77,6 +86,12 @@ observed reader paths. For each material episode, record:
 Do not create a class from one skill, package, page, workflow stage, current
 heading, or job title. Mark absent evidence as unknown rather than filling it
 with demographics or plausible preferences.
+
+An anonymous adopter and a sibling-team consumer are distinct entrant
+evidence even when they run the same commands: their delivered context,
+reachable support, trust boundary, and compatibility obligations differ
+materially. Do not collapse them into one external user, and do not split them
+when the evidence shows those properties coincide.
 
 ### 3. Call the intervention gate
 

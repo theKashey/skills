@@ -31,6 +31,28 @@ reader's context. When no material gap remains, add nothing.
   source-only is an enduring boundary, not transient state. Keep former
   behavior in changelogs, migration guides, or release documentation, and
   verify historical claims with durable historical evidence.
+- Rank upstream sources by what they can establish. PRDs, product contracts,
+  RFCs, ADRs, and plans are strong evidence of intent, non-goals, constraints,
+  and rationale; code, exported types, tests, and generated artifacts outrank
+  them for current behavior; explicit current decisions outrank both for
+  product policy. Intent never implemented and never revoked is not
+  documentable behavior; record it as a non-goal or roadmap item only with an
+  explicit decision. Upstream validation suppresses re-litigating a decision
+  only while later decisions preserve its material reader, distribution,
+  scope, and product assumptions; a decision that breaks one re-opens exactly
+  the consequences it created, never the validated intent itself.
+- Documentation topology follows authorized product and distribution
+  decisions, not repository structure. On a surface serving an external
+  consumer—a reader who receives the subject across a distribution or team
+  boundary, whether an anonymous adopter or a sibling team—treat the
+  established topology as revoked when such a decision changes the consumer
+  population, an entry point, the delivery boundary, what remains reachable,
+  or a consumer-facing contract: return to the route table's casting row with
+  the post-decision consumer set and record the per-consumer delta. Registry,
+  tag, or deployment state alone never fires this trigger; only a product or
+  distribution-contract decision can. Line, block, and file comments never
+  enter this check, nor does an orientation surface whose every material
+  reader receives the repository itself.
 - Follow the environment's established owner and submission route. Locality can
   explain or propose a fit; it cannot authorize a surface, displace an owner,
   or widen the requested topology or mutation scope.
@@ -82,7 +104,7 @@ the requested artifact genuinely spans them.
 | Task | Load and follow |
 | --- | --- |
 | Bounded revision to an established README, landing page, documentation home or site, tutorial, how-to, or explanation | Follow the [routine current-document path](#edit-an-established-current-document). Load a specialist guide only for a condition named there. |
-| New, substantially reworked, or challenged story; unresolved authorial goal; conflicting reader paths; or uncertain surface role | Follow [casting](references/casting.md). After `PROCEED`, load [content architecture](references/content-architecture.md) only while a story, surface-role, scan-path, or multi-reader alignment decision remains live. Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. |
+| New, substantially reworked, or challenged story; unresolved authorial goal; conflicting reader paths; uncertain surface role; or a revoked topology on an external-consumer surface | Follow [casting](references/casting.md). After `PROCEED`, load [content architecture](references/content-architecture.md) only while a story, surface-role, scan-path, or multi-reader alignment decision remains live. Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. |
 | API or configuration reference, public JSDoc/TSDoc, or standalone public API, configuration, or code example | Follow [Document a public contract or standalone example](references/api-jsdoc-examples.md#document-a-public-contract-or-standalone-example). Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. Finish non-inline work with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
 | Line, block, or file comment | Apply the [selective-context authoring decision](references/api-jsdoc-examples.md#selective-context-authoring-decision). Load the [locality ladder](references/locality-ladder.md) only when the owner or line/block/file placement remains unresolved. Stop after the code-local disposition; do not run documentation review. |
 | Documentation audit, review, release check, or maintenance plan | Follow [Audit documentation](references/quality-maintenance.md#audit-documentation), which names the additional guide required by each in-scope surface. Review only; do not edit unless the user separately authorizes changes. |
@@ -102,9 +124,11 @@ take the named conditional path.
    the work completes. Keep product intent distinct from observed
    implementation.
 2. Check the material gap from the context the reader actually has at the
-   decision. Use the established owner and topology. If the reader can already
-   act safely, add nothing; if the owner cannot be updated, return a proposal
-   for that owner instead of creating a fallback.
+   decision. Use the established owner and topology; on an external-consumer
+   surface, first check the topology-revocation trigger in the cross-route
+   contract and return to the route table's casting row when it fires. If the
+   reader can already act safely, add nothing; if the owner cannot be updated,
+   return a proposal for that owner instead of creating a fallback.
 3. Preserve the established through-line. Write the minimum missing purpose,
    behavior, evidence, boundary, and next route without repeating recoverable
    facts. Give the project-prioritized reader a compact direct path; route a

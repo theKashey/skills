@@ -160,8 +160,11 @@ ladder](locality-ladder.md) first:
 
 - A top-level repository or project README, when present, is technical orientation for the
   whole technical system or repository.
-- A package README, when present, is technical orientation and contract for the package,
-  whether it is internal or independently published.
+- A package README, when present, is technical orientation and contract for
+  the package. When an authorized decision distributes the package
+  independently, that README is also the effective root for its external
+  consumer, who receives it without ancestor surfaces; it remains a child
+  surface on the repository path.
 - A folder or module README, when present, is technical orientation for the governed area.
 - A public documentation home, when present, is navigation and orientation for readers already
   seeking documentation.
@@ -278,7 +281,11 @@ does not create a landing-page task or a required follow-up proposal.
 ## Reader entry and scan path
 
 Model the reader at the surface where they first encounter the documentation.
-Assume only context genuinely available at that surface.
+Assume only context genuinely available at that surface. When material entry
+paths deliver different context to the same surface, assume only the
+delivered-context intersection defined in the [locality
+ladder](locality-ladder.md): orient the least-contextualized material external
+consumer locally or give them a direct route.
 
 Open with the pressure, consequence, responsibility, supported outcome,
 boundary, or changed decision the entering reader needs. Make the governed

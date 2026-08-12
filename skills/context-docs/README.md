@@ -209,7 +209,7 @@ preferred document, or create an unauthorized fallback.
 | [SKILL.md](SKILL.md) | Cross-route contract, compact established-document path, and direct conditional workflow pointers. | A change affects every activation, the routine path, or which deeper workflow loads. |
 | [casting](references/casting.md) | Reader discovery, goal scaffolding, class-frequency evidence, top-`N` service priority, casting outcomes, and durable cast boundaries. | A change affects how a reader, goal, subject, surface, or service priority is challenged before drafting. |
 | [content architecture](references/content-architecture.md) | Deep alignment for authorial intent, story contracts, reader paths, document roles, procedure structure, and progressive disclosure. | A change affects a new or challenged story, surface role, scan path, or multi-reader alignment decision. |
-| [locality ladder](references/locality-ladder.md) | Compact existence, ownership, scope, and placement reasoning from a line comment to top-level documentation. | A change affects unresolved existence, ownership, scope, or placement without overriding an established owner. |
+| [locality ladder](references/locality-ladder.md) | Compact existence, ownership, scope, and placement reasoning from a line comment to top-level documentation; the documentation-topology, delivered-versus-reachable, external-consumer, and effective-root definitions. | A change affects unresolved existence, ownership, scope, or placement without overriding an established owner, or how topology is defined. |
 | [API, JSDoc, and examples](references/api-jsdoc-examples.md) | Public-contract workflow, JSDoc/TSDoc, code-local rationale, and example framing and integrity. | A change affects API semantics, snippets, or code comments. |
 | [review at wrap-up](references/review-documentation-at-wrap-up.md) | One-time minimum completion checks, the compact end-state gate, and the condition for loading the full scorecard. | A change affects routine non-inline completion. |
 | [quality and maintenance](references/quality-maintenance.md) | Audit workflow and evidence, change triggers, and release and drift checks. | A change affects audits, releases, or how documentation quality is assessed or maintained. |
@@ -243,6 +243,20 @@ The skill's durable principles are:
   a compact local consequence is not a second owner. When ownership is
   unresolved, use locality to propose the lowest stable surface that reaches
   every affected decision; do not treat the proposal as authority.
+- **Follow reader-visible consequences of decisions, not repository
+  structure.** An authorized product or distribution decision can change who
+  consumes a subject, where they enter, what is delivered to them, and what
+  obligations they hold, without any file becoming individually wrong—a
+  package published from a monorepo turns its README into an effective root
+  for a consumer who never receives the repository. On surfaces serving an
+  external consumer, such a decision revokes the established topology and
+  re-enters casting; the validated upstream intent is not re-litigated, only
+  the consequences the new decision created. A mandatory provenance pass on
+  every task was rejected: routine bounded work keeps the compact path, and
+  the trigger fires only on a decision-backed change to an external
+  consumption boundary—never on registry, tag, or deployment state alone, and
+  never for code comments or an orientation surface whose every material
+  reader receives the repository itself.
 - **Treat supplied context as living terrain.** Route readers to the established
   owner before adding local prose. Add only a durable, verified local
   consequence that changes a safe action, and retire it when the reader can

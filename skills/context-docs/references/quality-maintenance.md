@@ -33,6 +33,9 @@ plan. That request is itself the final documentation task.
    durable historical evidence. For a change-set audit, inventory every changed
    public item and affected non-inline surface. For a completeness audit,
    inventory every stable public item and relevant non-inline surface in scope.
+   When the distribution contract names external consumers, also inventory
+   each material external consumer with their entry path and delivered
+   context.
    Establish canonical facts, examples, and repository-native verification
    commands. Exclude line, block, and file comments; exported-symbol JSDoc
    remains a public-contract surface.
@@ -74,6 +77,7 @@ Report documentation quality with evidence and counts.
 | Remote-truth stability | Non-inline prose that depends on another owner preserves a stable contract or causal edge and its local consequence; it does not narrate remote mechanics that can change independently. |
 | Scan-path usability | On a human-facing entry surface, inspection of the rendered or actual delivered form shows semantically meaningful [focus and attention anchors](content-architecture.md#focus-and-attention-management) that make the primary subject, path, and necessary boundary perceptible before secondary detail without relying on decoration. For a public website presentation page, a browser visitor can identify the intended context, supported outcome, and first verified action; any boundary needed to avoid a likely false expectation appears before it matters. For a public documentation home, a reader can find the relevant topic or exact fact without a product-presentation detour. For a README, the named technical reader can identify the governed scope, boundary, and route for their task without marketing posture. |
 | Locality fit | Each fact remains with its established owner. When ownership is unresolved, the ladder supports a placement proposal at the narrowest governed scope visible to affected readers; it does not justify displacing another owner or creating a parallel record. |
+| Topology fit | For each material external consumer named by the authorized distribution contract, the entry path delivers or directly routes the orientation, contract, and boundaries that consumer needs; no surface assumes ancestor context its external consumer does not receive. Individually correct documents do not pass this gate while a consumer path fails. |
 | Entry-point validity | Commands, links, paths, prerequisites, and assumed context work from the documented starting state; any additional access or knowledge is explicit. |
 | Reader-path usability | A representative intended reader can complete the documented outcome from the stated starting state without undocumented setup, unsafe inference, or a required condition or warning that arrives after the action it governs; any untested assumptions are explicit. |
 | Level fit | Guided, Balanced, or Compressed matches the stated reader; explanatory detail is neither withheld from a reader who needs it nor repeated for one who does not. |
@@ -98,6 +102,8 @@ For the judgment-heavy gates, record the observation:
   disposition, and the evidence that supports or would overturn the result.
 - **Locality fit:** governed scope, chosen owner, and the plausible competing
   scope.
+- **Topology fit:** each material external consumer, their entry point,
+  delivered context, and the route by which orientation reaches them.
 - **Level fit:** named reader and one detail deliberately included or removed
   for that reader.
 - **Reader path:** starting state, task attempted, and observed result.
@@ -203,6 +209,16 @@ Require a documentation-impact decision when a change affects:
 - installation, supported runtimes or versions, generated API inputs, or docs-site navigation;
 - security, authorization, persistence, lifecycle, compatibility, or migration behavior;
 - example programs or documentation build tooling.
+
+Require a topology review—casting with the post-decision consumer set, not
+merely a prose update—when an authorized product or distribution decision
+makes an internal component externally consumable, starts or stops independent
+distribution, adds a CLI, API, SDK, or generated-docs surface as a direct
+external entry point, points a product surface straight at a subsystem, stops
+delivering source context with the artifact, or creates a new external
+compatibility or operational obligation. Ordinary implementation changes that
+preserve the existing consumers and distribution model do not fire this
+trigger; neither does registry, tag, or deployment state without a decision.
 
 Also reconsider the canonical surface or its pointer when evidence shows
 repeated support questions, failed onboarding or copy-paste paths, search

@@ -6,6 +6,14 @@ environment's established owner and submission route decide the actual home.
 The ladder is not a folder tree, document inventory, measure of importance, or
 persona catalog.
 
+Documentation topology is the reader-visible result of authorized product and
+distribution decisions: each material reader, their entry point, the context
+delivered with the artifact, and the surfaces reachable from that entry. It
+follows those decisions, not repository structure. An external consumer—a
+reader who receives the subject across a distribution or team boundary,
+whether an anonymous adopter or a sibling team—can hold a different topology
+than a repository reader over the same files.
+
 ## Pass the existence and ownership gates
 
 1. When the purpose of an existing choice or structure is unknown, treat it as
@@ -33,6 +41,18 @@ folder-local instructions, package documentation, and the canonical owner. Do
 not count repository-wide semantic search or indexing as available context
 unless the actual workflow reliably supplies the relevant result before the
 decision.
+
+Distinguish delivered context—what arrives in the reader's environment with
+the artifact—from reachable context—what a route can still fetch. A
+distribution decision can sever delivery while leaving reachability intact: a
+package published from a monorepo delivers only its own README, so that README
+is an effective root for its external consumer while remaining a child surface
+on the repository path. A surface serving several material entry paths may
+assume only the context delivered on every one of them. When an encounter path
+merely fails to reach the owner, the compact breadcrumb below suffices; when
+an authorized decision severs a delivery boundary, the surface's role has
+changed—route that re-decision through [casting](casting.md) instead of
+patching a root-sized gap with a breadcrumb.
 
 When an encounter path does not reach the owner and the gap would cause an
 unsafe action or repeated reconstruction, leave a compact breadcrumb at the
