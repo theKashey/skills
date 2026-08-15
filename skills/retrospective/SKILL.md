@@ -1,6 +1,6 @@
 ---
 name: retrospective
-description: Use when an existing solution claims to work and its problem, beneficiary, priority, evidence, or consequential oddities need interrogation; not for contract-conformance gating, bug fixes, forward design, or team-morale retrospectives.
+description: Use when an existing solution claims to work and its problem, beneficiary, owner, priority, evidence, or consequential oddities need interrogation; not for contract gating, fixing bugs, forward design, or team-morale retrospectives.
 ---
 
 # Retrospective
@@ -51,7 +51,7 @@ Observed effect: [what has actually been seen]
 Boundary: [environment, scale, time, inputs, and exclusions]
 Known constraints: [facts that allegedly shape the solution]
 Evidence supplied: [tests, measurements, comparisons, incidents, or none]
-Problem origin: [what evidence shows existed before the candidate, or Unknown]
+Problem origin: [Pre-existing | Exposed | Candidate-created | Candidate-amplified | Unknown; evidence]
 Displaced work: [one consequential problem competing for the same resources, or Unknown]
 ```
 
@@ -231,11 +231,11 @@ Review point: [time, attempt, state transition, or measurement]
 
 Choose a move whose possible outcomes divide the plausible accounts. Reject a
 probe when every outcome leaves the verdict unchanged. Do not turn the move
-into a rewrite or roadmap. Retrospective selects the question and the signal
-that would divide the accounts; it does not classify the causal regime or
-design the probe. When installed, Read the Terrain owns that execution.
-Update the ledger from the result; more activity without a discriminating
-signal is not progress.
+into a rewrite or roadmap. Retrospective selects the question, bounded move,
+and signals that would divide the accounts; it does not execute the move or
+infer causality from the proposed probe. When installed, Read the Terrain owns
+execution. Update the ledger from the result; more activity without a
+discriminating signal is not progress.
 
 Return `BLOCK` when the same consequential question survives two inconclusive
 moves or requires unavailable evidence. Return `NEEDS-HUMAN-DECISION` when

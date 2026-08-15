@@ -117,10 +117,12 @@ Helix's epitaphs so a retired story does not return under a new name.
 These are external compositions of separately installed skills, not runtime
 dependencies; the package completes alone. One maintenance invariant follows
 from the overlap: the isolated-reader question block in
-[`SKILL.md`](SKILL.md) is a deliberate verbatim duplicate of Read the
-Terrain's neutral second-order question, and read-the-terrain remains its
-canonical owner. Keep the two blocks identical when either changes, or record
-a deliberate divergence; an accidental paraphrase between them is a defect.
+[`SKILL.md`](SKILL.md) carries the same question text as Read the Terrain's
+neutral second-order question, and read-the-terrain remains its canonical
+owner. The two copies differ only in the indentation each surrounding list
+imposes; keep the question text itself identical when either changes. An
+accidental paraphrase between them is a defect, and a deliberate divergence is
+a decision for both skills at once.
 
 ## Runtime contract
 
