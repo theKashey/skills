@@ -1,6 +1,6 @@
 ---
 name: context-docs
-description: Use when creating, revising, or auditing a README, tutorial, how-to, API or configuration reference, changelog, migration guide, docs site, landing page, example, or code comment; not for changing code behavior.
+description: Use when creating, revising, or auditing a README, tutorial, how-to, API or configuration reference, changelog, migration guide, docs site, landing page, example, code comment, working document, or handoff; not for changing code behavior.
 ---
 
 # Context Docs
@@ -70,13 +70,37 @@ reader's context. When no material gap remains, add nothing.
 - Make a selective map, not an implementation transcript. Preserve invisible
   causes, relationships, contracts, and boundaries that change a decision;
   omit visible mechanics and facts the reader can safely recover.
-- Choose explanation density for the actual reader: Guided when unfamiliar
-  terms and prerequisites need a safe primary path, Balanced for a mixed or
-  unspecified audience, and Compressed for a known expert. Never compress away
-  required defaults, failures, security boundaries, setup, or public contracts.
+- Subtract priors and speciality before admitting prose. Casting supplies the
+  assumed priors—stable general knowledge, named concepts, and ordinary tool
+  or platform competence the cast reader brings; the governed subject supplies
+  the speciality—the contracts, choices, guarantees, boundaries, and failure
+  modes it owns or intentionally exposes, never every technology it uses
+  internally. Subtract those, the visible or reachable context, and any
+  verified delegated guarantee—an underlying abstraction or executable gate
+  that already prevents the wrong action here. Keep only the remaining exact
+  local contract, deviation, causal edge, boundary, or continuation
+  breadcrumb; admit an out-of-speciality fact only where it leaks across the
+  abstraction boundary with a material local consequence, then route to its
+  owner. Recruit a shared concept by its precise name instead of restating its
+  theory, and add a local consequence only when the name does not select the
+  action. Being true or relevant is not admission: every retained explanation
+  averts a named wrong turn, repeated investigation, or unsafe continuation.
+- Choose explanation density only for what admission already kept: Guided when
+  the surface is responsible for teaching unfamiliar terms and prerequisites,
+  Balanced for a mixed or unspecified audience, and Compressed for a known
+  expert or model. Density changes representation, never verified facts,
+  guarantees, or safety boundaries. Never compress away required defaults,
+  failures, security boundaries, setup, or public contracts, and never expand a
+  prior the cast reader already holds.
 - Keep reader contracts distinct. A technical README orients its technical
-  reader, a documentation home supports navigation and lookup, and a public
-  presentation page serves a verified browser-visitor decision or action.
+  reader, a documentation home supports navigation and lookup, a public
+  presentation page serves a verified browser-visitor decision or action, and a
+  working document, implementation handoff, or continuation note leaves a
+  reconstructable decision trace—verified local facts, decisions and their
+  causal edges, evidence routes, still-plausible rejected alternatives,
+  unresolved questions, and the next action—for whoever resumes the work. Read
+  a request to preserve a chain of thought as a request for that trace, not a
+  verbatim or exhaustive thought transcript.
 - For a new, substantially reworked, or challenged story, test the supplied
   reader, goal, subject, and surface before drafting. A bounded revision with an
   explicit, unchallenged story keeps that contract.
@@ -103,8 +127,8 @@ the requested artifact genuinely spans them.
 
 | Task | Load and follow |
 | --- | --- |
-| Bounded revision to an established README, landing page, documentation home or site, tutorial, how-to, or explanation | Follow the [routine current-document path](#edit-an-established-current-document). Load a specialist guide only for a condition named there. |
-| New, substantially reworked, or challenged story; unresolved authorial goal; conflicting reader paths; uncertain surface role; or a revoked topology on an external-consumer surface | Follow [casting](references/casting.md). After `PROCEED`, load [content architecture](references/content-architecture.md) only while a story, surface-role, scan-path, or multi-reader alignment decision remains live. Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. |
+| Bounded revision to an established README, landing page, documentation home or site, tutorial, how-to, explanation, working document, or handoff note | Follow the [routine current-document path](#edit-an-established-current-document). Load a specialist guide only for a condition named there. |
+| New, substantially reworked, or challenged story—including a working document, implementation handoff, or continuation note; unresolved authorial goal; conflicting reader paths; uncertain surface role; or a revoked topology on an external-consumer surface | Follow [casting](references/casting.md). After `PROCEED`, load [content architecture](references/content-architecture.md) only while a story, surface-role, working-document contract, scan-path, or multi-reader alignment decision remains live. Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. |
 | API or configuration reference, public JSDoc/TSDoc, or standalone public API, configuration, or code example | Follow [Document a public contract or standalone example](references/api-jsdoc-examples.md#document-a-public-contract-or-standalone-example). Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. Finish non-inline work with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
 | Line, block, or file comment | Apply the [selective-context authoring decision](references/api-jsdoc-examples.md#selective-context-authoring-decision). Load the [locality ladder](references/locality-ladder.md) only when the owner or line/block/file placement remains unresolved. Stop after the code-local disposition; do not run documentation review. |
 | Documentation audit, review, release check, or maintenance plan | Follow [Audit documentation](references/quality-maintenance.md#audit-documentation), which names the additional guide required by each in-scope surface. Review only; do not edit unless the user separately authorizes changes. |
@@ -124,11 +148,13 @@ take the named conditional path.
    the work completes. Keep product intent distinct from observed
    implementation.
 2. Check the material gap from the context the reader actually has at the
-   decision. Use the established owner and topology; on an external-consumer
-   surface, first check the topology-revocation trigger in the cross-route
-   contract and return to the route table's casting row when it fires. If the
-   reader can already act safely, add nothing; if the owner cannot be updated,
-   return a proposal for that owner instead of creating a fallback.
+   decision, subtracting the cast's assumed priors, the governed subject's
+   speciality boundary, and any verified delegated guarantee before drafting.
+   Use the established owner and topology; on an external-consumer surface,
+   first check the topology-revocation trigger in the cross-route contract and
+   return to the route table's casting row when it fires. If the reader can
+   already act safely, add nothing; if the owner cannot be updated, return a
+   proposal for that owner instead of creating a fallback.
 3. Preserve the established through-line. Write the minimum missing purpose,
    behavior, evidence, boundary, and next route without repeating recoverable
    facts. Give the project-prioritized reader a compact direct path; route a

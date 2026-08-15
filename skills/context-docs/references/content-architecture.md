@@ -8,12 +8,14 @@ from its filename, repository visibility, or marketing posture.
 
 - [Reader contexts](#reader-contexts)
 - [Authorial intent and story contract](#authorial-intent-and-story-contract)
+- [Prior and speciality admission](#prior-and-speciality-admission)
 - [Detail level](#detail-level)
 - [Procedure paths](#procedure-paths)
 - [Classify technical documents and public sites](#classify-technical-documents-and-public-sites)
 - [Technical README roles](#technical-readme-roles)
 - [Public documentation homes](#public-documentation-homes)
 - [Public website presentation pages](#public-website-presentation-pages)
+- [Working documents and handoffs](#working-documents-and-handoffs)
 - [Reader entry and scan path](#reader-entry-and-scan-path)
 - [Focus and attention management](#focus-and-attention-management)
 - [Progressive disclosure](#progressive-disclosure)
@@ -36,6 +38,7 @@ modes; it does not require separate files, folders, or navigation.
 | Find an exact fact | Reference | API, configuration, or in-page reference | Locate a precise answer without a narrative detour. |
 | Understand a design | Explanation | Concept or architecture section | Understand the mental model, trade-off, and boundary. |
 | Evaluate or access a browser-based product | Presentation or product guidance | Actual public website page, not a README | Recognize the supported outcome and take a verified browser-native next action. |
+| Resume or hand off unfinished work | Outside Diátaxis: working record | Working document, implementation handoff, or continuation note | Recover current state, live decisions, open questions, and the next action without the previous conversation. |
 
 Apply modes within the documentation surfaces the repository already uses. If a
 README is the only surface, keep the necessary modes as clear technical README
@@ -82,6 +85,8 @@ Record only the contract needed to control the draft:
 - surface role, existing owner, and authority;
 - primary content-persona class, proven modifier if any, task-local episode,
   and reader goal, plus secondary goals to route;
+- the governed subject and its speciality boundary, the class's assumed priors,
+  and the representation contract this document owes that reader;
 - authorial goal, its decision source, and the intended reader change;
 - one evidence-backed proposition or through-line and the proof that earns it;
 - boundary or non-fit, unsupported stories to exclude, and one completion
@@ -119,21 +124,85 @@ home makes a navigation promise. A tutorial or how-to progresses toward a
 working result; explanation progresses toward a mental model; reference makes a
 lookup promise and needs no book-like arc.
 
+## Prior and speciality admission
+
+Run this gate on every candidate statement before choosing a detail level or a
+home for it. Locality decides where an admitted fact belongs; it never decides
+whether generic knowledge deserves restating.
+
+Three inputs bound the gate:
+
+- **Assumed priors** come from the cast: the stable general knowledge, named
+  concepts, and ordinary tool or platform competence the cast reader brings to
+  this document. [Casting](casting.md#4-freeze-and-prioritize-the-smallest-cast)
+  owns them and keeps them task-local.
+- **Subject speciality** comes from the governed subject: the contracts,
+  choices, guarantees, boundaries, and failure modes it owns or intentionally
+  exposes. A technology the subject uses internally is not part of its
+  speciality.
+- **Delegated guarantees** come from the system: verified behavior supplied by
+  an underlying abstraction or executable gate that already prevents the wrong
+  action without prose at this surface. A gate the reader must invoke or
+  interpret is not one; document that local action or result and route to the
+  gate's owner.
+
+For each candidate statement:
+
+1. Name the reader decision, action, or continuation need it changes.
+2. Name the plausible wrong action or repeated investigation it prevents.
+3. Determine whether the fact is inside the governed subject's speciality.
+4. If it is outside, keep it only where it leaks across the abstraction
+   boundary and produces a material local consequence.
+5. Subtract meaning already recoverable from visible or reachable project
+   context, the assumed priors, and verified delegated guarantees.
+6. Keep only the remaining exact local contract, deviation, causal edge,
+   boundary, or continuation breadcrumb.
+
+Return one disposition:
+
+| Disposition | Return it when | Result |
+| --- | --- | --- |
+| `No document` | The prior, visible context, or a delegated guarantee already selects the safe action. | Add nothing. |
+| `Recruit the prior` | The cast reader holds the concept and its precise name selects the action. | Name the concept without restating its generic theory; add a local consequence only when the name does not select the action. |
+| `State the speciality contract` | The subject owns the behavior, default, failure, or boundary. | Preserve the exact local truth. |
+| `Preserve a boundary leak` | An out-of-speciality fact still changes a local decision. | Leave the smallest local consequence and route to the external owner. |
+| `Teach the prerequisite` | Teaching this generic material is part of the explicit reader and authorial goal. | Explain it to the depth that goal requires, and only on the surface that owns it. |
+
+Being true or relevant is not admission. Every admitted explanation must avert
+a named wrong turn, repeated investigation, or unsafe continuation; when no
+such turn can be named, the disposition is `No document` and existing prose is
+a deletion candidate.
+
+The gate suppresses generic explanation, not exact project truth. A public API
+or configuration reference still exposes its in-scope signatures, defaults,
+errors, compatibility limits, and security boundaries: a frontier model knowing
+the generic concept is not evidence that it knows the current repository
+contract. Changing the cast may change terminology, scaffolding, ordering,
+examples, and compression; it never changes verified facts, guarantees, or
+required safety boundaries.
+
 ## Detail level
 
-Choose Guided, Balanced, or Compressed for the intended reader before writing.
-Use Balanced when the audience is mixed or unspecified.
+Choose Guided, Balanced, or Compressed for the intended reader, but only for
+what [prior and speciality admission](#prior-and-speciality-admission) already
+kept. Density is a representation mode: it cannot readmit a subtracted prior or
+drop an admitted contract. Use Balanced when the audience is mixed or
+unspecified.
 
 | Level | Include | Avoid |
 | --- | --- | --- |
 | Guided | A short mental model, defined unfamiliar terms, explicit prerequisites, one primary path, and expected results. | Background history, multiple equivalent paths, and line-by-line code narration. |
-| Balanced | The reader outcome, non-obvious choices, important boundaries, and contextual links. | Repeating the reference contract or assuming specialist knowledge without evidence. |
-| Compressed | The exact answer, required conditions, meaningful boundary, and a descriptive link to detail. | Introductions, examples, or explanations the named expert audience can safely infer. |
+| Balanced | The reader outcome, non-obvious choices, important boundaries, and contextual links. | Repeating the reference contract, or treating absent repository prose as evidence that generic theory is needed. |
+| Compressed | The exact local answer, required conditions, meaningful boundary, evidence route or decision trace, and a descriptive link to detail. | Introductions, examples, or explanations the named expert or model audience can safely infer. |
 
-Do not use Compressed to hide a failure mode, security condition, required setup,
-or public API contract. Do not use Guided to make every page a tutorial. Keep
-code samples copyable at every level; change surrounding prose, not the amount
-of commentary inside the code.
+Guided lowers the assumed prior only for prerequisites this surface is
+explicitly responsible for teaching; it does not make every page a tutorial.
+Compressed recruits a shared concept by its precise name instead of restating
+its theory. Do not use Compressed to hide a failure mode, security condition,
+required setup, or public API contract. Assume ordinary shared knowledge as a
+prior; require supporting evidence only before assuming specialist knowledge
+the cast does not establish. Keep code samples copyable at every level; change
+surrounding prose, not the amount of commentary inside the code.
 
 ## Procedure paths
 
@@ -170,6 +239,9 @@ ladder](locality-ladder.md) first:
   seeking documentation.
 - A public website or product landing page is a separate presentation surface
   for browser visitors; it is not a README and is not implied by public source.
+- A working document, implementation handoff, or continuation note, when
+  present, is a task-scoped record for whoever resumes the work; it is not a
+  reader-facing product surface and does not become one by being committed.
 
 README is never an advertising landing page. Do not import landing-page section
 order, persuasion goals, browser calls to action, or source-versus-browser
@@ -277,6 +349,47 @@ product decision.
 
 When no presentation page exists or is authorized, stop this route. Its absence
 does not create a landing-page task or a required follow-up proposal.
+
+## Working documents and handoffs
+
+A working document, implementation handoff, or continuation note serves whoever
+resumes unfinished work. Cast that reader like any other: a human maintainer
+and a frontier model need materially different starting context, representation,
+proof, and success conditions. A frontier-model document defaults to a
+compressed representation contract until the project or user selects another.
+
+What it must leave is a **reconstructable decision trace**—the smallest durable
+record from which the intended reader can recover current state and continue:
+verified local facts, decisions and their causal edges, evidence routes,
+still-plausible rejected alternatives, unresolved questions, and the next
+action. A request to preserve a chain of thought asks for that trace, not a
+verbatim or exhaustive thought transcript.
+
+Preserve:
+
+- current state and completed decisions;
+- the shortest verified `X because Y` causal edge needed to prevent reversal;
+- direct evidence and the route back to its source;
+- rejected alternatives only while they remain locally plausible and likely to
+  be reopened;
+- unresolved uncertainty, including what has and has not been established;
+- the next decision, verification step, or action.
+
+Omit:
+
+- generic language, framework, platform, and engineering theory;
+- definitions of named concepts the cast reader can recruit;
+- chronological narration of the exploration;
+- dead branches whose removal cannot change continuation;
+- mechanics recoverable directly from code, types, tests, or a reachable owner;
+- motivational prose and restatement of the task.
+
+The completion test is whether a fresh intended reader can recover what is
+true, why the live decisions were selected, what remains unknown, and what to
+do next without receiving the previous conversation. It fails in both
+directions: a record whose reader must re-derive a decision the work already
+settled is incomplete, and a record that narrates an exploration nobody needs
+to repeat is a transcript, not a trace.
 
 ## Reader entry and scan path
 
@@ -411,6 +524,10 @@ At wrap-up, apply these review tests:
   without a product-presentation detour?
 - Public website presentation page: can a browser visitor find only a verified
   web-native path without source setup being made primary?
+- Working document or handoff: can a fresh intended reader recover current
+  state, live decisions and their reasons, open questions, and the next action
+  without the previous conversation, and without reading exploration nobody
+  needs to repeat?
 
 Flag a possible split when one page attempts to teach, prescribe, enumerate
 facts, and justify architecture with no clear separation. Until the user accepts

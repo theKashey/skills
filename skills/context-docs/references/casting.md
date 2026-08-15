@@ -36,6 +36,14 @@ Human versus coding agent is usually a modifier, not a class. Engineer or
 architect may describe decision altitude, not identity. Treat every proposed
 label as a hypothesis until it survives the procedure below.
 
+Reader kind does define the class when it materially changes starting context,
+representation, proof needs, or success conditions. A model-only working
+document may cast a **frontier model** as its primary class on that evidence;
+do not force the distinction to stay a modifier when it changes those authoring
+decisions. Do not promote it when the same starting context, proof, density,
+and route already serve both, and never derive the class from a model vendor,
+version, or capability tier.
+
 ## Scaffold the goals
 
 Before drafting, trace the proposed document through this chain:
@@ -155,6 +163,28 @@ density, proof, boundary, or next route while leaving facts and guarantees
 unchanged. If the cast cannot admit a recurring entrant without distortion, or
 causes contradictory promises or one bespoke narrative per route, recast it.
 
+Record two of those consequences explicitly, because admission and drafting
+both depend on them:
+
+- **Assumed priors**, the class's base level: the stable general knowledge,
+  named concepts, and ordinary tool or platform competence the cast reader
+  brings to this document. Record a prior only where it changes what may be
+  admitted or how it is represented. Do not inventory what the reader or model
+  is believed to know, and do not build a capability catalog by vendor,
+  version, or tier.
+- **Representation contract:** the voice, compression, evidence form, and
+  continuation needs this document owes that reader, selected from the class,
+  the surface, and the authorial goal. A working document cast to a frontier
+  model defaults to compressed until the project or user selects otherwise.
+
+Both are task-local unless the project already owns a durable cast, and both
+are adjustable per document: neither may be inferred as a universal property of
+all developers, all models, or every document serving the same class. Neither
+changes what is true: priors govern representation and admission only, under
+the invariant that
+[prior and speciality admission](content-architecture.md#prior-and-speciality-admission)
+states.
+
 After the classes survive, rank their expected service frequency for the
 project or surface:
 
@@ -179,6 +209,9 @@ After `PROCEED`, record:
 
 ```text
 Primary class:
+Governed subject and speciality boundary:
+Assumed priors:
+Representation contract:
 Frequency evidence and direct/deeper disposition:
 Proven modifier, if any:
 Task-local episode:
@@ -206,11 +239,13 @@ catalog at repository root.
 
 Use a compact `CONTENT-PERSONAS.md` as the selector and evidence boundary.
 Record each retained class's frequency evidence or explicitly unmeasured band,
-direct/deeper disposition, and canonical route. Keep the top-`N` selector
-compact. Link a subclass or modifier behind a direct condition only when its
-recurring content delta no longer fits there; a child contains only what
-differs from its parent. Do not create one record per skill, package, surface,
-task, or workflow, and do not load every detail because one applies.
+direct/deeper disposition, canonical route, and only the assumed priors that
+have repeatedly changed admission. Never persist a model-capability catalog or
+require a persona file before a working document can be written. Keep the
+top-`N` selector compact. Link a subclass or modifier behind a direct condition
+only when its recurring content delta no longer fits there; a child contains
+only what differs from its parent. Do not create one record per skill, package,
+surface, task, or workflow, and do not load every detail because one applies.
 
 Revisit or retire a durable class when entry evidence, decision rights, trust
 boundaries, supported outcomes, or authoring consequences change. A cast is

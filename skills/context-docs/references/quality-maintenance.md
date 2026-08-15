@@ -71,7 +71,7 @@ Report documentation quality with evidence and counts.
 | Selection context and impact | Before methodology, workflow, taxonomy, or components, the intended reader can infer the relevant situation or pressure, affected party or system, observable impact or changed decision, and boundary. A chooser may own this context for compact catalog entries; a standalone subject page and a detailed owning section orient themselves locally. |
 | Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is accounted for by a discoverable canonical source or has an explicit justified exclusion; prose fills only material semantic gaps. |
 | Relationship coverage | Within the stated audit scope, every consumer-visible assertion connecting named subjects that a reader could act on—capability, compatibility, dependency, causation, ordering, or ownership claims—is inventoried by source, relation, target, direction, modality, and condition, then verified against authoritative contracts for both endpoints or an explicit product decision. Record the bound applied and its exclusions. Internal coherence, co-location, and repeated prose are not evidence. |
-| Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. |
+| Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. Every retained explanation names the wrong turn, repeated investigation, or unsafe continuation it prevents, and survives subtraction of the cast reader's assumed priors, another subject's speciality, and verified delegated guarantees under [prior and speciality admission](content-architecture.md#prior-and-speciality-admission). When nothing survives that subtraction, deletion or `No document` is the passing result. |
 | Surface necessity | The surface passes the [locality ladder's existence and ownership gates](locality-ladder.md#pass-the-existence-and-ownership-gates). |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
 | Remote-truth stability | Non-inline prose that depends on another owner preserves a stable contract or causal edge and its local consequence; it does not narrate remote mechanics that can change independently. |
@@ -80,7 +80,7 @@ Report documentation quality with evidence and counts.
 | Topology fit | For each material external consumer named by the authorized distribution contract, the entry path delivers or directly routes the orientation, contract, and boundaries that consumer needs; no surface assumes ancestor context its external consumer does not receive. Individually correct documents do not pass this gate while a consumer path fails. |
 | Entry-point validity | Commands, links, paths, prerequisites, and assumed context work from the documented starting state; any additional access or knowledge is explicit. |
 | Reader-path usability | A representative intended reader can complete the documented outcome from the stated starting state without undocumented setup, unsafe inference, or a required condition or warning that arrives after the action it governs; any untested assumptions are explicit. |
-| Level fit | Guided, Balanced, or Compressed matches the stated reader; explanatory detail is neither withheld from a reader who needs it nor repeated for one who does not. |
+| Level fit | Guided, Balanced, or Compressed matches the stated reader and is applied only to what admission kept; explanatory detail is neither withheld from a reader who needs it nor repeated for one who does not. Substituting one cast for another changes terminology, scaffolding, ordering, examples, and compression only: verified facts, guarantees, and required safety boundaries stay identical under both. |
 | Example integrity | Every fenced example is runnable and validated, illustrative and syntax-checked, partial with stated omissions, or explicitly pseudocode. |
 | Authorial intent and story coherence | Different reader questions remain distinguishable. The finished surface keeps the primary class and episode's reader goal distinct from the established authorial goal and expresses one evidence-backed through-line, intended reader change, proof, boundary, and completion route. Every major section advances that change, supplies necessary proof or boundary, or serves a materially distinct routed goal; incompatible intents are not blended into a committee story. When a task-local contract governed the change, the finished surface agrees with it. |
 | Progressive disclosure | Each surface orients its named reader at its governed scope; detailed facts remain with their established owner and are reached through contextual links when that route is available to the reader. |
@@ -104,8 +104,13 @@ For the judgment-heavy gates, record the observation:
   scope.
 - **Topology fit:** each material external consumer, their entry point,
   delivered context, and the route by which orientation reaches them.
-- **Level fit:** named reader and one detail deliberately included or removed
-  for that reader.
+- **Minimum sufficient explanation:** for each retained explanation, the wrong
+  turn, repeated investigation, or unsafe continuation it prevents; for each
+  intentional omission, whether visible context, an assumed prior, a verified
+  delegated guarantee, or out-of-speciality ownership justifies it.
+- **Level fit:** named reader, that reader's assumed priors, one detail
+  deliberately included or removed for them, and one verified fact or safety
+  boundary that stayed identical when the cast was substituted.
 - **Reader path:** starting state, task attempted, and observed result.
 - **Scan-path usability:** actual delivered view inspected, primary subject,
   path, and boundary located, and the semantic anchors that exposed them.
@@ -157,9 +162,12 @@ every section and public item in that stated scope:
 7. Which established owner holds this fact? If ownership is unresolved, which
    governed scope best fits a placement proposal, and would the current surface
    duplicate or displace another owner?
-8. What material named-reader gap justifies this surface? If readable code,
-   types, tests, metadata, local context, or an existing canonical surface
-   already covers it, should no addition—or a deletion—be the result?
+8. What material named-reader gap justifies this surface, and which wrong turn,
+   repeated investigation, or unsafe continuation does each retained
+   explanation prevent? If readable code, types, tests, metadata, local
+   context, an existing canonical surface, the cast reader's assumed priors, a
+   verified delegated guarantee, or another subject's speciality already covers
+   it, should no addition—or a deletion—be the result?
 9. Can the project-defined reader—or the explicit task reader when no durable
    cast exists—find the purpose, primary path, and next detail appropriate to
    their available context and decision?

@@ -109,6 +109,36 @@ intervention. Casting can replace the reader, revise the goal, change the
 surface or subject, or conclude that no document is needed. Only a surviving
 contract earns a full draft and one verified through-line.
 
+Casting also fixes what the reader already knows. A competent intended reader
+brings the language, platform, tooling, and named engineering concepts the work
+runs on; an underlying abstraction or an executable gate may already prevent
+the wrong action; and a fact can be true near a subject while belonging to
+something that subject merely uses internally. Treating any of those as a
+documentation gap produces prose that is accurate, unnecessary, and from then
+on maintained. Context Docs therefore subtracts the cast's assumed priors, the
+governed subject's speciality boundary, and verified delegated guarantees
+before admitting an explanation, and recruits a shared concept by its precise
+name rather than restating its theory. What survives that subtraction—an exact
+local contract, a deviation from the expected default, a causal edge, a
+boundary—is what earns prose, and only when it averts a wrong turn or a
+repeated investigation that can be named. The subtraction is deliberately
+bounded: it suppresses generic explanation, never exact project truth. A
+reference still states its defaults, failures, compatibility limits, and
+security boundaries however sophisticated its reader is, because knowing a
+generic concept is not knowing this repository's contract.
+
+Not every reader is a person, and not every surface is a product. Work handed
+to whoever continues it—a working document, an implementation handoff, a
+continuation note—may validly cast a frontier model as its primary class, which
+changes authoring decisions rather than tone alone. That reader needs no
+engineering theory but does need repository-specific state, evidence routes,
+live decisions and their reasons, the alternatives still worth reopening, what
+remains unknown, and the next action. A full reasoning transcript buries those;
+no reasoning residue forces the next reader to repeat the investigation that
+produced them. Context Docs keeps the middle—a reconstructable decision
+trace—and tests it by whether a fresh intended reader can continue without the
+conversation that produced it.
+
 Those reader classes and their expected frequency belong to the project, not
 the distributed skill. A project can keep its highest-frequency classes on
 compact direct paths and route lower-frequency deltas to deeper canonical
@@ -150,11 +180,12 @@ or records explicitly accepted uncertainty—using `TODO` or `FIXME` for code—
 and never invents rationale.
 
 A coding agent may enter through a task, diff, README, public contract, symbol,
-or search match without tacit organizational memory. The same selective-context
-problem affects human readers. At code level, Context Docs preserves
-evidence-backed causes that rule out a locally reasonable alternative. It does
-not narrate visible mechanics, inevitable effects, or remote behavior that has
-no material consequence for the decision here.
+search match, or a handoff left by earlier work, without tacit organizational
+memory. The same selective-context problem affects human readers. At code
+level, Context Docs preserves evidence-backed causes that rule out a locally
+reasonable alternative. It does not narrate visible mechanics, inevitable
+effects, or remote behavior that has no material consequence for the decision
+here.
 
 Human-facing entry surfaces also have an attention boundary. During reading,
 eyes alternate between [fixations and
@@ -207,8 +238,8 @@ preferred document, or create an unauthorized fallback.
 | File | Owns | Change it when |
 | --- | --- | --- |
 | [SKILL.md](SKILL.md) | Cross-route contract, compact established-document path, and direct conditional workflow pointers. | A change affects every activation, the routine path, or which deeper workflow loads. |
-| [casting](references/casting.md) | Reader discovery, goal scaffolding, class-frequency evidence, top-`N` service priority, casting outcomes, and durable cast boundaries. | A change affects how a reader, goal, subject, surface, or service priority is challenged before drafting. |
-| [content architecture](references/content-architecture.md) | Deep alignment for authorial intent, story contracts, reader paths, document roles, procedure structure, and progressive disclosure. | A change affects a new or challenged story, surface role, scan path, or multi-reader alignment decision. |
+| [casting](references/casting.md) | Reader discovery, goal scaffolding, class-frequency evidence, top-`N` service priority, casting outcomes, assumed priors and the representation contract, and durable cast boundaries. | A change affects how a reader, goal, subject, surface, service priority, or assumed base level is challenged before drafting. |
+| [content architecture](references/content-architecture.md) | Deep alignment for authorial intent, story contracts, reader paths, document roles, procedure structure, and progressive disclosure; the prior-and-speciality admission gate, the working-document and handoff contract, and the reconstructable decision trace. | A change affects a new or challenged story, surface role, scan path, multi-reader alignment decision, or what admission keeps before density is chosen. |
 | [locality ladder](references/locality-ladder.md) | Compact existence, ownership, scope, and placement reasoning from a line comment to top-level documentation; the documentation-topology, delivered-versus-reachable, external-consumer, and effective-root definitions. | A change affects unresolved existence, ownership, scope, or placement without overriding an established owner, or how topology is defined. |
 | [API, JSDoc, and examples](references/api-jsdoc-examples.md) | Public-contract workflow, JSDoc/TSDoc, code-local rationale, and example framing and integrity. | A change affects API semantics, snippets, or code comments. |
 | [review at wrap-up](references/review-documentation-at-wrap-up.md) | One-time minimum completion checks, the compact end-state gate, and the condition for loading the full scorecard. | A change affects routine non-inline completion. |
@@ -227,6 +258,13 @@ The skill's durable principles are:
 - **Preserve invisible reefs; omit visible cliffs.** Keep the verified reason
   and consequence that code or the current surface does not reveal; omit
   mechanics and meaning already visible to the reader.
+- **Subtract priors, speciality, and guarantees before admitting prose.** Treat
+  the cast reader's stable knowledge, the contract the governed subject
+  actually owns, and a verified gate's enforcement as context the reader
+  already has. Admit only what remains and averts a named wrong turn or
+  repeated investigation, and recruit a shared concept by name instead of
+  teaching it. The subtraction changes representation and admission; it never
+  reaches an exact local contract or a required safety boundary.
 - **Orient before mechanism.** State purpose, relevant effect, and boundary at
   the subject's owning scope before internal method or detail.
 - **Cast before committing to the story.** Treat every supplied reader class,

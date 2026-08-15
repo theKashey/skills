@@ -22,13 +22,24 @@ than a repository reader over the same files.
    invisible reef—the non-local cause and material consequence—that changes it.
 2. List only context the reader actually encounters before that decision:
    nearby code, types, tests, package metadata, system access, and canonical
-   documentation reached through the project's normal route.
+   documentation reached through the project's normal route. Count the cast's
+   assumed priors and every verified delegated guarantee as that context too;
+   [prior and speciality
+   admission](content-architecture.md#prior-and-speciality-admission) defines
+   both.
 3. Add nothing when that context already makes the decision safe. An unfamiliar
    abstraction normally needs a route to its owner, not a second explanation at
-   every use.
-4. Follow the established owner. If it cannot be updated, return a placement
+   every use. A fact the reader already holds as a prior, or that an executable
+   gate already enforces, does not become a local gap by being absent from
+   repository prose.
+4. Determine the governed subject's speciality from the contract it owns or
+   intentionally exposes, never from the technologies it depends on internally.
+   A fact outside that speciality earns local prose only where it leaks across
+   the abstraction boundary with a material local consequence; keep the
+   smallest consequence here and route the rest to the external owner.
+5. Follow the established owner. If it cannot be updated, return a placement
    proposal for that owner instead of inventing a fallback record.
-5. For line, block, or file comments, first apply the [selective-context
+6. For line, block, or file comments, first apply the [selective-context
    authoring decision](api-jsdoc-examples.md#selective-context-authoring-decision).
    Place only an explanation that passes that admission gate.
 
