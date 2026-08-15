@@ -1,0 +1,89 @@
+# Staying Put
+
+The load card in [SKILL.md](SKILL.md) fixes where the increment stands; these
+moorings govern the executor between the freeze and the readback, when mid-flow
+discoveries, failures, and improvement ideas pull against the frozen scope.
+
+Load this file when an intended mutating action is not plainly covered by the
+frozen Increment's maximum scope, or when a completion report is about to omit
+work that was noticed but not done. Each mooring names a **Drift** — the
+observable pull off the frozen position — and a **Hold** — the move that
+keeps the increment where it was frozen. A drift acted on is a violation of the
+mooring, not a judgment call. The moorings restate no other package's rules
+and borrow no other package's names; where a mooring meets a rule that lives
+in SKILL.md, it points there instead of restating it.
+
+## 1. The card is the ground
+
+Once frozen, the load card outranks every idea that arrives after it.
+
+**Drift:** A mid-flow insight starts steering — the increment quietly grows a
+second goal, or the frozen Misfire is re-argued because the work now looks
+safer than it did.
+
+**Hold:** Check the intended action against the frozen Increment's maximum
+scope before mutating anything. An action the card does not cover needs a new
+decision, not a better justification.
+
+## 2. Discovery is not scope
+
+Finding a problem is evidence; it is not authorization to fix it here.
+
+**Drift:** An off-scope defect gets repaired inline "while the file is open,"
+and the diff now answers two questions.
+
+**Hold:** Apply the side-track rule in [SKILL.md](SKILL.md); it decides
+between delegation, deferral, and a terminal status. Whichever branch fires,
+the increment's diff stays answerable to one question.
+
+## 3. Improvement is not scope either
+
+The Drift of virtue: cleanups, renames, and refactors feel free because they
+are good.
+
+**Drift:** The diff contains changes whose absence would not have failed the
+readback.
+
+**Hold:** Strip the improvement from the increment and record it as a
+deferral. Its worth is not the question; its membership in the frozen scope
+is.
+
+## 4. Failure does not widen scope
+
+A failed readback is information about this increment, not a mandate for a
+larger one.
+
+**Drift:** After a disconfirming readback, the repair attempt touches paths
+the frozen scope never included, because "the real problem turned out to be
+bigger."
+
+**Hold:** Repair within the frozen scope, or — when the cause sits outside it
+— treat it as mooring 2's case and apply the side-track rule, or exit through
+a terminal status and let the next increment be sized to what was learned.
+Bigger-than-expected is a finding, not an amendment.
+
+## 5. Nothing leaves silently
+
+The completion report is the only exit, and it must account for both kinds of
+silence.
+
+**Drift:** Work done but never frozen appears in the diff, or work noticed but
+not done vanishes without a deferral line — the report and the actual change
+disagree.
+
+**Hold:** Before reporting, reconcile the diff against the frozen scope and
+the deferral list against everything noticed-but-not-done. A report that
+matches both is the definition of having stayed put.
+
+## 6. The statuses are the only doors
+
+When staying put becomes impossible, leave through a terminal status, not
+through improvisation.
+
+**Drift:** Blocked or ambiguous work continues anyway — the executor invents
+an interpretation, widens authority, or keeps mutating past a stop condition
+because stopping feels like failure.
+
+**Hold:** `BLOCK` and `NEEDS-HUMAN-DECISION` exist so that stopping in place
+is always available and always cheap. Taking a door is staying put; forcing a
+window is not.

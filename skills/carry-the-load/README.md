@@ -46,7 +46,9 @@ token, file, task, or model response.
 Lean does not mean thin, stripped-down, or *obezhirennoe*. The useful Russian
 translation is *berezhlivoe proizvodstvo*: careful stewardship of value,
 capacity, attention, and material. Removing code can improve flow, but code
-volume is not the objective.
+volume is not the objective. The full account — why small verified batches,
+bounded work-in-progress, and pull work, and how they map to AI-assisted
+development — is in [references/lean-development.md](references/lean-development.md).
 
 ### Antifragility governs learning
 
@@ -59,6 +61,9 @@ Expecting to be wrong therefore changes the shape of the deliverable. A rule
 fitted to the current examples should misfire locally, degrade to established
 behavior, carry no stronger label than its evidence earns, and be discountable
 where it fails. Failure remains bounded evidence rather than a global verdict.
+The full account — the fragile/robust/antifragile triad, why convex bounded
+errors beat prediction, and the software mapping — is in
+[references/antifragility.md](references/antifragility.md).
 
 ### Pragmatic engineering governs proportion
 
@@ -80,6 +85,8 @@ agent:
 
 - start from the recipient-visible effect and identify the current constraint;
 - keep one complete value-bearing increment in flight;
+- hand a problem discovered outside the frozen increment scope to a fresh
+  subagent or an explicit deferral instead of absorbing it into the increment;
 - pull context, tools, abstraction, and protection when the increment demands
   them rather than accumulating them in advance;
 - state a credible misfire and containment before committing to the change;
@@ -130,6 +137,12 @@ Load applies the same authorization and fresh-reader discipline only to the
 mechanical invariant its own increment just learned, and it does not redesign
 a repository merely to delete an instruction.
 
+Retrospective owns the isolation rationale the side-track rule borrows — why a
+correction should not be produced inside the context whose work exposed the
+problem — and applies it to interrogating finished claims. Carry the Load is
+the skill executing when side-tracking occurs, so the runtime move of
+delegating the particular problem to a fresh context stays here.
+
 Skill Guidance owns the Laws of Agent Instruction that govern instruction
 wording and placement. The behavior-principle procedure deliberately restates
 several of those Laws in procedural form so the package works when installed
@@ -151,7 +164,10 @@ accidental paraphrase between them is a defect.
 | File | Owns |
 | --- | --- |
 | [SKILL.md](SKILL.md) | Activation boundary, load card, flow, containment, protection audit, learning harvest, and completion |
+| [STAYING-PUT.md](STAYING-PUT.md) | The moorings: compact drift-and-hold rules for keeping the executor on the frozen scope, loaded under mid-flow scope pressure |
 | [Behavior principles](references/behavior-principles.md) | Conditional admission, placement, wording, and validation of learned agent behavior |
+| [Lean development](references/lean-development.md) | Expanded doctrine: what Lean is, why it works, and its mapping to AI-assisted development; maintainer support only |
+| [Antifragility](references/antifragility.md) | Expanded doctrine: the triad, why convexity works, and its software mapping; maintainer support only |
 
 ## Boundaries
 
@@ -165,5 +181,6 @@ a rule, silently weaken safety boundaries, or edit `AGENTS.md` without authority
 
 [SKILL.md](SKILL.md) is the package's only runtime entry point; it contains the
 load card, flow, containment, protection audit, learning harvest, and terminal
-statuses, and conditionally loads the behavior-principle procedure. The
-rationale above is maintainer support and is not required to run the skill.
+statuses, and conditionally loads the behavior-principle procedure and the
+staying-put moorings. The rationale above and the doctrine references are
+maintainer support and are not required to run the skill.

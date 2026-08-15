@@ -59,6 +59,26 @@ Use established repository checks and consumer surfaces. Do not add a new
 framework, service, abstraction, or review layer when an existing path can
 produce the required readback at lower total cost.
 
+When a problem surfaces outside the frozen Increment's maximum scope, do not
+expand the increment to absorb it and do not repair it inside the current
+context: the increment's accumulated context biases how the side problem is
+scoped and corrected. When the problem gates the increment's readback and the
+harness provides subagents, delegate it as a self-contained brief — the
+problem, its observed signal, and its own scope boundary, without the
+increment's working context. The brief carries only authority the executor
+already holds; a problem whose repair exceeds that authority takes the
+deferral or `NEEDS-HUMAN-DECISION` path instead. Otherwise record the problem
+as an explicit deferral in the completion report; when a readback-gating
+problem cannot be delegated, exit through a terminal status with the deferral
+recorded rather than repairing it in place. A mutating action outside the
+frozen maximum scope in the current context is a scope violation, not
+initiative.
+
+When an intended mutating action is not plainly covered by the frozen
+Increment's maximum scope, or a completion report is about to omit
+noticed-but-not-done work, load the moorings in
+[STAYING-PUT.md](STAYING-PUT.md) before proceeding.
+
 ## Make wrong cheap
 
 Before committing to an uncertain heuristic, rule, migration, rollout, or
@@ -143,9 +163,9 @@ Return one status:
 - `NEEDS-HUMAN-DECISION` — value, authority, risk ownership, or a material
   completed-state choice remains unresolved.
 
-Report the Value, Increment, observed Readback, protection disposition, learning
-owner, and status. The reported Readback must quote an executed observation —
-a test run, command output, or rendered surface; `PASS` is invalid when the
-readback is a prediction rather than an observation. Keep the visible response
-proportional to the decision; do not turn the load card into the deliverable
-when the result is already clear.
+Report the Value, Increment, observed Readback, protection disposition,
+learning owner, any deferred side problems, and status. The reported Readback
+must quote an executed observation — a test run, command output, or rendered
+surface; `PASS` is invalid when the readback is a prediction rather than an
+observation. Keep the visible response proportional to the decision; do not
+turn the load card into the deliverable when the result is already clear.
