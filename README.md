@@ -17,10 +17,10 @@ the whole development lifecycle.
 Context Docs is the main skill. It recovers verified reasons that code or
 system structure cannot show where a decision is made, putting an invisible
 requirement back in view before a locally reasonable change. Independent
-companion skills address outcome lineage, evidence-producing moves, advisory
-agent-instruction review, independent final review, structural enforcement of
-documented constraints, and an agent-generated architecture chart that keeps
-place and boundary addressable.
+companion skills address outcome lineage, evidence-producing moves,
+completion-claim interrogation, advisory agent-instruction review, independent
+final review, structural enforcement of documented constraints, and an
+agent-generated architecture chart that keeps place and boundary addressable.
 
 These interventions are designed for stressed work: context has accumulated,
 competing information dilutes attention, and a model can rationalize a
@@ -45,6 +45,10 @@ not yet provide.
   producer context before a handoff or trust transition. Its
   [SINS taxonomy](skills/verify-complex-artifacts/SINS.md) gives recurring
   observed defects stable names.
+- **[Retrospective](skills/retrospective/README.md):** cross-examines an
+  existing solution's completion claim — reconstructing the problem that would
+  make the candidate reasonable, then testing whether it exists, matters, and
+  changed for the intended beneficiary.
 - **[Read the Terrain](skills/read-the-terrain/README.md):** selects one
   bounded move under consequential uncertainty and requires it to advance the
   aim or improve the next decision.
@@ -72,6 +76,7 @@ make them stages in one loop or runtime dependencies.
 | The next move is plausible, but cause and effect are unclear or conditions are changing. | [Read the Terrain](skills/read-the-terrain/README.md) | One bounded move that advances the aim or produces evidence that changes the next decision. | Causality, solution correctness, or requirement coverage. |
 | A proposed or existing skill needs an evidence-backed review of activation, runtime choices, isolation, or context cost. | [Skill Guidance](skills/skill-guidance/README.md) | Advisory findings and validation evidence for the host-provided skill creator. | Domain correctness, authority to mutate the skill, or behavioral effectiveness from structure alone. |
 | A finished multi-file artifact looks coherent to its producer, but that producer's context may hide gaps. | [Verify Complex Artifacts](skills/verify-complex-artifacts/README.md) | An independent readiness decision that identifies blockers and decisions needing a human. | Product desirability or facts outside the contract and checks actually reviewed. |
+| A solution is presented as done or working, but its claim may rest on a substituted, invented, self-created, or lower-priority problem. | [Retrospective](skills/retrospective/README.md) | A reconstructed problem, a decision ledger over consequential oddities, and one claim verdict inside an explicit evidence boundary. | Implementation correctness, security, product desirability, or requirement coverage beyond the evidence actually examined. |
 | A verified constraint is still carried only by prose, and an authorized structural change can make it visible to local readers. | [Screaming Reefs](skills/screaming-reefs/README.md) | The smallest structural owner for the constraint, with the irreducibly remote cause retained as prose. | That structure proves behavior or authorizes a wider redesign. |
 | Work starts without knowing where things live, which boundary it is inside, or which external systems are real peers. | [Compass](skills/compass/README.md) | A generated, human-ratified semantic chart with a registry, glossary, viewports, and code coordinates that keeps place and purpose addressable across implementation change. | Boundary quality, code behavior beyond the checked gates, or that the finished chart gets used. |
 
@@ -226,6 +231,31 @@ target alone.
 Read [why independent refinement is needed and which damage it
 targets](skills/verify-complex-artifacts/README.md) or inspect its
 [runtime verification workflow](skills/verify-complex-artifacts/SKILL.md).
+
+### Retrospective
+
+When an AI agent produces the implementation and its explanation in the same
+context, the explanation can become a closed proof: the solution justifies the
+decisions, and those decisions are offered as proof that the solution was
+necessary. Polished code and green tests can still hide a substituted,
+invented, manufactured, or lower-priority problem — or a mechanism that only
+proves its own activity.
+
+Retrospective freezes the candidate and its exact “works” claim, reconstructs
+the problem backwards without borrowing the implementation's vocabulary,
+follows every consequential oddity to its current evidence, and refuses to
+treat “real problem” as equivalent to “right problem.” It ends in one claim
+verdict — support, a named condition, misalignment, refutation, or an explicit
+unresolved boundary — instead of a smoother rationale.
+
+It sits upstream of Verify Complex Artifacts, which gates a finished artifact
+against a frozen contract; Retrospective interrogates the claim behind that
+contract. Read the Terrain owns one bounded evidence-producing move inside
+live work; Retrospective owns the full interrogation of a finished claim.
+
+Read [why Retrospective exists and which mismatches it
+targets](skills/retrospective/README.md) or inspect its
+[runtime interrogation workflow](skills/retrospective/SKILL.md).
 
 ### Read the Terrain
 
