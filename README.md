@@ -18,7 +18,8 @@ Context Docs is the main skill. It recovers verified reasons that code or
 system structure cannot show where a decision is made, putting an invisible
 requirement back in view before a locally reasonable change. Independent
 companion skills address outcome lineage, evidence-producing moves,
-completion-claim interrogation, advisory agent-instruction review, independent
+engineering-flow shaping, completion-claim interrogation, advisory
+agent-instruction review, independent
 final review, structural enforcement of documented constraints, and an
 agent-generated architecture chart that keeps place and boundary addressable.
 
@@ -52,6 +53,9 @@ not yet provide.
 - **[Read the Terrain](skills/read-the-terrain/README.md):** selects one
   bounded move under consequential uncertainty and requires it to advance the
   aim or improve the next decision.
+- **[Carry the Load](skills/carry-the-load/README.md):** shapes a selected
+  engineering change into one complete value-bearing increment with bounded
+  failure, an audited protection set, and evidence-backed learning.
 - **[Helix](skills/helix/README.md):** runs an expand, spike, and collapse
   cycle over a small rewritten checkpoint and requires evidence before treating
   uncertain work as progress.
@@ -74,6 +78,7 @@ make them stages in one loop or runtime dependencies.
 | Code or system structure exposes behavior without the reason a constraint, boundary, or relationship must exist. | [Context Docs](skills/context-docs/README.md) | A verified explanation at the surface where the affected reader encounters the decision. | Product decisions, undocumented implementation correctness, or readiness of non-documentation artifacts. |
 | Direction under uncertainty is unresolved, or work has become a list of tasks with no accountable path to the wider goal. | [Helix](skills/helix/README.md) | One selected branch probed by a bounded spike, with the result collapsed into a checkpoint that keeps verdicts and epitaphs rather than plans. Requires a checkpoint surface the user configures before the first cycle. | That an action caused the outcome or that the goal is valuable. |
 | The next move is plausible, but cause and effect are unclear or conditions are changing. | [Read the Terrain](skills/read-the-terrain/README.md) | One bounded move that advances the aim or produces evidence that changes the next decision. | Causality, solution correctness, or requirement coverage. |
+| A move or outcome is already selected, but implementation risks expanding into a large batch, success-only rollout, or accumulating safeguards. | [Carry the Load](skills/carry-the-load/README.md) | One complete increment with a frozen misfire and containment, verified by an executed readback, with material learning routed to an established owner. | That the selected outcome is valuable, what caused an unknown failure, or that the final product is desirable. |
 | A proposed or existing skill needs an evidence-backed review of activation, runtime choices, isolation, or context cost. | [Skill Guidance](skills/skill-guidance/README.md) | Advisory findings and validation evidence for the host-provided skill creator. | Domain correctness, authority to mutate the skill, or behavioral effectiveness from structure alone. |
 | A finished multi-file artifact looks coherent to its producer, but that producer's context may hide gaps. | [Verify Complex Artifacts](skills/verify-complex-artifacts/README.md) | An independent readiness decision that identifies blockers and decisions needing a human. | Product desirability or facts outside the contract and checks actually reviewed. |
 | A solution is presented as done or working, but its claim may rest on a substituted, invented, self-created, or lower-priority problem. | [Retrospective](skills/retrospective/README.md) | A reconstructed problem, a decision ledger over consequential oddities, and one claim verdict inside an explicit evidence boundary. | Implementation correctness, security, product desirability, or requirement coverage beyond the evidence actually examined. |
@@ -271,6 +276,29 @@ must advance the aim or improve what can be decided next.
 
 Read [why to use Read the Terrain](skills/read-the-terrain/README.md) or inspect
 its [runtime decision workflow](skills/read-the-terrain/SKILL.md).
+
+### Carry the Load
+
+Once a move is selected, a plausible default is to build a comprehensive
+candidate, protect it broadly, and verify it near the end. Work expands into
+large batches and speculative scope, safeguards accumulate without a named
+load, and a rule fitted to the visible examples ships as if it were universal.
+
+Carry the Load freezes a load card — value, constraint, increment, credible
+misfire, containment, and readback — before the first mutating action, then
+moves one complete increment through implementation to an executed readback.
+It bounds how a wrong result can fail, audits every protection the increment
+adds or challenges, and routes material learning to code, a deterministic
+gate, or a conditional behavior-principle procedure under explicit authority.
+
+It sits downstream of Read the Terrain, which chooses the move when cause and
+effect are unclear; Carry the Load shapes the selected move's implementation,
+containment, and learning, and it does not choose the product outcome or
+diagnose an unknown cause.
+
+Read [why Carry the Load exists and which defaults it
+replaces](skills/carry-the-load/README.md) or inspect its
+[runtime flow workflow](skills/carry-the-load/SKILL.md).
 
 ### Helix
 
