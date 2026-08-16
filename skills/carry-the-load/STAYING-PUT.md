@@ -6,7 +6,8 @@ discoveries, failures, and improvement ideas pull against the frozen scope.
 
 Load this file when an intended mutating action is not plainly covered by the
 frozen Increment's maximum scope, or when a completion report is about to omit
-work that was noticed but not done. Each mooring names a **Drift** — the
+a deferral, a side repair, or work already mutated before the freeze. Each
+mooring names a **Drift** — the
 observable pull off the frozen position — and a **Hold** — the move that
 keeps the increment where it was frozen. A drift acted on is a violation of the
 mooring, not a judgment call. The moorings restate no other package's rules
@@ -15,7 +16,9 @@ in SKILL.md, it points there instead of restating it.
 
 ## 1. The card is the ground
 
-Once frozen, the load card outranks every idea that arrives after it.
+Once frozen, the load card outranks every idea that arrives after it. Evidence
+that contradicts a frozen field is not an idea: it takes a door in mooring 6,
+never a self-authorized rewrite.
 
 **Drift:** A mid-flow insight starts steering — the increment quietly grows a
 second goal, or the frozen Misfire is re-argued because the work now looks
@@ -33,20 +36,23 @@ Finding a problem is evidence; it is not authorization to fix it here.
 and the diff now answers two questions.
 
 **Hold:** Apply the side-track rule in [SKILL.md](SKILL.md); it decides
-between delegation, deferral, and a terminal status. Whichever branch fires,
-the increment's diff stays answerable to one question.
+between a bounded in-place repair, a delegated brief, a deferral, and a
+terminal status. A side repair shares the diff, so report it against its own
+boundary — that is what keeps the increment's scope answerable to one
+question.
 
 ## 3. Improvement is not scope either
 
 The Drift of virtue: cleanups, renames, and refactors feel free because they
 are good.
 
-**Drift:** The diff contains changes whose absence would not have failed the
-readback.
+**Drift:** The diff contains changes made after the freeze whose absence
+would not have failed the readback.
 
 **Hold:** Strip the improvement from the increment and record it as a
 deferral. Its worth is not the question; its membership in the frozen scope
-is.
+is. Improvement already in the diff before the freeze is reported under
+mooring 5, not stripped.
 
 ## 4. Failure does not widen scope
 
@@ -67,13 +73,15 @@ Bigger-than-expected is a finding, not an amendment.
 The completion report is the only exit, and it must account for both kinds of
 silence.
 
-**Drift:** Work done but never frozen appears in the diff, or work noticed but
-not done vanishes without a deferral line — the report and the actual change
-disagree.
+**Drift:** Work appears in the diff that neither the frozen scope nor a
+reported exception covers, or work set aside vanishes without a deferral line
+— the report and the actual change disagree.
 
-**Hold:** Before reporting, reconcile the diff against the frozen scope and
-the deferral list against everything noticed-but-not-done. A report that
-matches both is the definition of having stayed put.
+**Hold:** Before reporting, reconcile the diff against the frozen scope plus
+what [SKILL.md](SKILL.md) authorized outside it — a reported side repair, or
+reported work already mutated before the freeze — and reconcile the deferral
+list against what was set aside: side problems and stripped improvements
+alike. A report that matches both is the definition of having stayed put.
 
 ## 6. The statuses are the only doors
 

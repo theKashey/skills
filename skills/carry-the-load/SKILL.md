@@ -11,9 +11,14 @@ Thinness is not an objective.
 ## Freeze the load
 
 Record only fields that can change the implementation, and freeze them before
-the first mutating action. A card produced after implementation has already
-started is a protocol violation: return `BLOCK` instead of backfilling the
-card.
+the first mutating action. When implementation has already started, freeze the
+card against the currently observable state before the next mutating action
+and record which already-mutated work the card does not cover, so that the
+completion report can carry it. Do not backfill: a Misfire, Containment, or
+Readback fitted to what was already built is not a frozen field; a field the
+existing work cannot contradict was fitted to it. The frozen scope is not
+re-frozen to fit later work. Return `BLOCK` when the current state cannot be
+observed well enough to state a readback against it.
 
 ```text
 Value: [recipient and observable effect]
@@ -40,9 +45,10 @@ complete — has materially different plausible meanings, return
 2. **Find the current constraint.** Inspect only enough of the path from request
    to verification to identify the queue, handoff, unknown, defect source, or
    missing capability currently limiting delivery.
-3. **Define one complete increment.** Keep one increment in flight and make it
-   cross implementation, integration, and the first trustworthy readback. Do
-   not replace a vertical slice with the fewest lines or a disconnected stub.
+3. **Define one complete increment.** Keep one increment in flight per
+   executing context and make it cross implementation, integration, and the
+   first trustworthy readback. Do not replace a vertical slice with the fewest
+   lines or a disconnected stub.
 4. **Pull what the increment needs.** Load context, invoke tools, introduce
    abstraction, and add protection when the current constraint or credible
    consequence requires them. Preserve deliberate capacity, rollback paths,
@@ -60,23 +66,28 @@ framework, service, abstraction, or review layer when an existing path can
 produce the required readback at lower total cost.
 
 When a problem surfaces outside the frozen Increment's maximum scope, do not
-expand the increment to absorb it and do not repair it inside the current
-context: the increment's accumulated context biases how the side problem is
-scoped and corrected. When the problem gates the increment's readback and the
-harness provides subagents, delegate it as a self-contained brief — the
-problem, its observed signal, and its own scope boundary, without the
-increment's working context. The brief carries only authority the executor
-already holds; a problem whose repair exceeds that authority takes the
-deferral or `NEEDS-HUMAN-DECISION` path instead. Otherwise record the problem
-as an explicit deferral in the completion report; when a readback-gating
-problem cannot be delegated, exit through a terminal status with the deferral
-recorded rather than repairing it in place. A mutating action outside the
-frozen maximum scope in the current context is a scope violation, not
-initiative.
+expand the increment to absorb it. A problem that does not gate the readback
+becomes an explicit deferral in the completion report.
+
+A problem that does gate the readback is still repaired outside the frozen
+scope, so bound the repair on its own. Repair it in place when the fix is
+mechanically determined — the signal names the change and leaves no judgment
+about how far the repair reaches. When the repair's own boundary is open,
+the increment's accumulated context biases where that boundary lands: hand it
+to a self-contained brief — the problem, its observed signal, and its own
+scope boundary, without the increment's working context — carrying only
+authority the executor already holds. A repair exceeding that authority takes
+`NEEDS-HUMAN-DECISION`; a readback-gating problem with no available route
+exits through a terminal status with the deferral recorded.
+
+A side repair lands in the increment's diff whichever route produced it.
+Report it against its own boundary rather than as part of the increment's
+scope. A mutating action taken after the freeze, outside the frozen maximum
+scope, that is not a reported side repair is a scope violation, not initiative.
 
 When an intended mutating action is not plainly covered by the frozen
-Increment's maximum scope, or a completion report is about to omit
-noticed-but-not-done work, load the moorings in
+Increment's maximum scope, or a completion report is about to omit a deferral,
+a side repair, or work already mutated before the freeze, load the moorings in
 [STAYING-PUT.md](STAYING-PUT.md) before proceeding.
 
 ## Make wrong cheap
@@ -158,14 +169,16 @@ Return one status:
 - `NO-OP` — the current flow already delivers the effect, or the proposed
   machinery carries no additional load.
 - `BLOCK` — the effect, verification, or containment failed and no authorized
-  repair can establish it, or the load card was not frozen before
-  implementation began.
+  repair can establish it, or no card could be frozen against an observable
+  state.
 - `NEEDS-HUMAN-DECISION` — value, authority, risk ownership, or a material
   completed-state choice remains unresolved.
 
 Report the Value, Increment, observed Readback, protection disposition,
-learning owner, any deferred side problems, and status. The reported Readback
-must quote an executed observation — a test run, command output, or rendered
-surface; `PASS` is invalid when the readback is a prediction rather than an
-observation. Keep the visible response proportional to the decision; do not
-turn the load card into the deliverable when the result is already clear.
+learning owner, any side repair with its own boundary, any work already
+mutated before the freeze, any deferred side problem or stripped improvement,
+and status. The reported Readback must quote an executed observation — a test
+run, command output, or rendered surface; `PASS` is invalid when the readback
+is a prediction rather than an observation. Keep the visible response
+proportional to the decision; do not turn the load card into the deliverable
+when the result is already clear.

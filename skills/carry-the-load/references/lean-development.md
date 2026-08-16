@@ -66,9 +66,10 @@ else:
   value as the branch drifts and as the context that produced it is evicted or
   summarized away. Agent work decays faster than human work because the
   producing context is routinely discarded.
-- **One increment in flight is the working WIP limit.** Several concurrent
-  edits in one context confound the readback: when verification fails, the
-  failure could belong to any of them.
+- **One increment in flight per context is the working WIP limit.** Several
+  concurrent edits in one context confound the readback: when verification
+  fails, the failure could belong to any of them. The limit is per executing
+  context, not a ban on a second context working a separately bounded problem.
 - **Context is capacity, so pull applies to it.** Loading files, tools, and
   abstractions in advance fills a bounded attention budget with material the
   current constraint never demanded. Pull context when the increment needs it.

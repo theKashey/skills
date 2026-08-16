@@ -84,9 +84,10 @@ protect it broadly, and verify it near the end. Carry the Load instead makes the
 agent:
 
 - start from the recipient-visible effect and identify the current constraint;
-- keep one complete value-bearing increment in flight;
-- hand a problem discovered outside the frozen increment scope to a fresh
-  subagent or an explicit deferral instead of absorbing it into the increment;
+- keep one complete value-bearing increment in flight per executing context;
+- bound a problem discovered outside the frozen increment scope as a deferral,
+  a mechanically determined repair, or a delegated brief instead of absorbing
+  it into the increment;
 - pull context, tools, abstraction, and protection when the increment demands
   them rather than accumulating them in advance;
 - state a credible misfire and containment before committing to the change;
@@ -137,11 +138,13 @@ Load applies the same authorization and fresh-reader discipline only to the
 mechanical invariant its own increment just learned, and it does not redesign
 a repository merely to delete an instruction.
 
-Retrospective owns the isolation rationale the side-track rule borrows — why a
-correction should not be produced inside the context whose work exposed the
-problem — and applies it to interrogating finished claims. Carry the Load is
-the skill executing when side-tracking occurs, so the runtime move of
-delegating the particular problem to a fresh context stays here.
+Retrospective isolates a reader so producer context cannot anchor an inference
+about a finished candidate. Carry the Load's side-track brief isolates a repair
+so the increment's context cannot draw the side problem's boundary. The shared
+suspicion of producer context is not a shared rule: Retrospective's reader is
+denied context by design, while the brief pays that cost only when the repair's
+own boundary is open — a mechanically determined fix stays in place. Neither
+package owns the other's move.
 
 Skill Guidance owns the Laws of Agent Instruction that govern instruction
 wording and placement. The behavior-principle procedure deliberately restates

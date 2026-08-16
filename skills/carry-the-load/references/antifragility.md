@@ -29,18 +29,20 @@ antifragility compounds.
   bounded and the upside is open, being wrong often and cheaply outperforms
   being right by forecast. The discipline is therefore not to avoid error but
   to shape errors so they stay small, local, and informative.
-- **Stressors are the only honest probe.** A real failure is direct evidence
-  about the system actually in front of you; a prediction is evidence about
-  the model of it. Systems denied small stressors accumulate hidden fragility
-  and meet their first real one at full size.
+- **Applied stress is the direct probe.** A test run, an injected fault, or a
+  real failure is direct evidence about the system actually in front of you;
+  a forecast is evidence about the model of it. Systems denied small stressors
+  accumulate hidden fragility and meet their first real one at full size.
 - **Optionality preserves the upside.** A fallback, a reversible step, or a
   weakly-labeled claim keeps the option to discard a wrong commitment at low
   cost. Optionality is bought before the outcome is known; after the misfire
   it is too late to add.
 - **Via negativa degrades gracefully.** Removing a wrong assumption or an
   unjustified safeguard makes fewer new claims than adding machinery, so its
-  own failure mode is smaller. Subtraction is the intervention with the least
-  iatrogenic surface.
+  own failure mode is smaller. That advantage is conditional on *wrong* and
+  *unjustified* being established first: an unaudited deletion silently claims
+  the removed thing carried no load, which is the larger claim. The protection
+  audit in [SKILL.md](../SKILL.md#audit-protection) establishes the condition.
 
 ## How it maps to AI-assisted software development
 

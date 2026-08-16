@@ -16,7 +16,7 @@ Plausible default: [locally attractive wrong choice]
 Consequence: [verified effect of choosing incorrectly]
 Scope: [smallest set of agents and work that need the principle]
 Gate: [why code, types, lint, tests, schemas, or CI cannot own it]
-Observed change: [observable evidence that the behavior changed]
+Expected change: [observable choice difference the principle should produce]
 Retirement: [condition that would make the instruction unnecessary]
 Authority: [decision allowing the target instruction surface to change]
 ```
