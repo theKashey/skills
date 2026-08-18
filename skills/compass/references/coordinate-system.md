@@ -89,6 +89,8 @@ Where coordinates refuse to bubble up, physical grouping and logical grouping di
 | A file carries two coordinates within one root | Whether it does two jobs, or bridges two places | Split a file that does two jobs; keep and name a genuine bridge |
 | A file resists every enclosing coordinate | Whether it belongs to the floor | Recognize it as L5 and drop the coordinate |
 
+Before judging the signal, name the Compass level and parent boundary being observed. Coupling is relative to that frame: a relationship internal to one component may cross the highest-distance boundary when the observed level is its parent block. Do not combine evidence from different levels into one verdict.
+
 Follow the lead, and prefer the move that makes the coordinate coarser **when the code is better for it**. Decluttering toward coarse attribution is a good default direction of travel.
 
 What it must never become is a verdict or an obligation:
@@ -98,7 +100,9 @@ What it must never become is a verdict or an obligation:
 - `repository topology != semantic topology` is the normal condition of a real system, not a backlog. Compass maps that relationship. It never requires maintainers to reshape the implementation until it resembles the chart, and a non-uniform folder is not by itself a debt entry.
 - **Do not manufacture a source boundary solely to make a coordinate coarse.** Coarse attribution is worth reaching for when it also improves the code, and worth nothing when it only tidies the marker.
 
-The gate that keeps both halves honest: a density observation may open an investigation, and only cohesion or coupling evidence may close one as debt.
+Close the investigation with two separate statements: **reality** — what grouping and relationship exist at the selected level, with evidence — and **gradient** — the healthier direction that evidence suggests, if any. A legitimate arrangement may yield no move. The gradient is advisory: Compass records it but never requires the implementation to follow it.
+
+The gate that keeps both halves honest: a density observation may open an investigation, and only cohesion or coupling evidence at the selected level may close one as debt.
 
 ---
 

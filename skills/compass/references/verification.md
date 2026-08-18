@@ -245,7 +245,7 @@ Run before declaring Phase F complete on any block, and whenever the implementat
 ### Staleness
 - [ ] Stale coordinates are classified as **implementation remapping** and repaired by updating coordinates — not by editing L0–L2 semantics
 - [ ] A coordinate pointing to a place absent from the chart was investigated (unratified semantic change, or a marker written against a place that never existed) before the comment was deleted
-- [ ] Every coordinate-density observation — several coordinates in one folder, a file carrying two coordinates in one root, a file resisting every enclosing coordinate — carries a recorded disposition: *declutter* (with the move), *legitimate* (with what makes it so), or *debt* (with the independent cohesion or coupling evidence). An observation with no disposition is an unclosed lead; an observation dispositioned as debt on the coordinate pattern alone is an unearned verdict. Both fail this item
+- [ ] Every coordinate-density observation — several coordinates in one folder, a file carrying two coordinates in one root, a file resisting every enclosing coordinate — names the observed Compass level and parent boundary, then carries a recorded disposition: *declutter* (with the useful move), *legitimate* (with what makes it so and no required move), or *debt* (with independent cohesion or coupling evidence at that level and the healthier direction it suggests). An observation with no disposition is an unclosed lead; one that blends levels or calls the coordinate pattern itself debt is an unearned verdict. Both fail this item
 
 ---
 

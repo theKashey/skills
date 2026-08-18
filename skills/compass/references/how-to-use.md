@@ -167,7 +167,7 @@ The one sign with no numeric threshold, and the most decisive: **a logical role 
 
 ## Architectural Pull
 
-"Pull" is the pressure the chart creates toward certain kinds of work. When reading the chart before a task, you may feel pull toward:
+Architectural pull is the gradient from documented reality toward a healthier arrangement. It appears only after evidence establishes a direction; a chart observation alone creates a lead, not pull. When reading the chart before a task, the evidence may point toward:
 
 - **Refactoring** — a component boundary is wrong, making the task harder than it should be
 - **Extraction** — a new component is trying to emerge from an existing one
@@ -175,11 +175,13 @@ The one sign with no numeric threshold, and the most decisive: **a logical role 
 - **Decluttering** — a file sits where its coordinate does not, so the folder cannot carry one coordinate for its subtree
 - **Chart work** — code exists that has no place in the chart
 
-Capture these as tasks in the project's tracker. They are debt made visible — not urgent, but not invisible either.
+Name the Compass level and parent boundary under observation before judging cohesion or coupling. The same relationship may be internal at one level and cross the highest-distance boundary at the next. Record the current arrangement first, then the evidence-backed direction; do not blend observations from different levels into one finding.
+
+Close each lead as **legitimate** (no move), **declutter** (with the useful move), or **debt** (with the independent evidence and healthier direction). When the team chooses to act on declutter or debt, capture it in the project's tracker. Compass makes the opportunity visible; it neither schedules nor enforces the work.
 
 **Decluttering is the cheapest of these**, and coordinate density is what surfaces it: a folder whose files carry three addresses often has one file filed in the wrong place, and moving it lets the coordinate bubble up on its own. Take that direction of travel whenever the code is better for it.
 
-**Where the pull stops:** at the demand that the repository mirror the chart. A phenomenon spanning six packages, a module participating in two ratified roots, a bridge file legitimately carrying two coordinates — each is a lead worth a look, none is a defect on its own, and none obliges a move. Open the investigation on the density observation; close it as debt only on independent cohesion or coupling evidence, and record that evidence rather than the coordinate count as the reason.
+**Where the pull stops:** at the demand that the repository mirror the chart. A phenomenon spanning six packages, a module participating in two ratified roots, a bridge file legitimately carrying two coordinates — each is a lead worth a look, none is a defect on its own, and none obliges a move. Open the investigation on the density observation; close it as debt only on independent cohesion or coupling evidence at the selected level, and record that evidence rather than the coordinate count as the reason.
 
 ---
 
