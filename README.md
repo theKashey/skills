@@ -62,6 +62,9 @@ not yet provide.
 - **[Screaming Reefs](skills/screaming-reefs/README.md):** makes a verified
   constraint recoverable from names, types, APIs, ownership boundaries, or
   filesystem structure instead of only from a remote explanation.
+- **[Boundary Fit](skills/boundary-fit/README.md):** tests whether material
+  relationships fit the separation promised by a module, service, cell, team,
+  or system boundary instead of trusting topology alone.
 - **[Compass](skills/compass/README.md):** maintains an agent-generated,
   human-ratified semantic architecture chart — logical roots, scoped L0–L4
   levels, a glossary, viewports, and code coordinates — so every file and
@@ -83,6 +86,7 @@ make them stages in one loop or runtime dependencies.
 | A finished multi-file artifact looks coherent to its producer, but that producer's context may hide gaps. | [Verify Complex Artifacts](skills/verify-complex-artifacts/README.md) | An independent readiness decision that identifies blockers and decisions needing a human. | Product desirability or facts outside the contract and checks actually reviewed. |
 | A solution is presented as done or working, but its claim may rest on a substituted, invented, self-created, or lower-priority problem. | [Retrospective](skills/retrospective/README.md) | A reconstructed problem, a decision ledger over consequential oddities, and one claim verdict inside an explicit evidence boundary. | Implementation correctness, security, product desirability, or requirement coverage beyond the evidence actually examined. |
 | A verified constraint is still carried only by prose, and an authorized structural change can make it visible to local readers. | [Screaming Reefs](skills/screaming-reefs/README.md) | The smallest structural owner for the constraint, with the irreducibly remote cause retained as prose. | That structure proves behavior or authorizes a wider redesign. |
+| A module, service, cell, team, or system boundary looks independent, but it is unclear whether its relationships support the promised separation. | [Boundary Fit](skills/boundary-fit/README.md) | An evidence-backed classification of the relationships around the boundary, the mismatches they expose, and one fit verdict. | Runtime isolation, reliability, security, compliance, or authority to restructure the system. |
 | Work starts without knowing where things live, which boundary it is inside, or which external systems are real peers. | [Compass](skills/compass/README.md) | A generated, human-ratified semantic chart with a registry, glossary, viewports, and code coordinates that keeps place and purpose addressable across implementation change. | Boundary quality, code behavior beyond the checked gates, or that the finished chart gets used. |
 
 ## How the skills support each other
@@ -333,6 +337,23 @@ significance is irreducibly non-local stays documented.
 Read [why Screaming Reefs exists and where its
 boundaries are](skills/screaming-reefs/README.md) or inspect its
 [runtime structural-change workflow](skills/screaming-reefs/SKILL.md).
+
+### Boundary Fit
+
+Architecture can look modular while a single relationship still forces
+synchronized changes or propagates a failure across the system. The opposite
+mistake is also common: topology colocates components for operational reasons,
+and the diagram is then treated as evidence that they are cohesive.
+
+Boundary Fit freezes the separation a boundary is meant to provide, traces the
+material relationships that test it, and classifies each as a local bundle,
+boundary bridge, boundary knot, or topology passenger. It ends with a fit
+verdict and preserves explicit conditions and evidence gaps rather than
+prescribing a split from topology alone.
+
+Read [why Boundary Fit evaluates relationships rather than
+boxes](skills/boundary-fit/README.md) or inspect its
+[runtime boundary assessment](skills/boundary-fit/SKILL.md).
 
 ### Compass
 
