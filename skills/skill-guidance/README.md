@@ -36,6 +36,21 @@ A host skill creator may use Context Docs for reader-facing truth, locality, and
 progressive disclosure, and Skill Guidance for advisory review of the
 agent-facing contract. Neither runtime package invokes or depends on the other.
 
+Capability overlap creates a separate failure mode: one label can collapse why
+a skill exists, what it owns, how it operates, and how it is packaged into a
+false taxonomy. Skill Guidance instead derives an evidence-backed shape from
+independent dimensions: reason, governed capability and responsibility,
+operating form, package form, and capability relations. A single skill can
+therefore own documentation and execute it through a workflow, be broader on
+one decision axis and specialist on another, or consume an outcome without
+owning its production.
+
+Those relations must remain real. A specialist can refine only a named
+condition under an established broader default; an orthogonal concern keeps its
+own selection logic; and a coordinator or consumer does not absorb a
+contributor's internals. Bundling mechanics needed for standalone delivery does
+not grant adjacent expertise or make another skill a runtime dependency.
+
 ## When to use this skill
 
 Use Skill Guidance for design advice while a host skill creator is creating or
@@ -60,8 +75,8 @@ prose, examples, references, or reader paths change.
 | --- | --- |
 | [The Laws of Agent Instruction](LAWS.md) | Canonical Law identifiers, titles, and universal decision constraints |
 | [SKILL.md](SKILL.md) | Activation boundary, package isolation, route selection, obligation tests, and completion |
-| [Advisory design assessment](references/build-or-revise.md) | Capability ownership, activation/runtime separation, pruning recommendations, and required validation |
-| [Audit a skill](references/audit-skill.md) | Evidence-backed review without mutation |
+| [Advisory design assessment](references/build-or-revise.md) | Capability shape and neighbourhood, ownership, activation/runtime separation, pruning recommendations, and required validation |
+| [Audit a skill](references/audit-skill.md) | Evidence-backed shape, route, and obligation review without mutation |
 | [Validate changed choices](references/validate-changes.md) | Frozen behavioral evaluation and verdicts |
 | [Validator](scripts/validate_skill.py) | Standalone structural and isolation checks |
 

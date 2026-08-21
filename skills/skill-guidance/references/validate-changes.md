@@ -33,6 +33,24 @@ evidence; otherwise skip that gate. Do not repeat its checks here. Verify:
 - each named [Agent Instruction Law](../LAWS.md) uses the exact identifier and
   title, has a target-skill choice and supporting evidence, and does not claim
   that unnamed Laws no longer apply;
+- every claimed shape dimension is supported by the skill's reason, governed
+  capability and responsibility, operating form, runtime or package form, or
+  material capability relations; no permanent type label substitutes for that
+  evidence;
+- broader/default and specialist/refinement are classified on the same decision
+  axis with a named condition; the specialist changes only its conditional
+  delta and a normal-case change is made in the broader owner;
+- documentation and workflow are treated as independent dimensions, and every
+  orthogonal owner, coordinator, and consumer retains its own selection logic
+  and completion claim;
+- every material capability edge records its direction, condition or scope,
+  interface and completion boundary, evidence from both inspected contracts or
+  an explicit decision, and runtime-availability or isolation disposition; a
+  missing counterpart remains unknown rather than becoming an invented owner;
+- package form is earned by the task rather than copied from a taxonomy, and an
+  ownership handoff introduces no cross-skill runtime dependency: the
+  standalone package states the required interface or outcome, bundles
+  indispensable mechanics, or narrows its contract;
 - every repository-specific claim satisfies
   [Law VIII — Keep every claim falsifiable](../LAWS.md#law-viii--keep-every-claim-falsifiable);
 - the description meets the parent activation boundary contract and covers

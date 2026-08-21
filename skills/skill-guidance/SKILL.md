@@ -19,11 +19,11 @@ tools, or workflow phases. The body must start after activation and retain only
 post-trigger decisions, actions, resources, boundaries, and completion checks.
 Internal branch conditions remain execution logic.
 
-## Apply the eight decision laws
+## Apply the nine decision laws
 
 Read and apply [The Laws of Agent Instruction](LAWS.md) before selecting a
 route, admitting an obligation, or loading a branch procedure. `LAWS.md` is the
-canonical owner of all eight identifiers, titles, and decision constraints.
+canonical owner of all nine identifiers, titles, and decision constraints.
 
 ## Name the active laws
 

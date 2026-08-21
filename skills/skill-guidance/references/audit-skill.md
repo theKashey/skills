@@ -6,10 +6,11 @@ host-provided skill creator.
 
 ## Completion contract
 
-Finish when every runtime route and retained obligation in scope has an
-evidence-backed verdict, findings identify exact locations and minimal repair
-directions, activation and support prose have valid owners, and unobserved
-runtime behavior remains explicitly unvalidated.
+Finish when every runtime route, claimed shape dimension, material capability
+relation, and retained obligation in scope has an evidence-backed verdict;
+findings identify exact locations and minimal repair directions, activation and
+support prose have valid owners, and unobserved runtime behavior remains
+explicitly unvalidated.
 
 ## 1. Establish the audit boundary
 
@@ -22,14 +23,22 @@ available behavioral evidence.
 For each route, infer:
 
 - activating task and invocation mechanism;
+- reason, governed capability and responsibility, operating form, and runtime
+  or package form where those distinctions change behavior;
 - choice the route changes and default it must beat;
 - authority and canonical owner;
+- each material capability relation, with its direction, named condition or
+  scope, interface and completion boundary, evidence from both contracts or an
+  explicit decision, and runtime-availability or isolation disposition;
 - procedure, branch-specific inputs, and stopping condition;
 - deterministic enforcement already covering the rule;
 - runtime and human discovery cost.
 
 Flag a route whose intended behavior requires producer explanation rather than
-being inferable from the package.
+being inferable from the package. Treat a name, folder, catalog entry,
+description, shared topic, or plausible expertise as candidate discovery only;
+flag an invented counterpart or record it as unknown when ownership evidence is
+unavailable.
 
 ## 3. Apply the laws
 

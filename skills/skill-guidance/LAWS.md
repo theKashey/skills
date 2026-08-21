@@ -1,6 +1,6 @@
 # The Laws of Agent Instruction
 
-These eight laws govern every Skill Guidance route. Read and apply all eight;
+These nine laws govern every Skill Guidance route. Read and apply all nine;
 naming the laws that materially constrain one decision does not exempt the
 rest.
 
@@ -71,3 +71,14 @@ prose.
 Verify paths, commands, fields, versions, examples, links, and current behavior.
 A stale instruction is a defect, not harmless context: it is obeyed with the
 confidence of a live one.
+
+## Law IX — Refine the paved road; do not reopen it
+
+Classify skills from evidenced reasons, responsibilities, operating and package
+forms, and capability relations—not permanent kinds. Documentation
+responsibility and workflow form may coexist. A specialist owns only a named
+conditional delta from a broader owner's default; normal-case changes belong
+to that owner. Keep orthogonal choices with their owners, and establish
+counterparts or delegation from both contracts or an explicit decision;
+otherwise ownership stays unknown and standalone delivery transfers no
+adjacent expertise.
