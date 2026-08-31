@@ -1,6 +1,12 @@
 # Verification Procedures
 
-Formal checks that must pass before ratifying a root or advancing L0, L1, L2, L3, or Phase F. Run these as a mandatory gate — not optional polish. This file is the canonical owner of every completion checklist; other files point here rather than restating the items. Levels and phases with no section below carry no gate beyond their exit conditions in [`exploration.md`](exploration.md) and [`growth-and-drift.md`](growth-and-drift.md).
+Formal checks that must pass before ratifying a root, advancing L0, L1, L2, L3,
+or Phase F, or changing an opted-in named abstraction. Run the applicable
+checks as a mandatory gate — not optional polish. This file is the canonical
+owner of every completion checklist; other files point here rather than
+restating the items. Levels and phases with no section below carry no gate
+beyond their exit conditions in [`exploration.md`](exploration.md) and
+[`growth-and-drift.md`](growth-and-drift.md).
 
 ---
 
@@ -8,41 +14,101 @@ Formal checks that must pass before ratifying a root or advancing L0, L1, L2, L3
 
 **An agent ticking its own checkbox is self-certification, and the items the table below maps need no judgment at all.** They are decidable by a script, they go stale silently, and the moment they live in a checklist they are only as reliable as the attention of whoever last ran it. Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review. They keep their checklist rows all the same — installing the check is ask-first (`SKILL.md` §Boundaries), and before it lands the rows are run by hand like everything else — but once the script is in CI, a green run is the only honest tick:
 
+The manual fallback does not apply to the named-abstraction trial. Before its
+first definition or source claim, the host test suite must own an installed,
+adapted checker and repository-native fixtures for a valid claim, an invalid
+slug, a missing definition, malformed spacing or a multiline claim, an
+unsupported form, and a supported marker in a hidden source directory. Record
+the exact commands in the nominated trial record. The host usage hook that
+declares the chart root must also carry the durable pointer to that record
+specified in `named-abstractions.md`.
+
 | Decidable by a script | Owning checklist item |
 |---|---|
 | every `compass:` address resolves to a chart document | §Coordinate Verification → Correctness |
+| every supported `compass-abstraction:` marker in the configured source universe is valid and resolves to exactly one definition with the required headings | §Named Abstraction Verification |
 | every path-shaped coordinate in a `## Implementation coordinates` section — backticked, containing `/`, no placeholder — exists on disk | §Coordinate Verification → Staleness |
 | every block folder appears in its root's `CONTAINERS.md`, and every listed block has a folder | §L2 |
 | every relative link and heading anchor inside the chart resolves | §Markdown and Navigation |
 | every zoom-chain document carries a Mermaid fence | §Markdown and Navigation |
 | no forbidden filename (`SCOPE.md`, `CONTEXT.md`, `BLOCK.md`, `COMPONENT.md`) exists under the chart root | §Markdown and Navigation |
 
-```python
-# chart_check.py — decidable chart invariants. Adapt the two constants; run it in CI.
+````python
+# chart_check.py — decidable chart invariants. Adapt CHART and SRC_SUFFIXES; run it in CI.
 import pathlib, re, sys
 CHART = pathlib.Path(".compass")          # the declared chart root
+ABSTRACTIONS = CHART / "ABSTRACTIONS.md"
+# Include every source suffix allowed to carry `//`, `#`, or `--` markers.
 SRC_SUFFIXES = {".py", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".go", ".rs",
                 ".java", ".rb", ".swift", ".sql"}
 
-fail, seen = [], {"addresses": 0, "links": 0, "coordinates": 0, "blocks": 0, "diagrams": 0}
+fail, seen = [], {"addresses": 0, "abstraction_definitions": 0,
+                  "abstraction_markers": 0, "links": 0, "coordinates": 0,
+                  "blocks": 0, "diagrams": 0}
 # every line, not just the first: a marker legitimately sits under a comment, a licence
 # header or an import block, and a file may carry a second coordinate for another root
 addr_re = re.compile(r"^\s*(?:#|//|--)\s*compass:\s*(\S+)", re.M)
+abstraction_claim_re = re.compile(
+    r"^[ \t]*(?:#|//|--)[ \t]*compass-abstraction:[ \t]+(.*?)[ \t]*$", re.M)
 anchors = lambda t: {re.sub(r"[^a-z0-9 -]", "", h.lower()).replace(" ", "-")
                      for h in re.findall(r"^#{1,6} (.+)$", t, re.M)}
 
 def doc_for(address):                      # root | root.block | root.block.component
     return CHART.joinpath(*address.split(".")) / "README.md"
 
+entries = []
+if ABSTRACTIONS.exists():
+    abstraction_body = ABSTRACTIONS.read_text()
+    heading_count = len(re.findall(r"^## ", abstraction_body, re.M))
+    entry_re = re.compile(
+        r"^## [^\n]+ \(`([a-z0-9]+(?:-[a-z0-9]+)*)`\)[ \t]*\n(.*?)(?=^## |\Z)",
+        re.M | re.S)
+    entries = entry_re.findall(abstraction_body)
+    seen["abstraction_definitions"] = len(entries)
+    if not entries:
+        fail.append(f"{ABSTRACTIONS}: no named abstraction definitions")
+    if len(entries) != heading_count:
+        fail.append(f"{ABSTRACTIONS}: every ## heading must be 'Name (`lowercase-slug`)'")
+    slugs = [slug for slug, _ in entries]
+    for slug in sorted({slug for slug in slugs if slugs.count(slug) > 1}):
+        fail.append(f"{ABSTRACTIONS}: duplicate abstraction slug '{slug}'")
+    for slug, section in entries:
+        for heading in ("Meaning", "Essential discriminator", "Nearest non-example"):
+            field = re.search(
+                rf"^### {re.escape(heading)}[ \t]*\n(.*?)(?=^### |\Z)",
+                section, re.M | re.S)
+            if not field or not field.group(1).strip():
+                fail.append(f"{ABSTRACTIONS}: '{slug}' lacks ### {heading}")
+
+definition_slugs = [slug for slug, _ in entries]
 for p in pathlib.Path(".").rglob("*"):
     # any dotted directory: .git, .venv, and — the one that bites — a nested git worktree,
     # which otherwise counts every marker in the repository twice
     if p.is_dir() or any(x.startswith(".") for x in p.parts[:-1]): continue
     if "node_modules" in p.parts or p.suffix not in SRC_SUFFIXES: continue
-    for address in addr_re.findall(p.read_text(errors="ignore")):
+    source = p.read_text(errors="ignore")
+    for address in addr_re.findall(source):
         seen["addresses"] += 1
         if not doc_for(address).exists():
             fail.append(f"{p}: compass: {address} resolves to nothing")
+
+def inside_nested_worktree(p):
+    return any(parent != pathlib.Path(".") and (parent / ".git").exists()
+               for parent in p.parents)
+
+for p in pathlib.Path(".").rglob("*"):
+    # Unlike coordinate scanning, legitimate hidden source directories such as
+    # .storybook remain in the named-abstraction universe.
+    if p.is_dir() or ".git" in p.parts or "node_modules" in p.parts or ".venv" in p.parts:
+        continue
+    if inside_nested_worktree(p) or p.suffix not in SRC_SUFFIXES: continue
+    source = p.read_text(errors="ignore")
+    for slug in abstraction_claim_re.findall(source):
+        seen["abstraction_markers"] += 1
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug):
+            fail.append(f"{p}: invalid compass-abstraction slug '{slug}'")
+        elif definition_slugs.count(slug) != 1:
+            fail.append(f"{p}: compass-abstraction: {slug} does not resolve exactly once")
 
 for root in (d for d in CHART.iterdir() if d.is_dir() and d.name != "externals"):
     containers = root / "CONTAINERS.md"
@@ -77,9 +143,7 @@ for md in CHART.rglob("*.md"):
         md.name == "README.md" and md.parent != CHART)
     if zoom:
         seen["diagrams"] += 1
-        # written as `{3} on purpose — a literal triple backtick would close this code block;
-        # up to three leading spaces is still a fence in CommonMark (common inside lists)
-        if not re.search(r"^ {0,3}`{3}\s*mermaid", body, re.M):
+        if not re.search(r"^ {0,3}```\s*mermaid", body, re.M):
             fail.append(f"{md}: no mermaid diagram")
 
 for name in ("SCOPE.md", "CONTEXT.md", "BLOCK.md", "COMPONENT.md"):
@@ -87,9 +151,28 @@ for name in ("SCOPE.md", "CONTEXT.md", "BLOCK.md", "COMPONENT.md"):
 
 print("\n".join(fail) or "chart: clean — " + ", ".join(f"{v} {k}" for k, v in seen.items()))
 sys.exit(1 if fail else 0)
-```
+````
 
 **Print the counts, and read them.** A check that scanned nothing exits zero exactly like a check that scanned everything — which is how a chart whose markers were all deleted keeps a green build. If `addresses` drops to 0 after Phase F, the script is passing because it stopped looking.
+
+For an opted-in named-abstraction trial, read `abstraction_definitions` and
+`abstraction_markers` the same way. Zero markers means the checker proves
+nothing about adoption or coverage; it does not mean no implementation uses the
+concept.
+
+The configured suffix set is the checker's marker universe, not a discovery
+claim. Before trusting its count, run this raw-hit audit from the repository
+root and reconcile every result—including documentation examples and
+unsupported source forms—with that universe:
+
+```sh
+rg -n --hidden -F 'compass-abstraction:' -g '!**/.git/**' -g '!**/node_modules/**' .
+```
+
+Any source claim outside `SRC_SUFFIXES`, using a comment form other than `//`,
+`#`, or `--`, or missing from `abstraction_markers` fails the trial gate. Extend
+the checker and its fixtures before permitting that form; never silently narrow
+"every marker" to what the current regex happened to see.
 
 **What a passing run does and does not establish.** It proves the chart is internally consistent and still points at real code. It proves nothing about whether the boundaries are right, whether a rule the chart records is the rule the product enforces, or whether a name is one a human would use. Those are the rest of this file, and they stay judgment. Never report a green script as verification of the chart.
 
@@ -257,6 +340,31 @@ Run over any chart document carrying nontrivial rationale, and over implementati
 - [ ] For each piece of implementation documentation that repeats chart semantics: *does Compass already canonically own this truth?* If yes, reduce it to the smallest local consequence plus a coordinate route
 - [ ] No mechanism-specific Chesterton's Fence (queue semantics, retry placement, ordering guarantees, framework quirks) appears in L0–L2 prose
 - [ ] No complete semantic explanation is reproduced at both a chart location and an implementation site
+
+---
+
+## Named Abstraction Verification (Optional)
+
+Run whenever `ABSTRACTIONS.md` or a `compass-abstraction:` marker exists,
+including when no valid trial was configured. The governing procedure is
+[`named-abstractions.md`](named-abstractions.md). An unconfigured catalog or
+marker is an orphan claim and fails this gate until the user authorizes its
+removal or completes every trial prerequisite.
+
+- [ ] One existing task, PR, or tracker record is user-nominated and authorized as the sole owner of trial tasks, admission evidence, decisions, observations, and maintenance findings; the host usage hook carries the prescribed durable pointer to it
+- [ ] The host test suite owns the installed checker and the nominated trial record names its exact command plus passing valid, invalid-slug, missing-definition, malformed-spacing-or-multiline, unsupported-form, and hidden-source fixture commands
+- [ ] Every definition heading has a unique lowercase-hyphen slug and its required `Meaning`, `Essential discriminator`, and `Nearest non-example` sections
+- [ ] The repository-wide raw-hit audit has no unsupported or uncounted source claim; every supported marker in the configured source universe resolves to exactly one definition
+- [ ] Every marker is adjacent to a stable, authored declaration that owns the claimed instance — never a call site, generated file, barrel export, or convenience import
+- [ ] Each marked owner conforms to the definition's discriminator and is not its nearest non-example; this is review evidence, not a script result
+- [ ] The nominated trial record shows that every admitted name changed a concrete navigation, implementation, or comparison decision; mere recurrence or resemblance did not qualify it
+- [ ] `ABSTRACTIONS.md` contains no occurrence paths, feature mappings, `used-by` lists, edges, flows, or trial results
+- [ ] Marker absence is treated as unknown, searches are reported as declared occurrences only, and no coverage or completeness claim is made
+- [ ] The trial did not reinterpret L3 stereotypes or change any L0–L4 semantic entity
+
+A green mechanical check establishes only definition shape, slug uniqueness,
+and marker resolution. It does not establish that a marked owner conforms, that
+all conforming code is marked, or that the abstraction is useful.
 
 ---
 

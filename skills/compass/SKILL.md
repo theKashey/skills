@@ -1,6 +1,6 @@
 ---
 name: compass
-description: Use when establishing, exploring, maintaining, or consulting a semantic architecture chart for non-local work—its roots, levels, viewports, code coordinates, or chart-vs-code disagreements; not for reader-facing docs or implementing code.
+description: Use when establishing, exploring, maintaining, or consulting a Compass chart for non-local work—roots, levels, viewports, coordinates, disagreements, or an opted-in named-abstraction trial; not for reader-facing docs or implementing code.
 ---
 
 # Compass
@@ -135,6 +135,29 @@ Where product language and implementation language differ, the product or domain
 
 → Glossary format: [`references/blocks-and-levels.md`](references/blocks-and-levels.md#glossarymd-format)
 
+## Named Implementation Abstractions (Optional)
+
+During already-active non-local Compass work, an implementation-design concept
+may be useful to recognize even though the semantic chart must reject it. An
+opted-in trial may define that concept in `{chart-root}/ABSTRACTIONS.md` and
+mark declared instances with `compass-abstraction: <slug>`.
+
+This is coordinate-layer vocabulary, not semantic architecture. It adds no
+level, changes no L0–L4 entity, and may disappear in a full implementation
+rewrite. A marker is an authored claim, not proof; absence means unknown.
+
+Load the procedure only when the user requests the trial, an existing marker is
+encountered during non-local Compass work, or already-active non-local work
+exposes a candidate whose recognition would change a concrete decision. Do not
+load it for routine local work. Before starting, require the user to nominate
+and authorize one existing task, PR, or tracker record as the trial-evidence
+owner, require the existing host usage hook to point to that record, and
+require the host test suite to own the installed chart check and its fixtures;
+do not invent another evidence surface or accept manual self-certification.
+
+→ Admission gate, schema, source marker, and trial boundaries:
+[`references/named-abstractions.md`](references/named-abstractions.md)
+
 ## Exploration Loop
 
 Continuous loop: **orient → scan → probe → adjust**, triangulating three sources rather than comparing two — product/domain reality, the chart, and the implementation. Code yields a candidate model; product and domain reality verify it. Never derive L0/L1 semantics from code shape alone.
@@ -256,12 +279,18 @@ Three things are outside the chart entirely, and saying so keeps them from being
 
 ## File Layout (directory-as-zoom)
 
-Architecture docs live at `{chart-root}/`. **The directory structure IS the zoom hierarchy** — descending into a subfolder = zooming in one level. Every folder is named after the entity it describes, and **the identity document of every architectural directory is its `README.md`**, so opening any Compass directory on GitHub immediately answers *where am I?*
+Compass-owned documents live at `{chart-root}/`. **The directory structure of
+the semantic chart IS the zoom hierarchy** — descending into a subfolder =
+zooming in one level. Every chart folder is named after the entity it describes,
+and **the identity document of every architectural directory is its
+`README.md`**, so opening any Compass directory on GitHub immediately answers
+*where am I?*
 
 ```
 {chart-root}/
   README.md                   ← chart identity: scope + the roots below
   COMPASS.md                  ← registry (roots / L1 externals / demoted externals)
+  ABSTRACTIONS.md             ← optional implementation-design definitions; not a zoom level
   externals/                  ← one doc per L1 external, linked from its COMPASS.md row
     {external-name}.md
   {root}/                     ← one ratified logical root of orientation
@@ -280,7 +309,7 @@ Architecture docs live at `{chart-root}/`. **The directory structure IS the zoom
 
 Three constraints the tree cannot carry: `{root}/README.md` is a black box — actors and external systems only, never internal structure; `DOMAIN.md` carries domain language only, never technology or coordinates; and a demoted external gets no `externals/` doc at all — it lives in the adapter that uses it.
 
-`README.md` is promoted, never duplicated: an entity's identity document *is* its `README.md`. There is no `SCOPE.md`, `CONTEXT.md`, `BLOCK.md`, or `COMPONENT.md`. Explicitly named alternate views — `COMPASS.md`, `DOMAIN.md`, `GLOSSARY.md`, `CONTAINERS.md`, `VIEWPORTS.md` — keep their names because they are views, not identities.
+`README.md` is promoted, never duplicated: an entity's identity document *is* its `README.md`. There is no `SCOPE.md`, `CONTEXT.md`, `BLOCK.md`, or `COMPONENT.md`. Explicitly named alternate artifacts and views — `COMPASS.md`, `ABSTRACTIONS.md`, `DOMAIN.md`, `GLOSSARY.md`, `CONTAINERS.md`, `VIEWPORTS.md` — keep their names because they are not entity identities. `ABSTRACTIONS.md` sits beside the zoom chain rather than inside it.
 
 **Semantic fields are real Markdown.** Use headings for fields, lists for sets, tables for homogeneous collections, links for navigation, Mermaid for diagrams. Never pseudo-fields (`Responsibility — …`) — the Markdown AST should expose the schema instead of forcing an agent to infer it from prose punctuation.
 
@@ -296,7 +325,7 @@ Three constraints the tree cannot carry: `{root}/README.md` is a black box — a
             └→ {root}/VIEWPORTS.md (L4)
 ```
 
-**Five document kinds require a Mermaid diagram:** `{root}/README.md`, `CONTAINERS.md`, every block `README.md`, every component `README.md`, and `VIEWPORTS.md` — each showing inputs, outputs, and key relationships at its level of abstraction. The rest of the chain carries none: `DOMAIN.md` (L0) stays prose, where a mermaid context map is acceptable but never required, and `{chart-root}/README.md`, `COMPASS.md`, and `GLOSSARY.md` have nothing to draw.
+**Five document kinds require a Mermaid diagram:** `{root}/README.md`, `CONTAINERS.md`, every block `README.md`, every component `README.md`, and `VIEWPORTS.md` — each showing inputs, outputs, and key relationships at its level of abstraction. The rest of the chain carries none: `DOMAIN.md` (L0) stays prose, where a mermaid context map is acceptable but never required, and `{chart-root}/README.md`, `COMPASS.md`, `ABSTRACTIONS.md`, and `GLOSSARY.md` have nothing to draw.
 
 ## L1 Abstraction Guardrails (Hard Rules)
 
@@ -343,6 +372,7 @@ The runnable form of these rules is the L1 checklist in [`references/verificatio
 
 Quick patterns:
 - **Starting a non-local task** → read `{chart-root}/README.md` → `COMPASS.md` → `{root}/README.md` → `{root}/CONTAINERS.md` → find block → read `{block}/README.md` → find component → read `{component}/README.md`
+- **Encountering or proposing a named implementation abstraction during non-local Compass work** → read the trial-evidence pointer in the host usage hook, `{chart-root}/ABSTRACTIONS.md` if it exists, then [`references/named-abstractions.md`](references/named-abstractions.md) and its named-abstraction verification gate before interpreting or changing a definition or marker
 - **Changing domain meaning** → `{root}/DOMAIN.md` + `{root}/GLOSSARY.md`
 - **Debugging a flow** → open `{root}/VIEWPORTS.md` → find the viewport that covers the flow → trace participants
 - **"Why is this code weird?"** → follow its `compass:` coordinate first; if the reason is implementation-specific and unresolved, continue under Context Docs
@@ -361,6 +391,6 @@ diverges, and the divergent copy is the one an agent finds — read the gate.
 
 ✅ Always: read the declared chart root before chart work; declare scope before L0; apply the rewrite test to every semantic candidate; propagate top → down; document relationships in consumers; keep within size budgets; classify disagreement before repairing it; state confidence explicitly.
 
-⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; writing or updating the usage hook in the host's agent instructions; installing the chart check into the host's test suite (§Verification). Those two, plus `compass:` comments in source, are everything the skill touches outside the chart root.
+⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; starting a named-abstraction trial and authorizing its existing task, PR, or tracker record; writing trial observations to that record; writing or updating the usage hook in the host's agent instructions; installing the chart check into the host's test suite (§Verification); adding or changing `compass:` or `compass-abstraction:` comments in source. The usage hook, chart check, two source-marker forms, and host-nominated trial record are everything the skill touches outside the chart root.
 
 🚫 Never: write chart files outside the declared chart root or invent a root when none is configured; invent a logical root without human ratification; let code alone ratify L0–L2 semantic identity; document infrastructure as architecture (L5); contradict higher levels; treat a moved code path as evidence the semantics are wrong; demand implementation reshaping because topology and chart differ; seal coordinates before boundaries stabilize; skip human checkpoint at state 0 exit — when no human is available, stop there and report; do not proceed past any checkpoint unattended.

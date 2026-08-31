@@ -3,8 +3,11 @@
 The compass skill governs a semantic architecture chart under a chart root the
 host project declares: one or more human-ratified logical roots, a scoped L0–L4
 level stack, a per-root glossary, a tiered registry, viewports, and
-`// compass:` implementation coordinates in source. It describes what the
-system *is*; it does not prescribe implementations, tests, or requirements.
+`// compass:` implementation coordinates in source. That chart root may hold an
+opt-in `ABSTRACTIONS.md` for named implementation-design concepts, attached to
+code by `// compass-abstraction:` claims. The semantic chart describes what the
+system *is*; the optional catalog is not a chart level and does not prescribe
+implementations, tests, or requirements.
 
 Two nested things share the name: the skill package and the compass registry
 (`COMPASS.md`), the chart's root artifact.
@@ -72,7 +75,10 @@ source exists the chart points into it, because a summary of a live source is a
 second copy with no owner and it is wrong from the next commit. Implementation
 coordinates are the deliberate exception and stay authored: they exist so an
 agent reaches code without scanning, they are written before any marker is
-sealed, and they name entry points no scan produces. Runtime state, task
+sealed, and they name entry points no scan produces. Named-abstraction
+definitions are a second, opt-in exception: no command can decide what a local
+design concept means, while its declared incidence remains mechanically
+searchable in source and is never copied into the catalog. Runtime state, task
 memory, and whether the work is correct sit outside the chart entirely — not
 carried, and not pointed into.
 
@@ -168,11 +174,27 @@ carried, and not pointed into.
   a fixed literal in every project — never the host repository's own name —
   because the checks that read it are written once, shipped with the skill,
   and match the body without a comment prefix.
+- **Named abstractions are definitions, not an incidence inventory.** An
+  optional chart-root `ABSTRACTIONS.md` gives a non-obvious local
+  implementation concept a human-readable name, an essential discriminator,
+  and a nearest non-example; `compass-abstraction: <slug>` beside a stable
+  source owner makes the local claim. Search supplies declared occurrences, so
+  the catalog carries no paths, `used-by` lists, edges, flows, or completeness
+  claim. Marker presence is an assertion to review and marker absence is
+  unknown. The mechanism is deliberately reversible and remains an
+  unvalidated experiment until task evidence shows that the names improve a
+  concrete navigation, implementation, or comparison decision. One existing,
+  user-authorized task, PR, or tracker record owns that trial evidence; the
+  chart never does. The existing host usage hook points later activations to
+  that record without duplicating its evidence.
 
 ## Boundaries
 
-The chart answers what the system is, what its parts are responsible for, and
-how they relate. Implementation guidance, mechanism-specific rationale,
+The semantic chart answers what the system is, what its parts are responsible
+for, and how they relate. The optional named-abstraction catalog answers only
+what a project-specific implementation-design name means and how to distinguish
+it from its nearest non-example. It does not explain why a particular owner
+uses that design. Implementation guidance, mechanism-specific rationale,
 performance, test strategy, deployment topology, business requirements, and how
 the repository happens to be arranged are out of scope (§What the Chart Does
 NOT Answer in the how-to guide). Reader-facing documentation — READMEs,
@@ -194,9 +216,10 @@ agents then follow it is outside the skill's evaluation boundary.
 | [references/blocks-and-levels.md](references/blocks-and-levels.md) | Roots in practice, the contents of every chart document, the registry and glossary templates, Markdown conventions, promotion criteria with contrast examples; placement stays with SKILL.md §File Layout |
 | [references/coordinate-system.md](references/coordinate-system.md) | Addresses, marker syntax, the coordinate laws with their examples and validation, multiple coordinates |
 | [references/growth-and-drift.md](references/growth-and-drift.md) | Phases 0–F, the usage hook, the disagreement classification with its table and priorities, methodology drift |
+| [references/named-abstractions.md](references/named-abstractions.md) | Optional named implementation-abstraction admission, definition schema, source-claim semantics, use loop, and experiment limits |
 | [references/ownership-boundary.md](references/ownership-boundary.md) | The Compass/Context Docs ownership contract in both directions, and the coordinate-first investigation flow |
 | [references/how-to-use.md](references/how-to-use.md) | Task-to-navigation patterns over finished docs |
-| [references/verification.md](references/verification.md) | Every completion checklist that exists — root, L0, L1, L2, calibration, L3, coordinates, ownership, navigation; other files point there |
+| [references/verification.md](references/verification.md) | Every completion checklist that exists — root, L0, L1, L2, calibration, L3, coordinates, ownership, named abstractions, navigation; other files point there |
 
 Each fact has one canonical owner, and `SKILL.md` mirrors what an agent must
 not miss before it decides whether to open a reference at all — the rewrite
