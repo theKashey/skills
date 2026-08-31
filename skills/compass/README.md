@@ -147,6 +147,11 @@ carried, and not pointed into.
 - **One checklist owner** (`references/verification.md`), instead of per-file
   checklists: duplicated checklists diverge, and the divergent copy is the one
   an agent finds.
+- **Mutually exclusive Create and Consume flows**, instead of one runtime manual
+  that mixes chart production with chart use. Consumption must stay read-only:
+  finding a gap does not silently grant authority to rewrite the chart. Creation
+  includes maintenance and remapping because all three mutate Compass-owned or
+  Compass-installed state and require the same ownership and verification gates.
 - **Diagrams are mandatory only on the zoom chain**, not on every file: L0 is
   domain prose by design, and a forced diagram there would restate the context
   map without adding structure.
@@ -197,7 +202,7 @@ it from its nearest non-example. It does not explain why a particular owner
 uses that design. Implementation guidance, mechanism-specific rationale,
 performance, test strategy, deployment topology, business requirements, and how
 the repository happens to be arranged are out of scope (§What the Chart Does
-NOT Answer in the how-to guide). Reader-facing documentation — READMEs,
+NOT Answer in [the Consume guide](references/consume.md#what-the-chart-does-not-answer)). Reader-facing documentation — READMEs,
 references, tutorials — is a different craft with a different owner; compass
 claims only the chart. The boundary with Context Docs is a stated contract
 rather than a disclaimer: reasons that survive a rewrite may be Compass-owned,
@@ -211,24 +216,22 @@ agents then follow it is outside the skill's evaluation boundary.
 
 | File | Owns |
 | --- | --- |
-| [SKILL.md](SKILL.md) | Activation, chart root contract, the rewrite and invariance tests, root admission, level tables, L1 guardrails, file layout, and the always-loaded mirrors of the coordinate laws and the disagreement classification |
+| [SKILL.md](SKILL.md) | Activation, the minimal shared interpretation contract, and the exclusive Create/Consume route decision |
+| [references/create.md](references/create.md) | Create and maintenance entry: rewrite and invariance tests, root admission, level tables, L1 guardrails, file layout, authoring boundaries, and conditional routes to production references |
+| [references/consume.md](references/consume.md) | Read-only task-to-navigation and interpretation patterns over an existing chart |
+| [references/consume-named-abstractions.md](references/consume-named-abstractions.md) | Read-only interpretation of existing named-abstraction definitions and claims |
+| [references/structural-signals.md](references/structural-signals.md) | Shared read-only warning signs for level contamination and overreach; both flows may consult it without importing the other's procedure |
 | [references/exploration.md](references/exploration.md) | The orient→scan→probe→adjust loop, triangulation and evidence sources, per-state procedures and exits, level calibration, scratchpad format |
-| [references/blocks-and-levels.md](references/blocks-and-levels.md) | Roots in practice, the contents of every chart document, the registry and glossary templates, Markdown conventions, promotion criteria with contrast examples; placement stays with SKILL.md §File Layout |
+| [references/blocks-and-levels.md](references/blocks-and-levels.md) | Roots in practice, the contents of every chart document, the registry and glossary templates, Markdown conventions, promotion criteria with contrast examples; placement stays with `references/create.md` §File Layout |
 | [references/coordinate-system.md](references/coordinate-system.md) | Addresses, marker syntax, the coordinate laws with their examples and validation, multiple coordinates |
 | [references/growth-and-drift.md](references/growth-and-drift.md) | Phases 0–F, the usage hook, the disagreement classification with its table and priorities, methodology drift |
-| [references/named-abstractions.md](references/named-abstractions.md) | Optional named implementation-abstraction admission, definition schema, source-claim semantics, use loop, and experiment limits |
+| [references/named-abstractions.md](references/named-abstractions.md) | Create-only named implementation-abstraction admission, definition schema, source-claim semantics, maintenance, and experiment limits |
 | [references/ownership-boundary.md](references/ownership-boundary.md) | The Compass/Context Docs ownership contract in both directions, and the coordinate-first investigation flow |
-| [references/how-to-use.md](references/how-to-use.md) | Task-to-navigation patterns over finished docs |
 | [references/verification.md](references/verification.md) | Every completion checklist that exists — root, L0, L1, L2, calibration, L3, coordinates, ownership, named abstractions, navigation; other files point there |
 
-Each fact has one canonical owner, and `SKILL.md` mirrors what an agent must
-not miss before it decides whether to open a reference at all — the rewrite
-test, the coordinate laws, and the three-way classification most of all,
-because an agent that never opens a reference would otherwise attribute per
-file and repair every disagreement by rewriting the chart, the two failures
-those rules exist to prevent.
-A mirror summarises; it never adds a rule of its own, and where a mirror and
-its owner disagree, the owner wins. Completion checklists are deliberately not
-mirrored: a condensed checklist diverges, and the divergent copy is the one an
-agent finds. The runtime router may point to a reference, but nothing at
-runtime points here.
+Each fact has one canonical owner. `SKILL.md` carries only the facts needed to
+choose safely before either route loads: non-local applicability, declared chart
+root, code-versus-semantics authority, coordinate meaning, disagreement classes,
+and the no-mixing boundary. Create and Consume then leave one another's
+procedure unloaded. Completion checklists are deliberately not mirrored: a
+condensed checklist diverges, and the divergent copy is the one an agent finds.

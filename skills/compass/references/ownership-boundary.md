@@ -1,8 +1,11 @@
 # Ownership Boundary: Compass and Context Docs
 
-Both skills preserve *why*. They own different whys, and this file is the contract between them. It is an ownership test, not a writing-style preference — and it decides placement in both directions, so neither skill ends up restating the other.
+Both skills preserve *why*. They own different whys under one bidirectional
+ownership test, so neither skill restates the other. This is an ownership
+decision, not a writing-style preference.
 
-Context Docs' canonical-owner principle is the rule being honoured here: complete truth and remote mechanics live with **one** owner, and other encounter points get the smallest route to it. This file only establishes that Compass is one of the possible owners.
+Complete truth and remote mechanics live with **one** owner, and other encounter
+points get the smallest route to it. Compass is one possible owner.
 
 ## The classifier
 

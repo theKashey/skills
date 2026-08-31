@@ -1,6 +1,8 @@
-# How to Use the Chart
+# Consume a Compass chart
 
-The chart answers specific questions faster than reading code — and answers questions code cannot answer at all. This guide maps common developer tasks to navigation patterns. `{chart-root}` is the directory the host project declares in its agent instructions (see `SKILL.md` §Chart Root).
+Use an existing chart to orient non-local work without changing the chart or
+its installed integration. `{chart-root}` is the directory the host project
+declares in its agent instructions (see `SKILL.md` §Shared contract).
 
 The chart describes the logical system. The code is one realization of it. Read a mismatch as information about the mapping, not as a fault in either side, until you have classified it.
 
@@ -10,7 +12,8 @@ The chart describes the logical system. The code is one realization of it. Read 
 
 ### Starting a new task
 
-Follow the zoom chain when the work is not local (`SKILL.md` §Core Principle, **Applicability**) — and never skip a level:
+Follow the zoom chain when the work is not local (`SKILL.md` §Shared contract)
+— and never skip a level:
 
 1. Open `{chart-root}/README.md` — confirm scope and see which roots exist
 2. Open `{chart-root}/COMPASS.md` — see which roots exist and which externals were demoted; where more than one root could own the work, pick the orientation that matches how you're thinking about the task
@@ -40,6 +43,10 @@ If the code uses a word the glossary lists as an alias, the glossary term is the
 3. If the chart explains the *what* but the mechanism is still surprising, the remaining reason is implementation-specific: it lives with the code, and Context Docs owns where it goes
 
 Checking the coordinate first is what stops the same domain intent being reverse-engineered over and over.
+
+If an existing `compass-abstraction: <slug>` marker or definition affects the
+task, read [consume-named-abstractions.md](consume-named-abstractions.md). This
+is the only named-abstraction procedure in the Consume flow.
 
 ---
 
@@ -75,7 +82,8 @@ Count logical boundaries, not directories. A phenomenon spread across six packag
 4. Open that step's `{component}/README.md` — check boundary and implementation coordinates
 5. Navigate to the coordinate listed, add logging/breakpoint at the boundary
 
-**If no viewport covers the flow:** the flow is undocumented. Add a viewport after debugging — that's how the chart grows from real pain.
+**If no viewport covers the flow:** report the gap and continue from component
+documents and coordinates. Creating a viewport is a separate Create task.
 
 ---
 
@@ -88,7 +96,9 @@ Open its `{component}/README.md`. Read in this order:
 4. **Mermaid diagram** — shows who calls it and what it calls
 5. **Implementation coordinates** — where to find it today
 
-If the coordinates are wrong, that is a remapping to fix. If the responsibility or boundary is wrong, that is a semantic finding — classify it before editing.
+If the coordinates are wrong, classify and report an implementation remapping.
+If the responsibility or boundary is wrong, classify and report a semantic
+finding. Do not edit the chart in the Consume flow.
 
 ---
 
@@ -99,7 +109,7 @@ If the coordinates are wrong, that is a remapping to fix. If the responsibility 
 3. Check: does the change add new dependencies not listed in depends-on?
 4. Check: does the change alter a rule, invariant, or capability the chart records?
 5. Classify anything that disagrees with the chart before proposing a fix:
-   - files moved, service extracted, framework swapped → **implementation remapping**; update coordinates
+   - files moved, service extracted, framework swapped → **implementation remapping**; report that coordinates need a separate Create task
    - a rule or responsibility now differs → **semantic change**; needs ratification
    - the code crosses a ratified boundary → **implementation violation**; one side is wrong, decide which
 
@@ -120,46 +130,23 @@ Point 4 is the one reviewers skip. A pure rule change moves no file and breaks n
 4. For each: who is the consumer? (consumer docs the relationship — find those files)
 5. Decide up front whether this refactor changes *meaning* or only *structure*
 
-A structure-only refactor updates implementation coordinates and nothing above L2. If you find yourself editing L0, L1, or a block's logical role, you are making a semantic change — stop and take it through ratification instead of shipping it inside a refactor.
+A structure-only refactor implies implementation-coordinate maintenance and no
+change above L2. Record that maintenance as a separate Create task. If the plan
+would alter L0, L1, or a block's logical role, report a semantic change that
+requires ratification.
 
 **Refactor readiness check:** if you can't describe the before and after state of every affected block document, you're not ready to code.
 
 ---
 
-### Adding a new component
-
-1. Open `{root}/CONTAINERS.md` — confirm which block the component belongs to
-2. Open that block's `README.md` — confirm it fits the boundary statement
-3. Create `{chart-root}/{root}/{block}/{component-name}/README.md`
-4. Fill: stereotype, responsibility (1 sentence), bounded context, I/O, depends-on, used-by, boundary, implementation coordinates
-5. Add Mermaid diagram
-6. Add entry to the parent block's component table
-7. Update the block diagram to show the new component
-8. If it crosses a block boundary: update `CONTAINERS.md` table and diagram + check if a viewport needs updating
-
----
-
-### Adding a new block
-
-Requires human decision (L2 semantic change). Before creating:
-1. Can it be a component within an existing block? If yes, do that instead (YAGNI)
-2. Does it pass the L2 admission criteria in [`blocks-and-levels.md`](blocks-and-levels.md#level-promotion-criteria) and the checks in [`verification.md`](verification.md) §L2 Isolated Blocks Verification? Those are the criteria — do not substitute a shorter list from memory
-3. Does it have a clear owner in the team?
-
-If yes to all:
-1. Create `{block}/README.md`
-2. Add to `CONTAINERS.md` — block table and diagram
-3. Re-run level calibration on the block's new sibling set
-4. Seal it at its coarsest accurate coordinate — normally one `compass: {root}.{block}` on its composition root, not one per file (Phase F)
-5. Update `{root}/README.md` only if it requires a new L1 external system
-
-A new deployable, package, or service is not by itself a reason to add a block.
-
----
-
 ### Detecting that a component is doing too much
 
-The signals and their thresholds live in [`verification.md`](verification.md) §L3 Component Verification, §L2 Isolated Blocks Verification, and §Lead/Bleed Detection Checklist — one owner, so a threshold tightened there is tightened everywhere. Read them from the document you have open: a component document exposes responsibility, depends-on, used-by, and its diagram; a block document exposes communicates-with, the boundary statement, and the logical role.
+Read the component's responsibility, depends-on, used-by, and diagram, then the
+block's communicates-with entries, boundary statement, and logical role. Treat
+any apparent overreach as a lead to report, not permission to redraw the chart.
+Use the applicable thresholds in
+[structural-signals.md](structural-signals.md); it is the shared read-only owner
+for level-contamination and overreach signals.
 
 The one sign with no numeric threshold, and the most decisive: **a logical role that can only be stated by naming a directory.** That block has no semantic identity — it is a folder with a document.
 
@@ -188,7 +175,7 @@ Close each lead as **legitimate** (no move), **declutter** (with the useful move
 ## What the Chart Does NOT Answer
 
 - **How to implement** — the chart describes what the system is and how its parts relate, not how to build them
-- **Why this particular mechanism** — implementation-local rationale lives with the code (see [`ownership-boundary.md`](ownership-boundary.md))
+- **Why this particular mechanism** — implementation-local rationale lives with the code
 - **Performance characteristics** — measure with the project's evaluation tooling, don't document here
 - **Test strategy** — the chart shows boundaries, which inform test boundaries, but does not prescribe tests
 - **Deployment topology** — document only if a viewport question requires it; topology never defines roots or blocks

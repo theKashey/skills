@@ -1,8 +1,11 @@
 # Roots, Blocks, Levels, and Documentation Formats
 
-File placement is fixed by the canonical layout in `SKILL.md` §File Layout (directory-as-zoom under the project's declared chart root). This reference defines the *contents* of those files.
+`create.md` §File Layout owns placement under the project's declared chart
+root. The rules below own the contents of those chart documents.
 
-Every semantic entity defined here must first pass the rewrite test in `SKILL.md` §The Rewrite Test, and every semantic boundary change must run the invariance test in §The Invariance Test. Those two gates are not restated below.
+Every semantic entity defined here must first pass the rewrite test in
+`create.md` §The Rewrite Test, and every semantic boundary change must run the
+invariance test in §The Invariance Test. Those two gates are not restated below.
 
 ## Block Definition
 
@@ -21,7 +24,7 @@ Not everything is a block. Infrastructure, utilities, and shared helpers are the
 
 ## Roots
 
-A **root** is a stable logical starting point from which *where am I?* has a useful independent answer. The five-part admission test and the rebuild-from-scratch challenge live in `SKILL.md` §Scope and Roots. This section covers what roots look like in practice.
+A **root** is a stable logical starting point from which *where am I?* has a useful independent answer. The five-part admission test and the rebuild-from-scratch challenge live in `create.md` §Scope and Roots. This section covers what roots look like in practice.
 
 Roots do not correspond to repositories, deployables, services, folders, or C4 systems. Nothing about a package boundary, a separate service, or a second language creates a root; only independent logical identity does.
 
@@ -207,7 +210,7 @@ identity document is its `README.md`.
 | {name} | {component address} | {the fact about the dependency — not the name of the test it failed} |
 ```
 
-**Ratification is a gate on the work, not a column in the artifact.** A root still requires a human before an agent writes it, and that requirement is stated where it governs behaviour: the boundaries in `SKILL.md`, and the state-0 checkpoint in `references/growth-and-drift.md`. It does not belong in `COMPASS.md`, because who approved a boundary and when is a fact about the chart's production rather than about the system. The same reasoning excludes three fields a registry attracts:
+**Ratification is a gate on the work, not a column in the artifact.** A root still requires a human before an agent writes it, and that requirement is stated where it governs behaviour: the boundaries in `create.md`, and the state-0 checkpoint in `growth-and-drift.md`. It does not belong in `COMPASS.md`, because who approved a boundary and when is a fact about the chart's production rather than about the system. The same reasoning excludes three fields a registry attracts:
 
 - **`Registry owner:`** — a page-ownership line answers no question a reader of the chart has, and it is a field nobody ever changes.
 - **`Ratified by` / `Status`** — provenance and lifecycle metadata. A retired root is removed from the table; that it once existed is the commit history's job.
@@ -369,10 +372,10 @@ The external systems table is what the L1 external-system checks run over.
 
 Use these tests before assigning anything to a level. Default down when uncertain.
 
-**To be a root:** the five-part admission test in `SKILL.md` §Scope and Roots, all five, with a human ratification.
+**To be a root:** the five-part admission test in `create.md` §Scope and Roots, all five, with a human ratification.
 
 **To appear at L1 (external system):**
-- Both L1 tests pass — User-Possession and Control Boundary (defined in `SKILL.md` §L1 Abstraction Guardrails, checked via the L1 checklist in [`verification.md`](verification.md))
+- Both L1 tests pass — User-Possession and Control Boundary (defined in `create.md` §L1 Abstraction Guardrails, checked via the L1 checklist in [`verification.md`](verification.md))
 - It has an identity independent of this system (it exists without you)
 - The root's value proposition explicitly includes integrating with or serving it
 
@@ -632,14 +635,6 @@ A viewport whose `### Question` is missing has no reason to exist — retire it 
 3. Draw focused mermaid diagram. Annotate data shapes where they change.
 4. Document seams: concrete types, serialization functions, bridging types, entry points on receiving side.
 5. Name for the question: `order-lifecycle` not `frontend-backend-database-flow`.
-
-### Using a viewport
-
-1. Identify which viewport covers your change.
-2. Read current path.
-3. Do the work.
-4. Check: does the viewport still describe reality?
-5. If not, update the viewport.
 
 ### Limits
 

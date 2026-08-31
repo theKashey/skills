@@ -66,7 +66,10 @@ not how the repository is arranged.
   semantic change / implementation remapping / implementation violation
 ```
 
-**The first bullet is load-bearing, not a hedge** (`SKILL.md` §Core Principle, Applicability). A hook claiming the chart is worth reading before every edit is disbelieved after the third one-line fix, and a reader who learns to skip it skips it for the change that needed it.
+**The first bullet is load-bearing, not a hedge** (`create.md` §Core Principle,
+Applicability). A hook claiming the chart is worth reading before every edit is
+disbelieved after the third one-line fix, and a reader who learns to skip it
+skips it for the change that needed it.
 
 Keep the hook this size: it routes, it does not restate the chart, and it does not reproduce any other skill. Phase E maintains it — if the chart root moves or a root is added, the hook is part of the diff.
 

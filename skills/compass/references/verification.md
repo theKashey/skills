@@ -2,9 +2,9 @@
 
 Formal checks that must pass before ratifying a root, advancing L0, L1, L2, L3,
 or Phase F, or changing an opted-in named abstraction. Run the applicable
-checks as a mandatory gate — not optional polish. This file is the canonical
-owner of every completion checklist; other files point here rather than
-restating the items. Levels and phases with no section below carry no gate
+checks as a mandatory gate — not optional polish. Each completion checklist
+below is canonical; other procedures point to the applicable section rather
+than restating its items. Levels and phases with no section below carry no gate
 beyond their exit conditions in [`exploration.md`](exploration.md) and
 [`growth-and-drift.md`](growth-and-drift.md).
 
@@ -12,7 +12,7 @@ beyond their exit conditions in [`exploration.md`](exploration.md) and
 
 ## First: the mechanizable checks belong to the host's test suite
 
-**An agent ticking its own checkbox is self-certification, and the items the table below maps need no judgment at all.** They are decidable by a script, they go stale silently, and the moment they live in a checklist they are only as reliable as the attention of whoever last ran it. Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review. They keep their checklist rows all the same — installing the check is ask-first (`SKILL.md` §Boundaries), and before it lands the rows are run by hand like everything else — but once the script is in CI, a green run is the only honest tick:
+**An agent ticking its own checkbox is self-certification, and the items the table below maps need no judgment at all.** They are decidable by a script, they go stale silently, and the moment they live in a checklist they are only as reliable as the attention of whoever last ran it. Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review. They keep their checklist rows all the same — installing the check is ask-first (`create.md` §Boundaries), and before it lands the rows are run by hand like everything else — but once the script is in CI, a green run is the only honest tick:
 
 The manual fallback does not apply to the named-abstraction trial. Before its
 first definition or source claim, the host test suite must own an installed,
@@ -201,7 +201,7 @@ Run before declaring Phase A complete.
 - [ ] Every important concept maps to a human-recognizable phenomenon or rule in the product or domain, with the evidence named
 - [ ] No mechanism visible only in code was promoted to a domain concept without a separate semantic justification
 - [ ] `DOMAIN.md` contains no technology, code paths, schemas, API shapes, or implementation coordinates
-- [ ] The context list passes the Derivation Test (`SKILL.md` §The Derivation Test) — contexts mapping ~1:1 onto packages or onto the layer stack were read off the code, whatever their names now say
+- [ ] The context list passes the Derivation Test (`create.md` §The Derivation Test) — contexts mapping ~1:1 onto packages or onto the layer stack were read off the code, whatever their names now say
 - [ ] `GLOSSARY.md` exists and covers every term used architecturally anywhere in this root's chart
 - [ ] Terminology is consistent across `DOMAIN.md`, block documents, and component documents — one concept, one word
 - [ ] Where product and code names differ, the product term is canonical and the code term is recorded as an implementation alias
@@ -262,7 +262,7 @@ Run before declaring Phase B complete.
 - [ ] Every block survives the invariance test: its boundary still makes sense after a structure-only refactor
 - [ ] No block exists only because a package, service, or deployable exists — implementation decomposition is not product decomposition
 - [ ] No block was split or merged because deployment topology, framework, or repository layout changed
-- [ ] **The block list passes the Derivation Test** (`SKILL.md` §The Derivation Test): laid beside the deployables, the packages, and the layers of the stack, it pairs off one-to-one with none of them. This is a check on the *set* — every member can pass the rewrite test while the cut was still read off topology
+- [ ] **The block list passes the Derivation Test** (`create.md` §The Derivation Test): laid beside the deployables, the packages, and the layers of the stack, it pairs off one-to-one with none of them. This is a check on the *set* — every member can pass the rewrite test while the cut was still read off topology
 - [ ] **No residue block.** Every block name is one a practitioner would say out loud, unprompted. A category name (`*-intelligence`, `*-services`, `core`, `shared`, `common`) or a layer name (`foundation`, `platform`, `packages`) means the block was computed from what the other blocks did not absorb
 - [ ] A block list where every block maps to exactly one subtree was investigated as a Derivation Test lead, and the disposition is recorded: a repository deliberately shaped around the ratified boundaries is *legitimate* (with what makes it so); a cut read off the file tree is *derived* (redraw from the domain). The pattern opens the question; only derivation evidence closes it
 - [ ] Every external system referenced in L2 is either listed at L1 (passed eligibility) or explicitly marked as "L3 adapter" in the block doc
@@ -386,27 +386,9 @@ Run at each level, over every document written so far.
 
 ## Lead/Bleed Detection Checklist
 
-Run at any time to detect level contamination. These are warning signs, not errors — each requires investigation.
-
-| Signal | Likely cause | Action |
-|--------|-------------|--------|
-| L1 diagram has >1 node inside the boundary | Internal block leaked up | Remove internals, move to L2 |
-| L1 external systems table has a vendor API or library | Implementation detail leaked up | Demote to L3 adapter |
-| L1 external added right after a dependency was added | Manifest treated as admission evidence | Re-run both L1 tests against product reality |
-| L1 external systems table has an adapter used by only one component | Adapter leaked up | Demote to L3 in that component |
-| Block doc references a framework as a peer block | L5 infrastructure promoted | Demote to L5, remove block doc |
-| A block's logical role can only be stated by naming a directory | Implementation structure became the identity | Restate semantically or merge the block away |
-| A block split at the same time a service was extracted | Topology change mistaken for semantic change | Reclassify as remapping; restore the block |
-| A root appeared alongside a new package or repository | Packaging mistaken for logical identity | Re-run root admission; retire if it fails |
-| Component has 4+ external dependencies | Possible hidden block boundary or missing facade | Record justification; investigate split |
-| File carries two coordinates within one root | Two logical participations, or unresolved chart ambiguity | Investigate and record which — do not split reflexively |
-| File carries coordinates from different roots with no ratified second root | Agent invented a root | Remove the invented root |
-| Block boundary statement is missing or >2 sentences | Boundary not understood | Clarify before proceeding |
-| Component responsibility requires "and" | Component doing too much | Split candidate |
-| Component diagram carries 6+ arrows | Too many relationships to hold at one level | Decompose candidate |
-| Block communicates-with list exceeds 5 entries | Block doing too much | Record justification; investigate split |
-| Siblings at one level describe wildly different breadths | Level not calibrated | Run level calibration |
-| Chart prose explains a mechanism that a rewrite would delete | Implementation fence leaked into the chart | Move it to its Context Docs owner |
+Run the shared warning-sign inventory in
+[`structural-signals.md`](structural-signals.md). Each signal opens an
+investigation; it is not a failed completion gate by itself.
 
 ---
 
@@ -420,6 +402,6 @@ Run periodically (after any significant code change, or at state 3 maintenance c
 4. Pick 2 rules or invariants the chart records and check them against the product's current behaviour. This is the only check that finds a semantic change, and no structural comparison substitutes for it.
 5. Pick 3 glossary terms — is each still the word humans use, and are the recorded aliases still the words in code?
 6. Check `VIEWPORTS.md` — at most 3–4 active viewports, each still answering its named question with a diagram that describes reality. A chart that skipped L4 has no `VIEWPORTS.md` and no link to one; that passes.
-7. Check document sizes against the level budgets in `SKILL.md` §Quick Reference: Levels — oversize means scope creep within the level; split the content down a level, don't raise the budget. L0 and L4 budgets are per unit (context, viewport): an oversize unit is doing too much — split or retire the unit, since there is no level below to push it into.
+7. Check document sizes against the level budgets in `create.md` §Quick Reference: Levels — oversize means scope creep within the level; split the content down a level, don't raise the budget. L0 and L4 budgets are per unit (context, viewport): an oversize unit is doing too much — split or retire the unit, since there is no level below to push it into.
 
 **If any check fails:** classify the finding using [`growth-and-drift.md`](growth-and-drift.md#classifying-disagreement) — semantic change, implementation remapping, or implementation violation — and respond per the priority order there. A finding repaired before it is classified is the failure this step exists to prevent.

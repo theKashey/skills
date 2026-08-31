@@ -1,4 +1,4 @@
-# Named Implementation Abstractions
+# Create and maintain named implementation abstractions
 
 This is an opt-in experiment for implementation-design concepts that are too
 local to enter semantic Compass but useful enough to recognize across non-local
@@ -19,10 +19,11 @@ incidence when needed.
 
 Load it only when one of these conditions holds:
 
-1. The user explicitly asks to start or use the named-abstraction trial.
-2. Non-local Compass work encounters an existing `compass-abstraction:` marker.
-3. Non-local Compass work exposes a candidate whose recognition would change a
-   concrete navigation, implementation, or comparison decision.
+1. The user explicitly asks to start or change the named-abstraction trial.
+2. Create work encounters an existing `compass-abstraction:` marker that must
+   be validated, changed, or removed.
+3. Create work exposes a candidate whose admission would change a concrete
+   navigation, implementation, or comparison decision.
 
 Do not create a catalog in anticipation of future use, scan routine local work
 for possible names, or turn repeated code shapes into candidates by default.
@@ -167,23 +168,6 @@ The marker is an authored design claim, not proof of conformance. Its absence
 is unknown, not evidence that the code does not instantiate the abstraction.
 Search results contain declared occurrences only. Report them that way; never
 claim coverage or completeness from marker search.
-
-## Use loop
-
-When a name may affect non-local work:
-
-1. Read its central definition before interpreting the source marker.
-2. Run the hidden-aware exact-slug command above to find declared instances;
-   reconcile its results with the configured source universe.
-3. Review the candidate owner against the essential discriminator and nearest
-   non-example; resolution alone does not prove conformance.
-4. Choose one disposition: **reuse** the abstraction, implement something
-   **materially distinct**, or **decline to name** the new code.
-5. Keep the local reason for that disposition with the code or its Context Docs
-   owner. Do not write it into `ABSTRACTIONS.md`.
-
-Add a new name only if it independently passes the admission gate. Similarity
-to an existing owner is a lead, not admission evidence.
 
 ## Maintenance and falsification
 
