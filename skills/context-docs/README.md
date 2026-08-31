@@ -202,13 +202,21 @@ or give a technical document promotional intent.
 Source evidence supports documentation while it is authored, but documentation
 review and deterministic completion checks happen once at wrap-up. Line, block,
 and file comments are admitted and written from evidence but never enter
-documentation review; exported-symbol JSDoc remains a public contract.
+documentation review; JSDoc on an established public-contract symbol remains a
+public contract.
 
 The package does not assume that adding JSDoc improves an agentic workflow by
 itself. JSDoc is useful here as a delivery surface: a host can extract it with
-the exported symbol, index it, and retrieve the public semantics into the
+the in-scope symbol, index it, and retrieve the public semantics into the
 agent's actual working context. Any behavioral benefit depends on the factual
 quality of that contract and on the host providing that retrieval path.
+
+The explicit task or the environment's established API owner supplies which
+symbols belong to a public contract. Context Docs does not independently derive
+that membership from repository structure or export syntax; its work begins
+after the public-contract scope is fixed. It accounts for that supplied scope
+and adds JSDoc only where material consumer-visible semantics would otherwise
+be lost at the boundary.
 
 Local documentation is part of that context engineering. A local `AGENTS.md`,
 README, package document, or linked contract can turn a model-surprising use

@@ -31,14 +31,17 @@ plan. That request is itself the final documentation task.
    explicitly makes that state the subject. Treat an explicit enduring
    source-only decision as product truth, and audit historical claims against
    durable historical evidence. For a change-set audit, inventory every changed
-   public item and affected non-inline surface. For a completeness audit,
-   inventory every stable public item and relevant non-inline surface in scope.
-   When the distribution contract names external consumers, also inventory
-   each material external consumer with their entry path and delivered
-   context.
+   item and affected non-inline surface in the stated audit scope. For a
+   completeness audit, inventory every item and relevant non-inline surface in
+   that scope. When public-contract coverage is included, use the member set
+   supplied by the task or its established owner. When that set is unavailable,
+   report the scope limit instead of deriving public membership from source
+   exports. When the distribution contract names external consumers, also
+   inventory each material external consumer with their entry path and
+   delivered context.
    Establish canonical facts, examples, and repository-native verification
-   commands. Exclude line, block, and file comments; exported-symbol JSDoc
-   remains a public-contract surface.
+   commands. Exclude line, block, and file comments; JSDoc on an established
+   public-contract symbol remains a public-contract surface.
 2. Read the [locality ladder](locality-ladder.md) only when documentation
    existence, ownership, governed scope, or placement is unresolved. Read
    [content architecture](content-architecture.md) only when a story,
@@ -69,7 +72,7 @@ Report documentation quality with evidence and counts.
 | Casting validity | When the reader, goal, subject, or surface was new or challenged, the recorded casting outcome is supported by entrant, context, decision-right, trust-boundary, and intervention evidence. A non-`PROCEED` outcome was followed instead of being drafted around; a persisted class predicts a material content choice and is not merely a skill, package, page, task, workflow phase, or job title. Any service priority cites an observation source and window or is explicitly labeled as an unmeasured expectation; lower-frequency classes retain a reachable route. |
 | Entry relevance | The document opens with the reader-relevant entry need defined in the reader entry and scan path section of `content-architecture.md` while keeping the governed subject inferable. Every compact chooser or catalog entry names the subject, what it provides, and why the reader would choose it before mechanism. |
 | Selection context and impact | Before methodology, workflow, taxonomy, or components, the intended reader can infer the relevant situation or pressure, affected party or system, observable impact or changed decision, and boundary. A chooser may own this context for compact catalog entries; a standalone subject page and a detailed owning section orient themselves locally. |
-| Public-contract coverage | Every stable public export, option, route, command, and relevant error in the stated audit scope is accounted for by a discoverable canonical source or has an explicit justified exclusion; prose fills only material semantic gaps. |
+| Public-contract coverage | Every member in the owner-supplied public-contract scope is accounted for by a discoverable canonical source or has an explicit justified exclusion; prose fills only material semantic gaps. |
 | Relationship coverage | Within the stated audit scope, every consumer-visible assertion connecting named subjects that a reader could act on—capability, compatibility, dependency, causation, ordering, or ownership claims—is inventoried by source, relation, target, direction, modality, and condition, then verified against authoritative contracts for both endpoints or an explicit product decision. Record the bound applied and its exclusions. Internal coherence, co-location, and repeated prose are not evidence. |
 | Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. Every retained explanation names the wrong turn, repeated investigation, or unsafe continuation it prevents, and survives subtraction of the cast reader's assumed priors, another subject's speciality, and verified delegated guarantees under [prior and speciality admission](content-architecture.md#prior-and-speciality-admission). When nothing survives that subtraction, deletion or `No document` is the passing result. |
 | Surface necessity | The surface passes the [locality ladder's existence and ownership gates](locality-ladder.md#pass-the-existence-and-ownership-gates). |
@@ -140,7 +143,7 @@ findability and safe use.
 
 A surface may route a category to its canonical owner. When a surface is the
 canonical reference for a category, such as configuration, routes, or public
-API, it accounts for every stable member in its stated scope or records an
+API, it accounts for every supplied member in its stated scope or records an
 explicit exclusion.
 
 The absence of a documentation build or snippet harness does not pass the
@@ -213,7 +216,7 @@ Flag bare verbs such as supports, handles, claims, configure, use, secure, or wo
 
 Require a documentation-impact decision when a change affects:
 
-- public exports, type shapes, configuration, defaults, CLI commands, routes, or response/error contracts;
+- an established public-contract member or contract, including an export, type shape, configuration, default, CLI command, route, or response/error contract;
 - installation, supported runtimes or versions, generated API inputs, or docs-site navigation;
 - security, authorization, persistence, lifecycle, compatibility, or migration behavior;
 - example programs or documentation build tooling.
@@ -247,7 +250,7 @@ not depend on reconstructing the change from memory.
 
 At release cadence:
 
-1. Compare the public export and configuration inventory with reference coverage.
+1. Compare the owner-supplied public-contract and configuration inventory with reference coverage.
 2. Revalidate each changed primary reader path from its stated starting state,
    including a public-website action, documentation navigation or reference
    lookup, technical integration, maintenance, operation, or recovery as
@@ -261,7 +264,10 @@ At release cadence:
    gate](review-documentation-at-wrap-up.md#end-state-exit-gate) before
    declaring the documentation releasable.
 
-Prefer generated inventory or repository-native documentation tooling. Introduce a maintained API map only if coverage cannot otherwise be derived, because every additional index is another drift risk.
+Prefer an authoritative inventory supplied by the established owner or
+repository-native tooling that already owns public membership. When none
+exists, report the scope limit instead of deriving membership or introducing a
+maintained API map; every additional index is another drift risk.
 
 Add custom automation only after repeated use shows that a mechanical check
 cannot otherwise be performed reliably.

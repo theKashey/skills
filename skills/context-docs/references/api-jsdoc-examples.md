@@ -20,10 +20,13 @@ examples without paraphrasing mechanics already visible to their reader.
 Use this workflow for an API or configuration reference, public JSDoc or
 TSDoc, or a standalone public API, configuration, or code example.
 
-1. Inventory every stable public option, export, route, command, relevant
-   error, and example in scope. Determine stability from the evidence below;
-   treat unclear accidental or experimental status as a decision gap, not a
-   silent exclusion.
+1. Start with the public-contract scope supplied by the task or the
+   environment's established API owner. Inventory its options, symbols, routes,
+   commands, relevant errors, and examples. Treat membership as an input to this
+   workflow: do not infer or expand it from source-level or barrel exports,
+   top-level placement, or the absence of a package export map. When neither the
+   task nor an owner supplies the scope, return that missing owner or scope
+   instead of classifying symbols.
 2. Put each detailed fact in its established existing owner and orient and link
    elsewhere. Read the [locality ladder](locality-ladder.md) only when
    existence, ownership, scope, or placement remains unresolved; return its
@@ -43,21 +46,19 @@ TSDoc, or a standalone public API, configuration, or code example.
 6. After implementation and non-inline documentation are complete, follow
    [Review documentation at wrap-up](review-documentation-at-wrap-up.md). At
    that point, reconcile the inventory, verify public JSDoc on the actual
-   exported surface, classify examples, and run supported deterministic checks.
+   in-scope consumer surface, classify examples, and run supported deterministic
+   checks.
 
 Complete with accounted-for public semantics, an evidence-backed exclusion or
 no-op, a proposal for the established owner, or the smallest unresolved
-stability or product decision.
+contract fact or externally owned scope decision.
 
 ## Contract checklist
 
-For every stable public option, function, class, type, route, command, or error,
-account for the applicable facts:
-
-Determine stability from declared package exports, generated interfaces, route
-or command schemas, tests, support policy, or an explicit product decision.
-Treat unclear accidental or experimental status as a decision gap, not a silent
-exclusion.
+For every option, function, class, type, route, command, or error in the
+supplied public-contract scope, account for the applicable facts. Public
+membership is established outside this workflow; a language-level export does
+not add an item to that scope.
 
 | Field | Question |
 | --- | --- |
@@ -103,12 +104,13 @@ contract and implementation. A durable, repository-specific convention around
 an otherwise familiar abstraction may instead earn a concise local explanation
 at the smallest context owner that the affected reader receives before acting.
 
-Public JSDoc has an additional extracted-reference audience. State what the API
-does when generated documentation or IDE help cannot rely on the implementation
-body, but do not paraphrase information already encoded precisely by the
-signature. At wrap-up, verify the prose on the exposed symbol after barrel
-re-exports, overloads, inheritance, declaration emission, or reference
-generation; a successful build can still lose it.
+JSDoc on an in-scope public-contract symbol has an additional
+extracted-reference audience. State what the API does when generated
+documentation or IDE help cannot rely on the implementation body, but do not
+paraphrase information already encoded precisely by the signature. At wrap-up,
+verify the prose on the supplied consumer surface after barrel re-exports,
+overloads, inheritance, declaration emission, or reference generation; a
+successful build can still lose it.
 
 Use the code-specific placement below. Read the [locality
 ladder](locality-ladder.md) only when the owner or line/block/file scope remains
@@ -119,11 +121,12 @@ unresolved:
 | Line | Which non-locally-visible cause makes a selectable, apparently reasonable local alternative unsafe. | A paraphrase of the expression, an inevitable effect of the selected operation, or remote mechanics with no material consequence here. |
 | Block | Why a parallel process, lifecycle state, or other non-local invariant rules out an apparently reasonable reordering, omission, algorithm, or guard. | A translation of the statements or an imagined alternative that current interfaces do not permit. |
 | File | Why the file exists, the boundary it owns, and a non-obvious relationship to another subsystem. | A tour of declarations or imports. |
-| Exported symbol JSDoc | Purpose and public semantics the signature cannot encode: runtime defaults, failures, lifecycle, ownership, security boundaries, and important interactions. | Type narration, implementation history, or a duplicate reference page. |
+| Public-contract symbol JSDoc | Purpose and public semantics the signature cannot encode: runtime defaults, failures, lifecycle, ownership, security boundaries, and important interactions. | Type narration, implementation history, or a duplicate reference page. |
 
-Internal symbols need no JSDoc by default. Extractability alone does not justify
-low-value prose. Exported-symbol JSDoc is a public-contract surface layered on a
-symbol; it does not sit between file and block in the locality ladder.
+Symbols outside the supplied public-contract scope need no public JSDoc by
+default. Extractability alone does not justify low-value prose. Public-contract
+JSDoc is a surface layered on a symbol; it does not sit between file and block
+in the locality ladder.
 
 ### Selective-context authoring decision
 
@@ -262,4 +265,6 @@ harness as an open maintenance risk.
 
 Treat source, exported types, tests, generated artifacts, and approved decisions as evidence. Record enough source evidence in the task handoff that another maintainer can re-check contested claims.
 
-If behavior, default, error handling, or scope cannot be verified, do not fill the gap with plausible prose. Mark it as needing product or API clarification.
+If behavior, default, error handling, or a contract limit cannot be verified,
+do not fill the gap with plausible prose. Mark it as needing product or API
+clarification.

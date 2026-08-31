@@ -8,8 +8,8 @@ the smallest remaining defect or risk.
 Use this guide once, only after the in-scope implementation and non-inline
 documentation are complete. A user request specifically for a non-inline audit
 or review is itself a wrap-up task. Never invoke this guide on intermediate
-work. Exclude line, block, and file comments; exported-symbol JSDoc remains a
-public-contract surface.
+work. Exclude line, block, and file comments; JSDoc on an established
+public-contract symbol remains a public-contract surface.
 
 If the selected route already loaded the full quality scorecard for an audit or
 release, do not use this guide. That scorecard owns terminal completion.
@@ -22,15 +22,17 @@ this compact guide. Otherwise verify only the applicable minimum:
 
 1. Check the completed behavior against source, exported types, tests, generated
    artifacts, and explicit product decisions. Resolve or report contradictions.
-2. Account for every public export, option, route, error, command, example, and
-   documentation surface in the stated scope. In a change-set scope, account
-   for every changed or affected item and each justified exclusion.
+2. Account for every item, example, and documentation surface in the stated
+   scope. When public-contract coverage is in scope, use the member set supplied
+   by the task or its established owner rather than deriving membership. In a
+   change-set scope, account for every changed or affected item and each
+   justified exclusion.
 3. Confirm that each surface gives its intended reader enough relevance,
    behavior, evidence, and boundary to act without unsafe inference. When a
    task-local story contract governed the change, verify the opening, major
    sections, proof, limits, and completion route against it.
 4. When public JSDoc or TSDoc is in scope, verify that its semantics remain on
-   the intended exported symbol in the actual extracted, emitted, generated, or
+   the intended in-scope symbol in the actual extracted, emitted, generated, or
    IDE-visible surface. A successful build alone is not proof.
 5. Build or typecheck examples and documentation when supported. Classify each
    sample and validate the primary reader path from its documented starting

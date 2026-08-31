@@ -115,10 +115,10 @@ reader's context. When no material gap remains, add nothing.
 - Document the governed subject, not the drafting or validation process. Add a
   framework distinction only when it changes the reader's decision.
 - Review finished non-inline documentation once at wrap-up. Never run that
-  review for line, block, or file comments; exported-symbol JSDoc remains a
-  public-contract surface. Once an audit or release route selects the full
-  quality scorecard, that scorecard owns terminal completion; do not return to
-  the compact wrap-up guide.
+  review for line, block, or file comments; JSDoc on an established
+  public-contract symbol remains a public-contract surface. Once an audit or
+  release route selects the full quality scorecard, that scorecard owns
+  terminal completion; do not return to the compact wrap-up guide.
 
 ## Select one route
 

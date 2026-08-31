@@ -127,11 +127,11 @@ reader before the governed decision.
 | Top level | System or repository scope, major boundaries, and routes to canonical detail. |
 
 Broader scopes orient and route; narrower scopes preserve the local
-consequence. Keep detailed truth with one canonical owner. Exported-symbol
-JSDoc is a public-contract overlay, not another scope. Implementation altitude
-is also not a scope: low-level, business, and orchestration code can each
-contain a Chesterton's Fence or a verified invisible reef, but any explanation
-belongs at the scope that owns the decision.
+consequence. Keep detailed truth with one canonical owner. JSDoc on an
+established public-contract symbol is a public-contract overlay, not another
+scope. Implementation altitude is also not a scope: low-level, business, and
+orchestration code can each contain a Chesterton's Fence or a verified invisible
+reef, but any explanation belongs at the scope that owns the decision.
 
 Physical layout may overlap logical scope: a module can be a file and a package
 can be a folder. Co-locate scopes only when they genuinely coincide, and do not
