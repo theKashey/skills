@@ -15,15 +15,7 @@ The mechanism has two owners:
 Nothing owns an occurrence list. Exact marker search supplies the declared
 incidence when needed.
 
-## When to load this procedure
-
-Load it only when one of these conditions holds:
-
-1. The user explicitly asks to start or change the named-abstraction trial.
-2. Create work encounters an existing `compass-abstraction:` marker that must
-   be validated, changed, or removed.
-3. Create work exposes a candidate whose admission would change a concrete
-   navigation, implementation, or comparison decision.
+## Trial prerequisites
 
 Do not create a catalog in anticipation of future use, scan routine local work
 for possible names, or turn repeated code shapes into candidates by default.

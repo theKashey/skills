@@ -143,9 +143,11 @@ This is coordinate-layer vocabulary, not semantic architecture. It adds no
 level, changes no L0–L4 entity, and may disappear in a full implementation
 rewrite. A marker is an authored claim, not proof; absence means unknown.
 
-Load the procedure only when the user requests the trial, an existing marker is
-encountered during non-local Compass work, or already-active non-local work
-exposes a candidate whose recognition would change a concrete decision. Do not
+Load the procedure only when one of these holds: the user explicitly asks to
+start or change the named-abstraction trial; Create work encounters an existing
+`compass-abstraction:` marker that must be validated, changed, or removed; or
+already-active non-local Create work exposes a candidate whose admission would
+change a concrete navigation, implementation, or comparison decision. Do not
 load it for routine local work. Before starting, require the user to nominate
 and authorize one existing task, PR, or tracker record as the trial-evidence
 owner, require that record to state the trigger that ends the trial, require
