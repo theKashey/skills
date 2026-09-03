@@ -38,11 +38,13 @@ In the same host agent-instruction block that declares the chart root, add one
 durable routing line after the user approves it:
 
 ```markdown
-Named-abstraction trial evidence: {existing task, PR, or tracker URL or stable ID}
+Named-abstraction trial evidence: {existing task, PR, or tracker URL or stable ID} — before building a new capability, scan {chart-root}/ABSTRACTIONS.md
 ```
 
 This pointer is not a second evidence owner. It lets every later activation
-find the sole record without putting trial history in the chart. Add or update
+find the sole record without putting trial history in the chart, and it is the
+only host line that routes to the catalog: the trial-agnostic hook never names
+`ABSTRACTIONS.md`, so an agent must be told here that it exists. Add or update
 it before the first definition or marker, read it whenever this procedure
 loads, and remove it when the trial is removed or separately ratified.
 
@@ -51,7 +53,8 @@ check in [`verification.md`](verification.md#first-the-mechanizable-checks-belon
 before the first definition or marker. Record its exact repository-native
 command and its valid, invalid-slug, missing-definition,
 malformed-spacing-or-multiline, unsupported-form, and hidden-source fixture
-commands in the nominated trial record. Installing the check, starting the
+commands in the nominated trial record, together with the one fixture path
+that the checker and the raw-hit audit exclude (`verification.md` §First). Installing the check, starting the
 trial, writing its record, and adding or changing source markers are ask-first
 actions. A manual checkbox is not a fallback for trial source claims.
 
@@ -154,15 +157,15 @@ search and reconcile every raw hit with the configured source universe and the
 reported count:
 
 ```sh
-# Raw audit: reconcile every result.
-rg -n --hidden -F 'compass-abstraction:' -g '!**/.git/**' -g '!**/node_modules/**' .
+# Raw audit: reconcile every result; replace {fixture-path} and {checker-file} from the trial record.
+rg -n --hidden -F 'compass-abstraction:' -g '!**/.git/**' -g '!**/node_modules/**' -g '!{fixture-path}/**' -g '!{checker-file}' .
 
 # Exact declared incidence: replace only the example slug.
 rg -n --hidden '^[[:space:]]*(//|#|--)[[:space:]]*compass-abstraction:[[:space:]]+persisted-store-controller[[:space:]]*$' -g '!**/.git/**' -g '!**/node_modules/**' .
 ```
 
-An unmatched hit fails the gate; the checker does not make an unconfigured
-source universe exhaustive.
+An unmatched raw hit in any source file fails the gate — whether the file's suffix is outside the configured set or the marker's form is one the checker does not parse; a documentation example is reconciled, not failed.
+The checker does not make an unconfigured source universe exhaustive.
 
 The marker is an authored design claim, not proof of conformance. Its absence
 is unknown, not evidence that the code does not instantiate the abstraction.

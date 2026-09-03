@@ -72,7 +72,7 @@ File level        // compass: webshop.order-core.pricing-engine
 ```
 
 Treat these as laws:
-- Coordinates bubble up.
+- Coordinates bubble up, and bubbling stops at the component: one coordinate never stands in for more than one documented component. When a component's files coincide with its block's, that one coordinate is written at component depth.
 - Prefer one coordinate that accurately covers the whole subtree.
 - Use file-level coordinates only when the file's address differs from the enclosing one.
 - Folder/package coordinates are enough when everything in that subtree participates in the same place; exclude tests when they do not.

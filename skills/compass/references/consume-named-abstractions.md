@@ -28,5 +28,6 @@ does not add, change, or remove definitions or markers.
    the local reason with the code or its Context Docs owner, never in
    `ABSTRACTIONS.md`.
 
-If the definition, marker, or catalog needs to change, classify and report the
-need. That mutation belongs to a separate Create task.
+If the definition, marker, or catalog needs to change, classify the need and
+record it in the task's own PR, issue, or task record. That mutation belongs to
+a separate Create task.

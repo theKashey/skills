@@ -6,7 +6,7 @@ Compass answers three questions about a codebase: **where am I, what is this thi
 
 **The durable half is the third question, and that is where the value is.** A capable agent reconstructs *where am I* on demand, from the code, and gets better at it every release — repository maps, call graphs and hierarchical summaries are a crowded and improving field, and a chart competing on orientation is competing where its advantage shrinks. What no amount of reading reconstructs is **which of two readings of the system a human agreed to**. Given today's code, an agent can tell you what the system does; it cannot tell you whether that is the system anybody decided to have. Compass exists so that when code and intent disagree, the disagreement is *visible and classifiable* rather than silently resolved in the code's favour — §Classifying Disagreement is the product, not a maintenance procedure.
 
-**Applicability.** The chart earns its keep in proportion to how *non-local* the work is. A one-file fix, a rename, a bug with a stack trace pointing at the line — read the code. Work that crosses a boundary, changes a rule, adds a party, or asks *should this live here* is what the chart is for. Say so in the host's usage hook: a chart that claims to be worth reading before every edit trains agents to skip it before any.
+**Applicability.** The chart earns its keep in proportion to how *non-local* the work is. A one-file fix, a rename, a bug with a stack trace pointing at the line — read the code. Work that crosses a boundary, changes a rule, adds a party, or asks *should this live here* is what the chart is for. Say so in the host's usage hook: a chart that claims to be worth reading before every edit trains agents to skip it before any. One carve-out: building a new capability is never local, even when it lands in one file — that is the shape duplication takes — so check the owning block's component table, and in an opted-in named-abstraction trial `{chart-root}/ABSTRACTIONS.md`, before writing it.
 
 Compass is meta-code: a persistent logical model with two children — product behaviour and implementation coordinates — from which implementations can be understood, navigated, validated, discarded, and rebuilt.
 
@@ -78,6 +78,8 @@ The chart lives in one directory the host project declares in its agent instruct
 | L5 | Infrastructure | Shared code. Not documented. | — | — | — |
 
 **Kind decides who may change a thing and what evidence is required.** Semantic identity (L0–L2) must pass the rewrite test and follows the human ratification path. Coordinates (an L2 block's technology and implementation coordinates, all of L3, every `compass:` marker) are expected to churn as the implementation changes; an agent may remap them without a semantic ratification.
+
+**The budget keeps a document to its identity: one responsibility and one boundary, stated once.** It is neither decoration nor a target. When a definition and its budget collide, the budget wins and the excess moves — to a sibling or child entity through level calibration, to `GLOSSARY.md` when it is vocabulary, or to the code and its Context Docs owner when it is implementation rationale (`ownership-boundary.md`). The tells that a budget was ignored rather than met: bold used for emphasis rather than to mark a glossary term, a block boundary that runs past the two-sentence limit, and chart reasoning copied into a source file.
 
 The zoom vocabulary is Simon Brown's C4 model — read context/container/component with that prior — bent at both ends. Deltas: L0 (DDD's strategic layer) sits below the stack; L2 "isolated blocks" **are** C4 containers, and the file layout keeps C4's name (`CONTAINERS.md`); C4's Level 4 (code diagrams) is replaced by viewports — code diagrams rot fastest, so the chart stops at L3 and wires to code by coordinates instead; L- and L5 bracket the stack, above and below C4's reach. C4 supplies notation and zoom vocabulary; it does not define Compass's source of truth. Re-evaluate any C4-derived rule that conflicts with semantic orientation.
 
@@ -228,7 +230,10 @@ This is an L2 semantic change and requires a human decision.
 4. Create `{block}/README.md`, add the block to the `CONTAINERS.md` table and
    diagram, and rerun level calibration across its siblings.
 5. Seal the coarsest accurate coordinate, normally one
-   `compass: {root}.{block}` on its composition root rather than one per file.
+   `compass: {root}.{block}` on its composition root rather than one per file,
+   plus one per documented component whose files do not coincide with the
+   block's; when they coincide, that one coordinate is written at component
+   depth so the component is still named.
 6. Update `{root}/README.md` only if the block requires a new L1 external
    system.
 
@@ -242,7 +247,7 @@ A new deployable, package, or service is not by itself a reason to add a block.
 
 **Coordinate laws (treat as invariants):**
 - **A coordinate is a location, not a definition.** `// compass: checkout.payment.authorisation` means *the logic implemented here participates in this Compass location*. It does not mean *this source file defines that semantic boundary*. Coordinates may change while the place stays the same.
-- **Coordinates bubble up.** Prefer one accurate coordinate covering a whole subtree (package > folder > file) — but never manufacture a source boundary solely to make attribution coarse.
+- **Coordinates bubble up, and bubbling stops at the component.** Prefer one accurate coordinate covering a whole subtree (package > folder > file) — but never manufacture a source boundary solely to make attribution coarse, and never let one coordinate stand in for more than one documented component: where a component's files do not coincide with its block's, the component takes its own coordinate at Phase F, because `verification.md` §Coordinate Verification → Coverage requires each documented component to be reachable from code. When they coincide, the block's one coordinate is written at component depth.
 - **File-level coordinates are for files whose location differs** from the enclosing one, not a default.
 - **Multiple coordinates are legitimate** when code genuinely participates in more than one logical orientation, typically across roots. Prefer the smallest useful set; there is no fixed maximum.
 - **Multiple coordinates trigger verification, not refactoring.** The question is whether these are genuinely independent logical orientations.
@@ -397,7 +402,7 @@ The runnable form of these rules is the L1 checklist in [`verification.md`](veri
 
 Before declaring a root, L0, L1, L2, L3, or Phase F complete, run the mandatory checks:
 
-→ Full checklists, lead/bleed detection, spot check: [`verification.md`](verification.md)
+→ Full checklists, blind semantic read, lead/bleed detection, spot check: [`verification.md`](verification.md)
 
 There is no summary of those checklists here. A condensed second copy is what
 diverges, and the divergent copy is the one an agent finds — read the gate.
@@ -406,6 +411,6 @@ diverges, and the divergent copy is the one an agent finds — read the gate.
 
 ✅ Always: read the declared chart root before chart work; declare scope before L0; apply the rewrite test to every semantic candidate; propagate top → down; document relationships in consumers; keep within size budgets; classify disagreement before repairing it; state confidence explicitly.
 
-⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; starting a named-abstraction trial and authorizing its existing task, PR, or tracker record; writing trial observations to that record; writing or updating the usage hook in the host's agent instructions; installing the chart check into the host's test suite (§Verification); adding or changing `compass:` or `compass-abstraction:` comments in source. The usage hook, chart check, two source-marker forms, and host-nominated trial record are everything the skill touches outside the chart root.
+⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; starting a named-abstraction trial and authorizing its existing task, PR, or tracker record; writing trial observations to that record; writing or updating the usage hook in the host's agent instructions; installing or changing the chart check in the host's test suite (§Verification); adding or changing `compass:` or `compass-abstraction:` comments in source. The usage hook, chart check, two source-marker forms, and host-nominated trial record are everything the skill touches outside the chart root. The task's own PR, issue, or task record is the task's surface, not the skill's: recording a classified finding there is not a Compass write (`SKILL.md` §Choose exactly one flow).
 
 🚫 Never: write chart files outside the declared chart root or invent a root when none is configured; invent a logical root without human ratification; let code alone ratify L0–L2 semantic identity; document infrastructure as architecture (L5); contradict higher levels; treat a moved code path as evidence the semantics are wrong; demand implementation reshaping because topology and chart differ; seal coordinates before boundaries stabilize; skip human checkpoint at state 0 exit — when no human is available, stop there and report; do not proceed past any checkpoint unattended.

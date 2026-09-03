@@ -67,8 +67,10 @@ value scales with how non-local the work is.** Orientation — *which file, whic
 symbol, which caller* — is something a capable agent reconstructs from the code,
 increasingly well, and a chart competing there competes where its advantage is
 shrinking. A one-file fix does not want a chart; work that crosses a boundary,
-changes a rule, or asks whether something belongs here does. Claiming otherwise
-trains readers to skip it entirely. **And it never carries a fact a command can
+changes a rule, or asks whether something belongs here does — and building a
+new capability is that work even when it lands in one file, because that is
+the shape duplication takes. Claiming otherwise trains readers to skip it
+entirely. **And it never carries a fact a command can
 answer.** Build graphs, dependency edges, CI configuration, ownership data,
 schemas, test results: where an authoritative machine-readable
 source exists the chart points into it, because a summary of a live source is a
@@ -192,6 +194,16 @@ carried, and not pointed into.
   user-authorized task, PR, or tracker record owns that trial evidence; the
   chart never does. The existing host usage hook points later activations to
   that record without duplicating its evidence.
+- **Counts are asserted against a committed minimum**, instead of printed for
+  a human to read. A check that scans nothing exits zero exactly like one that
+  scans everything, and a printed count nobody reads is a checkbox with extra
+  steps. Chart-side minimums move only in the diff that changes the chart;
+  source-side ones take 1 once anything is sealed or claimed, because a
+  declutter legitimately lowers them.
+- **The semantic read is blind**, instead of the author's own re-read. Every
+  structural gate passes on a chart that is well-formed and untrue, and an
+  author sees what was meant rather than what is written, so the read that
+  judges the arguments runs in a fresh context holding only the chart.
 
 ## Boundaries
 
@@ -227,7 +239,7 @@ agents then follow it is outside the skill's evaluation boundary.
 | [references/growth-and-drift.md](references/growth-and-drift.md) | Phases 0–F, the usage hook, the disagreement classification with its table and priorities, methodology drift |
 | [references/named-abstractions.md](references/named-abstractions.md) | Create-only named implementation-abstraction admission, definition schema, source-claim semantics, maintenance, and experiment limits |
 | [references/ownership-boundary.md](references/ownership-boundary.md) | The Compass/Context Docs ownership contract in both directions, and the coordinate-first investigation flow |
-| [references/verification.md](references/verification.md) | Every completion checklist that exists — root, L0, L1, L2, calibration, L3, coordinates, ownership, named abstractions, navigation; other files point there |
+| [references/verification.md](references/verification.md) | Every completion checklist that exists — root, L0, L1, L2, calibration, L3, coordinates, ownership, named abstractions, navigation, the blind semantic read; other files point there |
 
 Each fact has one canonical owner. `SKILL.md` carries only the facts needed to
 choose safely before either route loads: non-local applicability, declared chart

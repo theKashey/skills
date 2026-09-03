@@ -16,7 +16,7 @@ For any explanation, ask:
 **Yes** → Compass is a candidate canonical owner.
 **No** → if the reason still constrains the current implementation, it is a Context Docs or code-local candidate.
 
-This is the rewrite test applied to rationale instead of to entities.
+This is the rewrite test applied to rationale instead of to entities. When both a chart location and an implementation site carry the same reason, the rewrite test decides which keeps it: a reason that survives a full implementation rewrite stays in the chart; a reason that constrains only the current implementation stays with the code or its Context Docs owner.
 
 ## What Compass owns
 

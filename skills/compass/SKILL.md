@@ -9,7 +9,8 @@ description: Use when creating or consuming a Compass semantic architecture char
 
 Compass describes the logical system, not the repository that currently
 implements it. Use it for non-local work that crosses a boundary, changes a
-rule, adds a party, or asks whether something belongs. For a one-file fix,
+rule, adds a party, or asks whether something belongs. Building a new
+capability is non-local even when it lands in one file. For a one-file fix,
 rename, or line-specific bug, read the code instead.
 
 Read the chart root declared by the host project's agent instructions before
@@ -36,7 +37,11 @@ task.
   Compass-owned or Compass-installed state. Read
   [references/consume.md](references/consume.md). Do not load Create references.
 
-If Consume reveals missing, stale, or disputed chart content, report and
-classify it, then stop the Compass flow. Changing it is a separate Create task
-with its own authority and checks. If a task requests both outcomes, separate
-them into distinct tasks; never drift from Consume into Create.
+If Consume reveals missing, stale, or disputed chart content, classify it and
+record it where the task's own evidence lives — the PR, issue, or task record —
+then stop the Compass flow. That record is the task's, not Compass-owned state,
+so writing there is not a Create action. A finding that exists only in the
+conversation has no owner and is lost with the turn. Changing it is a separate
+Create task with its own authority and checks. If a task requests both
+outcomes, separate them into distinct tasks; never drift from Consume into
+Create.

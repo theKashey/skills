@@ -54,7 +54,9 @@ not how the repository is arranged.
 - Read it when the work is not local: it crosses a boundary, changes a rule or
   an invariant, adds a party, or asks whether something belongs here. A one-file
   fix, a rename, or a bug with a stack trace pointing at the line does not need
-  it — read the code.
+  it — read the code. Building a new capability is not local, even in one file.
+- Building a new capability: find the owning block in {root}/CONTAINERS.md and
+  check its component table before writing it
 - Where am I: {chart-root}/README.md → COMPASS.md → {root}/README.md →
   CONTAINERS.md → {block}/README.md → {component}/README.md
 - Domain meaning or vocabulary: {root}/DOMAIN.md + {root}/GLOSSARY.md
@@ -78,6 +80,8 @@ Keep the hook this size: it routes, it does not restate the chart, and it does n
 Agent-driven. Use dependency tooling within each block to discover components and their relationships. Map each component to its L0 bounded context and to its current implementation coordinates.
 
 Human validates and identifies debt, leaks, and historical anomalies.
+
+Phase C is the first point at which the chart has enough argument to be wrong in ways no structural gate sees. When the L3 checklist passes, run the Blind Semantic Read in [`verification.md`](verification.md#blind-semantic-read) before calling the level done, and again whenever a later phase touches more than one document.
 
 ### Phase D — Define Viewports (L4)
 

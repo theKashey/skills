@@ -1,8 +1,9 @@
 # Verification Procedures
 
-Formal checks that must pass before ratifying a root, advancing L0, L1, L2, L3,
-or Phase F, or changing an opted-in named abstraction. Run the applicable
-checks as a mandatory gate — not optional polish. Each completion checklist
+Formal checks that must pass before ratifying a root, advancing L0, L1, L2, L3
+(including the blind semantic read), or Phase F, or changing an opted-in named
+abstraction. Run the applicable checks as a mandatory gate — not optional
+polish. Each completion checklist
 below is canonical; other procedures point to the applicable section rather
 than restating its items. Levels and phases with no section below carry no gate
 beyond their exit conditions in [`exploration.md`](exploration.md) and
@@ -19,7 +20,12 @@ first definition or source claim, the host test suite must own an installed,
 adapted checker and repository-native fixtures for a valid claim, an invalid
 slug, a missing definition, malformed spacing or a multiline claim, an
 unsupported form, and a supported marker in a hidden source directory. Record
-the exact commands in the nominated trial record. The host usage hook that
+the exact commands in the nominated trial record. Those fixtures are files
+containing deliberately invalid marker literals, so they live under one path the
+trial record names, and the checker and the raw-hit audit exclude that path and
+the checker's own file, and no other source path — the `.git`, `node_modules`,
+`.venv`, and nested-worktree exclusions stand. Without that exclusion the
+required fixtures are themselves unmatched hits and the gate cannot pass. The host usage hook that
 declares the chart root must also carry the durable pointer to that record
 specified in `named-abstractions.md`.
 
@@ -34,10 +40,12 @@ specified in `named-abstractions.md`.
 | no forbidden filename (`SCOPE.md`, `CONTEXT.md`, `BLOCK.md`, `COMPONENT.md`) exists under the chart root | §Markdown and Navigation |
 
 ````python
-# chart_check.py — decidable chart invariants. Adapt CHART and SRC_SUFFIXES; run it in CI.
+# chart_check.py — decidable chart invariants. Adapt CHART, SRC_SUFFIXES, FIXTURES, and MINIMUM; run it in CI.
 import pathlib, re, sys
 CHART = pathlib.Path(".compass")          # the declared chart root
 ABSTRACTIONS = CHART / "ABSTRACTIONS.md"
+FIXTURES = pathlib.Path("tests/fixtures/compass")  # the one fixture path the trial record names
+SELF = pathlib.Path(__file__).resolve()
 # Include every source suffix allowed to carry `//`, `#`, or `--` markers.
 SRC_SUFFIXES = {".py", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".go", ".rs",
                 ".java", ".rb", ".swift", ".sql"}
@@ -101,6 +109,8 @@ for p in pathlib.Path(".").rglob("*"):
     # .storybook remain in the named-abstraction universe.
     if p.is_dir() or ".git" in p.parts or "node_modules" in p.parts or ".venv" in p.parts:
         continue
+    # the declared fixtures and this file spell invalid literals on purpose; nothing else is exempt
+    if p.resolve() == SELF or FIXTURES in p.parents: continue
     if inside_nested_worktree(p) or p.suffix not in SRC_SUFFIXES: continue
     source = p.read_text(errors="ignore")
     for slug in abstraction_claim_re.findall(source):
@@ -149,11 +159,20 @@ for md in CHART.rglob("*.md"):
 for name in ("SCOPE.md", "CONTEXT.md", "BLOCK.md", "COMPONENT.md"):
     for p in CHART.rglob(name): fail.append(f"{p}: identity documents are README.md")
 
+# Commit the minimum beside this command. Chart-side counts take the count at the last passing
+# run and move only in the diff that changes the chart. Source-side counts (addresses,
+# abstraction_markers) take 1 once Phase F has sealed anything or a trial has claimed anything:
+# they guard against a scan that stopped looking, not against a declutter that bubbles up.
+MINIMUM = {"blocks": 0, "diagrams": 0, "links": 0, "coordinates": 0, "abstraction_definitions": 0,
+           "addresses": 0, "abstraction_markers": 0}
+for k, minimum in MINIMUM.items():
+    if seen[k] < minimum:
+        fail.append(f"{k}: {seen[k]} scanned, minimum is {minimum} — the check stopped looking")
 print("\n".join(fail) or "chart: clean — " + ", ".join(f"{v} {k}" for k, v in seen.items()))
 sys.exit(1 if fail else 0)
 ````
 
-**Print the counts, and read them.** A check that scanned nothing exits zero exactly like a check that scanned everything — which is how a chart whose markers were all deleted keeps a green build. If `addresses` drops to 0 after Phase F, the script is passing because it stopped looking.
+**Print the counts, and assert them.** A check that scanned nothing exits zero exactly like a check that scanned everything — which is how a chart whose markers were all deleted keeps a green build. If `addresses` drops to 0 after Phase F, the script is passing because it stopped looking. A printed count nobody reads is a checkbox with extra steps, so `MINIMUM` is committed beside the command. Chart-side counts take the count at the last passing run and move only in the diff that changes the chart; `addresses` and `abstraction_markers` take 1 once anything is sealed or claimed, because they legitimately fall when a declutter bubbles a coordinate up. Changing a minimum is a chart-check change and is ask-first like installing it (`create.md` §Boundaries). Dropping below a minimum is a build failure, not a warning.
 
 For an opted-in named-abstraction trial, read `abstraction_definitions` and
 `abstraction_markers` the same way. Zero markers means the checker proves
@@ -166,11 +185,12 @@ root and reconcile every result—including documentation examples and
 unsupported source forms—with that universe:
 
 ```sh
-rg -n --hidden -F 'compass-abstraction:' -g '!**/.git/**' -g '!**/node_modules/**' .
+rg -n --hidden -F 'compass-abstraction:' -g '!**/.git/**' -g '!**/node_modules/**' -g '!{fixture-path}/**' -g '!{checker-file}' .
 ```
 
-Any source claim outside `SRC_SUFFIXES`, using a comment form other than `//`,
-`#`, or `--`, or missing from `abstraction_markers` fails the trial gate. Extend
+An unmatched raw hit in any source file fails the gate — whether the file's suffix is outside the configured set or the marker's form is one the checker does not parse; a documentation example is reconciled, not failed.
+A source claim outside `SRC_SUFFIXES`, using a comment form other than `//`,
+`#`, or `--`, or missing from `abstraction_markers` is such a hit. Extend
 the checker and its fixtures before permitting that form; never silently narrow
 "every marker" to what the current regex happened to see.
 
@@ -339,7 +359,7 @@ Run over any chart document carrying nontrivial rationale, and over implementati
 - [ ] For each nontrivial reason in the chart: *would this reason survive a full implementation rewrite?* If no, it belongs with the code or its Context Docs owner — move it
 - [ ] For each piece of implementation documentation that repeats chart semantics: *does Compass already canonically own this truth?* If yes, reduce it to the smallest local consequence plus a coordinate route
 - [ ] No mechanism-specific Chesterton's Fence (queue semantics, retry placement, ordering guarantees, framework quirks) appears in L0–L2 prose
-- [ ] No complete semantic explanation is reproduced at both a chart location and an implementation site
+- [ ] No complete semantic explanation is reproduced at both a chart location and an implementation site. When both a chart location and an implementation site carry the same reason, the rewrite test decides which keeps it: a reason that survives a full implementation rewrite stays in the chart; a reason that constrains only the current implementation stays with the code or its Context Docs owner.
 
 ---
 
@@ -352,7 +372,7 @@ marker is an orphan claim and fails this gate until the user authorizes its
 removal or completes every trial prerequisite.
 
 - [ ] One existing task, PR, or tracker record is user-nominated and authorized as the sole owner of trial tasks, admission evidence, decisions, observations, and maintenance findings; the host usage hook carries the prescribed durable pointer to it
-- [ ] The host test suite owns the installed checker and the nominated trial record names its exact command plus passing valid, invalid-slug, missing-definition, malformed-spacing-or-multiline, unsupported-form, and hidden-source fixture commands
+- [ ] The host test suite owns the installed checker and the nominated trial record names its exact command plus passing valid, invalid-slug, missing-definition, malformed-spacing-or-multiline, unsupported-form, and hidden-source fixture commands, and the one fixture path that the checker and the raw-hit audit exclude
 - [ ] Every definition heading has a unique lowercase-hyphen slug and its required `Meaning`, `Essential discriminator`, and `Nearest non-example` sections
 - [ ] The repository-wide raw-hit audit has no unsupported or uncounted source claim; every supported marker in the configured source universe resolves to exactly one definition
 - [ ] Every marker is adjacent to a stable, authored declaration that owns the claimed instance — never a call site, generated file, barrel export, or convenience import
@@ -381,6 +401,21 @@ Run at each level, over every document written so far.
 - [ ] Opening each zoom-level directory on GitHub renders a landing page that answers *where am I?*
 - [ ] Every zoom-chain document carries its required Mermaid diagram
 - [ ] `VIEWPORTS.md`, where it exists, carries one `##` per viewport named for its question, and every root README linking to it has one to link to
+
+---
+
+## Blind Semantic Read
+
+Run when the L3 checklist passes (Phase C), before calling the level done, and again after any later phase that touched more than one document. Every other checklist in this file measures the container — headings, links, coordinates, symmetry — and all of them pass on a chart that is well-formed and untrue. This one reads the arguments.
+
+The reader is blind: a fresh agent context holding only `{chart-root}` and this list — no authoring session, no exploration scratchpad, no code. An author re-reading their own chart is not a blind read; the author sees what was meant. When no such context can be launched, stop there and report, as with any missing checkpoint. Record every finding in the task's own record and classify it (`growth-and-drift.md` §Classifying Disagreement) before changing anything. A contradiction between two chart pages has no code side to classify against: the page that owns the claim (`create.md` §Kind decides) keeps it, the other page is reduced to a link, and a correction that changes what a ratified level says goes back through that level's checklist.
+
+- [ ] No glossary entry contradicts the document that defines its concept, and no term carries two meanings inside one bounded context
+- [ ] No singular claim — *the one invariant*, *the only failure this system does not tolerate* — is made about more than one entity
+- [ ] No argument is re-derived on more than one page: a recurring cross-cutting claim has one owning page, and every other page states the local fact and links to it
+- [ ] L0's context map and L2's wiring diagram are not one diagram with renamed nodes: a block-to-block edge legitimately repeats in that block's own diagram, but a context-map relationship carried word-for-word into `CONTAINERS.md` means one level was read off the other instead of derived from the domain and the repository
+- [ ] Every block `README.md` answers *why does this exist* on its own, without a second document needed to make it true
+- [ ] The Derivation Test (`create.md` §The Derivation Test) holds on reading, not only on scanning: no block is a package wearing a domain name
 
 ---
 
