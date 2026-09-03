@@ -148,9 +148,10 @@ encountered during non-local Compass work, or already-active non-local work
 exposes a candidate whose recognition would change a concrete decision. Do not
 load it for routine local work. Before starting, require the user to nominate
 and authorize one existing task, PR, or tracker record as the trial-evidence
-owner, require the existing host usage hook to point to that record, and
-require the host test suite to own the installed chart check and its fixtures;
-do not invent another evidence surface or accept manual self-certification.
+owner, require that record to state the trigger that ends the trial, require
+the existing host usage hook to point to that record, and require the host
+test suite to own the installed chart check and its fixtures; do not invent
+another evidence surface or accept manual self-certification.
 
 → Admission gate, schema, source marker, and trial boundaries:
 [`named-abstractions.md`](named-abstractions.md)

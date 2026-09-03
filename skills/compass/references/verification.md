@@ -378,6 +378,7 @@ removal or completes every trial prerequisite.
 - [ ] Every marker is adjacent to a stable, authored declaration that owns the claimed instance — never a call site, generated file, barrel export, or convenience import
 - [ ] Each marked owner conforms to the definition's discriminator and is not its nearest non-example; this is review evidence, not a script result
 - [ ] The nominated trial record shows that every admitted name changed a concrete navigation, implementation, or comparison decision; mere recurrence or resemblance did not qualify it
+- [ ] The nominated trial record states one trigger that ends the trial — a calendar date, a count of recorded observations, or a named event — and, once that trigger is reached, carries the verdict of the reading (`named-abstractions.md` §Maintenance and falsification); a missing trigger, or a reached trigger with no verdict, fails this gate
 - [ ] `ABSTRACTIONS.md` contains no occurrence paths, feature mappings, `used-by` lists, edges, flows, or trial results
 - [ ] Marker absence is treated as unknown, searches are reported as declared occurrences only, and no coverage or completeness claim is made
 - [ ] The trial did not reinterpret L3 stereotypes or change any L0–L4 semantic entity

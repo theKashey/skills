@@ -190,7 +190,11 @@ carried, and not pointed into.
   claim. Marker presence is an assertion to review and marker absence is
   unknown. The mechanism is deliberately reversible and remains an
   unvalidated experiment until task evidence shows that the names improve a
-  concrete navigation, implementation, or comparison decision. One existing,
+  concrete navigation, implementation, or comparison decision. The trial names
+  its own end when it starts, and every Consume task that interprets a name
+  writes its observation into the trial record, so the experiment can fail on
+  schedule or on evidence — the rejected alternative, kill conditions with no
+  moment at which they are read, could only ever persist by inertia. One existing,
   user-authorized task, PR, or tracker record owns that trial evidence; the
   chart never does. The existing host usage hook points later activations to
   that record without duplicating its evidence.

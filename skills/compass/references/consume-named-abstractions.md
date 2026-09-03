@@ -27,6 +27,17 @@ does not add, change, or remove definitions or markers.
    something **materially distinct**, or **decline to name** the new code. Keep
    the local reason with the code or its Context Docs owner, never in
    `ABSTRACTIONS.md`.
+7. Append one line to the nominated trial record — task, slug, disposition,
+   and whether the name changed the decision, misled, or was declined — asking
+   first, as with every write to that record; the record is the host's, not
+   Compass-owned or Compass-installed state, so this write is not a Create
+   action. If the user declines, the line goes in the task's own record
+   instead, so it always has an owner. At the same touch read the record's
+   trigger, counting the line just appended there: if it is reached and no
+   verdict is recorded, say so in the line and in the task's own record. The
+   reading is a separate Create task (`named-abstractions.md` §Maintenance
+   and falsification). This line is the trial's disconfirming evidence and
+   Consume's only route for it; the catalog never carries it.
 
 If the definition, marker, or catalog needs to change, classify the need and
 record it in the task's own PR, issue, or task record. That mutation belongs to

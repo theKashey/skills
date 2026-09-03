@@ -29,10 +29,19 @@ Do not create a catalog in anticipation of future use, scan routine local work
 for possible names, or turn repeated code shapes into candidates by default.
 Before starting, require the user to nominate and authorize one existing task,
 PR, or tracker record as the trial-evidence owner. Do not invent a new file or
-service for this purpose. The nominated record owns the frozen task, admission
-evidence, before/after decision, observations, and maintenance findings. If no
-such owner is available, do not create `ABSTRACTIONS.md` or a marker; report the
-blocked trial.
+service for this purpose. The nominated record owns the frozen task, the
+trigger that ends the trial, admission evidence, before/after decision,
+observations, and maintenance findings. If no such owner is available, do not
+create `ABSTRACTIONS.md` or a marker; report the blocked trial.
+
+The trial ends by its own rule, recorded in the nominated record before the
+first definition as part of writing that record: the user sets one trigger an
+agent can check from the record alone — a calendar date, a count of recorded
+observations, or a named event. Starting a trial without one violates this
+section, and the gate fails until it is recorded. The five conditions in
+§Maintenance and falsification are unactionable without a moment at which
+they are read, and an experiment nobody is scheduled to judge becomes
+permanent by inertia.
 
 In the same host agent-instruction block that declares the chart root, add one
 durable routing line after the user approves it:
@@ -45,8 +54,9 @@ This pointer is not a second evidence owner. It lets every later activation
 find the sole record without putting trial history in the chart, and it is the
 only host line that routes to the catalog: the trial-agnostic hook never names
 `ABSTRACTIONS.md`, so an agent must be told here that it exists. Add or update
-it before the first definition or marker, read it whenever this procedure
-loads, and remove it when the trial is removed or separately ratified.
+it before the first definition or marker; read it whenever this procedure
+loads and follow it to the record's trigger before admitting or changing
+anything; remove it when the trial is removed or separately ratified.
 
 The host's test suite must also own an installed, adapted copy of the chart
 check in [`verification.md`](verification.md#first-the-mechanizable-checks-belong-to-the-hosts-test-suite)
@@ -182,6 +192,8 @@ list to the catalog.
 
 Keep the frozen task, before/after decisions, navigation observations, and
 marker maintenance findings in the nominated trial record outside the chart.
+Consume tasks append their observation lines there
+(`consume-named-abstractions.md` step 7).
 This package defines the experiment's mechanics; it does not establish that the
 experiment works. Treat the approach as failing—and remove the catalog and
 markers with user approval—if names stay feature-flavoured or trivial, markers
@@ -189,10 +201,21 @@ create confident classification errors, the useful view requires lists or
 graphs, maintenance routinely goes stale, or the names do not change concrete
 task decisions.
 
-Freeze the filename, schema, and marker literal for the duration of one trial;
-do not tune them around each task. At the decision point, either remove the
-experiment or separately ratify permanent vocabulary. Trial use alone does not
-make this syntax part of Compass's settled chart format.
+Freeze the filename, schema, marker literal, and trigger for the duration of
+one trial; do not tune them around each task. The decision point is the
+trigger the record set at start. The Create activation that finds it reached —
+this procedure loading, or the gate running — reads the record against the
+five conditions above before any other trial action. A record holding no
+observation in which a name changed a decision meets the last condition:
+absence of evidence is failing, never grounds to extend. Failing, the
+activation removes the catalog, the markers, and the pointer line with user
+approval, as above, and writes the verdict to the record. Not failing, it
+writes the verdict with a new user-set trigger, so a new bounded run begins
+under the same frozen syntax, and presents ratifying permanent
+vocabulary as the separate package decision it cannot take. A Consume task
+that finds the trigger reached says so in its observation line and in the
+task's own record; the reading is Create work. Trial use alone does not make
+this syntax part of Compass's settled chart format.
 
 Run the [optional gate](verification.md#named-abstraction-verification-optional)
 whenever a definition or marker changes. A green mechanical result proves only
