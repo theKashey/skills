@@ -155,6 +155,11 @@ Do not make every failure leave a permanent instruction. The improvement is a
 better future choice at lower total cost, not a larger memory of everything
 that went wrong.
 
+When the user explicitly asks to teach the repository a supported engineering
+behavior, load and follow
+[behavior principles](references/behavior-principles.md) without waiting for a
+disconfirming readback.
+
 The behavior-principle procedure returns its own status; report it alongside
 the increment status. An `UNVALIDATED` principle leaves the learning owner
 established but its effect unproven — report it as such rather than as

@@ -1,10 +1,5 @@
 # Preserve a behavior principle
 
-Use this procedure only after a material misfire exposes a recurring or
-high-consequence model judgment, or when the user explicitly asks to teach a
-repository a supported engineering behavior. Do not use it for an incidental
-error, a local fact, or a mechanically enforceable invariant.
-
 ## Pass the admission gate
 
 Freeze this evidence before proposing prose:
