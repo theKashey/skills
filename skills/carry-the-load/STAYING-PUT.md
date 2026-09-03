@@ -4,15 +4,12 @@ The load card in [SKILL.md](SKILL.md) fixes where the increment stands; these
 moorings govern the executor between the freeze and the readback, when mid-flow
 discoveries, failures, and improvement ideas pull against the frozen scope.
 
-Load this file when an intended mutating action is not plainly covered by the
-frozen Increment's maximum scope, or when a completion report is about to omit
-a deferral, a side repair, or work already mutated before the freeze. Each
-mooring names a **Drift** — the
-observable pull off the frozen position — and a **Hold** — the move that
-keeps the increment where it was frozen. A drift acted on is a violation of the
-mooring, not a judgment call. The moorings restate no other package's rules
-and borrow no other package's names; where a mooring meets a rule that lives
-in SKILL.md, it points there instead of restating it.
+Each mooring names a **Drift** — the observable pull off the frozen position —
+and a **Hold** — the move that keeps the increment where it was frozen. A drift
+acted on is a violation of the mooring, not a judgment call. The moorings
+restate no other package's rules and borrow no other package's names; where a
+mooring meets a rule that lives in SKILL.md, it points there instead of
+restating it.
 
 ## 1. The card is the ground
 

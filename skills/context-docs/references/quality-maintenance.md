@@ -1,12 +1,9 @@
 # Quality and maintenance
 
 Non-inline documentation can look complete while stale contracts, broken reader
-paths, or copied remote mechanics remain. Use this full reference for an audit,
-release, work spanning multiple non-inline surfaces, or a material risk that
-needs the detailed scorecard. Routine single-surface completion uses [Review
-documentation at wrap-up](review-documentation-at-wrap-up.md) instead. An
-explicit non-inline audit or review is itself the final task. This reference
-never applies to line, block, or file comments.
+paths, or copied remote mechanics remain. An explicit non-inline audit or
+review is itself the final task. This reference never applies to line, block,
+or file comments.
 
 - [Audit documentation](#audit-documentation)
 - [Evidence scorecard](#evidence-scorecard)
@@ -16,10 +13,6 @@ never applies to line, block, or file comments.
 - [Release and drift review](#release-and-drift-review)
 
 ## Audit documentation
-
-Use this workflow only at final work wrap-up or release, or when the user
-explicitly requests a non-inline documentation audit, review, or maintenance
-plan. That request is itself the final documentation task.
 
 1. State the audit mode, boundary, and evidence horizon before collecting
    evidence. Audit current product documentation against the authorized

@@ -1,10 +1,8 @@
 # Documentation locality ladder
 
-Use this guide only when documentation existence, ownership, governed scope, or
-placement remains unresolved. Locality can explain or propose a fit; the
-environment's established owner and submission route decide the actual home.
-The ladder is not a folder tree, document inventory, measure of importance, or
-persona catalog.
+Locality can explain or propose a fit; the environment's established owner and
+submission route decide the actual home. The ladder is not a folder tree,
+document inventory, measure of importance, or persona catalog.
 
 Documentation topology is the reader-visible result of authorized product and
 distribution decisions: each material reader, their entry point, the context

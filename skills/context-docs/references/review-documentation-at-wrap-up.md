@@ -5,14 +5,8 @@ omit an affected surface, or strand its reader on an untested path. Use this
 guide to decide whether the finished documentation is publishable and expose
 the smallest remaining defect or risk.
 
-Use this guide once, only after the in-scope implementation and non-inline
-documentation are complete. A user request specifically for a non-inline audit
-or review is itself a wrap-up task. Never invoke this guide on intermediate
-work. Exclude line, block, and file comments; JSDoc on an established
+Exclude line, block, and file comments; JSDoc on an established
 public-contract symbol remains a public-contract surface.
-
-If the selected route already loaded the full quality scorecard for an audit or
-release, do not use this guide. That scorecard owns terminal completion.
 
 For an audit, release, work spanning multiple non-inline surfaces, or a material
 risk that needs a detailed gate, load [quality and

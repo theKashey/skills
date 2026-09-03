@@ -4,8 +4,7 @@ The [Laws](SKILL.md#laws) bind the one who writes the chart. The Sins belong
 to the one who sails by it. They are not moral failures or diagnoses of
 intent; they are named deformations visible in outcomes.
 
-Use this reference only after a gate has found a defect and the evidence matches
-one of these deformations. Name its presence in the gate record as
+Record a matched Sin in the gate record as
 `sin → observed evidence → invalidated gate`. Naming a sin neither proves its
 cause nor requires a repair. When repair is authorized, a **Counter** may
 provide a repair lead; the owning gate still determines whether the affected

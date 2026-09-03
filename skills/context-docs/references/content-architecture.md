@@ -1,7 +1,7 @@
 # Content architecture
 
-Use this guide when a new or challenged story, surface role, scan path, or
-multi-reader route needs alignment.
+This guide aligns a document's story, surface role, scan path, and
+multi-reader routes.
 
 Start with the reader's task and governed scope; do not infer a document's role
 from its filename, repository visibility, or marketing posture.

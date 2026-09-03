@@ -1,9 +1,5 @@
 # Cast the reader
 
-Use casting when a reader-facing surface is new or substantially reworked, or
-when the proposed reader, goal, subject, or surface is in doubt. A bounded edit
-with an explicit, unchallenged story contract does not need to recast it.
-
 An upstream validation—product contract, PRD, accepted RFC or ADR—keeps a
 story unchallenged only while later decisions preserve its material reader,
 distribution, scope, and product assumptions. When a decision has revoked an
