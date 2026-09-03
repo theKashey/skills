@@ -23,7 +23,7 @@ Follow the zoom chain when the work is not local (`SKILL.md` §Shared contract)
 6. Open the specific `{component}/README.md` files that will be touched
 7. Check `VIEWPORTS.md` — does any viewport cross the area of change?
 
-Beside the chain, not in it: if the task builds a new capability and the host hook carries a named-abstraction trial pointer, scan the `##` headings of `{chart-root}/ABSTRACTIONS.md` for a concept the new code would instantiate. On a match, read [consume-named-abstractions.md](consume-named-abstractions.md) before writing — it confirms the trial is valid before anything is interpreted.
+Beside the chain, not in it: if the task builds a new capability and `{chart-root}/ABSTRACTIONS.md` exists, scan its `##` headings for a concept the new code would instantiate. On a match, read [consume-named-abstractions.md](consume-named-abstractions.md) before writing — it confirms the claim is valid before anything is interpreted.
 
 **Signal that you're ready:** you can restate the task in semantic terms, name every component you'll touch and every boundary you'll cross, name any existing component or named abstraction the new code would otherwise duplicate, and classify any chart/code disagreement. Keep reproduction details and the implementation plan with the project task, not in the chart. Every *report* in this guide lands there too — in the task's own record, never only in the conversation (`SKILL.md` §Choose exactly one flow).
 

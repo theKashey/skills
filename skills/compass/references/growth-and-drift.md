@@ -55,8 +55,9 @@ not how the repository is arranged.
   an invariant, adds a party, or asks whether something belongs here. A one-file
   fix, a rename, or a bug with a stack trace pointing at the line does not need
   it — read the code. Building a new capability is not local, even in one file.
-- Building a new capability: find the owning block in {root}/CONTAINERS.md and
-  check its component table before writing it
+- Building a new capability: find the owning block in {root}/CONTAINERS.md,
+  check its component table, and scan the headings of
+  {chart-root}/ABSTRACTIONS.md if it exists, before writing it
 - Where am I: {chart-root}/README.md → COMPASS.md → {root}/README.md →
   CONTAINERS.md → {block}/README.md → {component}/README.md
 - Domain meaning or vocabulary: {root}/DOMAIN.md + {root}/GLOSSARY.md
@@ -73,7 +74,7 @@ Applicability). A hook claiming the chart is worth reading before every edit is
 disbelieved after the third one-line fix, and a reader who learns to skip it
 skips it for the change that needed it.
 
-Keep the hook this size: it routes, it does not restate the chart, and it does not reproduce any other skill. Phase E maintains it — if the chart root moves or a root is added, the hook is part of the diff.
+Keep the hook this size: it routes, it does not restate the chart, and it does not reproduce any other skill. Each bullet is one route, and the host's own wording of a route is fine. Phase E maintains it — if the chart root moves or a root is added, the hook is part of the diff; if a Compass release changes this template, the hook gains the missing route (§Phase E).
 
 ### Phase C — Map Components (L3)
 
@@ -98,6 +99,7 @@ Triggered by events, not by schedule:
 - Restructuring (move, split, extract, merge, framework or language swap) → remap coordinates; semantics stand
 - New external system → update L1/L2, may create a state-0 pocket for that block
 - Product rule change → semantic change; may need ratification even when no file moved
+- Compass release changed the usage hook template (§Phase B) — seen when Create entry reads the hook beside the chart root → add the missing route to the hook, ask-first, then re-run the L2 hook rows (`verification.md` §L2)
 
 ### Phase F — Seal Coordinates
 

@@ -6,7 +6,7 @@ Compass answers three questions about a codebase: **where am I, what is this thi
 
 **The durable half is the third question, and that is where the value is.** A capable agent reconstructs *where am I* on demand, from the code, and gets better at it every release — repository maps, call graphs and hierarchical summaries are a crowded and improving field, and a chart competing on orientation is competing where its advantage shrinks. What no amount of reading reconstructs is **which of two readings of the system a human agreed to**. Given today's code, an agent can tell you what the system does; it cannot tell you whether that is the system anybody decided to have. Compass exists so that when code and intent disagree, the disagreement is *visible and classifiable* rather than silently resolved in the code's favour — §Classifying Disagreement is the product, not a maintenance procedure.
 
-**Applicability.** The chart earns its keep in proportion to how *non-local* the work is. A one-file fix, a rename, a bug with a stack trace pointing at the line — read the code. Work that crosses a boundary, changes a rule, adds a party, or asks *should this live here* is what the chart is for. Say so in the host's usage hook: a chart that claims to be worth reading before every edit trains agents to skip it before any. One carve-out: building a new capability is never local, even when it lands in one file — that is the shape duplication takes — so check the owning block's component table, and in an opted-in named-abstraction trial `{chart-root}/ABSTRACTIONS.md`, before writing it.
+**Applicability.** The chart earns its keep in proportion to how *non-local* the work is. A one-file fix, a rename, a bug with a stack trace pointing at the line — read the code. Work that crosses a boundary, changes a rule, adds a party, or asks *should this live here* is what the chart is for. Say so in the host's usage hook: a chart that claims to be worth reading before every edit trains agents to skip it before any. One carve-out: building a new capability is never local, even when it lands in one file — that is the shape duplication takes — so check the owning block's component table, and `{chart-root}/ABSTRACTIONS.md` when it exists, before writing it.
 
 Compass is meta-code: a persistent logical model with two children — product behaviour and implementation coordinates — from which implementations can be understood, navigated, validated, discarded, and rebuilt.
 
@@ -135,27 +135,24 @@ Where product language and implementation language differ, the product or domain
 ## Named Implementation Abstractions (Optional)
 
 During already-active non-local Compass work, an implementation-design concept
-may be useful to recognize even though the semantic chart must reject it. An
-opted-in trial may define that concept in `{chart-root}/ABSTRACTIONS.md` and
-mark declared instances with `compass-abstraction: <slug>`.
+may be useful to recognize even though the semantic chart must reject it. The
+chart may define that concept in `{chart-root}/ABSTRACTIONS.md` and mark
+declared instances with `compass-abstraction: <slug>`.
 
 This is coordinate-layer vocabulary, not semantic architecture. It adds no
 level, changes no L0–L4 entity, and may disappear in a full implementation
 rewrite. A marker is an authored claim, not proof; absence means unknown.
 
 Load the procedure only when one of these holds: the user explicitly asks to
-start or change the named-abstraction trial; Create work encounters an existing
-`compass-abstraction:` marker that must be validated, changed, or removed; or
-already-active non-local Create work exposes a candidate whose admission would
-change a concrete navigation, implementation, or comparison decision. Do not
-load it for routine local work. Before starting, require the user to nominate
-and authorize one existing task, PR, or tracker record as the trial-evidence
-owner, require that record to state the trigger that ends the trial, require
-the existing host usage hook to point to that record, and require the host
-test suite to own the installed chart check and its fixtures; do not invent
-another evidence surface or accept manual self-certification.
+admit, change, or retire a named abstraction; Create work encounters an
+existing `compass-abstraction:` marker that must be validated, changed, or
+removed; or already-active non-local Create work exposes a candidate whose
+admission would change a concrete navigation, implementation, or comparison
+decision. Do not load it for routine local work. Before the first definition
+or marker, require the host test suite to own the installed chart check and
+its fixtures; do not accept manual self-certification.
 
-→ Admission gate, schema, source marker, and trial boundaries:
+→ Admission gate, schema, source marker, maintenance, and retirement:
 [`named-abstractions.md`](named-abstractions.md)
 
 ## Exploration Loop
@@ -412,8 +409,8 @@ diverges, and the divergent copy is the one an agent finds — read the gate.
 
 ## Boundaries
 
-✅ Always: read the declared chart root before chart work; declare scope before L0; apply the rewrite test to every semantic candidate; propagate top → down; document relationships in consumers; keep within size budgets; classify disagreement before repairing it; state confidence explicitly.
+✅ Always: read the declared chart root before chart work, and the usage hook beside it once one is installed — a route the current template carries and the hook lacks is Phase E work (`growth-and-drift.md` §Phase E); declare scope before L0; apply the rewrite test to every semantic candidate; propagate top → down; document relationships in consumers; keep within size budgets; classify disagreement before repairing it; state confidence explicitly.
 
-⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; starting a named-abstraction trial and authorizing its existing task, PR, or tracker record; writing trial observations to that record; writing or updating the usage hook in the host's agent instructions; installing or changing the chart check in the host's test suite (§Verification); adding or changing `compass:` or `compass-abstraction:` comments in source. The usage hook, chart check, two source-marker forms, and host-nominated trial record are everything the skill touches outside the chart root. The task's own PR, issue, or task record is the task's surface, not the skill's: recording a classified finding there is not a Compass write (`SKILL.md` §Choose exactly one flow).
+⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; admitting or retiring a named abstraction; writing or updating the usage hook in the host's agent instructions; installing or changing the chart check in the host's test suite (§Verification); adding or changing `compass:` or `compass-abstraction:` comments in source. The usage hook, chart check, and two source-marker forms are everything the skill touches outside the chart root. The task's own PR, issue, or task record is the task's surface, not the skill's: recording a classified finding there is not a Compass write (`SKILL.md` §Choose exactly one flow).
 
 🚫 Never: write chart files outside the declared chart root or invent a root when none is configured; invent a logical root without human ratification; let code alone ratify L0–L2 semantic identity; document infrastructure as architecture (L5); contradict higher levels; treat a moved code path as evidence the semantics are wrong; demand implementation reshaping because topology and chart differ; seal coordinates before boundaries stabilize; skip human checkpoint at state 0 exit — when no human is available, stop there and report; do not proceed past any checkpoint unattended.

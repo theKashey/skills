@@ -4,7 +4,7 @@ The compass skill governs a semantic architecture chart under a chart root the
 host project declares: one or more human-ratified logical roots, a scoped L0–L4
 level stack, a per-root glossary, a tiered registry, viewports, and
 `// compass:` implementation coordinates in source. That chart root may hold an
-opt-in `ABSTRACTIONS.md` for named implementation-design concepts, attached to
+`ABSTRACTIONS.md` for named implementation-design concepts, attached to
 code by `// compass-abstraction:` claims. The semantic chart describes what the
 system *is*; the optional catalog is not a chart level and does not prescribe
 implementations, tests, or requirements.
@@ -78,7 +78,7 @@ second copy with no owner and it is wrong from the next commit. Implementation
 coordinates are the deliberate exception and stay authored: they exist so an
 agent reaches code without scanning, they are written before any marker is
 sealed, and they name entry points no scan produces. Named-abstraction
-definitions are a second, opt-in exception: no command can decide what a local
+definitions are a second exception: no command can decide what a local
 design concept means, while its declared incidence remains mechanically
 searchable in source and is never copied into the catalog. Runtime state, task
 memory, and whether the work is correct sit outside the chart entirely — not
@@ -173,7 +173,12 @@ carried, and not pointed into.
   what every produced chart physically embeds — changing them later rebuilds
   every chart, so they are settled before first use. Checklists and thresholds
   only change how the next pass judges an existing chart, so they may tighten
-  release by release without invalidating anything already built.
+  release by release without invalidating anything already built. The usage hook
+  and the chart check are installed copies a host approved once: a release that
+  changes their templates rewrites nothing in a host; the next Create activation
+  reads the installed hook beside the chart root, a missing route is Phase E
+  work, and a stale chart check fails the named-abstraction gate's fixture row
+  until it is changed, ask-first.
 - **The coordinate marker is `compass: <address>`, written in the host
   language's comment syntax** (`// compass:` in TypeScript, `# compass:` in
   Python). The marker names the Compass-owned address space, so an agent
@@ -182,22 +187,20 @@ carried, and not pointed into.
   because the checks that read it are written once, shipped with the skill,
   and match the body without a comment prefix.
 - **Named abstractions are definitions, not an incidence inventory.** An
-  optional chart-root `ABSTRACTIONS.md` gives a non-obvious local
-  implementation concept a human-readable name, an essential discriminator,
-  and a nearest non-example; `compass-abstraction: <slug>` beside a stable
-  source owner makes the local claim. Search supplies declared occurrences, so
-  the catalog carries no paths, `used-by` lists, edges, flows, or completeness
-  claim. Marker presence is an assertion to review and marker absence is
-  unknown. The mechanism is deliberately reversible and remains an
-  unvalidated experiment until task evidence shows that the names improve a
-  concrete navigation, implementation, or comparison decision. The trial names
-  its own end when it starts, and every Consume task that interprets a name
-  writes its observation into the trial record, so the experiment can fail on
-  schedule or on evidence — the rejected alternative, kill conditions with no
-  moment at which they are read, could only ever persist by inertia. One existing,
-  user-authorized task, PR, or tracker record owns that trial evidence; the
-  chart never does. The existing host usage hook points later activations to
-  that record without duplicating its evidence.
+  optional chart-root `ABSTRACTIONS.md` gives a non-obvious local implementation
+  concept a human-readable name, an essential discriminator, and a nearest
+  non-example; `compass-abstraction: <slug>` beside a stable source owner makes
+  the local claim. Search supplies declared occurrences, so the catalog carries
+  no paths, `used-by` lists, edges, flows, or completeness claim. Marker
+  presence is an assertion to review and marker absence is unknown. A name is
+  retired on task evidence, the conditions `references/named-abstractions.md`
+  §Maintenance and retirement lists, through the same ratified Create work that
+  admitted it; admission evidence lives in the change that admitted the name and
+  retirement evidence in task records, never in the catalog. The rejected
+  alternative was shipping the catalog as an opt-in experiment with its own
+  evidence record and end date: a consumer installs from main, so a rule that
+  calls itself provisional hands its validation to every consumer and is a hedge
+  none of them can use.
 - **Counts are asserted against a committed minimum**, instead of printed for
   a human to read. A check that scans nothing exits zero exactly like one that
   scans everything, and a printed count nobody reads is a checkbox with extra
@@ -241,7 +244,7 @@ agents then follow it is outside the skill's evaluation boundary.
 | [references/blocks-and-levels.md](references/blocks-and-levels.md) | Roots in practice, the contents of every chart document, the registry and glossary templates, Markdown conventions, promotion criteria with contrast examples; placement stays with `references/create.md` §File Layout |
 | [references/coordinate-system.md](references/coordinate-system.md) | Addresses, marker syntax, the coordinate laws with their examples and validation, multiple coordinates |
 | [references/growth-and-drift.md](references/growth-and-drift.md) | Phases 0–F, the usage hook, the disagreement classification with its table and priorities, methodology drift |
-| [references/named-abstractions.md](references/named-abstractions.md) | Create-only named implementation-abstraction admission, definition schema, source-claim semantics, maintenance, and experiment limits; loaded only under the conditions `create.md` §Named Implementation Abstractions states, and states none of its own |
+| [references/named-abstractions.md](references/named-abstractions.md) | Create-only named implementation-abstraction admission, definition schema, source-claim semantics, maintenance, and retirement; loaded only under the conditions `create.md` §Named Implementation Abstractions states, and states none of its own |
 | [references/ownership-boundary.md](references/ownership-boundary.md) | The Compass/Context Docs ownership contract in both directions, and the coordinate-first investigation flow |
 | [references/verification.md](references/verification.md) | Every completion checklist that exists — root, L0, L1, L2, calibration, L3, coordinates, ownership, named abstractions, navigation, the blind semantic read; other files point there |
 

@@ -1,7 +1,7 @@
 # Verification Procedures
 
 Formal checks that must pass before ratifying a root, advancing L0, L1, L2, L3
-(including the blind semantic read), or Phase F, or changing an opted-in named
+(including the blind semantic read), or Phase F, or changing a named
 abstraction. Run the applicable checks as a mandatory gate — not optional
 polish. Each completion checklist
 below is canonical; other procedures point to the applicable section rather
@@ -15,19 +15,19 @@ beyond their exit conditions in [`exploration.md`](exploration.md) and
 
 **An agent ticking its own checkbox is self-certification, and the items the table below maps need no judgment at all.** They are decidable by a script, they go stale silently, and the moment they live in a checklist they are only as reliable as the attention of whoever last ran it. Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review. They keep their checklist rows all the same — installing the check is ask-first (`create.md` §Boundaries), and before it lands the rows are run by hand like everything else — but once the script is in CI, a green run is the only honest tick:
 
-The manual fallback does not apply to the named-abstraction trial. Before its
-first definition or source claim, the host test suite must own an installed,
-adapted checker and repository-native fixtures for a valid claim, an invalid
-slug, a missing definition, malformed spacing or a multiline claim, an
-unsupported form, and a supported marker in a hidden source directory. Record
-the exact commands in the nominated trial record. Those fixtures are files
-containing deliberately invalid marker literals, so they live under one path the
-trial record names, and the checker and the raw-hit audit exclude that path and
-the checker's own file, and no other source path — the `.git`, `node_modules`,
-`.venv`, and nested-worktree exclusions stand. Without that exclusion the
-required fixtures are themselves unmatched hits and the gate cannot pass. The host usage hook that
-declares the chart root must also carry the durable pointer to that record
-specified in `named-abstractions.md`.
+The manual fallback does not apply to named-abstraction claims: a claim exists
+to be resolved, and nothing resolves it before the check. Before the first
+definition or source claim, the host test suite must own an installed, adapted
+checker and repository-native fixtures for a valid claim, an invalid slug, a
+missing definition, malformed spacing or a multiline claim, an unsupported
+form, and a supported marker in a hidden source directory; the suite is the
+only record of that command and those fixtures. Those fixtures are files
+containing deliberately invalid marker literals, so they live under the one
+path the checker's `FIXTURES` names, and the checker and the raw-hit audit
+exclude that path and the checker's own file, and no other source path — the
+`.git`, `node_modules`, `.venv`, and nested-worktree exclusions stand. Without
+that exclusion the required fixtures are themselves unmatched hits and the gate
+cannot pass.
 
 | Decidable by a script | Owning checklist item |
 |---|---|
@@ -44,7 +44,7 @@ specified in `named-abstractions.md`.
 import pathlib, re, sys
 CHART = pathlib.Path(".compass")          # the declared chart root
 ABSTRACTIONS = CHART / "ABSTRACTIONS.md"
-FIXTURES = pathlib.Path("tests/fixtures/compass")  # the one fixture path the trial record names
+FIXTURES = pathlib.Path("tests/fixtures/compass")  # the one path the checker and the raw-hit audit exclude
 SELF = pathlib.Path(__file__).resolve()
 # Include every source suffix allowed to carry `//`, `#`, or `--` markers.
 SRC_SUFFIXES = {".py", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".go", ".rs",
@@ -161,7 +161,7 @@ for name in ("SCOPE.md", "CONTEXT.md", "BLOCK.md", "COMPONENT.md"):
 
 # Commit the minimum beside this command. Chart-side counts take the count at the last passing
 # run and move only in the diff that changes the chart. Source-side counts (addresses,
-# abstraction_markers) take 1 once Phase F has sealed anything or a trial has claimed anything:
+# abstraction_markers) take 1 once Phase F has sealed anything or a marker has claimed anything:
 # they guard against a scan that stopped looking, not against a declutter that bubbles up.
 MINIMUM = {"blocks": 0, "diagrams": 0, "links": 0, "coordinates": 0, "abstraction_definitions": 0,
            "addresses": 0, "abstraction_markers": 0}
@@ -174,7 +174,7 @@ sys.exit(1 if fail else 0)
 
 **Print the counts, and assert them.** A check that scanned nothing exits zero exactly like a check that scanned everything — which is how a chart whose markers were all deleted keeps a green build. If `addresses` drops to 0 after Phase F, the script is passing because it stopped looking. A printed count nobody reads is a checkbox with extra steps, so `MINIMUM` is committed beside the command. Chart-side counts take the count at the last passing run and move only in the diff that changes the chart; `addresses` and `abstraction_markers` take 1 once anything is sealed or claimed, because they legitimately fall when a declutter bubbles a coordinate up. Changing a minimum is a chart-check change and is ask-first like installing it (`create.md` §Boundaries). Dropping below a minimum is a build failure, not a warning.
 
-For an opted-in named-abstraction trial, read `abstraction_definitions` and
+For named abstractions, read `abstraction_definitions` and
 `abstraction_markers` the same way. Zero markers means the checker proves
 nothing about adoption or coverage; it does not mean no implementation uses the
 concept.
@@ -275,7 +275,7 @@ For each node in the external systems table, confirm ALL:
 
 ## L2 Isolated Blocks Verification
 
-Run before declaring Phase B complete.
+Run before declaring Phase B complete, and re-run the hook rows after Phase E updates the hook (`growth-and-drift.md` §Phase E).
 
 - [ ] Every block has: name, responsibility (1 sentence), logical role, boundary statement, technology, implementation coordinates, communicates-with list
 - [ ] Every block's **logical role** maps upward to a stable responsibility or phenomenon of the root, and is stated without naming a directory, package, or technology
@@ -295,6 +295,7 @@ Run before declaring Phase B complete.
 - [ ] `CONTAINERS.md` exists, carries a wiring diagram, and lists every block folder
 - [ ] The host's agent instructions carry the usage hook (chart root + entry pattern), human-approved — a chart no agent is routed to does not exist
 - [ ] The hook says **when** to read the chart, not that it precedes all code work — an unconditional claim is disbelieved after the third one-line fix, and then it is skipped for the change that needed it
+- [ ] The hook carries every route in the current template (`growth-and-drift.md` §Phase B: one bullet per route, the host's own wording allowed); a hook installed under an earlier template fails here until Phase E updates it, ask-first
 - [ ] Every block's component table is present
 
 ---
@@ -365,23 +366,22 @@ Run over any chart document carrying nontrivial rationale, and over implementati
 
 ## Named Abstraction Verification (Optional)
 
-Run whenever `ABSTRACTIONS.md` or a `compass-abstraction:` marker exists,
-including when no valid trial was configured. The governing procedure is
-[`named-abstractions.md`](named-abstractions.md). An unconfigured catalog or
-marker is an orphan claim and fails this gate until the user authorizes its
-removal or completes every trial prerequisite.
+Run whenever `ABSTRACTIONS.md` or a `compass-abstraction:` marker exists. The
+governing procedure is [`named-abstractions.md`](named-abstractions.md). A
+marker without a unique definition or without the installed check is an orphan
+claim (`named-abstractions.md` §Prerequisites) and fails this gate until the
+user authorizes its removal or completes the missing setup; a catalog without
+the installed check fails the same way.
 
-- [ ] One existing task, PR, or tracker record is user-nominated and authorized as the sole owner of trial tasks, admission evidence, decisions, observations, and maintenance findings; the host usage hook carries the prescribed durable pointer to it
-- [ ] The host test suite owns the installed checker and the nominated trial record names its exact command plus passing valid, invalid-slug, missing-definition, malformed-spacing-or-multiline, unsupported-form, and hidden-source fixture commands, and the one fixture path that the checker and the raw-hit audit exclude
+- [ ] The host test suite owns the installed checker and runs passing valid, invalid-slug, missing-definition, malformed-spacing-or-multiline, unsupported-form, and hidden-source fixtures under the one path that the checker and the raw-hit audit exclude
 - [ ] Every definition heading has a unique lowercase-hyphen slug and its required `Meaning`, `Essential discriminator`, and `Nearest non-example` sections
 - [ ] The repository-wide raw-hit audit has no unsupported or uncounted source claim; every supported marker in the configured source universe resolves to exactly one definition
 - [ ] Every marker is adjacent to a stable, authored declaration that owns the claimed instance — never a call site, generated file, barrel export, or convenience import
 - [ ] Each marked owner conforms to the definition's discriminator and is not its nearest non-example; this is review evidence, not a script result
-- [ ] The nominated trial record shows that every admitted name changed a concrete navigation, implementation, or comparison decision; mere recurrence or resemblance did not qualify it
-- [ ] The nominated trial record states one trigger that ends the trial — a calendar date, a count of recorded observations, or a named event — and, once that trigger is reached, carries the verdict of the reading (`named-abstractions.md` §Maintenance and falsification); a missing trigger, or a reached trigger with no verdict, fails this gate
-- [ ] `ABSTRACTIONS.md` contains no occurrence paths, feature mappings, `used-by` lists, edges, flows, or trial results
+- [ ] Every admitted name changed a concrete navigation, implementation, or comparison decision, and the change that admitted it records the before/after decision; mere recurrence or resemblance did not qualify it
+- [ ] `ABSTRACTIONS.md` contains no occurrence paths, feature mappings, `used-by` lists, edges, flows, or history
 - [ ] Marker absence is treated as unknown, searches are reported as declared occurrences only, and no coverage or completeness claim is made
-- [ ] The trial did not reinterpret L3 stereotypes or change any L0–L4 semantic entity
+- [ ] No named abstraction reinterprets an L3 stereotype or changes any L0–L4 semantic entity
 
 A green mechanical check establishes only definition shape, slug uniqueness,
 and marker resolution. It does not establish that a marked owner conforms, that
