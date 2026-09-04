@@ -8,7 +8,19 @@ definitions; it does not add, change, or remove definitions or markers.
    suite owns the installed chart check and its required fixtures. If either
    is absent, classify the marker as an **orphan claim**,
    report its location, and stop this path. Do not interpret or reuse it.
-2. Read the matching definition before interpreting the source marker.
+2. Read the matching definition before interpreting the source marker. A
+   deterministic lookup by human-readable name or exact slug returns its owning
+   definition section without scanning unrelated entries; if the bounded output
+   reports omitted lines, open that section before deciding:
+
+   ```sh
+   python3 "{compass-skill}/scripts/compass_search.py" \
+     --chart-root "{chart-root}" --kind abstraction --literal-only \
+     persisted-store-controller
+   ```
+
+   The command and its bounds are owned by
+   [the search route](consume-search.md#targeted-lookup).
 3. Find declared instances with a hidden-aware exact-slug search, replacing
    only the example slug:
 

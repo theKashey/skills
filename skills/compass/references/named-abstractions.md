@@ -20,9 +20,8 @@ incidence when needed.
 Do not create a catalog in anticipation of future use, scan routine local work
 for possible names, or turn repeated code shapes into candidates by default.
 The catalog exists from the first admitted name (§Definition schema) and no
-sooner; the host usage hook's *Building a new capability* line routes a builder
-to it whenever it exists ([`growth-and-drift.md`](growth-and-drift.md)
-§Phase B).
+sooner. The host [usage hook](agent-hook.md) sends every new capability through
+chart search; when the catalog exists, that search can surface its definitions.
 
 The host's test suite must own an installed, adapted copy of the chart check
 in [`verification.md`](verification.md#first-the-mechanizable-checks-belong-to-the-hosts-test-suite)
@@ -165,8 +164,8 @@ changing concrete task decisions. A Consume task that finds a name misleading
 records that as a definition finding in the task's own record
 (`consume-named-abstractions.md`); the retirement is Create work that reads
 those findings. An empty catalog fails the chart check, so retiring the last
-name removes the file; the hook's routing line stays, because it is
-conditional on the catalog existing.
+name removes the file; the hook stays because it searches the chart that is
+present rather than naming the optional catalog.
 
 Never tune the filename, schema, or marker literal around a task or a chart.
 

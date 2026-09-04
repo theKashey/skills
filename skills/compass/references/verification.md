@@ -293,9 +293,9 @@ Run before declaring Phase B complete, and re-run the hook rows after Phase E up
 - [ ] No block's communicates-with list exceeds 5 entries without a recorded justification — the block is a candidate for doing too much
 - [ ] Block diagram exists and reflects all communicates-with entries
 - [ ] `CONTAINERS.md` exists, carries a wiring diagram, and lists every block folder
-- [ ] The host's agent instructions carry the usage hook (chart root + entry pattern), human-approved — a chart no agent is routed to does not exist
+- [ ] The host's agent instructions carry the current [usage-hook template](agent-hook.md), with the installed Compass skill and declared chart-root paths substituted and human-approved — a chart no agent is routed to does not exist
 - [ ] The hook says **when** to read the chart, not that it precedes all code work — an unconditional claim is disbelieved after the third one-line fix, and then it is skipped for the change that needed it
-- [ ] The hook carries every route in the current template (`growth-and-drift.md` §Phase B: one bullet per route, the host's own wording allowed); a hook installed under an earlier template fails here until Phase E updates it, ask-first
+- [ ] The hook carries the template's non-local trigger, live search command, matched-section consultation, BM25 boundary, and local-work exclusion; equivalent host wording is allowed, but an older or incomplete contract fails until Phase E updates it, ask-first
 - [ ] Every block's component table is present
 
 ---

@@ -45,36 +45,23 @@ Run level calibration ([`exploration.md`](exploration.md#level-calibration)) bef
 
 Phase B is done only when the root, L1, and L2 checklists in [`verification.md`](verification.md) pass, including the Cut Loose Ends protocol after every L1 pass. When unsure about an external system, leave it at L3 and document the uncertainty — do NOT elevate by default.
 
-**Close Phase B by installing the usage hook.** A chart that agents are not routed to does not exist. Propose a short block for the host's agent instructions (`AGENTS.md`, `CLAUDE.md`, or equivalent — the same file that declares the chart root) and let the human approve it before writing:
+**Close Phase B by installing the usage hook.** A chart that agents are not
+routed to does not exist. Copy the four-line block from
+[agent-hook.md](agent-hook.md) into the host's agent instructions (`AGENTS.md`,
+`CLAUDE.md`, or equivalent—the file that declares the chart root). Substitute
+the installed Compass skill and declared chart-root paths, then let the human
+approve the block before writing it.
 
-```markdown
-## Architecture chart
-An architecture chart lives in {chart-root}/. It describes the logical system,
-not how the repository is arranged.
-- Read it when the work is not local: it crosses a boundary, changes a rule or
-  an invariant, adds a party, or asks whether something belongs here. A one-file
-  fix, a rename, or a bug with a stack trace pointing at the line does not need
-  it — read the code. Building a new capability is not local, even in one file.
-- Building a new capability: find the owning block in {root}/CONTAINERS.md,
-  check its component table, and scan the headings of
-  {chart-root}/ABSTRACTIONS.md if it exists, before writing it
-- Where am I: {chart-root}/README.md → COMPASS.md → {root}/README.md →
-  CONTAINERS.md → {block}/README.md → {component}/README.md
-- Domain meaning or vocabulary: {root}/DOMAIN.md + {root}/GLOSSARY.md
-- Cross-block flow: {root}/VIEWPORTS.md
-- Code carries `compass: <address>` coordinates; addresses resolve in the chart
-- "Why is this code like this?" — follow its coordinate first; if the reason
-  is specific to this implementation, it lives with the code, not the chart
-- If code and chart disagree, classify before changing either side:
-  semantic change / implementation remapping / implementation violation
-```
+**The non-local trigger is load-bearing, not a hedge** (`create.md` §Core
+Principle, Applicability). A hook claiming the chart is worth reading before
+every edit is disbelieved after the third one-line fix, and a reader who learns
+to skip it skips it for the change that needed it.
 
-**The first bullet is load-bearing, not a hedge** (`create.md` §Core Principle,
-Applicability). A hook claiming the chart is worth reading before every edit is
-disbelieved after the third one-line fix, and a reader who learns to skip it
-skips it for the change that needed it.
-
-Keep the hook this size: it routes, it does not restate the chart, and it does not reproduce any other skill. Each bullet is one route, and the host's own wording of a route is fine. Phase E maintains it — if the chart root moves or a root is added, the hook is part of the diff; if a Compass release changes this template, the hook gains the missing route (§Phase E).
+Keep the hook compact: it starts search and consultation, while the Consume
+router owns task-specific paths. Equivalent host wording is fine when it keeps
+the template's trigger, search command, consultation boundary, and local-work
+exclusion. Phase E maintains the installed copy when a path or the canonical
+template changes.
 
 ### Phase C — Map Components (L3)
 
@@ -99,7 +86,9 @@ Triggered by events, not by schedule:
 - Restructuring (move, split, extract, merge, framework or language swap) → remap coordinates; semantics stand
 - New external system → update L1/L2, may create a state-0 pocket for that block
 - Product rule change → semantic change; may need ratification even when no file moved
-- Compass release changed the usage hook template (§Phase B) — seen when Create entry reads the hook beside the chart root → add the missing route to the hook, ask-first, then re-run the L2 hook rows (`verification.md` §L2)
+- Compass release changed [the usage-hook template](agent-hook.md) — seen when
+  Create compares it with the hook beside the chart root → update the installed
+  block ask-first, then re-run the L2 hook rows (`verification.md` §L2)
 
 ### Phase F — Seal Coordinates
 

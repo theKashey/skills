@@ -142,6 +142,15 @@ carried, and not pointed into.
   lines. The pseudo-field form forced every consumer to recover the schema by
   parsing punctuation; headings put it in the Markdown AST where both agents
   and rendering already look.
+- **Hybrid lookup reads the live chart**, instead of generating an index or
+  claiming semantic search. Exact headings and identifiers stay deterministic;
+  BM25 only reranks within direct-match tiers and adds lexically related
+  sections, improving the chance that task language finds different chart
+  wording. It creates no cache or duplicate owner, and its score is not
+  confidence or proof of relevance. Results preserve the owning Markdown
+  section boundary and anchor bounded excerpts on the evidence, so glossary
+  contexts and named-abstraction discriminators do not silently detach from the
+  matched term.
 - **An explicit ownership contract with Context Docs**, instead of leaving two
   skills that both preserve "why" to overlap by feel. The rewrite test doubles
   as the classifier, so a reason has exactly one owner and neither skill
@@ -154,6 +163,11 @@ carried, and not pointed into.
   finding a gap does not silently grant authority to rewrite the chart. Creation
   includes maintenance and remapping because all three mutate Compass-owned or
   Compass-installed state and require the same ownership and verification gates.
+- **A compact search-and-consult hook**, instead of a route catalog copied into
+  every host. The host entry instruction starts live chart search and preserves
+  the local-work exclusion; the Consume router reveals task-specific detail only
+  after the query identifies a path. This keeps semantic context on the path of
+  non-local work without loading every navigation pattern on every activation.
 - **Diagrams are mandatory only on the zoom chain**, not on every file: L0 is
   domain prose by design, and a forced diagram there would restate the context
   map without adding structure.
@@ -176,9 +190,9 @@ carried, and not pointed into.
   release by release without invalidating anything already built. The usage hook
   and the chart check are installed copies a host approved once: a release that
   changes their templates rewrites nothing in a host; the next Create activation
-  reads the installed hook beside the chart root, a missing route is Phase E
-  work, and a stale chart check fails the named-abstraction gate's fixture row
-  until it is changed, ask-first.
+  compares the installed hook with `references/agent-hook.md`, a missing
+  instruction is Phase E work, and a stale chart check fails the named-abstraction
+  gate's fixture row until it is changed, ask-first.
 - **The coordinate marker is `compass: <address>`, written in the host
   language's comment syntax** (`// compass:` in TypeScript, `# compass:` in
   Python). The marker names the Compass-owned address space, so an agent
@@ -237,13 +251,18 @@ agents then follow it is outside the skill's evaluation boundary.
 | --- | --- |
 | [SKILL.md](SKILL.md) | Activation, the minimal shared interpretation contract, and the exclusive Create/Consume route decision |
 | [references/create.md](references/create.md) | Create and maintenance entry: rewrite and invariance tests, root admission, level tables, L1 guardrails, file layout, authoring boundaries, and conditional routes to production references |
-| [references/consume.md](references/consume.md) | Read-only task-to-navigation and interpretation patterns over an existing chart |
+| [references/consume.md](references/consume.md) | Compact read-only search-and-consult contract and conditional router |
+| [references/consume-search.md](references/consume-search.md) | Conditional lookup options, result interpretation, and glossary use |
+| [references/consume-investigation.md](references/consume-investigation.md) | Conditional code-rationale, component, and cross-block investigation paths |
+| [references/consume-change.md](references/consume-change.md) | Conditional estimation, review, refactor, overreach, and architectural-pull paths |
 | [references/consume-named-abstractions.md](references/consume-named-abstractions.md) | Read-only interpretation of existing named-abstraction definitions and claims |
+| [scripts/compass_search.py](scripts/compass_search.py) | Live, read-only structured lookup over a host-declared chart root, with deterministic exact tiers and optional BM25-related candidates |
+| [references/agent-hook.md](references/agent-hook.md) | Canonical four-line search-and-consult block copied into host agent instructions after human approval |
 | [references/structural-signals.md](references/structural-signals.md) | Shared read-only warning signs for level contamination and overreach; both flows may consult it without importing the other's procedure |
 | [references/exploration.md](references/exploration.md) | The orient→scan→probe→adjust loop, triangulation and evidence sources, per-state procedures and exits, level calibration, scratchpad format |
 | [references/blocks-and-levels.md](references/blocks-and-levels.md) | Roots in practice, the contents of every chart document, the registry and glossary templates, Markdown conventions, promotion criteria with contrast examples; placement stays with `references/create.md` §File Layout |
 | [references/coordinate-system.md](references/coordinate-system.md) | Addresses, marker syntax, the coordinate laws with their examples and validation, multiple coordinates |
-| [references/growth-and-drift.md](references/growth-and-drift.md) | Phases 0–F, the usage hook, the disagreement classification with its table and priorities, methodology drift |
+| [references/growth-and-drift.md](references/growth-and-drift.md) | Phases 0–F, usage-hook installation and maintenance, disagreement classification, and methodology drift |
 | [references/named-abstractions.md](references/named-abstractions.md) | Create-only named implementation-abstraction admission, definition schema, source-claim semantics, maintenance, and retirement; loaded only under the conditions `create.md` §Named Implementation Abstractions states, and states none of its own |
 | [references/ownership-boundary.md](references/ownership-boundary.md) | The Compass/Context Docs ownership contract in both directions, and the coordinate-first investigation flow |
 | [references/verification.md](references/verification.md) | Every completion checklist that exists — root, L0, L1, L2, calibration, L3, coordinates, ownership, named abstractions, navigation, the blind semantic read; other files point there |
