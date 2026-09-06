@@ -80,8 +80,7 @@ counterpart → governed choice or result → relation and direction
 → contract or decision evidence → runtime availability and isolation disposition
 ```
 
-When a counterpart cannot be established, record the owner as unknown. Narrow
-the contract, keep indispensable mechanics inside the standalone package, or
+When a counterpart cannot be established, record the owner as unknown or
 return `Needs-human-decision`; do not invent a skill, delegation, or dependency.
 
 Apply the admission questions from `SKILL.md`, then recommend:
@@ -120,19 +119,15 @@ unreliably, recommend sharpening the condition before recommending inline
 guidance.
 
 Trace representative activated flows through every transitively required
-reference. Judge a split by what a flow leaves unloaded, not by the size of
-`SKILL.md`: when every relevant flow still reads the extracted material, do not
-claim progressive disclosure, and recommend the nearest every-run owner unless
-a separate ownership constraint justifies the file boundary.
-
-A reference may point to narrower references when explicit child conditions let
-other subflows avoid them and the split improves clarity or signal-to-noise. If
-serial discovery through a nested route would materially delay work, recommend
-listing the complete journey in the main `SKILL.md`, marking required and
-conditional steps so independent reads can be planned together. Treat line
-count as a signal, not a placement rule. Split by invocation when a branch needs
-independent discovery. Split by sequence only after a sharper completion
-criterion fails to prevent observed premature completion.
+reference and judge each split by the splitting clause of
+[Law II — Spend the instruction budget](../LAWS.md#law-ii--spend-the-instruction-budget).
+When a split fails it, recommend the nearest every-run owner unless a separate
+ownership constraint justifies the file boundary. When it calls for exposing a
+read journey, recommend marking required and conditional steps so independent
+reads can be planned together. Treat line count as a signal, not a placement
+rule. Split by invocation when a branch needs independent discovery. Split by
+sequence only after a sharper completion criterion fails to prevent observed
+premature completion.
 
 ## 4. Review the runtime contract
 
@@ -150,9 +145,7 @@ after activation.
 For every procedure, check:
 
 1. State its internal branch condition and authorized scope.
-2. Apply each named [Agent Instruction Law](../LAWS.md) that constrains its
-   decisions, then check every remaining Law whose condition arises; naming a
-   Law is not an exemption from the rest.
+2. Apply each [Agent Instruction Law](../LAWS.md) whose condition arises.
 3. Put warnings immediately before the action they govern.
 4. End each meaningful step with a checkable completion condition.
 5. Use an example only when it resolves ambiguity left by the decision laws.
@@ -162,24 +155,14 @@ authoring help, and design history from the body and runtime references. Retain
 a verified causal rationale beside an instruction only when it materially
 improves compliance, choice transfer, or the outcome on an unseen case.
 
-Durable reasons about the governed capability, its rejected alternatives,
-reader-relevant boundaries, and concrete component ownership belong in
-`README.md`. Authoring and review history, generic surface-selection
-rationale, and framework provenance belong in the handoff. Recommend against
-publishing claims such as “this README explains,” “this skill follows,” or
+Allocate durable reasons and handoff material by the parent reader contract
+in `SKILL.md`. Recommend against publishing claims such as “this README explains,” “this skill follows,” or
 “this documentation uses Diátaxis” merely because they are true of the build.
 A framework belongs in the final artifact only when its distinction changes the
-reader's choice or is part of the governed subject or contract. The README must
-remain outside the runtime dependency graph.
+reader's choice or is part of the governed subject or contract.
 
-A maintainer README is generated on the user's request and then to the parent
-reader contract: it opens with the skill's name, what it provides, and why a
-reader would use it; a missing README is not a defect.
-The recurring failure, affected agent or reader, intended observable impact,
-evaluation boundary, and responsibility boundary should precede runtime
-architecture or authoring mechanics. Relationships to other skills require
-both package contracts or an explicit product decision and never create a
-runtime dependency.
+Judge an existing or requested maintainer README only by the parent reader
+contract in `SKILL.md`.
 
 ## 5. Form the recommendation and validation record
 
@@ -193,12 +176,6 @@ Classify every retained prose unit as description trigger, runtime execution,
 behavior-improving causal rationale, or README support. Identify anything
 without a valid surface for the host creator to move or delete.
 
-Keep the law-alignment record in the advisory report. Use the exact law
-identifier and title so the host creator can act on a precise violation.
-Recommend a named law in the target runtime only when its title and local
-consequence directly select an agent action; never recommend a bare framework
-list or cross-skill runtime dependency.
-
 Apply
 [Law VIII — Keep every claim falsifiable](../LAWS.md#law-viii--keep-every-claim-falsifiable)
 and
@@ -207,6 +184,3 @@ to every retained repository-specific claim.
 
 Apply the validation selected by the parent router to an existing candidate.
 When no candidate exists, specify the checks the host skill creator must run.
-Structural validity and clean isolated comparisons are regression evidence, not
-evidence that the skill changes the intended choice under accumulated-context
-stress.

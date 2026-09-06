@@ -43,8 +43,8 @@ unavailable.
 ## 3. Apply the laws
 
 Apply every [Agent Instruction Law](../LAWS.md) and the admission requirements
-in the parent `SKILL.md`; do not redefine them here. Cite the exact canonical
-Law identifier and title for each failure. Also check that:
+in the parent `SKILL.md`. Cite the exact canonical Law identifier and title
+for each failure. Also check that:
 
 - every named Law maps to an observable target-skill choice and evidence, and
   no named-Law list is presented as an exemption from the remaining Laws;
@@ -54,9 +54,7 @@ Law identifier and title for each failure. Also check that:
   explanations, or excuses;
 - retained causal rationale improves behavior;
 - an existing maintainer README holds only the durable subject-facing reasons
-  the parent reader contract assigns it and is not a runtime dependency — its
-  absence alone is not a finding, and a contaminated README's repair direction
-  is relocation, never deletion;
+  the parent reader contract in `SKILL.md` assigns it;
 - description-to-route coverage, direct and conditional reference pointers,
   present-state wording, clean end-state, and route-specific completion
   criteria hold.
@@ -72,6 +70,4 @@ Order findings by observed frequency and consequence. For each finding report:
 - smallest repair direction;
 - validation that would prove the repair.
 
-Separate `BLOCK` from `NEEDS-HUMAN-DECISION` and `UNVALIDATED`. Do not declare
-runtime success from clean prose, structural validity, tool use, or instruction
-compliance alone.
+Separate `BLOCK` from `NEEDS-HUMAN-DECISION` and `UNVALIDATED`.

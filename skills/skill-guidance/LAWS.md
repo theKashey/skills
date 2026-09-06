@@ -1,6 +1,6 @@
 # The Laws of Agent Instruction
 
-These nine laws govern every Skill Guidance route. Read and apply all nine;
+These laws govern every Skill Guidance route. Read and apply all of them;
 naming the laws that materially constrain one decision does not exempt the
 rest.
 
@@ -14,21 +14,29 @@ incorrectly.
 
 ## Law II — Spend the instruction budget
 
-Make every sentence avert a named wrong turn or premature stop. Delete no-ops,
-sediment, unjustified duplication, and context that is merely relevant. Choose
-the representation that preserves decision reliability at the lowest justified
-reading, retrieval, and execution cost. A diagram, table, local cue, or causal
-explanation can earn its cost even when prose elsewhere expresses the same
-facts; retain it only where it prevents a named error or repeated investigation.
-Keep the complete rule with one canonical owner. Compare representative choices
-when a proposed saving could reduce reliability. Measure the budget over
-the selected flow—`SKILL.md` plus every transitively required reference—not an
-individual file. Moving always-read material behind a pointer is not progressive
-disclosure: it preserves the load and adds traversal. Split when a condition
-lets at least one relevant flow leave material unloaded; nested conditional
-references may sharpen signal, but expose materially long read journeys in the
-main `SKILL.md` so the agent can plan them without serial discovery. Put the
-most frequently missed, highest-consequence choices first.
+Length, repetition, and representation all draw on one bounded attention
+budget, measured over the selected flow—`SKILL.md` plus every transitively
+required reference—not an individual file. A saving counts only while the
+agent still chooses reliably; compare representative choices when a proposed
+saving could reduce reliability. Cite the clause that applies:
+
+- **Admission:** make every sentence avert a named wrong turn or premature
+  stop. Delete no-ops, sediment, unjustified duplication, and context that is
+  merely relevant. Keep the complete rule with one canonical owner; a local
+  cue or causal explanation elsewhere earns its cost only where it prevents a
+  named error or repeated investigation.
+- **Encoding:** choose the representation that preserves decision reliability
+  at the lowest justified reading, retrieval, and execution cost. A diagram,
+  table, or aligned block can earn its cost even when prose elsewhere
+  expresses the same facts, by the same test.
+- **Splitting:** moving always-read material behind a pointer is not
+  progressive disclosure; it preserves the load and adds traversal. Split when
+  a condition lets at least one relevant flow leave material unloaded. Nested
+  conditional references may sharpen signal, but expose materially long read
+  journeys in the main `SKILL.md` so the agent can plan them without serial
+  discovery.
+- **Order:** put the most frequently missed, highest-consequence choices
+  first.
 
 ## Law III — Recruit shared priors
 
@@ -52,8 +60,9 @@ does not enforce it.
 
 ## Law VI — Carry verified why for surprising fences
 
-Preserve the shortest verified `X because Y` when it protects an apparently
-wrong constraint or transfers a choice to an unseen case. Keep other
+Treat an apparently wrong constraint as Chesterton's Fence: delete it only
+once its reason is known. Preserve the shortest verified `X because Y` when it
+protects such a fence or transfers a choice to an unseen case. Keep other
 explanation, defense, apology, anticipated objections, authoring support, and
 design history out of runtime files. A README may explain durable reasons,
 concrete ownership, and a framework distinction that changes a reader's choice,
@@ -79,11 +88,6 @@ confidence of a live one.
 
 ## Law IX — Refine the paved road; do not reopen it
 
-Classify skills from evidenced reasons, responsibilities, operating and package
-forms, and capability relations—not permanent kinds. Documentation
-responsibility and workflow form may coexist. A specialist owns only a named
-conditional delta from a broader owner's default; normal-case changes belong
-to that owner. Keep orthogonal choices with their owners, and establish
-counterparts or delegation from both contracts or an explicit decision;
-otherwise ownership stays unknown and standalone delivery transfers no
-adjacent expertise.
+A specialist owns only a named conditional delta from an established broader
+owner's default; a normal-case change belongs to that owner, and an orthogonal
+concern keeps its own selection logic.

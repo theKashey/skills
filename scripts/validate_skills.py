@@ -36,8 +36,14 @@ SHARED_BLOCKS = (
 )
 
 
-def run(command: list[str], cwd: Path = REPOSITORY_ROOT) -> bool:
-    return subprocess.run(command, cwd=cwd, check=False).returncode == 0
+def run(
+    command: list[str], cwd: Path = REPOSITORY_ROOT, quiet: bool = False
+) -> bool:
+    """Run a validator command; `quiet` drops its stdout (errors stay on
+    stderr) so a repeated run does not print the same report twice."""
+    stdout = subprocess.DEVNULL if quiet else None
+    completed = subprocess.run(command, cwd=cwd, check=False, stdout=stdout)
+    return completed.returncode == 0
 
 
 def fenced_blocks(text: str) -> list[list[str]]:
@@ -165,6 +171,7 @@ def main() -> int:
             if not run(
                 [sys.executable, str(VALIDATOR), str(copied)],
                 cwd=copied_root,
+                quiet=True,
             ):
                 return 1
 
@@ -178,6 +185,7 @@ def main() -> int:
                         str(copied),
                     ],
                     cwd=copied,
+                    quiet=True,
                 ):
                     return 1
 

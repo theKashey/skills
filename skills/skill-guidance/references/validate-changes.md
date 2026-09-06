@@ -27,7 +27,8 @@ Do not revise the frozen contract merely to accommodate the candidate.
 
 When package mechanics changed, take the parent
 [isolation-gate result](../SKILL.md#enforce-package-isolation) as prerequisite
-evidence; otherwise skip that gate. Do not repeat its checks here. Verify:
+evidence; otherwise it does not bear on the delta. Do not repeat its checks
+here. Verify:
 
 - every retained obligation satisfies the parent admission contract;
 - each named [Agent Instruction Law](../LAWS.md) uses the exact identifier and
@@ -47,10 +48,9 @@ evidence; otherwise skip that gate. Do not repeat its checks here. Verify:
   interface and completion boundary, evidence from both inspected contracts or
   an explicit decision, and runtime-availability or isolation disposition; a
   missing counterpart remains unknown rather than becoming an invented owner;
-- package form is earned by the task rather than copied from a taxonomy, and an
-  ownership handoff introduces no cross-skill runtime dependency: the
-  standalone package states the required interface or outcome, bundles
-  indispensable mechanics, or narrows its contract;
+- package form is earned by the task rather than copied from a taxonomy, and
+  every ownership handoff passes the parent
+  [isolation check](../SKILL.md#enforce-package-isolation);
 - every repository-specific claim satisfies
   [Law VIII — Keep every claim falsifiable](../LAWS.md#law-viii--keep-every-claim-falsifiable);
 - the description meets the parent activation boundary contract and covers
@@ -58,24 +58,19 @@ evidence; otherwise skip that gate. Do not repeat its checks here. Verify:
 - the body and runtime references begin after activation and contain only
   execution content or behavior-improving causal rationale;
 - README support and design reasons are not required by any runtime route;
-- a maintainer README, when present or requested, first makes the skill's
-  name, offering, and reader-relevant reason inferable, then makes the driving
-  failure, affected agent or reader, intended impact, and boundary inferable
-  before package architecture or methodology — its absence alone fails
-  nothing;
+- a maintainer README, when present or requested, meets the parent reader
+  contract in `SKILL.md`;
 - each route satisfies the parent locality, ownership, and conditional-pointer
   contracts;
 - each representative activated flow is traced from the main `SKILL.md` through
   its transitive references, recording mandatory loads, conditional loads and
-  their conditions, and serial discovery depth; a disclosure claim leaves the
-  extracted material unloaded on at least one relevant flow, and a materially
-  long nested journey is exposed in the main `SKILL.md` so its reads can be
-  planned rather than discovered one at a time;
+  their conditions, serial discovery depth, and each file's size from the
+  validator's runtime flow report; every split satisfies the splitting clause
+  of [Law II — Spend the instruction budget](../LAWS.md#law-ii--spend-the-instruction-budget);
 - the completed package satisfies the parent reader contract and has a
   publishable end state.
 
-Record the exact evidence and property it establishes. Structural validity does
-not establish semantic or behavioral correctness.
+Record the exact evidence and property it establishes.
 
 ## 3. Observe representative behavior
 
@@ -96,8 +91,10 @@ Assess:
 5. authorized scope and avoidance of unrelated ritual;
 6. satisfaction of the checkable completion criterion;
 7. decision reliability and total reading, retrieval, and execution cost,
-   including recurring context and traversal latency; a context saving does not
-   justify a material loss in the intended choice or completion behavior.
+   including recurring context and traversal latency, with the loaded flow's
+   size for candidate and baseline taken from the validator's runtime flow
+   report rather than estimated; a context saving does not justify a material
+   loss in the intended choice or completion behavior.
 
 Reference loading, tool use, produced files, and literal instruction compliance
 are evidence only when they contribute to the frozen outcome.

@@ -11,6 +11,13 @@ validity. Exit 1 means mechanical failure; exit 2 means unresolved REVIEW
 findings, even if mechanical checks pass; exit 0 means neither was found.
 Semantic network isolation remains UNVALIDATED until the audit resolves every
 REVIEW finding.
+
+A mechanically valid package also gets a runtime flow report: every text file
+in the runtime set (SKILL.md, files under agents/ and references/, and files
+the runtime link graph reaches), with its line and word count. The gate cannot
+tell a mandatory load from a conditional one, so the reviewer sums the files a
+representative flow actually loads; scripts execute without entering context
+and are omitted.
 """
 
 from __future__ import annotations
@@ -236,7 +243,12 @@ def fenced_shell_escape_errors(relative: Path, path: Path, root: Path, text: str
     return errors
 
 
-def validate_skill(skill_root: Path) -> tuple[list[str], list[str]]:
+def validate_skill(
+    skill_root: Path, report: list[tuple[str, int, int]] | None = None
+) -> tuple[list[str], list[str]]:
+    """Return (mechanical errors, REVIEW findings); when `report` is given,
+    fill it with (path, lines, words) for each runtime file an activation can
+    read."""
     if skill_root.is_symlink():
         return [f"{skill_root}: package root must not be a symlink"], []
     root = skill_root.resolve()
@@ -339,6 +351,14 @@ def validate_skill(skill_root: Path) -> tuple[list[str], list[str]]:
         errors.append(
             f"{skill_root}/README.md: maintainer README must not be a runtime dependency"
         )
+    if report is not None:
+        for relative in sorted(runtime, key=lambda r: (r.name != "SKILL.md", str(r))):
+            if relative.parts[0] == "scripts":
+                continue
+            content = texts.get(relative)
+            if content is None:
+                continue
+            report.append((str(relative), len(content.splitlines()), len(content.split())))
 
     for relative, content in texts.items():
         if relative in runtime:
@@ -387,6 +407,21 @@ def run_self_test() -> tuple[list[str], int]:
                 failures.append(f"{label}: expected semantic review={review}, got {reviews}")
 
         expect("valid package", make("valid-skill", "Use only bundled material."), True)
+        flow: list[tuple[str, int, int]] = []
+        count += 1
+        validate_skill(make("flow-report", "See [a](references/a.md).", files=[
+            ("references/a.md", "# A\n\nOne two three.\n"),
+            ("scripts/run.sh", "echo run\n")]), flow)
+        if flow != [("SKILL.md", 8, 12), ("references/a.md", 3, 5)]:
+            failures.append(f"flow report wrong: {flow}")
+        flow = []
+        count += 1
+        binary = make("flow-binary", "See [logo](assets/logo.png).")
+        (binary / "assets").mkdir()
+        (binary / "assets" / "logo.png").write_bytes(b"\x89PNG\r\n\xff\xfe\x00")
+        binary_errors, _ = validate_skill(binary, flow)
+        if binary_errors or flow != [("SKILL.md", 8, 12)]:
+            failures.append(f"linked binary asset: errors={binary_errors} flow={flow}")
         expect("overlong description", make("overlong", "Body.", "x" * 241), False, "exceeds")
         expect("multi-sentence description", make("two-sentence", "Body.",
             "Use when X applies. Also use when Y applies."), False, "one sentence")
@@ -466,11 +501,17 @@ def main() -> int:
             print(f"PASS validator self-test: {count} cases")
     if args.skill:
         target = args.skill.resolve()
-        package_errors, reviews = validate_skill(target)
+        flow: list[tuple[str, int, int]] = []
+        package_errors, reviews = validate_skill(target, flow)
         errors.extend(package_errors)
         if not errors:
             files = sum(1 for p in target.rglob("*") if p.is_file())
             print(f"PASS {target.name}: {files} files, mechanical checks")
+            width = max(len(path) for path, _, _ in flow)
+            print("runtime flow report (lines, words); sum the files a representative flow loads:")
+            for path, lines, words in flow:
+                print(f"  {path:<{width}}  {lines:>5} {words:>6}")
+            print(f"  {'all runtime files':<{width}}  {sum(f[1] for f in flow):>5} {sum(f[2] for f in flow):>6}")
         for review in reviews:
             print(f"REVIEW {review}")
         if reviews:
