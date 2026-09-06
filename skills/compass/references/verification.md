@@ -13,7 +13,7 @@ beyond their exit conditions in [`exploration.md`](exploration.md) and
 
 ## First: the mechanizable checks belong to the host's test suite
 
-**An agent ticking its own checkbox is self-certification, and the items the table below maps need no judgment at all.** Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review. Installing the check is ask-first (`create.md` §Boundaries); before it lands, run the rows by hand. Once installed, require a passing suite with valid, dangling, malformed, hidden-source, and unsupported-form/suffix coordinate fixtures, plus scope-carrier, exclusion, and template-heading fixtures; `tests/test_chart_check.py` in the Compass package is the reference suite. A green run covers only the mapped properties:
+**An agent ticking its own checkbox is self-certification, and the items the table below maps need no judgment at all.** Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review. Installing the check is ask-first (`create.md` §Boundaries). A checklist row marked *script-owned* is a green run of the installed check and nothing else; while the check is not yet installed, and after a recorded decline (§L2), that row is run by hand like every other. Once installed, require a passing suite with valid, dangling, malformed, hidden-source, and unsupported-form/suffix coordinate fixtures, plus scope-carrier, exclusion, and template-heading fixtures; `tests/test_chart_check.py` in the Compass package is the reference suite. A green run covers only the mapped properties. The installed copy is frozen at install time: every Create task compares it with this fence, and a difference is Phase E work (`growth-and-drift.md` §Phase E), ask-first. Template-shape failures are prefixed `template:` and route to the format trigger there; every other failure routes to §Classifying Disagreement.
 
 The manual fallback does not apply to named-abstraction claims: a claim exists
 to be resolved, and nothing resolves it before the check. Before the first
@@ -181,28 +181,38 @@ for md in CHART.rglob("*.md"):
     # template headings (blocks-and-levels.md): depth below CHART says which README this is
     depth = len(md.relative_to(CHART).parts) - 1 if md.name == "README.md" else 0
     h2 = re.findall(r"^## (.+?)\s*$", body, re.M)
+    # `template:` failures are document-shape failures: rewrite to the current template (Phase E), never classify
+    older = "written to an earlier Compass template"
+    prose_stereotype = depth == 3 and re.search(r"^«[^»]+»", body.split("\n## ", 1)[0], re.M)
+    if prose_stereotype:
+        fail.append(f"{md}: template: {older} — stereotype is a prose line, now ## Stereotype")
     for heading in {2: ["Responsibility", "Logical role", "Boundary", "Technology",
                         "Implementation coordinates", "Communicates with", "Uses",
                         "Components", "Diagram"],
                     3: ["Stereotype", "Responsibility", "Bounded context", "Inputs and outputs", "Depends on",
                         "Used by", "Boundary", "Implementation coordinates", "Diagram"]}.get(depth, []):
-        if heading not in h2: fail.append(f"{md}: missing ## {heading}")
+        if heading not in h2 and not (heading == "Stereotype" and prose_stereotype):
+            fail.append(f"{md}: template: missing ## {heading}")
     if depth == 2:                         # the wire (→) needs its decision (### under ## Uses)
         part = lambda name: (re.search(rf"^## {name}\n(.*?)(?=^## |\Z)", body, re.S | re.M) or [None, ""])[1]
         decided = set(re.findall(r"^### \[[^\]]+\]\(\.\./([^/)]+)/", part("Uses"), re.M))
         for target in re.findall(r"^\s*-\s*→.*?\]\(\.\./([^/)]+)/", part("Communicates with"), re.M):
-            if target not in decided: fail.append(f"{md}: → {target} has no ### entry under ## Uses")
+            if target not in decided: fail.append(f"{md}: template: → {target} has no ### entry under ## Uses")
         if not re.search(r"^\|.*\|\s*$", part("Components"), re.M):
-            fail.append(f"{md}: no component table")
+            fail.append(f"{md}: template: no component table")
     if md.name == "VIEWPORTS.md":         # one ## per viewport, each with its ### sections and one legal type
         for title, text in re.findall(r"^## (.+?)\s*\n(.*?)(?=^## |\Z)", body, re.S | re.M):
             h3 = re.findall(r"^### (.+?)\s*$", text, re.M)
+            prose_type = "Type" not in h3 and re.search(r"^Type:", text, re.M)
+            if prose_type:
+                fail.append(f"{md}: template: viewport '{title}' {older} — type is a prose line, now ### Type")
             for heading in ["Type", "Question", "Participants", "Diagram", "Seams"]:
-                if heading not in h3: fail.append(f"{md}: viewport '{title}' missing ### {heading}")
+                if heading not in h3 and not (heading == "Type" and prose_type):
+                    fail.append(f"{md}: template: viewport '{title}' missing ### {heading}")
             value = re.search(r"^### Type\s*\n(.*?)(?=^### |\Z)", text, re.S | re.M)
             kind = (value.group(1).split() or [""])[0] if value else ""
             if "Type" in h3 and kind not in ("runtime", "domain", "boundary", "lifecycle"):
-                fail.append(f"{md}: viewport '{title}' type '{kind}' is not runtime, domain, boundary, or lifecycle")
+                fail.append(f"{md}: template: viewport '{title}' type '{kind}' is not runtime, domain, boundary, or lifecycle")
 
 for (subtree, root), carriers in scopes.items():
     if len({frozenset(addresses) for addresses in carriers.values()}) > 1:
@@ -220,10 +230,16 @@ MINIMUM = {"blocks": 0, "diagrams": 0, "links": 0, "coordinates": 0, "abstractio
 for k, minimum in MINIMUM.items():
     if seen[k] < minimum:
         fail.append(f"{k}: {seen[k]} scanned, minimum is {minimum} — the check stopped looking")
-if fail:  # route the failure, not only report it
-    fail.append("Classify each failure before repairing it: Compass Create, growth-and-drift.md "
-                "§Classifying Disagreement. A coordinate that resolves to nothing is investigated "
-                "rather than deleting the comment.")
+if fail:  # route each failure kind, not only report it
+    template, other = (any(": template: " in f for f in fail), any(": template: " not in f for f in fail))
+    if template:
+        fail.append("A `template:` failure is a document written to an earlier or incomplete Compass "
+                    "template: rewrite it to the current template, ask-first (growth-and-drift.md "
+                    "§Phase E); its semantics stand and there is nothing to classify.")
+    if other:
+        fail.append("Classify each other failure before repairing it: Compass Create, growth-and-drift.md "
+                    "§Classifying Disagreement. A coordinate that resolves to nothing is investigated "
+                    "rather than deleting the comment.")
 print("\n".join(fail) or "chart: clean — " + ", ".join(f"{v} {k}" for k, v in seen.items()))
 sys.exit(1 if fail else 0)
 ````

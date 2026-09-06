@@ -96,11 +96,18 @@ Triggered by events, not by schedule:
   entry; respond per the class, never inside the Consume task that found it
 - The installed chart check failed → classify each failure before repairing it
   (§Classifying Disagreement); a marker at an absent address is handled by
-  `verification.md` §Staleness, not deleted to turn the build green
+  `verification.md` §Staleness, not deleted to turn the build green. A failure
+  prefixed `template:` is not a chart/code disagreement: it takes the
+  document-format trigger below
+- Compass release changed the chart check — seen when Create compares the
+  installed check with the fence (`verification.md` §First) → update the
+  installed check ask-first and run it; its `template:` failures take the next
+  trigger
 - Compass release changed a document format in
   [`blocks-and-levels.md`](blocks-and-levels.md) — seen when a level checklist
-  or a re-installed chart check fails a document written to the older form →
-  rewrite that document to the current template, ask-first; its semantics stand
+  or the updated chart check reports a `template:` failure on a document
+  written to the older form → rewrite that document to the current template,
+  ask-first; its semantics stand
 - Compass release changed [the usage-hook template](agent-hook.md) — seen when
   Create compares it with the hook beside the chart root → update the installed
   block ask-first, then re-run the L2 hook rows (`verification.md` §L2)

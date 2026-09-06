@@ -252,8 +252,10 @@ class ChartCheckTest(unittest.TestCase):
         self.assert_failure("addresses: 0 scanned, minimum is 1")
 
     def test_failure_routes_to_classification(self) -> None:
+        # a chart-versus-code failure alone routes to classification and never to the template rewrite
         self.write("src/checkout/app.py", "# compass: shop.missing\n")
-        self.assert_failure("shop.missing resolves to nothing", "Classify each failure before repairing it")
+        out = self.assert_failure("shop.missing resolves to nothing", "Classify each other failure before repairing it")
+        self.assertNotIn("template:", out)
 
     # -- coordinate markers: where the checker looks and what it accepts -------------------
 
@@ -369,29 +371,50 @@ class ChartCheckTest(unittest.TestCase):
 
     def test_missing_block_heading_fails(self) -> None:
         self.edit(".compass/shop/checkout/README.md", "## Boundary\n\nDoes not do the other thing.\n", "")
-        self.assert_failure("checkout/README.md: missing ## Boundary")
+        out = self.assert_failure("checkout/README.md: template: missing ## Boundary",
+                                  "A `template:` failure is a document written to an earlier or incomplete")
+        self.assertNotIn("Classify each other failure", out)
 
     def test_outbound_wire_without_a_uses_entry_fails(self) -> None:
         self.edit(".compass/shop/checkout/README.md",
                   "### [`fulfillment`](../fulfillment/README.md)\n\n#### Why\n\nSomeone must ship.\n", "")
-        self.assert_failure("→ fulfillment has no ### entry under ## Uses")
+        self.assert_failure("template: → fulfillment has no ### entry under ## Uses")
 
     def test_missing_component_table_fails(self) -> None:
         block = self.host / ".compass/shop/fulfillment/README.md"
         block.write_text(re.sub(r"^\|.*\|\n", "", block.read_text(encoding="utf-8"), flags=re.M), encoding="utf-8")
-        self.assert_failure("fulfillment/README.md: no component table")
+        self.assert_failure("fulfillment/README.md: template: no component table")
 
     def test_component_without_a_stereotype_heading_fails(self) -> None:
+        self.edit(".compass/shop/checkout/entry/README.md", "## Stereotype\n\n«handler»\n\n", "")
+        self.assert_failure("entry/README.md: template: missing ## Stereotype")
+
+    def test_component_with_a_prose_stereotype_is_named_as_the_older_template(self) -> None:
         self.edit(".compass/shop/checkout/entry/README.md", "## Stereotype\n\n«handler»\n\n", "«handler»\n\n")
-        self.assert_failure("entry/README.md: missing ## Stereotype")
+        out = self.assert_failure("entry/README.md: template: written to an earlier Compass template",
+                                  "stereotype is a prose line, now ## Stereotype")
+        self.assertNotIn("missing ## Stereotype", out)
+
+    def test_both_failure_kinds_route_separately(self) -> None:
+        self.edit(".compass/shop/checkout/entry/README.md", "## Stereotype\n\n«handler»\n\n", "")
+        self.write("src/checkout/stray.ts", "// compass: shop.missing\n")
+        self.assert_failure("A `template:` failure is a document written to an earlier or incomplete",
+                            "Classify each other failure before repairing it")
 
     def test_viewport_type_as_a_prose_line_fails(self) -> None:
         self.edit(".compass/shop/VIEWPORTS.md", "### Type\n\nlifecycle\n", "Type: lifecycle\n")
-        self.assertNotIn("missing ### Question", self.assert_failure("missing ### Type"))
+        out = self.assert_failure("template: viewport", "written to an earlier Compass template",
+                                  "type is a prose line, now ### Type")
+        self.assertNotIn("missing ### Type", out)
+        self.assertNotIn("missing ### Question", out)
+
+    def test_viewport_without_any_type_is_missing_not_older(self) -> None:
+        self.edit(".compass/shop/VIEWPORTS.md", "### Type\n\nlifecycle\n", "")
+        self.assertNotIn("earlier Compass template", self.assert_failure("template: viewport", "missing ### Type"))
 
     def test_viewport_with_an_unknown_type_fails(self) -> None:
         self.write(".compass/shop/VIEWPORTS.md", VIEWPORTS.format(kind="sequence"))
-        self.assert_failure("type 'sequence' is not runtime, domain, boundary, or lifecycle")
+        self.assert_failure("template: viewport", "type 'sequence' is not runtime, domain, boundary, or lifecycle")
 
     def test_viewport_with_an_empty_type_fails(self) -> None:
         self.write(".compass/shop/VIEWPORTS.md", VIEWPORTS.format(kind=""))
