@@ -5,8 +5,10 @@ root, block, component, or coordinate.
 
 ## Explain why code has its shape
 
-1. Find the coordinate covering the file: its own `compass:` comment or the
-   nearest enclosing folder or package coordinate.
+1. Resolve the file's coordinate for each relevant root using the shared
+   inheritance contract in [`SKILL.md`](../SKILL.md#shared-contract). Consult
+   the chart's implementation-coordinate sections for declared carriers and
+   scopes; a marker in an adjacent entry file is not implicit folder coverage.
 2. Follow the address into the chart. If the code enforces a documented
    invariant, boundary, or responsibility, that is the semantic reason; stop.
 3. If the chart explains the *what* but the mechanism remains surprising, keep
@@ -37,7 +39,7 @@ Open its `README.md` and read in this order:
 1. stereotype — the component pattern;
 2. responsibility — its one job;
 3. boundary — what it deliberately does not do;
-4. diagram — its callers and callees; and
+4. diagram — its semantic relationships; use reverse-view routes for consumers; and
 5. implementation coordinates — where it lives today.
 
 If the coordinates are wrong, classify an implementation remapping. If the

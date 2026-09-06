@@ -1,8 +1,5 @@
 # Content architecture
 
-This guide aligns a document's story, surface role, scan path, and
-multi-reader routes.
-
 Start with the reader's task and governed scope; do not infer a document's role
 from its filename, repository visibility, or marketing posture.
 
@@ -106,9 +103,23 @@ contract with one semantic slice before expanding it:
 2. Produce only the opening claim and support, an ordered heading spine with
    each section's contribution, the necessary proof and boundary, and the
    completion route.
-3. Classify the readback as expected, disconfirming, mixed, or inconclusive;
-   collapse what survives into one contract before writing body prose or visual
-   implementation.
+3. Obtain a readback from an intended reader or an available fresh reviewer.
+   Give them only the slice and context the actual entrant receives, and ask
+   what subject, supported outcome, boundary, and next action they infer. Keep
+   the expected answer and authorial rationale out of their input. Record the
+   returned interpretation and compare it with the frozen contract:
+
+   - Expected: proceed with the supported contract.
+   - Disconfirming: return to casting's earliest wrong causal layer before drafting.
+   - Mixed or inconclusive: isolate the disputed inference and make one bounded
+     clarification or slice revision, then obtain a new readback. If it remains
+     unresolved, report that limit; stop only for a missing truth or authority
+     decision, otherwise draft from the established contract without claiming
+     reader validation.
+
+   If no reader or fresh reviewer is available, record the readback as unvalidated.
+   An author self-check may support drafting from an already resolved contract,
+   but is not observed reader evidence and cannot settle missing authority.
 
 Complete documents are not story probes. After alignment, produce one full
 route. Every major section must advance the intended reader change, supply
@@ -149,12 +160,17 @@ Three inputs bound the gate:
 For each candidate statement:
 
 1. Name the reader decision, action, or continuation need it changes.
-2. Name the plausible wrong action or repeated investigation it prevents.
+2. For rationale, name the plausible wrong action or repeated investigation it
+   prevents. For reference, teaching, or continuation, name the exact lookup,
+   learning, or resumption need instead.
 3. Determine whether the fact is inside the governed subject's speciality.
 4. If it is outside, keep it only where it leaks across the abstraction
-   boundary and produces a material local consequence.
-5. Subtract meaning already recoverable from visible or reachable project
-   context, the assumed priors, and verified delegated guarantees.
+   boundary with a material local consequence or is a prerequisite this surface
+   is explicitly responsible for teaching.
+5. Subtract meaning the actual reader path supplies before the decision,
+   together with assumed priors and verified delegated guarantees. A source
+   being reachable somewhere is insufficient; preserve a local consequence
+   and direct route when the reader would otherwise miss it.
 6. Keep only the remaining exact local contract, deviation, causal edge,
    boundary, or continuation breadcrumb.
 
@@ -168,9 +184,11 @@ Return one disposition:
 | `Preserve a boundary leak` | An out-of-speciality fact still changes a local decision. | Leave the smallest local consequence and route to the external owner. |
 | `Teach the prerequisite` | Teaching this generic material is part of the explicit reader and authorial goal. | Explain it to the depth that goal requires, and only on the surface that owns it. |
 
-Being true or relevant is not admission. Every admitted explanation must avert
-a named wrong turn, repeated investigation, or unsafe continuation; when no
-such turn can be named, the disposition is `No document` and existing prose is
+Being true or relevant is not admission. Name the decision, task, or
+continuation need an admitted statement serves. Exact reference contracts and
+explicit teaching prerequisites need no invented unsafe alternative. Other
+explanations must avert a named wrong turn, repeated investigation, or unsafe
+continuation; when no such turn can be named, the disposition is `No document` and existing prose is
 a deletion candidate.
 
 The gate suppresses generic explanation, not exact project truth. A public API
@@ -367,7 +385,8 @@ verbatim or exhaustive thought transcript.
 
 Preserve:
 
-- current state and completed decisions;
+- verified current state and completed decisions, including pending publication,
+  rollout, access, or implementation work when it changes continuation;
 - the shortest verified `X because Y` causal edge needed to prevent reversal;
 - direct evidence and the route back to its source;
 - rejected alternatives only while they remain locally plausible and likely to
@@ -381,8 +400,15 @@ Omit:
 - definitions of named concepts the cast reader can recruit;
 - chronological narration of the exploration;
 - dead branches whose removal cannot change continuation;
-- mechanics recoverable directly from code, types, tests, or a reachable owner;
+- mechanics the reader's actual continuation path already supplies from code,
+  types, tests, or the canonical owner;
 - motivational prose and restatement of the task.
+
+Date or otherwise identify observations that can change, separate completed
+facts from intended outcomes, and retain the next verification or action. A
+finished handoff may describe unfinished work; its completeness is the usable
+record, not completion of the work it hands off. Do not apply product-publication
+cleanup rules to remove those facts.
 
 The completion test is whether a fresh intended reader can recover what is
 true, why the live decisions were selected, what remains unknown, and what to

@@ -39,9 +39,9 @@ Evidence: package scripts and representative task
 Use the exact canonical identifier and title, the target-skill choice it
 governs, and evidence. Cite
 [`Law VII — Enforce or delete mechanical rules`](LAWS.md#law-vii--enforce-or-delete-mechanical-rules),
-for example, when a duplicate prose rule must be removed. The named set is a
-compact review checklist, not an exception list: every law still applies when
-its condition arises. Keep this record in the advisory report or handoff, never
+for example, when verified enforcement makes a prose rule redundant. The named
+set is a compact review checklist, not an exception list: every law still
+applies when its condition arises. Keep this record in the advisory report or handoff, never
 in the distributed package. Recommend naming a law in the target runtime only
 when its title plus local consequence selects an action for that target skill's
 agent; never recommend a bare framework label or a dependency on this package.
@@ -63,6 +63,14 @@ From this skill directory, run:
 ```bash
 python3 scripts/validate_skill.py TARGET_SKILL_DIRECTORY
 ```
+
+The command reports mechanical failures (exit 1) separately from network
+mentions needing semantic review (exit 2). Resolve each `REVIEW` against its
+surrounding procedure: inert data is not a dependency; required network access
+violates isolation. Record the
+disposition and evidence in the advisory report. Report `UNVALIDATED` while any
+required disposition is unresolved; a mechanical pass alone does not establish
+semantic isolation.
 
 ## Select one route
 
@@ -117,10 +125,10 @@ A standalone package carries a maintainer `README.md` that owns those durable
 reasons — recurring problem, affected reader, intended effect, boundaries,
 rejected alternatives, and component ownership — and stays outside the runtime
 dependency graph. A missing README is never a blocking finding; when the
-user asks for one, generate it to exactly that contract. A README holding
-handoff material (authoring narrative, validation records, pending work,
-environment deixis) is repaired by relocating that content, never by deleting
-the file.
+user asks for one, return that contract to the host skill creator for generation.
+A README holding handoff material (authoring narrative, validation records,
+pending work, environment deixis) is repaired by relocating that content, never
+by deleting the file.
 
 Complete with an evidence-backed advisory report, audit verdict, or behavioral
 evaluation. A clean-context comparison can expose routing or interpretation

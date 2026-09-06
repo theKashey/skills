@@ -25,6 +25,12 @@ references can improve clarity and signal-to-noise, but each serial discovery
 adds latency; the main `SKILL.md` should expose materially long journeys so the
 agent can plan the required reads.
 
+Lower context cost matters only while the agent can still choose reliably.
+Equivalent prose and a table can impose different retrieval costs; a local cue
+can prevent a wrong turn even when the complete rule lives elsewhere. Likewise,
+a gate that rejects a finished mistake may leave an earlier costly choice
+unprotected. Deleting that guidance would trade fewer words for more rework.
+
 A tidy single-turn exercise gives an instruction unusually little competition
 and is weak evidence for that intended effect. Structural validation and clean
 comparisons can expose packaging, routing, or interpretation regressions; they
@@ -50,6 +56,10 @@ condition under an established broader default; an orthogonal concern keeps its
 own selection logic; and a coordinator or consumer does not absorb a
 contributor's internals. Bundling mechanics needed for standalone delivery does
 not grant adjacent expertise or make another skill a runtime dependency.
+
+Isolation concerns required access, not the presence of an address in example
+data. Mechanical network findings therefore identify mentions for semantic
+review; they do not establish whether a procedure depends on the network.
 
 ## When to use this skill
 

@@ -12,12 +12,37 @@ reader who receives the subject across a distribution or team boundary,
 whether an anonymous adopter or a sibling team—can hold a different topology
 than a repository reader over the same files.
 
+## Product evidence and topology
+
+For product documentation, freeze the authorized completed product and
+distribution contract before gathering evidence. Treat an observation as transient
+delivery state when an ordinary publish, tag, deploy, propagation, or rollout
+operation could change it without a product or distribution-contract decision.
+Exclude that proposition from product-contract evidence, reasoning, findings,
+risks, caveats, prerequisites, and route selection regardless of its source.
+Inspect current delivery state when it is the task's subject. An explicit
+decision that the completed product remains source-only is an enduring boundary.
+Working records use the [handoff contract](content-architecture.md#working-documents-and-handoffs)
+instead: relevant unfinished state is evidence for continuation, not product policy.
+
+On an external-consumer surface, an authorized product or distribution decision
+revokes the established topology when it changes the consumer population, an
+entry point, the delivery boundary, what remains reachable, or a consumer-facing
+contract. Return to [casting](casting.md) with the post-decision consumer set and
+record the per-consumer delta. Upstream validation suppresses re-litigating
+intent only while those material assumptions survive; reopen the consequences
+of the new decision, not validated intent itself. Registry, tag, or deployment
+state alone never fires this trigger. Line, block, and file comments do not
+enter it, nor does orientation whose every material reader receives the repository.
+
 ## Pass the existence and ownership gates
 
 1. When the purpose of an existing choice or structure is unknown, treat it as
    Chesterton's Fence and investigate before changing or removing it. Once the
-   rationale is verified, name the decision the reader must make and the
-   invisible reef—the non-local cause and material consequence—that changes it.
+   purpose is understood, name the reader's decision, task, or continuation
+   need. For code-local rationale, establish the invisible reef—the non-local
+   cause and material consequence; broader facts follow
+   [prior and speciality admission](content-architecture.md#prior-and-speciality-admission).
 2. List only context the reader actually encounters before that decision:
    nearby code, types, tests, package metadata, system access, and canonical
    documentation reached through the project's normal route. Count the cast's
@@ -67,8 +92,8 @@ When an encounter path does not reach the owner and the gap would cause an
 unsafe action or repeated reconstruction, leave a compact breadcrumb at the
 narrowest existing or authorized surface. Include only:
 
-- the local decision and invisible reef with its material consequence;
-- the shortest verified causal edge showing why the remote owner matters; and
+- the local decision, task, or continuation need and its missing fact;
+- for rationale, the verified causal edge and material local consequence; and
 - a direct, descriptive route to the canonical detail.
 
 Keep procedure, configuration, and implementation mechanics with the owner.
@@ -147,7 +172,7 @@ Return one of:
   governed scope, proposed owner, and unresolved authority.
 
 For an update or proposal, write the smallest verified fact that changes the
-decision. Preserve the local causal edge and consequence; leave remote
-mechanics with their owner. Check that every evidenced encounter path reaches
+decision, task, or continuation. Preserve any needed local causal edge and
+consequence; leave remote mechanics with their owner. Check that every evidenced encounter path reaches
 the local consequence and canonical detail before action, without copying a
 narrower or broader contract or claiming authority to create or move a surface.

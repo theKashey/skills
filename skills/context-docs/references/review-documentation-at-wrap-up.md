@@ -8,14 +8,17 @@ the smallest remaining defect or risk.
 Exclude line, block, and file comments; JSDoc on an established
 public-contract symbol remains a public-contract surface.
 
-For an audit, release, work spanning multiple non-inline surfaces, or a material
-risk that needs a detailed gate, load [quality and
+For an audit, release, or a material risk requiring a detailed gate—including
+changed cross-surface contracts, ownership, or reader paths—load [quality and
 maintenance](quality-maintenance.md) and apply its evidence scorecard. Once
 delegated, return only that workflow's terminal result and do not come back to
-this compact guide. Otherwise verify only the applicable minimum:
+this compact guide. Surface count alone does not require escalation; bounded
+mechanical edits across several surfaces use the applicable minimum:
 
-1. Check the completed behavior against source, exported types, tests, generated
-   artifacts, and explicit product decisions. Resolve or report contradictions.
+1. Check documented claims against source, exported types, tests, generated
+   artifacts, and explicit decisions in the surface's time domain: completed
+   product behavior, historical facts, or a working record's observed state.
+   Resolve or report contradictions.
 2. Account for every item, example, and documentation surface in the stated
    scope. When public-contract coverage is in scope, use the member set supplied
    by the task or its established owner rather than deriving membership. In a
@@ -39,12 +42,18 @@ this compact guide. Otherwise verify only the applicable minimum:
 
 ## End-state exit gate
 
-Write current documentation as the contract expected when the requested work is
+For a working document, handoff, or continuation note, check the
+[working-record completion contract](content-architecture.md#working-documents-and-handoffs):
+the record must be ready to use, with verified state, open work, uncertainty,
+and the next action. Relevant temporary state and pending actions are part of
+that result; unfinished record scaffolding is not.
+
+For product documentation, write the contract expected when the requested work is
 complete. It may temporarily lead the implementation while both are being
 edited, but it must not claim completion until the final code, generated
 artifacts, and documented behavior agree.
 
-Reject a result that requires another edit merely to:
+Reject a product-documentation result that requires another edit merely to:
 
 - replace future tense with the completed contract;
 - remove notes about temporary repository, branch, rollout, or access state;

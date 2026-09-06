@@ -51,8 +51,8 @@ start until the before and after state of each affected block is explicit.
 
 ## Assess overreach and architectural pull
 
-Read the component responsibility, dependencies, consumers, boundary, and
-diagram, then the block relationships, boundary, and logical role. Apply
+Read the component responsibility, semantic dependencies, available consumer
+routes, boundary, and diagram, then the block relationships, boundary, and logical role. Apply
 [structural signals](structural-signals.md) as leads, not permission to redraw
 the chart. A logical role expressible only as a directory name is a particularly
 strong lead that the block lacks semantic identity.
@@ -66,7 +66,7 @@ Architectural pull exists only after evidence establishes a healthier direction:
 - **Chart work** — report code with no place in the chart.
 
 Name the Compass level and parent boundary before judging cohesion or coupling.
-Record current reality separately from the evidence-backed direction, then close
+In the task record, record current reality separately from the evidence-backed direction, then close
 the lead as **legitimate**, **declutter**, or **debt**. Coordinate density may
 open the investigation; only independent cohesion or coupling evidence closes
 it as debt. When the team acts on declutter or debt, capture it in the project

@@ -15,16 +15,13 @@ or file comments.
 ## Audit documentation
 
 1. State the audit mode, boundary, and evidence horizon before collecting
-   evidence. Audit current product documentation against the authorized
-   completed product and distribution contract. Exclude any proposition that
-   an ordinary publish, tag, deploy, propagation, or rollout operation could
-   change without a product or distribution-contract decision, regardless of
-   its source; do not report it as a defect, risk, caveat, prerequisite, route,
-   or untested assumption. Inspect current delivery state only when the user
-   explicitly makes that state the subject. Treat an explicit enduring
-   source-only decision as product truth, and audit historical claims against
-   durable historical evidence. For a change-set audit, inventory every changed
-   item and affected non-inline surface in the stated audit scope. For a
+   evidence. For product documentation, apply the
+   [product evidence boundary](locality-ladder.md#product-evidence-and-topology).
+   For working records, audit verified state, open work, evidence routes, and
+   next actions under the [handoff contract](content-architecture.md#working-documents-and-handoffs),
+   including relevant temporary state. Audit historical claims against durable
+   historical evidence. For a change-set audit, inventory every changed item and
+   affected non-inline surface in the stated audit scope. For a
    completeness audit, inventory every item and relevant non-inline surface in
    that scope. When public-contract coverage is included, use the member set
    supplied by the task or its established owner. When that set is unavailable,
@@ -61,13 +58,13 @@ Report documentation quality with evidence and counts.
 
 | Gate | Pass condition |
 | --- | --- |
-| Currentness | At wrap-up, checked evidence shows no contradiction between the documented finished state and the completed exports, types, defaults, routes, tests, or supported versions in scope. |
+| Currentness | At wrap-up, checked evidence shows no contradiction between the documented state in the surface's time domain and its source evidence; product contracts agree with completed exports, types, defaults, routes, tests, or supported versions in scope. |
 | Casting validity | When the reader, goal, subject, or surface was new or challenged, the recorded casting outcome is supported by entrant, context, decision-right, trust-boundary, and intervention evidence. A non-`PROCEED` outcome was followed instead of being drafted around; a persisted class predicts a material content choice and is not merely a skill, package, page, task, workflow phase, or job title. Any service priority cites an observation source and window or is explicitly labeled as an unmeasured expectation; lower-frequency classes retain a reachable route. |
 | Entry relevance | The document opens with the reader-relevant entry need defined in the reader entry and scan path section of `content-architecture.md` while keeping the governed subject inferable. Every compact chooser or catalog entry names the subject, what it provides, and why the reader would choose it before mechanism. |
 | Selection context and impact | Before methodology, workflow, taxonomy, or components, the intended reader can infer the relevant situation or pressure, affected party or system, observable impact or changed decision, and boundary. A chooser may own this context for compact catalog entries; a standalone subject page and a detailed owning section orient themselves locally. |
 | Public-contract coverage | Every member in the owner-supplied public-contract scope is accounted for by a discoverable canonical source or has an explicit justified exclusion; prose fills only material semantic gaps. |
 | Relationship coverage | Within the stated audit scope, every consumer-visible assertion connecting named subjects that a reader could act on—capability, compatibility, dependency, causation, ordering, or ownership claims—is inventoried by source, relation, target, direction, modality, and condition, then verified against authoritative contracts for both endpoints or an explicit product decision. Record the bound applied and its exclusions. Internal coherence, co-location, and repeated prose are not evidence. |
-| Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. Every retained explanation names the wrong turn, repeated investigation, or unsafe continuation it prevents, and survives subtraction of the cast reader's assumed priors, another subject's speciality, and verified delegated guarantees under [prior and speciality admission](content-architecture.md#prior-and-speciality-admission). When nothing survives that subtraction, deletion or `No document` is the passing result. |
+| Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. Every retained statement serves a named decision, task, or continuation need under the admission gate; exact contracts and explicit teaching needs require no invented unsafe alternative. It survives subtraction of the cast reader's assumed priors, another subject's speciality, and verified delegated guarantees under [prior and speciality admission](content-architecture.md#prior-and-speciality-admission). When nothing survives that subtraction, deletion or `No document` is the passing result. |
 | Surface necessity | The surface passes the [locality ladder's existence and ownership gates](locality-ladder.md#pass-the-existence-and-ownership-gates). |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
 | Remote-truth stability | Non-inline prose that depends on another owner preserves a stable contract or causal edge and its local consequence; it does not narrate remote mechanics that can change independently. |
@@ -81,7 +78,7 @@ Report documentation quality with evidence and counts.
 | Authorial intent and story coherence | Different reader questions remain distinguishable. The finished surface keeps the primary class and episode's reader goal distinct from the established authorial goal and expresses one evidence-backed through-line, intended reader change, proof, boundary, and completion route. Every major section advances that change, supplies necessary proof or boundary, or serves a materially distinct routed goal; incompatible intents are not blended into a committee story. When a task-local contract governed the change, the finished surface agrees with it. |
 | Progressive disclosure | Each surface orients its named reader at its governed scope; detailed facts remain with their established owner and are reached through contextual links when that route is available to the reader. |
 | Navigation health | Links resolve; docs build where supported; essential pages are not orphaned; facts needed to act are not available only through a visual. |
-| Publishable end state | Non-inline documentation represents the completed result and requires no cleanup operation to remove draft scaffolding, temporary caveats, or promises of future completion. |
+| Publishable end state | The document is ready for its intended use without draft scaffolding. Product documentation represents the completed contract; a working record preserves verified current state, relevant pending work, and the next action without claiming that work is complete. |
 
 Record evidence capable of falsifying qualitative judgments. Use a task-local
 table such as:
@@ -100,8 +97,9 @@ For the judgment-heavy gates, record the observation:
   scope.
 - **Topology fit:** each material external consumer, their entry point,
   delivered context, and the route by which orientation reaches them.
-- **Minimum sufficient explanation:** for each retained explanation, the wrong
-  turn, repeated investigation, or unsafe continuation it prevents; for each
+- **Minimum sufficient explanation:** for each retained statement, its decision,
+  lookup, learning, or continuation need, and for rationale the wrong turn or
+  repeated investigation it prevents; for each
   intentional omission, whether visible context, an assumed prior, a verified
   delegated guarantee, or out-of-speciality ownership justifies it.
 - **Level fit:** named reader, that reader's assumed priors, one detail
@@ -158,23 +156,28 @@ every section and public item in that stated scope:
 7. Which established owner holds this fact? If ownership is unresolved, which
    governed scope best fits a placement proposal, and would the current surface
    duplicate or displace another owner?
-8. What material named-reader gap justifies this surface, and which wrong turn,
-   repeated investigation, or unsafe continuation does each retained
-   explanation prevent? If readable code, types, tests, metadata, local
+8. What material named-reader gap justifies this surface, and which decision,
+   task, or continuation need does each retained statement serve? For rationale,
+   which wrong turn or repeated investigation does it prevent? If readable code, types, tests, metadata, local
    context, an existing canonical surface, the cast reader's assumed priors, a
    verified delegated guarantee, or another subject's speciality already covers
    it, should no addition—or a deletion—be the result?
 9. Can the project-defined reader—or the explicit task reader when no durable
    cast exists—find the purpose, primary path, and next detail appropriate to
    their available context and decision?
-10. In the authorized completed delivery, where does the intended reader
+10. For product documentation, in the authorized completed delivery, where does the intended reader
     encounter this document, and which context, paths, credentials, tools, or
     prerequisites does that contract provide? Omit transient delivery-state
     propositions from the answer and report regardless of where they were
-    observed, unless current delivery is the explicit audit subject.
+    observed, unless current delivery is the explicit audit subject. For a
+    working record, use the continuation reader's verified current starting
+    state and retain temporary conditions that change the next action.
 11. If the primary reader path changed, was it checked from its stated starting state, and which assumptions remain untested?
 12. For a procedure, does the heading state the task and does each step give one meaningful action after its necessary location, condition, and warning? For a tutorial, can the reader see its meaningful checkpoints?
-13. Could this state enter its intended review, merge, or publication without editing away a temporary caveat, placeholder, draft marker, or promise about what will happen later?
+13. Is the document ready for its intended use under the end-state gate? For
+    product documentation, remove temporary delivery caveats and completion
+    promises; for working records, preserve relevant open work and next actions
+    while removing unfinished record scaffolding.
 14. What does the entering reader need to care about before mechanism? Does the
     opening lead with that reader-relevant entry need while keeping the
     governed subject inferable?

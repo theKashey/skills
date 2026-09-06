@@ -64,10 +64,11 @@ Coordinates want to bubble up. Annotate at the coarsest level that's still accur
 
 ```
 Package level     // compass: webshop.order-core
-  applies to everything below unless overridden
+  applies to everything below unless overridden — once the block document
+  declares its carrier: `src/order-core/index.ts` covers `src/order-core/`
 
 Folder level      // compass: webshop.order-core.billing-gateway
-  overrides package for this subtree
+  overrides package for this subtree — declared the same way by the component
 
 File level        // compass: webshop.order-core.pricing-engine
   overrides folder for this specific file
@@ -77,7 +78,7 @@ Treat these as laws:
 - Coordinates bubble up, and bubbling stops at the component: one coordinate never stands in for more than one documented component. When a component's files coincide with its block's, that one coordinate is written at component depth.
 - Prefer one coordinate that accurately covers the whole subtree.
 - Use file-level coordinates only when the file's address differs from the enclosing one.
-- Folder/package coordinates are enough when everything in that subtree participates in the same place; exclude tests when they do not.
+- Folder/package coordinates are enough when everything in that subtree participates in the same place; exclude tests when they do not. A marker gains that scope only through the carrier declaration in §Where a Folder-Level Coordinate Lives; on its own it is a file claim.
 
 A folder needs no coordinate of its own when the enclosing one is still accurate for it; when it is not, the folder's files take the file-level exception.
 
@@ -102,7 +103,7 @@ What it must never become is a verdict or an obligation:
 - `repository topology != semantic topology` is the normal condition of a real system, not a backlog. Compass maps that relationship. It never requires maintainers to reshape the implementation until it resembles the chart, and a non-uniform folder is not by itself a debt entry.
 - **Do not manufacture a source boundary solely to make a coordinate coarse.** Coarse attribution is worth reaching for when it also improves the code, and worth nothing when it only tidies the marker.
 
-Close the investigation with two separate statements: **reality** — what grouping and relationship exist at the selected level, with evidence — and **gradient** — the healthier direction that evidence suggests, if any. A legitimate arrangement may yield no move. The gradient is advisory: Compass records it but never requires the implementation to follow it.
+Close the investigation in the task record with two separate statements: **reality** — what grouping and relationship exist at the selected level, with evidence — and **gradient** — the healthier direction that evidence suggests, if any. A legitimate arrangement may yield no move. The gradient is advisory and stays outside the chart; Compass never requires the implementation to follow it.
 
 The gate that keeps both halves honest: a density observation may open an investigation, and only cohesion or coupling evidence at the selected level may close one as debt.
 
@@ -110,7 +111,29 @@ The gate that keeps both halves honest: a density observation may open an invest
 
 ## Where a Folder-Level Coordinate Lives
 
-Where the implementation already has a composition root — an entry point, a root router, a barrel that imports and re-exports a level's parts — that file is the natural carrier for the folder's coordinate, and the first file an agent reads on entering the level.
+Choose an existing source file within the covered subtree as its carrier,
+preferably a composition root such as an entry point, root router, or barrel.
+Declare the carrier and exact subtree together in the addressed document's
+`## Implementation coordinates`, following the inheritance contract in
+[`SKILL.md`](../SKILL.md#shared-contract). For example, these illustrative
+entries in two component documents establish a parent and a narrower scope:
+
+```markdown
+## Implementation coordinates
+
+- `src/orders/index.ts` covers `src/orders/`
+```
+
+```markdown
+## Implementation coordinates
+
+- `src/orders/pricing/rules.ts` covers `src/orders/pricing/`
+```
+
+An unannotated `src/orders/pricing/round.ts` inherits the second document's
+address. An explicit marker for that root in `round.ts` overrides it. A marker
+for another root leaves the first root's inheritance intact. Only the address
+owned by the document declaring a carrier gains that scope.
 
 ```swift
 // compass: webshop.order-core
@@ -121,7 +144,11 @@ import PricingEngine
 import InvoiceRepository
 ```
 
-**Do not create one to satisfy Compass.** Where no such file exists, use folder or file coordinates; a missing composition root is an implementation style, not a chart finding.
+**Do not create a composition root to satisfy Compass.** Another existing source
+file in the subtree can carry the declared scope. When none can carry an
+accurate subtree claim, use file coordinates. An undeclared marker is a file
+claim; a missing declared carrier or conflicting scope declarations are
+remapping findings to record and resolve before claiming inherited coverage.
 
 ---
 

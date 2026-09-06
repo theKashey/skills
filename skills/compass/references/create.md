@@ -48,18 +48,18 @@ Then ask: *would this boundary still make sense after a structure-only refactor?
 
 The two tests above interrogate one entity at a time, and **a decomposition can fail while every member passes.** Run this one over the finished list, at L0 and again at L2, before the level is ratified.
 
-> **Where did this list come from?** Lay the block (or context) names beside the deployables, the packages, and the layers of the stack. If a set pairs off one-to-one with any of those, the cut was read off topology — however many members individually survive the rewrite test.
+> **Where did this list come from?** Lay the block (or context) names beside the deployables, the packages, and the layers of the stack. A one-to-one match opens an investigation into derivation; it does not decide it. Establish whether domain responsibilities justified the cut or packaging supplied the identities.
 
-Individually they will survive. A vault survives a rewrite; a worker survives a rewrite. That is precisely why entity-level tests cannot catch this: the *derivation* is wrong, not the members.
+Entity-level tests cannot establish where the decomposition came from. A repository deliberately organized around ratified domain boundaries may match the chart exactly and pass. A cut supported only by file-tree evidence fails, even if its individual names sound semantic.
 
-**The tell is a residue block.** Once the deployables have taken the block slots, whatever they compose has nowhere left to go, so a container is invented to hold it — and its name is always a category rather than a responsibility: `*-intelligence`, `*-services`, `core`, `shared`, `common`, `platform`. Ask of every name: **would a practitioner say this out loud, unprompted, to another practitioner?** A name nobody says is a name nobody chose; it was computed from what was left over.
+**Look for a residue block.** A category name such as `*-intelligence`, `*-services`, `core`, `shared`, `common`, or `platform` may hold whatever the other blocks did not absorb. Ask what coherent responsibility it owns and whether practitioners recognize it. The name is a lead; domain evidence decides whether it is a real responsibility or a remainder bucket.
 
 Two further shapes of the same failure:
 
-- **A layer promoted to a block.** `foundation`, `platform`, `packages` are positions in a dependency stack. A block carrying one of those names almost certainly holds members answering to different responsibilities — check by asking what each one *refuses*, and watch the answers fail to rhyme.
+- **A layer promoted to a block.** For `foundation`, `platform`, or `packages`, check whether a logical responsibility justifies the boundary independently of its stack position. Compare what its members *refuse*; the label alone cannot disqualify a ratified domain concept.
 - **A one-to-one map onto the language split.** Two blocks because there is a python side and a TypeScript side is a topology cut wearing two hats. One responsibility spanning two languages is the normal condition, not a defect.
 
-**The repair is not renaming.** Redraw from the domain: name the responsibilities first, from `DOMAIN.md` and the product, then ask where each currently lives. Expect *several places, across layers* — that is what a semantic cut looks like from a file tree, and it is why coordinates exist.
+**When derivation is wrong, renaming is not a repair.** Redraw from the domain: name the responsibilities first, from `DOMAIN.md` and the product, then ask where each currently lives. One responsibility may occupy one file or several places across layers. Preserve an already justified cut; record the investigation's evidence and disposition in the task record.
 
 ## Chart Root
 
@@ -210,8 +210,8 @@ Blocks document themselves. Consumers document relationships: when block A uses 
 2. Open that block's `README.md` and confirm the component fits its boundary.
 3. Create `{chart-root}/{root}/{block}/{component-name}/README.md` with its
    stereotype, one-sentence responsibility, bounded context, inputs and
-   outputs, dependencies, consumers, boundary, implementation coordinates, and
-   Mermaid diagram.
+   outputs, semantic dependencies, a reverse-view route when useful, boundary,
+   implementation coordinates, and Mermaid diagram.
 4. Add the component to the parent block's component table and diagram.
 5. If it crosses a block boundary, update the `CONTAINERS.md` table and diagram
    and determine whether a viewport must change.
@@ -231,7 +231,9 @@ This is an L2 semantic change and requires a human decision.
    diagram, and rerun level calibration across its siblings.
 5. Seal the coarsest accurate coordinate, normally one
    `compass: {root}.{block}` on its composition root rather than one per file,
-   plus one per documented component whose files do not coincide with the
+   declared in the block's `## Implementation coordinates` as that carrier
+   covering the subtree (`coordinate-system.md` §Where a Folder-Level
+   Coordinate Lives), plus one per documented component whose files do not coincide with the
    block's; when they coincide, that one coordinate is written at component
    depth so the component is still named.
 6. Update `{root}/README.md` only if the block requires a new L1 external
@@ -336,7 +338,7 @@ and **the identity document of every architectural directory is its
                                 coordinates, communicates-with, components, diagram
       {component}/            ← L3 folder (one per component)
         README.md             ← L3 self-doc: stereotype, context, I/O, depends-on,
-                                used-by, boundary, coordinates, diagram
+                                reverse-view route, boundary, coordinates, diagram
 ```
 
 Three constraints the tree cannot carry: `{root}/README.md` is a black box — actors and external systems only, never internal structure; `DOMAIN.md` carries domain language only, never technology or coordinates; and a demoted external gets no `externals/` doc at all — it lives in the adapter that uses it.
@@ -376,7 +378,7 @@ Violations here are the most common lead/bleed failure mode. Memorise these befo
 - Internal components or adapters (those are L3)
 - SDK names, API version names, endpoint paths, protocol details
 - Internal edges between internals
-- Anything that runs inside the system boundary or is implemented by you
+- Anything that belongs inside the selected logical root's boundary; shared repository or team ownership alone does not place another system inside it
 
 **Two orthogonal tests — apply both. Both must pass for L1; passing only one is not enough.**
 

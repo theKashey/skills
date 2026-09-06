@@ -70,15 +70,16 @@ shrinking. A one-file fix does not want a chart; work that crosses a boundary,
 changes a rule, or asks whether something belongs here does — and building a
 new capability is that work even when it lands in one file, because that is
 the shape duplication takes. Claiming otherwise trains readers to skip it
-entirely. **And it never carries a fact a command can
-answer.** Build graphs, dependency edges, CI configuration, ownership data,
-schemas, test results: where an authoritative machine-readable
-source exists the chart points into it, because a summary of a live source is a
-second copy with no owner and it is wrong from the next commit. Implementation
-coordinates are the deliberate exception and stay authored: they exist so an
+entirely. **And it does not independently maintain machine-owned truth.**
+Build graphs, import and call incidence, CI configuration, ownership data, and schemas stay
+with their authoritative sources; the chart links to them or uses generated
+views with a source route. Semantic relationships remain authored: what crosses
+a boundary and why it matters cannot be recovered from an import alone. A
+diagram may project those relationships without becoming another owner of
+their meaning. Implementation coordinates also stay authored: they exist so an
 agent reaches code without scanning, they are written before any marker is
 sealed, and they name entry points no scan produces. Named-abstraction
-definitions are a second exception: no command can decide what a local
+definitions stay authored too: no command can decide what a local
 design concept means, while its declared incidence remains mechanically
 searchable in source and is never copied into the catalog. Runtime state, task
 memory, and whether the work is correct sit outside the chart entirely — not
@@ -96,8 +97,11 @@ carried, and not pointed into.
   so both L1 tests must pass and anything uncertain goes down a level. The
   rejected alternative, listing every integration at L1, turns the context
   diagram into a dependency inventory instead of a boundary statement.
-- **Consumers own relationships (BEM)**, instead of provider-side lists: a
-  provider cannot know why it is used, and provider-side lists rot silently.
+- **Consumers own relationship decisions (BEM)**: why they depend on a
+  provider, what they rely on, and what would make them leave. Reverse views
+  remain useful for navigation when they link to those consumer-owned entries
+  or are generated from an identified source; an independently maintained
+  provider-side incidence list would create another owner and drift silently.
 - **Coordinates are sealed last (Phase F)**, instead of attribute-as-you-go:
   wiring code to the chart before semantic boundaries stabilize multiplies the
   cost of correcting a boundary that was wrong.
@@ -202,6 +206,9 @@ carried, and not pointed into.
   a fixed literal in every project — never the host repository's own name —
   because the checks that read it are written once, shipped with the skill,
   and match the body without a comment prefix.
+  Inherited scope is explicit in the chart's implementation coordinates:
+  the carrier file and covered subtree are recorded together, because a marker
+  alone cannot distinguish a file claim from a folder or package claim.
 - **Named abstractions are definitions, not an incidence inventory.** An
   optional chart-root `ABSTRACTIONS.md` gives a non-obvious local implementation
   concept a human-readable name, an essential discriminator, and a nearest

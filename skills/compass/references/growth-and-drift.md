@@ -70,9 +70,9 @@ template changes.
 
 ### Phase C — Map Components (L3)
 
-Agent-driven. Use dependency tooling within each block to discover components and their relationships. Map each component to its L0 bounded context and to its current implementation coordinates.
+Agent-driven. Use dependency tooling within each block as implementation evidence, then establish the components' semantic relationships. Map each component to its L0 bounded context and to its current implementation coordinates; keep recoverable import/call incidence with tooling.
 
-Human validates and identifies debt, leaks, and historical anomalies.
+Human validates and identifies debt, leaks, and historical anomalies. Record findings and dispositions in the task record; the chart owns the boundaries and mappings, not a defect register.
 
 Phase C is the first point at which the chart has enough argument to be wrong in ways no structural gate sees. When the L3 checklist passes, run the Blind Semantic Read in [`verification.md`](verification.md#blind-semantic-read) before calling the level done, and again whenever a later phase touches more than one document.
 
@@ -175,7 +175,7 @@ Do not silently pick one. An unratified semantic change repaired as if it were a
 
 **Proactive (agent-driven):**
 - Compare recorded implementation coordinates against the actual filesystem.
-- Compare block "communicates with" entries against the actual import graph.
+- Use imports, events, and runtime interactions as evidence of how block "communicates with" relationships are realized; do not equate semantic edges with imports.
 - Compare L1 external systems against actual network calls, API clients, config references — then re-run both L1 tests on anything new; a dependency is not an admission.
 - `grep -r "compass:"` and validate every address exists in the chart.
 - Re-read the product surface for the rules the chart claims. Structural comparison cannot find a semantic change.

@@ -95,8 +95,9 @@ Assess:
 4. distinction between user intent, current behavior, and mechanical facts;
 5. authorized scope and avoidance of unrelated ritual;
 6. satisfaction of the checkable completion criterion;
-7. reduction in activated information or decision work sufficient to justify
-   recurring context, cognitive cost, and traversal latency.
+7. decision reliability and total reading, retrieval, and execution cost,
+   including recurring context and traversal latency; a context saving does not
+   justify a material loss in the intended choice or completion behavior.
 
 Reference loading, tool use, produced files, and literal instruction compliance
 are evidence only when they contribute to the frozen outcome.

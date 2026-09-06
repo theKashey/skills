@@ -15,13 +15,13 @@ incorrectly.
 ## Law II — Spend the instruction budget
 
 Make every sentence avert a named wrong turn or premature stop. Delete no-ops,
-sediment, duplicated meaning, and context that is merely relevant. Length and
-repetition both consume a bounded attention budget, and so does representation:
-the runtime reader is a model, so prefer the cheapest encoding that still
-carries the decision. Keep a diagram, tree, or aligned block only where its
-geometry carries what prose cannot — a directory hierarchy, a navigation chain.
-A picture of a claim a sentence already makes is decoration billed to every
-activation. Measure that budget over
+sediment, unjustified duplication, and context that is merely relevant. Choose
+the representation that preserves decision reliability at the lowest justified
+reading, retrieval, and execution cost. A diagram, table, local cue, or causal
+explanation can earn its cost even when prose elsewhere expresses the same
+facts; retain it only where it prevents a named error or repeated investigation.
+Keep the complete rule with one canonical owner. Compare representative choices
+when a proposed saving could reduce reliability. Measure the budget over
 the selected flow—`SKILL.md` plus every transitively required reference—not an
 individual file. Moving always-read material behind a pointer is not progressive
 disclosure: it preserves the load and adds traversal. Split when a condition
@@ -63,8 +63,13 @@ framework-provenance records in the handoff.
 ## Law VII — Enforce or delete mechanical rules
 
 Prefer types, lint, formatting, hooks, tests, or CI for enforceable constraints.
-Point to the gate and its exact invocation instead of duplicating its policy in
-prose.
+Before deleting an instruction in favor of a gate, verify the failure it covers,
+that it runs on the affected path, and when it intervenes relative to the
+consequential choice. Point to the gate and its exact invocation; remove policy
+prose whose decision is already protected. Retain the smallest earlier decision
+cue when the gate only detects a mistake after harm or costly rework. An
+available gate without established coverage and timing is not a delegated
+guarantee.
 
 ## Law VIII — Keep every claim falsifiable
 

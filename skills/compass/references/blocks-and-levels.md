@@ -91,7 +91,7 @@ Roots do not need to agree with each other on naming, levels, or boundaries. The
 
 ## BEM Principle (Block–Element–Modifier)
 
-A block describes only itself. A parent defines why it uses a block. Relationship context never lives in the block's self-document — it lives in the consumer.
+A block describes itself and the dependencies it consumes. The consumer owns each dependency decision. Reverse views route to that owner or are generated from an identified source; they do not independently maintain incidence or repeat the consumer's rationale.
 
 ---
 
@@ -126,7 +126,7 @@ An agent reading a chart document should recover its schema from the heading str
 
 - `CONTAINERS.md` block table entries → link to `{block}/README.md`
 - Block "Communicates with" entries → link to a sibling `../other-block/README.md` or `../other-block/{component}/README.md`
-- Component "Depends on" / "Used by" entries → link to `../../other-block/README.md` or a sibling `../other-component/README.md`
+- Component "Depends on" entries → link to `../../other-block/README.md` or a sibling `../other-component/README.md`; reverse views link to the consumer-owned section or their generating source
 - Component "Bounded context" entry → link to that context's heading in `DOMAIN.md`
 - Glossary "Bounded context" entry → link to that context's heading in `DOMAIN.md`
 - `VIEWPORTS.md` participant names → link where possible
@@ -500,7 +500,7 @@ packages or services. Coordinate detail: expected to change.
 ## Communicates with
 
 - → [`{block}`](../{block}/README.md) — {protocol, what crosses}
-- ← [`{block}`](../{block}/README.md) — {protocol, what crosses}
+- ← [`{block}`](../{block}/README.md#uses) — {projection of its consumer-owned relationship}
 
 ## Uses
 
@@ -528,13 +528,13 @@ Implementation coordinates are the agent's entry point. An agent reading a block
 
 **Format:** Mermaid flowchart per block + component documents.
 
-**Contains:** Logical modules within one isolated block. Dependencies between components. Mapping to code paths. Leaks, debt, and boundary violations (honest). Color-coded diagrams (red=leak, yellow=debt).
+**Contains:** Logical modules within one isolated block, their semantic dependencies, and current implementation coordinates. Keep violation, leak, and debt findings and their dispositions in the task's PR, issue, or task record, outside the chart. The chart retains the ratified boundaries and truthful mappings; a finding does not silently change either.
 
 Each L3 component must reference which L0 bounded context it serves. If a component serves two contexts, that's a finding. Bounded contexts have no address — addresses run from the root down — so a component names its context by that context's heading in `DOMAIN.md` and links to it.
 
 L3 is the coordinate layer: it is expected to move, split, and be renamed as the implementation changes, and doing so is not a semantic event.
 
-**Written by:** Agent, validated by human. Use dependency tooling (not file reading) to discover actual relationships. When unavailable, import scanning (grep, build adjacency list manually).
+**Written by:** Agent, validated by human. Use dependency tooling, or import scanning when unavailable, as evidence of implementation incidence. Establish which semantic dependencies those edges realize; an import is neither a semantic relationship nor proof of a violation by itself. Link to tooling for recoverable incidence rather than maintaining a copy.
 
 ### `{component}/README.md` format (L3)
 
@@ -560,11 +560,12 @@ What crosses the boundary.
 
 ## Depends on
 
-- [`{name}`](../{name}/README.md) — {what it relies on}
+- [`{name}`](../{name}/README.md) — {the semantic capability this component relies on}
 
 ## Used by
 
-- [`{name}`](../{name}/README.md) — {what it provides}
+Optional reverse-view route: link to the consumers' owning dependency entries,
+or to a generated/live view and its source. No independent caller inventory.
 
 ## Boundary
 
@@ -577,7 +578,8 @@ Directories, key files, entry functions — e.g. `OrderService.swift`,
 
 ## Diagram
 
-Mermaid: who calls it and what it calls.
+Mermaid: the component's semantic relationships, projected from their owning
+entries. Recoverable import/call incidence stays with tooling.
 ```
 
 Implementation coordinates are the agent's grep targets. An agent reading a component document should be able to open the right file without scanning the codebase.
@@ -656,7 +658,7 @@ The one thing Compass needs from the floor is a closable coordinate gate. A subt
 
 ## Consumer Relationship
 
-When block A uses block B, the relationship is documented in A, never in B. It lives under `## Uses` in A's `README.md`, one `###` per block used:
+When block A uses block B, A owns the relationship decision under `## Uses` in A's `README.md`, one `###` per block used. B may route a reverse view to that entry or use an identified generated/live source; it does not maintain another incidence list or copy A's rationale:
 
 ```markdown
 ## Uses
@@ -677,5 +679,12 @@ Conditions for replacement.
 ```
 
 `## Communicates with` records *that* A and B talk and what crosses; `## Uses` records *why* A accepted the dependency and what would end it. A block that lists a communication with no matching `## Uses` entry has recorded the wire and lost the decision — the L2 gate checks for this.
+
+Author the semantic relationship and its meaning with the consumer. Inbound
+entries and diagrams project those entries with a route to the owner; generated
+reverse views identify their source. Build graphs, imports, calls, schemas,
+and other machine-owned facts remain linked or generated, not independently
+maintained in chart prose. Semantic communication need not match the import
+graph: events or data can cross a boundary without a direct import.
 
 The "why" recorded here is a logical dependency reason and belongs to Compass. A reason that would disappear if the same product were reimplemented belongs to Context Docs instead — see [`ownership-boundary.md`](ownership-boundary.md).

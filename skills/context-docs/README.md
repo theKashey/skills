@@ -2,9 +2,10 @@
 
 Context Docs starts with Chesterton's Fence: do not change or remove an existing
 choice, constraint, boundary, relationship, or structure before understanding
-why it is there. After investigation, it preserves a verified **invisible
-reef**—a non-local cause and material local consequence—and omits the **visible
-cliff**, meaning the reader can already recover safely from current context.
+why it is there. It preserves the minimum verified information a reader needs
+for a decision, task, or continuation. For code-local rationale, that is an
+**invisible reef**—a non-local cause and material local consequence; it omits the
+**visible cliff**, meaning the reader can already recover safely from current context.
 
 Locality is how Context Docs resolves an explanation whose existence, owner,
 scope, or placement is still uncertain. Its compact ladder can support a
@@ -120,9 +121,10 @@ governed subject's speciality boundary, and verified delegated guarantees
 before admitting an explanation, and recruits a shared concept by its precise
 name rather than restating its theory. What survives that subtraction—an exact
 local contract, a deviation from the expected default, a causal edge, a
-boundary—is what earns prose, and only when it averts a wrong turn or a
-repeated investigation that can be named. The subtraction is deliberately
-bounded: it suppresses generic explanation, never exact project truth. A
+boundary—earns prose when it serves a named decision, task, or continuation
+need. Rationale must avert a plausible wrong turn or repeated investigation;
+exact contracts and explicit teaching needs require no invented unsafe
+alternative. The subtraction is deliberately bounded: it suppresses generic explanation, never exact project truth. A
 reference still states its defaults, failures, compatibility limits, and
 security boundaries however sophisticated its reader is, because knowing a
 generic concept is not knowing this repository's contract.
@@ -137,7 +139,10 @@ remains unknown, and the next action. A full reasoning transcript buries those;
 no reasoning residue forces the next reader to repeat the investigation that
 produced them. Context Docs keeps the middle—a reconstructable decision
 trace—and tests it by whether a fresh intended reader can continue without the
-conversation that produced it.
+conversation that produced it. Relevant temporary state and pending actions
+belong in that record because they determine continuation. Product documentation
+instead describes the authorized completed contract: a publication mismatch
+must not redefine the product's supported route.
 
 Those reader classes and their expected frequency belong to the project, not
 the distributed skill. A project can keep its highest-frequency classes on
@@ -148,8 +153,10 @@ not facts, guarantees, or safety boundaries.
 
 For a new or substantially reworked reader-facing surface, the skill spends one
 small alignment move before a full draft: a task-local story contract and the
-smallest opening-and-heading slice that can disconfirm it. This makes an early
-strategic correction cheap while preserving one final documentation review for
+smallest opening-and-heading slice that can disconfirm it through a reader's
+or fresh reviewer's returned interpretation. An author's self-check does not
+establish reader validation; absent observation remains explicit. This makes
+an early strategic correction cheap while preserving one final documentation review for
 the finished artifact. Routine bounded revisions keep the established story and
 avoid that ceremony.
 
@@ -175,9 +182,12 @@ determines how much explanation the reader needs.
 After investigation, an **invisible reef** is the verified non-local cause and
 material consequence that can make an apparently reasonable action unsafe. A
 **visible cliff** is meaning already visible and safely recoverable from the
-reader's local context. Context Docs documents only a verified invisible reef
-or records explicitly accepted uncertainty—using `TODO` or `FIXME` for code—
-and never invents rationale.
+reader's local context. The general admission rule is the minimum verified
+information the reader needs for the intended decision, task, or continuation.
+The invisible-reef test governs code-local rationale; exact reference contracts,
+explicit teaching prerequisites, and continuation facts need not invent an
+unsafe alternative to earn their place. Accepted uncertainty remains explicit—
+using `TODO` or `FIXME` for code—and never becomes invented rationale.
 
 A coding agent may enter through a task, diff, README, public contract, symbol,
 search match, or a handoff left by earlier work, without tacit organizational
@@ -248,7 +258,7 @@ preferred document, or create an unauthorized fallback.
 | [SKILL.md](SKILL.md) | Cross-route contract, compact established-document path, and direct conditional workflow pointers. | A change affects every activation, the routine path, or which deeper workflow loads. |
 | [casting](references/casting.md) | Reader discovery, goal scaffolding, class-frequency evidence, top-`N` service priority, casting outcomes, assumed priors and the representation contract, and durable cast boundaries. | A change affects how a reader, goal, subject, surface, service priority, or assumed base level is challenged before drafting. |
 | [content architecture](references/content-architecture.md) | Deep alignment for authorial intent, story contracts, reader paths, document roles, procedure structure, and progressive disclosure; the prior-and-speciality admission gate, the working-document and handoff contract, and the reconstructable decision trace. | A change affects a new or challenged story, surface role, scan path, multi-reader alignment decision, or what admission keeps before density is chosen. |
-| [locality ladder](references/locality-ladder.md) | Compact existence, ownership, scope, and placement reasoning from a line comment to top-level documentation; the documentation-topology, delivered-versus-reachable, external-consumer, and effective-root definitions. | A change affects unresolved existence, ownership, scope, or placement without overriding an established owner, or how topology is defined. |
+| [locality ladder](references/locality-ladder.md) | Compact existence, ownership, scope, and placement reasoning from a line comment to top-level documentation; product evidence and topology decisions; the delivered-versus-reachable, external-consumer, and effective-root definitions. | A change affects unresolved existence, ownership, scope, or placement without overriding an established owner, or how product evidence and decision-driven topology changes are handled. |
 | [API, JSDoc, and examples](references/api-jsdoc-examples.md) | Public-contract workflow, JSDoc/TSDoc, code-local rationale, and example framing and integrity. | A change affects API semantics, snippets, or code comments. |
 | [review at wrap-up](references/review-documentation-at-wrap-up.md) | One-time minimum completion checks, the compact end-state gate, and the condition for loading the full scorecard. | A change affects routine non-inline completion. |
 | [quality and maintenance](references/quality-maintenance.md) | Audit workflow and evidence, change triggers, and release and drift checks. | A change affects audits, releases, or how documentation quality is assessed or maintained. |
@@ -267,11 +277,12 @@ The skill's durable principles are:
   and consequence that code or the current surface does not reveal; omit
   mechanics and meaning already visible to the reader.
 - **Subtract priors, speciality, and guarantees before admitting prose.** Treat
-  the cast reader's stable knowledge, the contract the governed subject
-  actually owns, and a verified gate's enforcement as context the reader
-  already has. Admit only what remains and averts a named wrong turn or
-  repeated investigation, and recruit a shared concept by name instead of
-  teaching it. The subtraction changes representation and admission; it never
+  the cast reader's stable knowledge, context delivered before action, and a
+  verified gate's enforcement as context the reader already has. Keep the
+  governed subject's exact contract and only material consequences from another
+  subject's internals. Admit what remains for a named decision, task, or
+  continuation need, and recruit a shared concept by name unless teaching it is
+  an explicit reader goal. The subtraction changes representation and admission; it never
   reaches an exact local contract or a required safety boundary.
 - **Orient before mechanism.** State purpose, relevant effect, and boundary at
   the subject's owning scope before internal method or detail.
@@ -306,7 +317,8 @@ The skill's durable principles are:
 - **Treat supplied context as living terrain.** Route readers to the established
   owner before adding local prose. Add only a durable, verified local
   consequence that changes a safe action, and retire it when the reader can
-  recover the same boundary from the established owner.
+  recover the same boundary from the established owner along the actual reader
+  path before acting; mere reachability is not received context.
 - **Prefer a map to a transcript.** Preserve non-obvious constraints,
   interactions, and rationale that protect a real decision the reader cannot
   safely infer; omit visible or inevitable mechanics, callee-owned behavior,
@@ -320,12 +332,13 @@ The skill's durable principles are:
   first, then notice when code, types, an API, or structure could expose it
   directly. Keep the explanation when the significance remains non-local; do
   not treat every documented reef as a mandatory refactor.
-- **Treat documentation as a completed-system claim.** Use present artifacts to
+- **Treat product documentation as a completed-system claim.** Use present artifacts to
   implement and verify the authorized finished contract, not to promote a
   temporary checkout, delivery, or publication mismatch into reader-facing
   content. At wrap-up, verify the claim against the finished code and artifacts,
-  and exercise representative reader paths to expose context gaps. Do not review
-  line, block, or file comments.
+  and exercise representative reader paths to expose context gaps. A working
+  record is complete when another reader can continue from its verified state,
+  including relevant unfinished work. Do not review line, block, or file comments.
 
 The package separates the frequent runtime path from conditional alignment and
 maintenance detail. [Casting](references/casting.md) owns reader selection,

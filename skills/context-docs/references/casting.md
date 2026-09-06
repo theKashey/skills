@@ -222,9 +222,9 @@ Disconfirming readback:
 
 Use the smallest opening-and-heading slice described in
 [content architecture](content-architecture.md#authorial-intent-and-story-contract)
-to test the contract. Classify the readback as expected, disconfirming, mixed,
-or inconclusive. When it disconfirms the plan, return to the earliest wrong
-layer in the goal scaffold; do not preserve the original deliverable by force.
+to test the contract. That procedure owns the observer inputs, outcome
+classification, bounded retry, and unavailable-observer disposition. Follow its
+result rather than preserving the original deliverable by force.
 
 ## Persist only earned cast context
 

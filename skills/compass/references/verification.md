@@ -13,7 +13,7 @@ beyond their exit conditions in [`exploration.md`](exploration.md) and
 
 ## First: the mechanizable checks belong to the host's test suite
 
-**An agent ticking its own checkbox is self-certification, and the items the table below maps need no judgment at all.** They are decidable by a script, they go stale silently, and the moment they live in a checklist they are only as reliable as the attention of whoever last ran it. Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review. They keep their checklist rows all the same — installing the check is ask-first (`create.md` §Boundaries), and before it lands the rows are run by hand like everything else — but once the script is in CI, a green run is the only honest tick:
+**An agent ticking its own checkbox is self-certification, and the items the table below maps need no judgment at all.** Install them in the host's own test suite during Phase B, so they fail a build rather than waiting for a review. Installing the check is ask-first (`create.md` §Boundaries); before it lands, run the rows by hand. Once installed, require a passing suite with valid, dangling, malformed, hidden-source, and unsupported-form/suffix coordinate fixtures, plus scope-carrier, exclusion, and template-heading fixtures; `tests/test_chart_check.py` in the Compass package is the reference suite. A green run covers only the mapped properties:
 
 The manual fallback does not apply to named-abstraction claims: a claim exists
 to be resolved, and nothing resolves it before the check. Before the first
@@ -32,6 +32,7 @@ cannot pass.
 | Decidable by a script | Owning checklist item |
 |---|---|
 | every `compass:` address resolves to a chart document | §Coordinate Verification → Correctness |
+| every declared scope names an existing carrier inside the subtree, with the addressed marker, and same-root carriers at that subtree agree | §Coordinate Verification → Coverage |
 | every supported `compass-abstraction:` marker in the configured source universe is valid and resolves to exactly one definition with the required headings | §Named Abstraction Verification |
 | every path-shaped coordinate in a `## Implementation coordinates` section — backticked, containing `/`, no placeholder — exists on disk | §Coordinate Verification → Staleness |
 | every block folder appears in its root's `CONTAINERS.md`, and every listed block has a folder | §L2 |
@@ -45,23 +46,21 @@ cannot pass.
 
 ````python
 # chart_check.py — decidable chart invariants. Adapt CHART, SRC_SUFFIXES, FIXTURES, and MINIMUM; run it in CI.
-import pathlib, re, sys
+import os, pathlib, re, sys
 CHART = pathlib.Path(".compass")          # the declared chart root
 ABSTRACTIONS = CHART / "ABSTRACTIONS.md"
 FIXTURES = pathlib.Path("tests/fixtures/compass")  # the one path the checker and the raw-hit audit exclude
 SELF = pathlib.Path(__file__).resolve()
-# Include every source suffix allowed to carry `//`, `#`, or `--` markers.
+# Both marker kinds use this source universe. Raw hits outside it fail.
 SRC_SUFFIXES = {".py", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".go", ".rs",
                 ".java", ".rb", ".swift", ".sql"}
 
 fail, seen = [], {"addresses": 0, "abstraction_definitions": 0,
                   "abstraction_markers": 0, "links": 0, "coordinates": 0,
                   "blocks": 0, "diagrams": 0}
-# every line, not just the first: a marker legitimately sits under a comment, a licence
-# header or an import block, and a file may carry a second coordinate for another root
-addr_re = re.compile(r"^\s*(?:#|//|--)\s*compass:\s*(\S+)", re.M)
-abstraction_claim_re = re.compile(
-    r"^[ \t]*(?:#|//|--)[ \t]*compass-abstraction:[ \t]+(.*?)[ \t]*$", re.M)
+raw_marker_re = re.compile(r"compass(?:-abstraction)?:")
+marker_re = re.compile(
+    r"^[ \t]*(?:#|//|--)[ \t]*(compass(?:-abstraction)?):[ \t]+([^\r\n]*?)[ \t]*$", re.M)
 anchors = lambda t: {re.sub(r"[^a-z0-9 -]", "", h.lower()).replace(" ", "-")
                      for h in re.findall(r"^#{1,6} (.+)$", t, re.M)}
 
@@ -93,36 +92,39 @@ if ABSTRACTIONS.exists():
                 fail.append(f"{ABSTRACTIONS}: '{slug}' lacks ### {heading}")
 
 definition_slugs = [slug for slug, _ in entries]
-for p in pathlib.Path(".").rglob("*"):
-    # any dotted directory: .git, .venv, and — the one that bites — a nested git worktree,
-    # which otherwise counts every marker in the repository twice
-    if p.is_dir() or any(x.startswith(".") for x in p.parts[:-1]): continue
-    if "node_modules" in p.parts or p.suffix not in SRC_SUFFIXES: continue
-    source = p.read_text(errors="ignore")
-    for address in addr_re.findall(source):
-        seen["addresses"] += 1
-        if not doc_for(address).exists():
-            fail.append(f"{p}: compass: {address} resolves to nothing")
-
-def inside_nested_worktree(p):
-    return any(parent != pathlib.Path(".") and (parent / ".git").exists()
-               for parent in p.parents)
-
-for p in pathlib.Path(".").rglob("*"):
-    # Unlike coordinate scanning, legitimate hidden source directories such as
-    # .storybook remain in the named-abstraction universe.
-    if p.is_dir() or ".git" in p.parts or "node_modules" in p.parts or ".venv" in p.parts:
-        continue
-    # the declared fixtures and this file spell invalid literals on purpose; nothing else is exempt
-    if p.resolve() == SELF or FIXTURES in p.parents: continue
-    if inside_nested_worktree(p) or p.suffix not in SRC_SUFFIXES: continue
-    source = p.read_text(errors="ignore")
-    for slug in abstraction_claim_re.findall(source):
-        seen["abstraction_markers"] += 1
-        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug):
-            fail.append(f"{p}: invalid compass-abstraction slug '{slug}'")
-        elif definition_slugs.count(slug) != 1:
-            fail.append(f"{p}: compass-abstraction: {slug} does not resolve exactly once")
+source_addresses = {}
+for current, dirs, files in os.walk("."):
+    base = pathlib.Path(current)
+    dirs[:] = [name for name in dirs if name not in {".git", "node_modules", ".venv"}
+               and (base / name).resolve() != FIXTURES.resolve()
+               and not (base / name / ".git").exists()]
+    for name in files:
+        p = base / name
+        if p.resolve() == SELF or not p.is_file(): continue
+        source = p.read_text(errors="ignore")
+        raw_hits = raw_marker_re.findall(source)
+        if not raw_hits: continue
+        # Markdown examples are documentation, not source claims.
+        if p.suffix.lower() == ".md": continue
+        if p.suffix not in SRC_SUFFIXES:
+            fail.append(f"{p}: marker outside SRC_SUFFIXES"); continue
+        claims = marker_re.findall(source)
+        if len(claims) != len(raw_hits):
+            fail.append(f"{p}: unsupported or malformed marker literal")
+        for kind, value in claims:
+            if kind == "compass":
+                seen["addresses"] += 1
+                source_addresses.setdefault(p.resolve(), set()).add(value)
+                if not re.fullmatch(r"[^./\\\s]+(?:\.[^./\\\s]+){0,2}", value):
+                    fail.append(f"{p}: invalid compass address '{value}'")
+                elif not doc_for(value).is_file():
+                    fail.append(f"{p}: compass: {value} resolves to nothing")
+            else:
+                seen["abstraction_markers"] += 1
+                if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", value):
+                    fail.append(f"{p}: invalid compass-abstraction slug '{value}'")
+                elif definition_slugs.count(value) != 1:
+                    fail.append(f"{p}: compass-abstraction: {value} does not resolve exactly once")
 
 for root in (d for d in CHART.iterdir() if d.is_dir() and d.name != "externals"):
     containers = root / "CONTAINERS.md"
@@ -134,6 +136,7 @@ for root in (d for d in CHART.iterdir() if d.is_dir() and d.name != "externals")
     for miss in dirs - listed: fail.append(f"{root.name}: block '{miss}' is not in CONTAINERS.md")
     for miss in listed - dirs: fail.append(f"{root.name}: CONTAINERS.md lists '{miss}', no folder")
 
+scopes = {}
 for md in CHART.rglob("*.md"):
     body = md.read_text()
     for href in re.findall(r"\]\(([^)\s]+)\)", body):
@@ -152,6 +155,22 @@ for md in CHART.rglob("*.md"):
         if "/" not in coord or any(c in coord for c in "<>{}*"): continue
         seen["coordinates"] += 1
         if not pathlib.Path(coord).exists(): fail.append(f"{md}: coordinate {coord} not on disk")
+    coordinate_text = section.group(1) if section else ""
+    declarations = re.findall(r"`([^`]+)` covers `([^`]+)`", coordinate_text)
+    if len(declarations) != len(re.findall(r"`[^`]+` covers", coordinate_text)):
+        fail.append(f"{md}: malformed carrier/subtree declaration")
+    for carrier, subtree in declarations:
+        address = ".".join(md.parent.relative_to(CHART).parts)
+        carrier_path, scope_path = pathlib.Path(carrier), pathlib.Path(subtree)
+        if (md.name != "README.md" or not address or not subtree.endswith("/") or carrier_path.is_absolute()
+                or scope_path.is_absolute() or ".." in carrier_path.parts or ".." in scope_path.parts):
+            fail.append(f"{md}: scope needs an addressed README and repository-relative paths"); continue
+        if not scope_path.is_dir() or scope_path.resolve() not in carrier_path.resolve().parents:
+            fail.append(f"{md}: carrier {carrier} is not inside subtree {subtree}")
+        if address not in source_addresses.get(carrier_path.resolve(), set()):
+            fail.append(f"{md}: carrier {carrier} lacks compass: {address}")
+        key = (scope_path.resolve(), address.split(".")[0])
+        scopes.setdefault(key, {}).setdefault(carrier_path.resolve(), set()).add(address)
     # the five zoom-chain kinds each require a diagram
     zoom = md.name in ("CONTAINERS.md", "VIEWPORTS.md") or (
         md.name == "README.md" and md.parent != CHART)
@@ -185,6 +204,10 @@ for md in CHART.rglob("*.md"):
             if "Type" in h3 and kind not in ("runtime", "domain", "boundary", "lifecycle"):
                 fail.append(f"{md}: viewport '{title}' type '{kind}' is not runtime, domain, boundary, or lifecycle")
 
+for (subtree, root), carriers in scopes.items():
+    if len({frozenset(addresses) for addresses in carriers.values()}) > 1:
+        fail.append(f"{subtree}: conflicting carrier scopes for root {root}")
+
 for name in ("SCOPE.md", "CONTEXT.md", "BLOCK.md", "COMPONENT.md"):
     for p in CHART.rglob(name): fail.append(f"{p}: identity documents are README.md")
 
@@ -212,22 +235,25 @@ For named abstractions, read `abstraction_definitions` and
 nothing about adoption or coverage; it does not mean no implementation uses the
 concept.
 
-The configured suffix set is the checker's marker universe, not a discovery
-claim. Before trusting its count, run this raw-hit audit from the repository
-root and reconcile every result—including documentation examples and
-unsupported source forms—with that universe:
+Both marker kinds share the configured suffix set and exclusions: `.git`,
+`node_modules`, `.venv`, nested worktrees, the one fixture directory, and the
+checker itself. Other hidden directories remain included. The checker rejects
+raw marker literals that it cannot parse or whose suffix is not configured;
+Markdown examples are documentation, not claims. Before trusting its count,
+run this raw-hit audit from the repository root and reconcile every result
+with that universe, including documentation and excluded trees:
 
 ```sh
-rg -n --hidden -F 'compass-abstraction:' -g '!**/.git/**' -g '!**/node_modules/**' -g '!{fixture-path}/**' -g '!{checker-file}' .
+rg -n --hidden -e 'compass:' -e 'compass-abstraction:' -g '!**/.git/**' -g '!**/node_modules/**' -g '!{fixture-path}/**' -g '!{checker-file}' .
 ```
 
 An unmatched raw hit in any source file fails the gate — whether the file's suffix is outside the configured set or the marker's form is one the checker does not parse; a documentation example is reconciled, not failed.
 A source claim outside `SRC_SUFFIXES`, using a comment form other than `//`,
-`#`, or `--`, or missing from `abstraction_markers` is such a hit. Extend
+`#`, or `--`, or missing from its marker count is such a hit. Extend
 the checker and its fixtures before permitting that form; never silently narrow
 "every marker" to what the current regex happened to see.
 
-**What a passing run does and does not establish.** It proves the chart is internally consistent and still points at real code. It proves nothing about whether the boundaries are right, whether a rule the chart records is the rule the product enforces, or whether a name is one a human would use. Those are the rest of this file, and they stay judgment. Never report a green script as verification of the chart.
+**What a passing run does and does not establish.** It establishes only the mechanical properties in the table, within the configured universe. It does not establish complete coordinate coverage, valid semantic relationships, correct boundaries, product-rule conformance, or useful names. Those are the rest of this file, and they stay judgment. Never report a green script as verification of the chart.
 
 ---
 
@@ -254,7 +280,7 @@ Run before declaring Phase A complete.
 - [ ] Every important concept maps to a human-recognizable phenomenon or rule in the product or domain, with the evidence named
 - [ ] No mechanism visible only in code was promoted to a domain concept without a separate semantic justification
 - [ ] `DOMAIN.md` contains no technology, code paths, schemas, API shapes, or implementation coordinates
-- [ ] The context list passes the Derivation Test (`create.md` §The Derivation Test) — contexts mapping ~1:1 onto packages or onto the layer stack were read off the code, whatever their names now say
+- [ ] The context list passes the Derivation Test (`create.md` §The Derivation Test): any one-to-one match with packages or layers was investigated, and domain evidence justifies the decomposition independently of topology; the task record holds the disposition
 - [ ] `GLOSSARY.md` exists and covers every term used architecturally anywhere in this root's chart
 - [ ] Terminology is consistent across `DOMAIN.md`, block documents, and component documents — one concept, one word
 - [ ] Where product and code names differ, the product term is canonical and the code term is recorded as an implementation alias
@@ -288,7 +314,7 @@ For each node in the external systems table, confirm ALL:
 - [ ] Passes User-Possession Test: *"Would the primary actor name this as a top-level tool/service they use?"*
 - [ ] Passes Control Boundary Test: *"If this system stopped running, does this thing still exist and belong to the user/operator?"*
 - [ ] Admitted from product or operator reality — **not** inferred from a dependency manifest, lockfile, or import
-- [ ] Not implemented inside the system (no code root in this repo)
+- [ ] Outside the selected logical root's boundary; another product may share this repository or team and still be external to this root
 - [ ] You are naming the **product/service/store**, not an engine, SDK, API version, or client library
 - [ ] Not a framework, library, runtime, or OS component (engines are never L1; the stores they serve may be)
 - [ ] Would appear in a product description or user-facing documentation
@@ -315,11 +341,10 @@ Run before declaring Phase B complete, and re-run the hook rows after Phase E up
 - [ ] Every block survives the invariance test: its boundary still makes sense after a structure-only refactor
 - [ ] No block exists only because a package, service, or deployable exists — implementation decomposition is not product decomposition
 - [ ] No block was split or merged because deployment topology, framework, or repository layout changed
-- [ ] **The block list passes the Derivation Test** (`create.md` §The Derivation Test): laid beside the deployables, the packages, and the layers of the stack, it pairs off one-to-one with none of them. This is a check on the *set* — every member can pass the rewrite test while the cut was still read off topology
-- [ ] **No residue block.** Every block name is one a practitioner would say out loud, unprompted. A category name (`*-intelligence`, `*-services`, `core`, `shared`, `common`) or a layer name (`foundation`, `platform`, `packages`) means the block was computed from what the other blocks did not absorb
-- [ ] A block list where every block maps to exactly one subtree was investigated as a Derivation Test lead, and the disposition is recorded: a repository deliberately shaped around the ratified boundaries is *legitimate* (with what makes it so); a cut read off the file tree is *derived* (redraw from the domain). The pattern opens the question; only derivation evidence closes it
+- [ ] **The block list passes the Derivation Test** (`create.md` §The Derivation Test): any one-to-one match with deployables, packages, layers, or subtrees was investigated. A repository shaped around ratified domain boundaries is legitimate; a cut justified only by topology is redrawn from domain evidence. Record the evidence and disposition in the task record
+- [ ] **No residue block.** Each block owns a coherent, human-recognized responsibility. Category or layer names (`core`, `shared`, `platform`, and similar) prompted investigation, not automatic rejection; no block exists merely to hold what the others did not absorb
 - [ ] Every external system referenced in L2 is either listed at L1 (passed eligibility) or explicitly marked as "L3 adapter" in the block doc
-- [ ] No component is documented as a block (if it maps to a single file or a single class, it's L3)
+- [ ] Each block meets L2's semantic admission criteria and sibling scale; a single-file or single-class implementation neither establishes nor disqualifies a block
 - [ ] No circular block dependencies (A → B → A)
 - [ ] Every block boundary statement says what it does NOT do (missing boundary = incomplete), and is no longer than 2 sentences
 - [ ] Every outbound (`→`) communicates-with entry has a matching `## Uses` entry in the same block, carrying why, relied capabilities, and replacement conditions — the wire without the decision is an incomplete block document; entry presence is script-owned (§First), the three answers are not
@@ -350,12 +375,12 @@ Run at each level after its documents exist, and again whenever a sibling set ch
 
 Run before declaring Phase C complete.
 
-- [ ] Every component has: stereotype, responsibility (1 sentence), bounded context, I/O, depends-on, used-by, boundary, implementation coordinates — heading presence is script-owned (§First); the checkbox covers the content
+- [ ] Every component has: stereotype, responsibility (1 sentence), bounded context, I/O, semantic dependencies, boundary, implementation coordinates — heading presence is script-owned (§First); the checkbox covers the content. Any reverse view links to consumer-owned entries or an identified generated/live source rather than maintaining another caller inventory
 - [ ] No component names two L0 bounded contexts (if it does → boundary finding, flag it)
 - [ ] Every implementation coordinate exists on disk (`grep` or `ls` to confirm)
 - [ ] Every component is owned by exactly one block (it lives in one block folder); callers from other blocks are consumption, not ownership — 3+ consuming blocks is a shared-library smell: demote to L5 or split, or record why it stays
 - [ ] No component's depends-on list reaches 4+ entries from different blocks or external systems without a recorded justification — that is boundary pressure: an integration hub, a missing facade, or a hidden block
-- [ ] Mermaid diagram exists and matches depends-on/used-by entries
+- [ ] Mermaid diagram exists and projects the owning semantic relationship entries; machine-owned import/call incidence stays linked or generated
 - [ ] Components are listed in their parent block's component table
 
 ---
@@ -368,6 +393,7 @@ Run before declaring Phase F complete on any block, and whenever the implementat
 - [ ] Every code file in the block is **covered** by a coordinate — its own, or the nearest enclosing folder/package one — or is a test that does not participate in the place its enclosing coordinate names, or is recorded as L5 infrastructure in the block's component table
 - [ ] Every L5 entry in the component table names what it is (formatter, logger, config loader, generic UI, shared types); a bare `L5` with no name is an un-attributed component wearing an exemption
 - [ ] Every component documented in the block is named by at least one coordinate in code (chart → code); a block sealed only at block level leaves its components unwired
+- [ ] Every inherited scope has a carrier/subtree declaration in the addressed document's implementation coordinates and resolves under `SKILL.md` §Shared contract; no coverage is inferred from a carrier's filename, and missing or conflicting carriers remain unresolved remapping findings
 
 ### Correctness
 - [ ] Every coordinate address exists as a place in the chart (`grep -r "compass:" {source root}` → validate each address; the marker is the comment body, so match it without a language-specific comment prefix)
@@ -383,7 +409,7 @@ Run before declaring Phase F complete on any block, and whenever the implementat
 ### Staleness
 - [ ] Stale coordinates are classified as **implementation remapping** and repaired by updating coordinates — not by editing L0–L2 semantics
 - [ ] A coordinate pointing to a place absent from the chart was investigated (unratified semantic change, or a marker written against a place that never existed) before the comment was deleted
-- [ ] Every coordinate-density observation — several coordinates in one folder, a file carrying two coordinates in one root, a file resisting every enclosing coordinate — names the observed Compass level and parent boundary, then carries a recorded disposition: *declutter* (with the useful move), *legitimate* (with what makes it so and no required move), or *debt* (with independent cohesion or coupling evidence at that level and the healthier direction it suggests). An observation with no disposition is an unclosed lead; one that blends levels or calls the coordinate pattern itself debt is an unearned verdict. Both fail this item
+- [ ] Every coordinate-density observation — several coordinates in one folder, a file carrying two coordinates in one root, a file resisting every enclosing coordinate — names the observed Compass level and parent boundary, then carries a disposition in the task record: *declutter* (with the useful move), *legitimate* (with what makes it so and no required move), or *debt* (with independent cohesion or coupling evidence at that level and the healthier direction it suggests). An observation with no disposition is an unclosed lead; one that blends levels or calls the coordinate pattern itself debt is an unearned verdict. Both fail this item
 
 ---
 
@@ -395,6 +421,7 @@ Run over any chart document carrying nontrivial rationale, and over implementati
 - [ ] For each piece of implementation documentation that repeats chart semantics: *does Compass already canonically own this truth?* If yes, reduce it to the smallest local consequence plus a coordinate route
 - [ ] No mechanism-specific Chesterton's Fence (queue semantics, retry placement, ordering guarantees, framework quirks) appears in L0–L2 prose
 - [ ] No complete semantic explanation is reproduced at both a chart location and an implementation site. When both a chart location and an implementation site carry the same reason, the rewrite test decides which keeps it: a reason that survives a full implementation rewrite stays in the chart; a reason that constrains only the current implementation stays with the code or its Context Docs owner.
+- [ ] The chart retains semantic boundaries and current mappings; violation/debt findings, dispositions, and correctness status stay in task records, not chart prose or diagram verdict colors
 
 ---
 
@@ -468,7 +495,7 @@ Run periodically (after any significant code change, or at state 3 maintenance c
 
 1. Pick 5 random source files per block. For each: is it covered by a coordinate? Does that address exist in the chart? Can you navigate component → block → root in ≤2 hops?
 2. Pick 3 random component documents — do their implementation coordinates still exist on disk? Classify every miss as remapping before touching anything semantic.
-3. Pick 1 block document — does its communicates-with list match actual imports?
+3. Pick 1 block document — do current imports, events, or other interactions realize its semantic communicates-with relationships? Investigate disagreement; a semantic edge need not be an import edge.
 4. Pick 2 rules or invariants the chart records and check them against the product's current behaviour. This is the only check that finds a semantic change, and no structural comparison substitutes for it.
 5. Pick 3 glossary terms — is each still the word humans use, and are the recorded aliases still the words in code?
 6. Check `VIEWPORTS.md` — at most 3–4 active viewports, each still answering its named question with a diagram that describes reality. A chart that skipped L4 has no `VIEWPORTS.md` and no link to one; that passes.

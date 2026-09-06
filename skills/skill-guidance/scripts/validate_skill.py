@@ -3,12 +3,14 @@
 
 Checks only mechanically decidable properties: frontmatter contract including
 the single-sentence description, text encoding, forbidden artifacts, local
-link and heading-anchor closure, README runtime exclusion, literal network
-references in runtime files, and parent-directory escapes in scripts and
-structured data. Semantic questions -- whether prose creates an external
-dependency, whether a network mention is load-bearing -- belong to the audit
-route, not this gate. PASS therefore claims exactly what was checked and
-nothing more.
+link and heading-anchor closure, README runtime exclusion, network commands,
+and parent-directory escapes in scripts and structured data. Literal network
+references produce REVIEW findings, not dependency errors: whether a mention
+is load-bearing belongs to the audit route. PASS establishes only mechanical
+validity. Exit 1 means mechanical failure; exit 2 means unresolved REVIEW
+findings, even if mechanical checks pass; exit 0 means neither was found.
+Semantic network isolation remains UNVALIDATED until the audit resolves every
+REVIEW finding.
 """
 
 from __future__ import annotations
@@ -179,8 +181,9 @@ def heading_slugs(text: str) -> set[str]:
     return slugs
 
 
-def network_errors(relative: Path, text: str) -> list[str]:
+def network_findings(relative: Path, text: str) -> tuple[list[str], list[str]]:
     errors: list[str] = []
+    reviews: list[str] = []
     suffix = relative.suffix.lower()
     for number, line in enumerate(text.splitlines(), start=1):
         if suffix in {".svg", ".xml", ".html"} and "xmlns" in line:
@@ -188,10 +191,10 @@ def network_errors(relative: Path, text: str) -> list[str]:
         if suffix in {".json", ".yaml", ".yml"} and SCHEMA_LINE_RE.search(line):
             continue
         if REMOTE_URL_RE.search(line) or SCP_REMOTE_RE.search(line):
-            errors.append(f"{relative}:{number}: literal network reference in runtime file")
-        elif suffix in COMMAND_SURFACES and NETWORK_COMMAND_RE.search(line):
+            reviews.append(f"{relative}:{number}: network reference requires semantic isolation review")
+        if suffix in COMMAND_SURFACES and NETWORK_COMMAND_RE.search(line):
             errors.append(f"{relative}:{number}: network command in runtime file")
-    return errors
+    return errors, reviews
 
 
 def escape_errors(relative: Path, path: Path, root: Path, text: str) -> list[str]:
@@ -233,18 +236,19 @@ def fenced_shell_escape_errors(relative: Path, path: Path, root: Path, text: str
     return errors
 
 
-def validate_skill(skill_root: Path) -> list[str]:
+def validate_skill(skill_root: Path) -> tuple[list[str], list[str]]:
     if skill_root.is_symlink():
-        return [f"{skill_root}: package root must not be a symlink"]
+        return [f"{skill_root}: package root must not be a symlink"], []
     root = skill_root.resolve()
     skill_file = root / "SKILL.md"
     if not skill_file.is_file():
-        return [f"{skill_root}: missing SKILL.md"]
+        return [f"{skill_root}: missing SKILL.md"], []
 
     errors: list[str] = []
+    reviews: list[str] = []
     text, decode_error = decode_text(skill_file)
     if decode_error or text is None:
-        return [f"{skill_file}: {decode_error or 'unreadable'}"]
+        return [f"{skill_file}: {decode_error or 'unreadable'}"], []
     name, description = parse_frontmatter(text)
     if not name or not NAME_RE.fullmatch(name):
         errors.append(f"{skill_file}: invalid or missing frontmatter name")
@@ -338,12 +342,14 @@ def validate_skill(skill_root: Path) -> list[str]:
 
     for relative, content in texts.items():
         if relative in runtime:
-            errors.extend(network_errors(relative, content))
+            network_errors, network_reviews = network_findings(relative, content)
+            errors.extend(network_errors)
+            reviews.extend(network_reviews)
         if relative.suffix.lower() in ESCAPE_SCAN_SUFFIXES:
             errors.extend(escape_errors(relative, root / relative, root, content))
         elif relative.suffix.lower() == ".md":
             errors.extend(fenced_shell_escape_errors(relative, root / relative, root, content))
-    return errors
+    return errors, reviews
 
 
 def run_self_test() -> tuple[list[str], int]:
@@ -367,16 +373,18 @@ def run_self_test() -> tuple[list[str], int]:
                 target.write_text(content, encoding="utf-8")
             return package
 
-        def expect(label, package, ok, contains=""):
+        def expect(label, package, ok, contains="", *, review=False):
             nonlocal count
             count += 1
-            result = validate_skill(package)
+            result, reviews = validate_skill(package)
             if ok and result:
                 failures.append(f"{label} rejected: {result[0]}")
             elif not ok and not result:
                 failures.append(f"{label} accepted")
             elif not ok and contains and not any(contains in e for e in result):
                 failures.append(f"{label} wrong reason: {result[0]}")
+            if bool(reviews) != review:
+                failures.append(f"{label}: expected semantic review={review}, got {reviews}")
 
         expect("valid package", make("valid-skill", "Use only bundled material."), True)
         expect("overlong description", make("overlong", "Body.", "x" * 241), False, "exceeds")
@@ -405,8 +413,17 @@ def run_self_test() -> tuple[list[str], int]:
         expect("inline-code link", make("inline", "Literal: `[a](m.md)` and ``[b](g.md)``."), True)
         expect("runtime README", make("readme-rt", "Read [notes](README.md).", files=[
             ("README.md", "Maintainer notes.\n")]), False, "runtime dependency")
-        expect("runtime URL", make("rt-url", f"Fetch {url}example.invalid/x first."),
-            False, "literal network reference")
+        expect("network prerequisite requires review", make("rt-url",
+            f"Fetch {url}example.invalid/x first."), True, review=True)
+        expect("offline URL data requires classification", make("url-data",
+            f"Classify `{url}example.invalid/a` as an HTTPS URL using the string alone."),
+            True, review=True)
+        expect("remote runtime link requires review", make("rt-link",
+            f"Read [required instructions]({url}example.invalid/instructions)."),
+            True, review=True)
+        expect("network command with URL", make("net-url",
+            f"Run `curl {url}example.invalid/x` first."),
+            False, "network command", review=True)
         expect("non-runtime URL", make("rd-url", "Use only bundled material.", files=[
             ("README.md", f"Background: {url}example.invalid/paper.\n")]), True)
         expect("network command", make("net-cmd", "Run `pip install requests` first."),
@@ -440,6 +457,7 @@ def main() -> int:
     args = parser.parse_args()
 
     errors: list[str] = []
+    reviews: list[str] = []
     if args.self_test:
         failures, count = run_self_test()
         if failures:
@@ -448,15 +466,20 @@ def main() -> int:
             print(f"PASS validator self-test: {count} cases")
     if args.skill:
         target = args.skill.resolve()
-        errors.extend(validate_skill(target))
+        package_errors, reviews = validate_skill(target)
+        errors.extend(package_errors)
         if not errors:
             files = sum(1 for p in target.rglob("*") if p.is_file())
-            print(f"PASS {target.name}: {files} files, mechanical checks and runtime isolation")
+            print(f"PASS {target.name}: {files} files, mechanical checks")
+        for review in reviews:
+            print(f"REVIEW {review}")
+        if reviews:
+            print("UNVALIDATED semantic network isolation: resolve REVIEW findings in the audit")
     elif not args.self_test:
         parser.error("provide a skill directory or --self-test")
     for error in errors:
         print(f"ERROR {error}", file=sys.stderr)
-    return 1 if errors else 0
+    return 1 if errors else 2 if reviews else 0
 
 
 if __name__ == "__main__":

@@ -19,18 +19,10 @@ reader's context. When no material gap remains, add nothing.
   its current form and record accepted uncertainty instead of inventing a
   rationale. Recovering the reason does not by itself justify prose; the reader
   must still have a material gap.
-- Freeze the authorized completed product and distribution contract before
-  gathering evidence. Treat an observation as transient delivery state when an
-  ordinary publish, tag, deploy, propagation, or rollout operation could change
-  it without a product or distribution-contract decision. Exclude that
-  proposition from evidence, reasoning, findings, risks, caveats,
-  prerequisites, and route selection regardless of whether it appears in
-  repository prose, manifests, metadata, tags, history, a registry, or a
-  deployment. Inspect it only when the user explicitly makes current delivery
-  state the subject. An explicit decision that the completed product remains
-  source-only is an enduring boundary, not transient state. Keep former
-  behavior in changelogs, migration guides, or release documentation, and
-  verify historical claims with durable historical evidence.
+- For product documentation, describe the authorized completed contract; temporary
+  delivery state does not redefine it. Working records instead preserve verified
+  current state, pending work, and uncertainty needed to continue. Keep historical
+  claims in their historical domain and verify them with durable evidence.
 - Rank upstream sources by what they can establish. PRDs, product contracts,
   RFCs, ADRs, and plans are strong evidence of intent, non-goals, constraints,
   and rationale; code, exported types, tests, and generated artifacts outrank
@@ -41,18 +33,10 @@ reader's context. When no material gap remains, add nothing.
   only while later decisions preserve its material reader, distribution,
   scope, and product assumptions; a decision that breaks one re-opens exactly
   the consequences it created, never the validated intent itself.
-- Documentation topology follows authorized product and distribution
-  decisions, not repository structure. On a surface serving an external
-  consumer—a reader who receives the subject across a distribution or team
-  boundary, whether an anonymous adopter or a sibling team—treat the
-  established topology as revoked when such a decision changes the consumer
-  population, an entry point, the delivery boundary, what remains reachable,
-  or a consumer-facing contract: return to the route table's casting row with
-  the post-decision consumer set and record the per-consumer delta. Registry,
-  tag, or deployment state alone never fires this trigger; only a product or
-  distribution-contract decision can. Line, block, and file comments never
-  enter this check, nor does an orientation surface whose every material
-  reader receives the repository itself.
+- When product or distribution decisions may change an external consumer's
+  context, apply [product evidence and topology](references/locality-ladder.md#product-evidence-and-topology)
+  before keeping the established route. Delivery state alone does not trigger
+  recasting; code comments and repository-only orientation do not enter it.
 - Follow the environment's established owner and submission route. Locality can
   explain or propose a fit; it cannot authorize a surface, displace an owner,
   or widen the requested topology or mutation scope.
@@ -70,37 +54,23 @@ reader's context. When no material gap remains, add nothing.
 - Make a selective map, not an implementation transcript. Preserve invisible
   causes, relationships, contracts, and boundaries that change a decision;
   omit visible mechanics and facts the reader can safely recover.
-- Subtract priors and speciality before admitting prose. Casting supplies the
-  assumed priors—stable general knowledge, named concepts, and ordinary tool
-  or platform competence the cast reader brings; the governed subject supplies
-  the speciality—the contracts, choices, guarantees, boundaries, and failure
-  modes it owns or intentionally exposes, never every technology it uses
-  internally. Subtract those, the visible or reachable context, and any
-  verified delegated guarantee—an underlying abstraction or executable gate
-  that already prevents the wrong action here. Keep only the remaining exact
-  local contract, deviation, causal edge, boundary, or continuation
-  breadcrumb; admit an out-of-speciality fact only where it leaks across the
-  abstraction boundary with a material local consequence, then route to its
-  owner. Recruit a shared concept by its precise name instead of restating its
-  theory, and add a local consequence only when the name does not select the
-  action. Being true or relevant is not admission: every retained explanation
-  averts a named wrong turn, repeated investigation, or unsafe continuation.
-- Choose explanation density only for what admission already kept: Guided when
-  the surface is responsible for teaching unfamiliar terms and prerequisites,
-  Balanced for a mixed or unspecified audience, and Compressed for a known
-  expert or model. Density changes representation, never verified facts,
-  guarantees, or safety boundaries. Never compress away required defaults,
-  failures, security boundaries, setup, or public contracts, and never expand a
-  prior the cast reader already holds.
-- Keep reader contracts distinct. A technical README orients its technical
-  reader, a documentation home supports navigation and lookup, a public
-  presentation page serves a verified browser-visitor decision or action, and a
-  working document, implementation handoff, or continuation note leaves a
-  reconstructable decision trace—verified local facts, decisions and their
-  causal edges, evidence routes, still-plausible rejected alternatives,
-  unresolved questions, and the next action—for whoever resumes the work. Read
-  a request to preserve a chain of thought as a request for that trace, not a
-  verbatim or exhaustive thought transcript.
+- Admit the minimum verified information the reader needs for the decision,
+  task, or continuation. Subtract assumed general knowledge, facts actually
+  encountered before action, and verified guarantees that already prevent the
+  wrong action. A merely reachable source is not received context. Keep exact
+  local contracts, defaults, failures, setup, and safety boundaries; another
+  subject's internal details earn only a material local consequence and route.
+  Recruit shared concepts by name. Teach prerequisites only when the surface's
+  reader and authorial goal require it.
+- Choose Guided for an explicit teaching responsibility, Balanced for a mixed or
+  unspecified reader, and Compressed for a known expert or model. Density changes
+  representation, never facts or guarantees; do not re-teach established priors.
+- Preserve the established reader contract: technical orientation, documentation
+  navigation, browser-visitor action, or a working record's reconstructable
+  decision trace. For an unresolved role or continuation contract, use
+  [content architecture](references/content-architecture.md). A decision trace
+  keeps facts, reasons, evidence routes, live alternatives, unknowns, and next
+  actions; it is not an exhaustive thought transcript.
 - For a new, substantially reworked, or challenged story, test the supplied
   reader, goal, subject, and surface before drafting. A bounded revision with an
   explicit, unchallenged story keeps that contract.
@@ -151,8 +121,8 @@ take the named conditional path.
    decision, subtracting the cast's assumed priors, the governed subject's
    speciality boundary, and any verified delegated guarantee before drafting.
    Use the established owner and topology; on an external-consumer surface,
-   first check the topology-revocation trigger in the cross-route contract and
-   return to the route table's casting row when it fires. If the reader can
+   apply the conditional product-evidence and topology rule above; return to
+   casting when a decision revokes the topology. If the reader can
    already act safely, add nothing; if the owner cannot be updated, return a
    proposal for that owner instead of creating a fallback.
 3. Preserve the established through-line. Write the minimum missing purpose,
