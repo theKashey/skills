@@ -15,10 +15,16 @@ python3 "{compass-skill}/scripts/compass_search.py" \
 
 The helper reads live Markdown and writes no index or cache. Results carry a
 chart-relative file, heading ancestry, line-numbered bounded excerpt, and match
-signal. Exact identifiers and headings precede other results. BM25 reranks
-inside each direct-match tier and may add lexically related sections; its score
-is not confidence, semantic similarity, proof of relevance, typo recovery, or
-a completeness claim.
+signal. A dotted address resolves to the identity section of the document its
+segments name and precedes every other tier; then a chart heading, entity slug,
+or identifier matched by the query or a phrase inside it (`term=` shows which
+phrase); then a section whose own heading contains the query; then literal
+text. When query words match no heading, slug, or identifier, a line before
+the results lists them as named nowhere — a vocabulary lead, not a miss. An address that resolves to no
+document is noted on stderr as a finding to classify. BM25 reranks inside each
+direct-match tier and may add lexically related sections; its score is not
+confidence, semantic similarity, proof of relevance, typo recovery, or a
+completeness claim.
 
 Use `--literal-only` when related candidates would be noise. The default bound
 is 10 sections and 48 Markdown lines from each owning section; `--limit` and

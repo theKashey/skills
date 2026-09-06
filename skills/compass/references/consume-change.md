@@ -28,7 +28,9 @@ that end-to-end impact. Count logical boundaries, not files or directories.
 3. Classify every disagreement before proposing a fix:
    - moved file, extracted service, or framework swap → **implementation remapping**
    - changed rule or responsibility → **semantic change** requiring ratification
-   - code crossing a ratified boundary → **implementation violation**
+   - the executable implementation contradicts ratified Compass semantics →
+     **implementation violation**; which side is wrong is decided in Create,
+     so record the class and stop (`SKILL.md` §Choose exactly one flow)
 
 Direct store access around an owning interface, reaching into another block's
 internals, and one component serving two bounded contexts are common boundary

@@ -17,7 +17,7 @@ Phase F   — Seal coordinates
 
 ### Phase 0 — Scope + Compass
 
-The human declares scope and the chart root. If the organization already keeps a compass, register there; otherwise create a local `COMPASS.md` with its tiers empty.
+The human declares scope and the chart root. The root is declared by writing it into the host's agent instructions (`AGENTS.md`, `CLAUDE.md`, or equivalent) — the file `SKILL.md` reads it from and the file Phase B's usage hook joins; a root that lives only in the conversation is not declared, and `create.md` §Chart Root then asks rather than inventing one. If the organization already keeps a compass, register there; otherwise create a local `COMPASS.md` with its tiers empty.
 
 **Roots are not ratified here.** Root admission needs product and domain evidence, and Root Verification explicitly refuses file-tree evidence — which is all Phase 0 has. Candidate roots are named on the scratchpad during Phase 0.5, brought to the state-0 human checkpoint with their five admission answers, and ratified there. Only then does a root get its `COMPASS.md` row and its `{root}/` directory, whose `README.md` is written in Phase B.
 
@@ -45,8 +45,13 @@ Run level calibration ([`exploration.md`](exploration.md#level-calibration)) bef
 
 Phase B is done only when the root, L1, and L2 checklists in [`verification.md`](verification.md) pass, including the Cut Loose Ends protocol after every L1 pass. When unsure about an external system, leave it at L3 and document the uncertainty — do NOT elevate by default.
 
-**Close Phase B by installing the usage hook.** A chart that agents are not
-routed to does not exist. Copy the four-line block from
+**Close Phase B by installing the chart check and the usage hook.** A chart
+that agents are not routed to does not exist, and a chart no build checks is
+verified by whoever last read a checklist. Install the chart check from
+[`verification.md` §First](verification.md#first-the-mechanizable-checks-belong-to-the-hosts-test-suite)
+into the host's test suite, ask-first; the `MINIMUM` rule and the recorded
+alternative to installing are the L2 row that checks it (`verification.md`
+§L2). Copy the four-line block from
 [agent-hook.md](agent-hook.md) into the host's agent instructions (`AGENTS.md`,
 `CLAUDE.md`, or equivalent—the file that declares the chart root). Substitute
 the installed Compass skill and declared chart-root paths, then let the human
@@ -86,6 +91,16 @@ Triggered by events, not by schedule:
 - Restructuring (move, split, extract, merge, framework or language swap) → remap coordinates; semantics stand
 - New external system → update L1/L2, may create a state-0 pocket for that block
 - Product rule change → semantic change; may need ratification even when no file moved
+- A Consume task recorded a classified finding in its PR, issue, or task record
+  (`SKILL.md` §Choose exactly one flow) → that record is this Create task's
+  entry; respond per the class, never inside the Consume task that found it
+- The installed chart check failed → classify each failure before repairing it
+  (§Classifying Disagreement); a marker at an absent address is handled by
+  `verification.md` §Staleness, not deleted to turn the build green
+- Compass release changed a document format in
+  [`blocks-and-levels.md`](blocks-and-levels.md) — seen when a level checklist
+  or a re-installed chart check fails a document written to the older form →
+  rewrite that document to the current template, ask-first; its semantics stand
 - Compass release changed [the usage-hook template](agent-hook.md) — seen when
   Create compares it with the hook beside the chart root → update the installed
   block ask-first, then re-run the L2 hook rows (`verification.md` §L2)

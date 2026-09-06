@@ -72,14 +72,14 @@ The chart lives in one directory the host project declares in its agent instruct
 | L- | Compass | Registry of roots and externals | semantic | org changes | ≤100w/entry |
 | L0 | Domain | Bounded contexts, aggregates, context map. No tech. | semantic | years | ≤500w/context |
 | L1 | System Context | Actors + external systems. Human-ratified. | semantic | quarters | ≤400w + diagram |
-| L2 | Isolated Blocks | Major internal blocks. Tech enters here. | semantic identity, coordinate detail | months | ≤300w + diagram + component table |
+| L2 | Isolated Blocks | Major internal blocks. Tech enters here. | semantic identity, coordinate detail | months | ≤300w self-doc + diagram + component table; ≤80w per `## Uses` entry |
 | L3 | Components | Logical modules mapped to code paths. | coordinate | weeks | ≤200w |
 | L4 | Viewports | Cross-cutting flows. 3–4 active max. | either | weeks | ≤500w/viewport |
 | L5 | Infrastructure | Shared code. Not documented. | — | — | — |
 
 **Kind decides who may change a thing and what evidence is required.** Semantic identity (L0–L2) must pass the rewrite test and follows the human ratification path. Coordinates (an L2 block's technology and implementation coordinates, all of L3, every `compass:` marker) are expected to churn as the implementation changes; an agent may remap them without a semantic ratification.
 
-**The budget keeps a document to its identity: one responsibility and one boundary, stated once.** It is neither decoration nor a target. When a definition and its budget collide, the budget wins and the excess moves — to a sibling or child entity through level calibration, to `GLOSSARY.md` when it is vocabulary, or to the code and its Context Docs owner when it is implementation rationale (`ownership-boundary.md`). The tells that a budget was ignored rather than met: bold used for emphasis rather than to mark a glossary term, a block boundary that runs past the two-sentence limit, and chart reasoning copied into a source file.
+**The budget keeps a document to its identity: one responsibility and one boundary, stated once.** It is neither decoration nor a target. When a definition and its budget collide, the budget wins and the excess moves — to a sibling or child entity through level calibration, to `GLOSSARY.md` when it is vocabulary, or to the code and its Context Docs owner when it is implementation rationale (`ownership-boundary.md`). The tells that a budget was ignored rather than met: bold used for emphasis rather than to mark a glossary term, a block boundary that runs past the two-sentence limit, and chart reasoning copied into a source file. The L2 count covers the self-description, `## Responsibility` through `## Communicates with`; `## Uses` entries and the component table sit outside it, each `## Uses` entry within its own 80 words — an entry that outgrows its three questions is carrying implementation rationale that belongs with the code (`ownership-boundary.md`), not a reason to raise the budget.
 
 The zoom vocabulary is Simon Brown's C4 model — read context/container/component with that prior — bent at both ends. Deltas: L0 (DDD's strategic layer) sits below the stack; L2 "isolated blocks" **are** C4 containers, and the file layout keeps C4's name (`CONTAINERS.md`); C4's Level 4 (code diagrams) is replaced by viewports — code diagrams rot fastest, so the chart stops at L3 and wires to code by coordinates instead; L- and L5 bracket the stack, above and below C4's reach. C4 supplies notation and zoom vocabulary; it does not define Compass's source of truth. Re-evaluate any C4-derived rule that conflicts with semantic orientation.
 
@@ -301,7 +301,7 @@ Three things are outside the chart entirely, and saying so keeps them from being
 - **0** — Scope + chart root + compass registration
 - **0.5** — Explore (state 0 loop) → scratchpad; roots proposed, then ratified at the state-0 checkpoint, never before there is evidence
 - **A** — Establish domain (L0 + `GLOSSARY.md`), human-checkpointed
-- **B** — Frame system (L1 + L2); closes by installing the human-approved usage hook into the host's agent instructions
+- **B** — Frame system (L1 + L2); closes by installing the human-approved chart check into the host's test suite, or recording the human's decline, and the usage hook into the host's agent instructions
 - **C** — Map components (L3), agent-driven
 - **D** — Define viewports (L4, if needed)
 - **E** — Maintain: re-run exploration on diffs, classify disagreement

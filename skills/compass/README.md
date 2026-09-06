@@ -143,7 +143,9 @@ carried, and not pointed into.
   parsing punctuation; headings put it in the Markdown AST where both agents
   and rendering already look.
 - **Hybrid lookup reads the live chart**, instead of generating an index or
-  claiming semantic search. Exact headings and identifiers stay deterministic;
+  claiming semantic search. An address resolves to its directory's identity
+  document, and exact headings, entity slugs, and identifiers stay
+  deterministic, matched by the query or a phrase inside it;
   BM25 only reranks within direct-match tiers and adds lexically related
   sections, improving the chance that task language finds different chart
   wording. It creates no cache or duplicate owner, and its score is not
@@ -256,7 +258,7 @@ agents then follow it is outside the skill's evaluation boundary.
 | [references/consume-investigation.md](references/consume-investigation.md) | Conditional code-rationale, component, and cross-block investigation paths |
 | [references/consume-change.md](references/consume-change.md) | Conditional estimation, review, refactor, overreach, and architectural-pull paths |
 | [references/consume-named-abstractions.md](references/consume-named-abstractions.md) | Read-only interpretation of existing named-abstraction definitions and claims |
-| [scripts/compass_search.py](scripts/compass_search.py) | Live, read-only structured lookup over a host-declared chart root, with deterministic exact tiers and optional BM25-related candidates |
+| [scripts/compass_search.py](scripts/compass_search.py) | Live, read-only structured lookup over a host-declared chart root, with deterministic address, exact, heading, and literal tiers and optional BM25-related candidates |
 | [references/agent-hook.md](references/agent-hook.md) | Canonical four-line search-and-consult block copied into host agent instructions after human approval |
 | [references/structural-signals.md](references/structural-signals.md) | Shared read-only warning signs for level contamination and overreach; both flows may consult it without importing the other's procedure |
 | [references/exploration.md](references/exploration.md) | The orient→scan→probe→adjust loop, triangulation and evidence sources, per-state procedures and exits, level calibration, scratchpad format |

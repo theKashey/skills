@@ -63,7 +63,7 @@ similarity cluster, or a group that becomes useful only after adding occurrence
 lists, relationships, flows, or `used-by` data. Leave it unnamed rather than
 weakening the gate.
 
-A named abstraction does not change the existing L3 `stereotype` field. A
+A named abstraction does not change a component's existing `## Stereotype`. A
 stereotype classifies a component's broad architectural role; a named
 abstraction identifies a narrower project-specific implementation design.
 

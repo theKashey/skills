@@ -24,6 +24,8 @@ Unambiguous without context. An agent or human reading `webshop.order-core.billi
 
 An address is a place, not a file. Two different files may sit at one address; one file may sit at addresses in two different roots. Neither fact is a defect.
 
+The chart document for an address is the identity document of the directory its segments name: `webshop.order-core.billing-gateway` is described at `{chart-root}/webshop/order-core/billing-gateway/README.md`. The search helper and the chart check both resolve an address this way, so an address whose directory is absent is the case §Coordinate Validation investigates.
+
 ---
 
 ## Coordinates

@@ -541,7 +541,9 @@ L3 is the coordinate layer: it is expected to move, split, and be renamed as the
 ```markdown
 # {Component}
 
-«service» | «entity» | «repository» | «handler» | «gateway» | «factory»
+## Stereotype
+
+«service» | «entity» | «repository» | «handler» | «gateway» | «factory» — one
 
 ## Responsibility
 
@@ -605,7 +607,9 @@ All of a root's viewports live in one `VIEWPORTS.md`, one `##` per viewport, nam
 
 ## {question the viewport answers}
 
-Type: runtime | domain | boundary | lifecycle
+### Type
+
+runtime | domain | boundary | lifecycle — one
 
 ### Question
 

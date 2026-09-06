@@ -16,9 +16,12 @@ python3 "{compass-skill}/scripts/compass_search.py" \
   --chart-root "{chart-root}" "{task terms}"
 ```
 
-Read exact, heading, and literal matches first. Treat BM25-related matches as
-leads, not semantic proof. Consult the matched owning sections, then traverse
-the implicated branch through every chart level present:
+Read address, exact, heading, and literal matches first. Treat BM25-related
+matches as leads, not semantic proof. The `Named nowhere in the chart` line
+lists the task words no chart heading, slug, or identifier names: re-search
+with the glossary's own terms before reading the gap as missing content. Consult the matched owning sections, then traverse the implicated
+branch — the root, block, and component the matches name — through every
+chart level present:
 
 ```text
 {chart-root}/README.md → COMPASS.md → {root}/README.md

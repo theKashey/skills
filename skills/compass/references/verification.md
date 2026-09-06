@@ -37,6 +37,10 @@ cannot pass.
 | every block folder appears in its root's `CONTAINERS.md`, and every listed block has a folder | §L2 |
 | every relative link and heading anchor inside the chart resolves | §Markdown and Navigation |
 | every zoom-chain document carries a Mermaid fence | §Markdown and Navigation |
+| every block and component `README.md` carries the headings its template requires | §L2, §L3 |
+| every outbound (`→`) communicates-with entry names a block with a `###` entry under `## Uses` | §L2 |
+| every block `README.md` carries a component table | §L2 |
+| every viewport in `VIEWPORTS.md` carries `### Type`, `### Question`, `### Participants`, `### Diagram`, and `### Seams`, and its type is `runtime`, `domain`, `boundary`, or `lifecycle` | §Markdown and Navigation |
 | no forbidden filename (`SCOPE.md`, `CONTEXT.md`, `BLOCK.md`, `COMPONENT.md`) exists under the chart root | §Markdown and Navigation |
 
 ````python
@@ -155,6 +159,31 @@ for md in CHART.rglob("*.md"):
         seen["diagrams"] += 1
         if not re.search(r"^ {0,3}```\s*mermaid", body, re.M):
             fail.append(f"{md}: no mermaid diagram")
+    # template headings (blocks-and-levels.md): depth below CHART says which README this is
+    depth = len(md.relative_to(CHART).parts) - 1 if md.name == "README.md" else 0
+    h2 = re.findall(r"^## (.+?)\s*$", body, re.M)
+    for heading in {2: ["Responsibility", "Logical role", "Boundary", "Technology",
+                        "Implementation coordinates", "Communicates with", "Uses",
+                        "Components", "Diagram"],
+                    3: ["Stereotype", "Responsibility", "Bounded context", "Inputs and outputs", "Depends on",
+                        "Used by", "Boundary", "Implementation coordinates", "Diagram"]}.get(depth, []):
+        if heading not in h2: fail.append(f"{md}: missing ## {heading}")
+    if depth == 2:                         # the wire (→) needs its decision (### under ## Uses)
+        part = lambda name: (re.search(rf"^## {name}\n(.*?)(?=^## |\Z)", body, re.S | re.M) or [None, ""])[1]
+        decided = set(re.findall(r"^### \[[^\]]+\]\(\.\./([^/)]+)/", part("Uses"), re.M))
+        for target in re.findall(r"^\s*-\s*→.*?\]\(\.\./([^/)]+)/", part("Communicates with"), re.M):
+            if target not in decided: fail.append(f"{md}: → {target} has no ### entry under ## Uses")
+        if not re.search(r"^\|.*\|\s*$", part("Components"), re.M):
+            fail.append(f"{md}: no component table")
+    if md.name == "VIEWPORTS.md":         # one ## per viewport, each with its ### sections and one legal type
+        for title, text in re.findall(r"^## (.+?)\s*\n(.*?)(?=^## |\Z)", body, re.S | re.M):
+            h3 = re.findall(r"^### (.+?)\s*$", text, re.M)
+            for heading in ["Type", "Question", "Participants", "Diagram", "Seams"]:
+                if heading not in h3: fail.append(f"{md}: viewport '{title}' missing ### {heading}")
+            value = re.search(r"^### Type\s*\n(.*?)(?=^### |\Z)", text, re.S | re.M)
+            kind = (value.group(1).split() or [""])[0] if value else ""
+            if "Type" in h3 and kind not in ("runtime", "domain", "boundary", "lifecycle"):
+                fail.append(f"{md}: viewport '{title}' type '{kind}' is not runtime, domain, boundary, or lifecycle")
 
 for name in ("SCOPE.md", "CONTEXT.md", "BLOCK.md", "COMPONENT.md"):
     for p in CHART.rglob(name): fail.append(f"{p}: identity documents are README.md")
@@ -168,6 +197,10 @@ MINIMUM = {"blocks": 0, "diagrams": 0, "links": 0, "coordinates": 0, "abstractio
 for k, minimum in MINIMUM.items():
     if seen[k] < minimum:
         fail.append(f"{k}: {seen[k]} scanned, minimum is {minimum} — the check stopped looking")
+if fail:  # route the failure, not only report it
+    fail.append("Classify each failure before repairing it: Compass Create, growth-and-drift.md "
+                "§Classifying Disagreement. A coordinate that resolves to nothing is investigated "
+                "rather than deleting the comment.")
 print("\n".join(fail) or "chart: clean — " + ", ".join(f"{v} {k}" for k, v in seen.items()))
 sys.exit(1 if fail else 0)
 ````
@@ -277,7 +310,7 @@ For each node in the external systems table, confirm ALL:
 
 Run before declaring Phase B complete, and re-run the hook rows after Phase E updates the hook (`growth-and-drift.md` §Phase E).
 
-- [ ] Every block has: name, responsibility (1 sentence), logical role, boundary statement, technology, implementation coordinates, communicates-with list
+- [ ] Every block has: name, responsibility (1 sentence), logical role, boundary statement, technology, implementation coordinates, communicates-with list — heading presence is script-owned (§First); the checkbox covers the content
 - [ ] Every block's **logical role** maps upward to a stable responsibility or phenomenon of the root, and is stated without naming a directory, package, or technology
 - [ ] Every block survives the invariance test: its boundary still makes sense after a structure-only refactor
 - [ ] No block exists only because a package, service, or deployable exists — implementation decomposition is not product decomposition
@@ -289,14 +322,15 @@ Run before declaring Phase B complete, and re-run the hook rows after Phase E up
 - [ ] No component is documented as a block (if it maps to a single file or a single class, it's L3)
 - [ ] No circular block dependencies (A → B → A)
 - [ ] Every block boundary statement says what it does NOT do (missing boundary = incomplete), and is no longer than 2 sentences
-- [ ] Every outbound (`→`) communicates-with entry has a matching `## Uses` entry in the same block, carrying why, relied capabilities, and replacement conditions — the wire without the decision is an incomplete block document
+- [ ] Every outbound (`→`) communicates-with entry has a matching `## Uses` entry in the same block, carrying why, relied capabilities, and replacement conditions — the wire without the decision is an incomplete block document; entry presence is script-owned (§First), the three answers are not
 - [ ] No block's communicates-with list exceeds 5 entries without a recorded justification — the block is a candidate for doing too much
 - [ ] Block diagram exists and reflects all communicates-with entries
 - [ ] `CONTAINERS.md` exists, carries a wiring diagram, and lists every block folder
 - [ ] The host's agent instructions carry the current [usage-hook template](agent-hook.md), with the installed Compass skill and declared chart-root paths substituted and human-approved — a chart no agent is routed to does not exist
 - [ ] The hook says **when** to read the chart, not that it precedes all code work — an unconditional claim is disbelieved after the third one-line fix, and then it is skipped for the change that needed it
 - [ ] The hook carries the template's non-local trigger, live search command, matched-section consultation, BM25 boundary, and local-work exclusion; equivalent host wording is allowed, but an older or incomplete contract fails until Phase E updates it, ask-first
-- [ ] Every block's component table is present
+- [ ] The chart check (§First) is installed in the host's test suite with `MINIMUM` set by the rule under its fence (§First), or the human's decline is recorded in the task's PR, issue, or task record — a Phase B closed with an all-zero minimum is green over a chart it never scanned
+- [ ] Every block's component table is present (script-owned, §First)
 
 ---
 
@@ -316,7 +350,7 @@ Run at each level after its documents exist, and again whenever a sibling set ch
 
 Run before declaring Phase C complete.
 
-- [ ] Every component has: stereotype, responsibility (1 sentence), bounded context, I/O, depends-on, used-by, boundary, implementation coordinates
+- [ ] Every component has: stereotype, responsibility (1 sentence), bounded context, I/O, depends-on, used-by, boundary, implementation coordinates — heading presence is script-owned (§First); the checkbox covers the content
 - [ ] No component names two L0 bounded contexts (if it does → boundary finding, flag it)
 - [ ] Every implementation coordinate exists on disk (`grep` or `ls` to confirm)
 - [ ] Every component is owned by exactly one block (it lives in one block folder); callers from other blocks are consumption, not ownership — 3+ consuming blocks is a shared-library smell: demote to L5 or split, or record why it stays
@@ -401,7 +435,7 @@ Run at each level, over every document written so far.
 - [ ] Every relative link resolves — including glossary → `DOMAIN.md` anchors and component → context anchors
 - [ ] Opening each zoom-level directory on GitHub renders a landing page that answers *where am I?*
 - [ ] Every zoom-chain document carries its required Mermaid diagram
-- [ ] `VIEWPORTS.md`, where it exists, carries one `##` per viewport named for its question, and every root README linking to it has one to link to
+- [ ] `VIEWPORTS.md`, where it exists, carries one `##` per viewport named for its question, each with its five `###` sections and a `### Type` naming one of the four viewport types (section presence and type value are script-owned, §First), and every root README linking to it has one to link to
 
 ---
 
@@ -409,7 +443,7 @@ Run at each level, over every document written so far.
 
 Run when the L3 checklist passes (Phase C), before calling the level done, and again after any later phase that touched more than one document. Every other checklist in this file measures the container — headings, links, coordinates, symmetry — and all of them pass on a chart that is well-formed and untrue. This one reads the arguments.
 
-The reader is blind: a fresh agent context holding only `{chart-root}` and this list — no authoring session, no exploration scratchpad, no code. An author re-reading their own chart is not a blind read; the author sees what was meant. When no such context can be launched, stop there and report, as with any missing checkpoint. Record every finding in the task's own record and classify it (`growth-and-drift.md` §Classifying Disagreement) before changing anything. A contradiction between two chart pages has no code side to classify against: the page that owns the claim (`create.md` §Kind decides) keeps it, the other page is reduced to a link, and a correction that changes what a ratified level says goes back through that level's checklist.
+The reader is blind: a fresh agent context holding only `{chart-root}` and this list — no authoring session, no exploration scratchpad, no code. An author re-reading their own chart is not a blind read; the author sees what was meant. When no such context can be launched, stop there and report, as with any missing checkpoint. Record every finding in the task's own record and classify it (`growth-and-drift.md` §Classifying Disagreement) before changing anything. A contradiction between two chart pages has no code side to classify against: the page that owns the claim (`create.md` §Quick Reference: Levels, *Kind decides*) keeps it, the other page is reduced to a link, and a correction that changes what a ratified level says goes back through that level's checklist.
 
 - [ ] No glossary entry contradicts the document that defines its concept, and no term carries two meanings inside one bounded context
 - [ ] No singular claim — *the one invariant*, *the only failure this system does not tolerate* — is made about more than one entity

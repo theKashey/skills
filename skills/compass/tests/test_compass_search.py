@@ -326,6 +326,77 @@ class CompassSearchTest(unittest.TestCase):
         self.assertEqual(no_match.returncode, 1)
 
 
+    def test_address_resolves_to_its_directory_without_a_literal(self) -> None:
+        self.write(
+            "shop/checkout/purchase-entry/README.md",
+            """
+            # Purchase entry
+
+            ## Responsibility
+
+            Accept a purchase request.
+            """,
+        )
+        result = self.run_search("--literal-only", "shop.checkout.purchase-entry")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        first = result.stdout.index("[1] ")
+        self.assertIn("shop/checkout/purchase-entry/README.md", result.stdout[first:].split("\n")[0])
+        self.assertIn("signal=address", result.stdout)
+
+    def test_unresolved_address_is_routed_to_classification(self) -> None:
+        result = self.run_search("--literal-only", "shop.nowhere.thing")
+        self.assertIn("shop.nowhere.thing resolves to no chart document", result.stderr)
+        self.assertIn("classification finding", result.stderr)
+
+    def test_entity_owner_precedes_its_consumers(self) -> None:
+        self.write(
+            "shop/fulfillment/README.md",
+            """
+            # Fulfillment
+
+            ## Communicates with
+
+            - ← [`checkout`](../checkout/README.md) — paid orders arrive here
+            """,
+        )
+        result = self.run_search("--literal-only", "checkout")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertLess(
+            result.stdout.index("shop/checkout/README.md"),
+            result.stdout.index("shop/fulfillment/README.md"),
+        )
+        first = next(line for line in result.stdout.splitlines() if "signal=" in line)
+        self.assertIn("signal=exact", first)
+
+    def test_heading_tier_reads_the_section_heading_not_its_ancestry(self) -> None:
+        self.write(
+            "NOTES.md",
+            """
+            # Order Core
+
+            ## Billing
+
+            Settles invoices.
+
+            ## Order lifecycle
+
+            From draft to fulfilled.
+            """,
+        )
+        result = self.run_search("--kind", "other", "--literal-only", "Order")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("heading=Order Core > Order lifecycle", result.stdout)
+        self.assertNotIn("heading=Order Core > Billing", result.stdout)
+
+    def test_task_phrase_matches_the_glossary_term_inside_it(self) -> None:
+        result = self.run_search("--literal-only", "move a workspace between accounts")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("signal=exact term='workspace'", result.stdout)
+        self.assertIn("A customer's isolated collaboration area.", result.stdout)
+        named_nowhere = result.stdout.split("Named nowhere in the chart:")[1].split("\n")[0]
+        self.assertIn("move", named_nowhere)
+
+
 class CompassPackageContractTest(unittest.TestCase):
     def test_agent_hook_is_a_four_line_search_contract(self) -> None:
         hook = PACKAGE_ROOT / "references" / "agent-hook.md"
