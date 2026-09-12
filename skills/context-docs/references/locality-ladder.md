@@ -55,11 +55,11 @@ enter it, nor does orientation whose every material reader receives the reposito
    every use. A fact the reader already holds as a prior, or that an executable
    gate already enforces, does not become a local gap by being absent from
    repository prose.
-4. Determine the governed subject's speciality from the contract it owns or
-   intentionally exposes, never from the technologies it depends on internally.
-   A fact outside that speciality earns local prose only where it leaks across
-   the abstraction boundary with a material local consequence; keep the
-   smallest consequence here and route the rest to the external owner.
+4. A fact outside the governed subject's speciality—the boundary that [prior
+   and speciality admission](content-architecture.md#prior-and-speciality-admission)
+   defines—earns local prose only where it leaks across the abstraction
+   boundary with a material local consequence; keep the smallest consequence
+   here and route the rest to the external owner.
 5. Follow the established owner. If it cannot be updated, return a placement
    proposal for that owner instead of inventing a fallback record.
 6. For line, block, or file comments, first apply the [selective-context

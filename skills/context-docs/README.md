@@ -187,7 +187,8 @@ information the reader needs for the intended decision, task, or continuation.
 The invisible-reef test governs code-local rationale; exact reference contracts,
 explicit teaching prerequisites, and continuation facts need not invent an
 unsafe alternative to earn their place. Accepted uncertainty remains explicit—
-using `TODO` or `FIXME` for code—and never becomes invented rationale.
+using `TODO` or `FIXME` for code and the completion report's untested
+assumptions or remaining risks for prose—and never becomes invented rationale.
 
 A coding agent may enter through a task, diff, README, public contract, symbol,
 search match, or a handoff left by earlier work, without tacit organizational
@@ -255,14 +256,14 @@ preferred document, or create an unauthorized fallback.
 
 | File | Owns | Change it when |
 | --- | --- | --- |
-| [SKILL.md](SKILL.md) | Cross-route contract, compact established-document path, and direct conditional workflow pointers. | A change affects every activation, the routine path, or which deeper workflow loads. |
+| [SKILL.md](SKILL.md) | Cross-route contract, grouped into the rules every route keeps and the rules only non-inline surfaces keep; the compact established-document path; and direct conditional workflow pointers. | A change affects every activation, the routine path, or which deeper workflow loads. |
 | [casting](references/casting.md) | Reader discovery, goal scaffolding, class-frequency evidence, top-`N` service priority, casting outcomes, assumed priors and the representation contract, and durable cast boundaries. | A change affects how a reader, goal, subject, surface, service priority, or assumed base level is challenged before drafting. |
 | [content architecture](references/content-architecture.md) | Deep alignment for authorial intent, story contracts, reader paths, document roles, procedure structure, and progressive disclosure; the prior-and-speciality admission gate, the working-document and handoff contract, and the reconstructable decision trace. | A change affects a new or challenged story, surface role, scan path, multi-reader alignment decision, or what admission keeps before density is chosen. |
 | [locality ladder](references/locality-ladder.md) | Compact existence, ownership, scope, and placement reasoning from a line comment to top-level documentation; product evidence and topology decisions; the delivered-versus-reachable, external-consumer, and effective-root definitions. | A change affects unresolved existence, ownership, scope, or placement without overriding an established owner, or how product evidence and decision-driven topology changes are handled. |
 | [public contracts](references/public-contracts.md) | Public-contract workflow and checklist, public JSDoc/TSDoc and its route to the page that owns the rest, and example framing and integrity. | A change affects API or configuration semantics, public symbol documentation, or snippets. |
 | [code comments](references/code-comments.md) | Line, block, and file comment admission: the selective-context authoring decision and the Chesterton's Fence test. | A change affects when code-local rationale is written or refused. |
 | [review at wrap-up](references/review-documentation-at-wrap-up.md) | One-time minimum completion checks, the compact end-state gate, and the condition for loading the full scorecard. | A change affects routine non-inline completion. |
-| [quality and maintenance](references/quality-maintenance.md) | Audit workflow and evidence, change triggers, and release and drift checks. | A change affects audits, releases, or how documentation quality is assessed or maintained. |
+| [quality and maintenance](references/quality-maintenance.md) | Audit workflow and evidence, change triggers, the historical-surface contract for changelogs and migration guides, and release and drift checks. | A change affects audits, releases, or how documentation quality is assessed or maintained. |
 
 Keep each behavior in one canonical owner. Link to it from other files rather
 than restating it with slightly different wording.
@@ -354,16 +355,16 @@ wrap-up](references/review-documentation-at-wrap-up.md) owns routine completion;
 and [quality and maintenance](references/quality-maintenance.md) owns audits,
 release evidence, and drift checks.
 
-This split keeps an established-document edit on the compact runtime and
-wrap-up path. It exposes content architecture, locality, casting, specialist
-contract guidance, and comprehensive audit doctrine only when the choice they
-own becomes live. Public-contract work and code-comment work are separated for
-the same reason: a comment decision loads the admission gate alone, and a
-reference task reaches that gate only when the sample it is preparing carries
-comments. It also keeps technical
-READMEs, public documentation homes, and product presentation pages distinct
-because they serve different readers and entry contexts. Diátaxis supplies a
-reader-question vocabulary, not a required file tree.
+This split keeps an established-document edit, and a handoff whose resume
+reader is explicit, on the compact runtime and wrap-up path. It exposes content
+architecture, locality, casting, specialist contract guidance, and
+comprehensive audit doctrine only when the choice they own becomes live.
+Public-contract work and code-comment work are separated for the same reason: a
+comment decision loads the admission gate alone, and a reference task reaches
+that gate only when the sample it is preparing carries comments. It also keeps
+technical READMEs, public documentation homes, and product presentation pages
+distinct because they serve different readers and entry contexts. Diátaxis
+supplies a reader-question vocabulary, not a required file tree.
 
 ## Boundaries
 

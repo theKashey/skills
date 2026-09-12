@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Enforce repository-wide skill isolation with the bundled package validator.
 
-Also compares text a package deliberately shares with another package. Each
-skill installs alone, so shared runtime text cannot be factored out; only a
-repository-level comparison can catch one copy drifting into a paraphrase of
-the other.
+Also compares text a package deliberately shares with another package, and
+inline phrases a package deliberately repeats across its own files. Each
+skill installs alone, so shared runtime text cannot be factored out, and a
+SKILL.md that must execute without loading its references has to carry some
+definitions verbatim; only a comparison can catch one copy drifting into a
+paraphrase of the other.
 """
 
 from __future__ import annotations
@@ -32,6 +34,35 @@ SHARED_BLOCKS = (
         "marker": "From the candidate alone, infer:",
         "canonical": "read-the-terrain/SKILL.md",
         "copies": ("retrospective/SKILL.md",),
+    },
+)
+
+# Inline prose that one package deliberately carries word-for-word in several
+# of its own files. Whitespace is normalized before matching because Markdown
+# reflows lines. Each file listed must contain the phrase exactly once, and no
+# other file in the package may contain it, so a copy cannot appear or vanish
+# unnoticed. Only prose that is genuinely duplicated belongs here: where a file
+# links to the owning reference instead of restating it, there is no second
+# copy to compare and no entry to declare.
+SHARED_PHRASES = (
+    {
+        "label": "context-docs assumed priors",
+        "phrase": "stable general knowledge, named concepts, and ordinary tool "
+        "or platform competence",
+        "files": (
+            "context-docs/references/casting.md",
+            "context-docs/references/content-architecture.md",
+        ),
+    },
+    {
+        "label": "context-docs JSDoc overlay",
+        "phrase": "JSDoc on an established public-contract symbol remains a "
+        "public-contract surface",
+        "files": (
+            "context-docs/SKILL.md",
+            "context-docs/references/quality-maintenance.md",
+            "context-docs/references/review-documentation-at-wrap-up.md",
+        ),
     },
 )
 
@@ -111,6 +142,38 @@ def shared_block_errors(packages: list[Path]) -> list[str]:
     return errors
 
 
+def shared_phrase_errors(packages: list[Path]) -> list[str]:
+    errors: list[str] = []
+    for spec in SHARED_PHRASES:
+        label, phrase = spec["label"], " ".join(spec["phrase"].split())
+        package_name = spec["files"][0].split("/", 1)[0]
+        declared = set(spec["files"])
+        counts: dict[str, int] = {}
+        for package in packages:
+            if package.name != package_name:
+                continue
+            for path in sorted(package.rglob("*.md")):
+                relative = path.relative_to(SKILLS_ROOT).as_posix()
+                try:
+                    text = " ".join(path.read_text(encoding="utf-8").split())
+                except (OSError, UnicodeDecodeError):
+                    continue
+                counts[relative] = text.count(phrase)
+        for relative in sorted(declared):
+            found = counts.get(relative, 0)
+            if found != 1:
+                errors.append(
+                    f"shared phrase {label!r}: expected exactly one copy in "
+                    f"{relative}, found {found}"
+                )
+        for relative, found in sorted(counts.items()):
+            if found and relative not in declared:
+                errors.append(
+                    f"shared phrase {label!r}: undeclared copy in {relative}"
+                )
+    return errors
+
+
 def main() -> int:
     packages = [
         path
@@ -156,7 +219,7 @@ def main() -> int:
             return 1
 
     print("phase: shared-block identity", flush=True)
-    block_errors = shared_block_errors(packages)
+    block_errors = shared_block_errors(packages) + shared_phrase_errors(packages)
     if block_errors:
         for error in block_errors:
             print(f"ERROR {error}", file=sys.stderr)
@@ -192,9 +255,13 @@ def main() -> int:
     blocks = f"{len(SHARED_BLOCKS)} shared block"
     if len(SHARED_BLOCKS) != 1:
         blocks += "s"
+    phrases = f"{len(SHARED_PHRASES)} shared phrase"
+    if len(SHARED_PHRASES) != 1:
+        phrases += "s"
     print(
         f"PASS {len(packages)} licensed, structurally isolated skill packages, "
-        f"{blocks} compared across packages, and one-package copy checks"
+        f"{blocks} compared across packages, {phrases} compared within a "
+        "package, and one-package copy checks"
     )
     return 0
 

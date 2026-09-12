@@ -64,7 +64,7 @@ Report documentation quality with evidence and counts.
 | Selection context and impact | Before methodology, workflow, taxonomy, or components, the intended reader can infer the relevant situation or pressure, affected party or system, observable impact or changed decision, and boundary. A chooser may own this context for compact catalog entries; a standalone subject page and a detailed owning section orient themselves locally. |
 | Public-contract coverage | Every member in the owner-supplied public-contract scope is accounted for by a discoverable canonical source or has an explicit justified exclusion; prose fills only material semantic gaps. |
 | Relationship coverage | Within the stated audit scope, every consumer-visible assertion connecting named subjects that a reader could act on—capability, compatibility, dependency, causation, ordering, or ownership claims—is inventoried by source, relation, target, direction, modality, and condition, then verified against authoritative contracts for both endpoints or an explicit product decision. Record the bound applied and its exclusions. Internal coherence, co-location, and repeated prose are not evidence. |
-| Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. Every retained statement serves a named decision, task, or continuation need under the admission gate; exact contracts and explicit teaching needs require no invented unsafe alternative. It survives subtraction of the cast reader's assumed priors, another subject's speciality, and verified delegated guarantees under [prior and speciality admission](content-architecture.md#prior-and-speciality-admission). When nothing survives that subtraction, deletion or `No document` is the passing result. |
+| Minimum sufficient explanation | Each unit in scope gives its intended reader the relevance, behavior, evidence, and boundaries needed to act or decide safely; do not force irrelevant detail into a low-risk entry. Every retained statement serves a named decision, task, or continuation need under the admission gate; exact contracts and explicit teaching needs require no invented unsafe alternative. It survives subtraction of the cast reader's assumed priors, another subject's speciality, and verified delegated guarantees under [prior and speciality admission](content-architecture.md#prior-and-speciality-admission). When nothing survives that subtraction, `No document` is the passing result, and so is deletion of prose whose purpose was investigated and found to avert nothing. |
 | Surface necessity | The surface passes the [locality ladder's existence and ownership gates](locality-ladder.md#pass-the-existence-and-ownership-gates). |
 | Claim evidence | Evaluative or comparative claims have adjacent, interpretable evidence and measurement conditions; otherwise they state observable behavior without unsupported adjectives. |
 | Remote-truth stability | Non-inline prose that depends on another owner preserves a stable contract or causal edge and its local consequence; it does not narrate remote mechanics that can change independently. |
@@ -161,7 +161,8 @@ every section and public item in that stated scope:
    which wrong turn or repeated investigation does it prevent? If readable code, types, tests, metadata, local
    context, an existing canonical surface, the cast reader's assumed priors, a
    verified delegated guarantee, or another subject's speciality already covers
-   it, should no addition—or a deletion—be the result?
+   it, should no addition—or, once its purpose has been investigated, a
+   deletion—be the result?
 9. Can the project-defined reader—or the explicit task reader when no durable
    cast exists—find the purpose, primary path, and next detail appropriate to
    their available context and decision?
@@ -225,7 +226,8 @@ external entry point, points a product surface straight at a subsystem, stops
 delivering source context with the artifact, or creates a new external
 compatibility or operational obligation. Ordinary implementation changes that
 preserve the existing consumers and distribution model do not fire this
-trigger; neither does registry, tag, or deployment state without a decision.
+trigger; [product evidence and topology](locality-ladder.md#product-evidence-and-topology)
+names the delivery state that never can.
 
 Also reconsider the canonical surface or its pointer when evidence shows
 repeated support questions, failed onboarding or copy-paste paths, search
@@ -238,6 +240,14 @@ Choose one result and record the evidence:
 - update changelog or migration docs;
 - update public JSDoc or code-local rationale;
 - no user-facing documentation impact.
+
+A changelog, migration guide, or release note owns the historical time domain
+that the cross-route contract's product-documentation rule keeps out of
+current surfaces. For each affected member in the owner-supplied
+public-contract scope it states the former and current behavior, the version or
+release boundary between them, the action a reader must take to cross it, and
+the durable historical evidence that verifies the former behavior. It routes to
+the current reference for the full present contract instead of restating it.
 
 Record each affected non-inline surface during the work so final coverage does
 not depend on reconstructing the change from memory.

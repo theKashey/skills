@@ -27,14 +27,20 @@ mechanical edits across several surfaces use the applicable minimum:
 3. Confirm that each surface gives its intended reader enough relevance,
    behavior, evidence, and boundary to act without unsafe inference. When a
    task-local story contract governed the change, verify the opening, major
-   sections, proof, limits, and completion route against it.
+   sections, proof, limits, and completion route against it. Apply the
+   [separation test](content-architecture.md#separation-tests) for each
+   surface's mode.
 4. When public JSDoc or TSDoc is in scope, verify that its semantics remain on
    the intended in-scope symbol in the actual extracted, emitted, generated, or
    IDE-visible surface. A successful build alone is not proof.
 5. Build or typecheck examples and documentation when supported. Classify each
    sample and validate the primary reader path from its documented starting
-   state. Report any setup, access, credential, or environment assumption that
-   remains untested.
+   state. On a human-facing entry surface, also inspect the rendered or
+   delivered form for the [attention
+   anchors](content-architecture.md#focus-and-attention-management) that let a
+   reader scanning from that entry notice the primary subject, path, and
+   necessary boundary before secondary detail. Report any setup, access,
+   credential, or environment assumption that remains untested.
 6. Check links, navigation, code-fence status, terminology, defaults, historical
    leakage, source-to-artifact register leakage, mid-process wording, and
    copy-paste integrity.

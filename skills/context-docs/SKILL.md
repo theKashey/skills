@@ -14,10 +14,17 @@ reader's context. When no material gap remains, add nothing.
 
 ## Keep the cross-route contract
 
+The first group binds every route. The second binds only non-inline
+surfaces; a line, block, or file comment stops after the first group.
+
+### On every route
+
 - Ground every claim in source, exported types, tests, generated artifacts, or
   an explicit decision. If a Chesterton's Fence remains unresolved, preserve
   its current form and record accepted uncertainty instead of inventing a
-  rationale. Recovering the reason does not by itself justify prose; the reader
+  rationale: a `TODO` or `FIXME` for code, an untested assumption or remaining
+  risk in the completion report for prose, never a placeholder in the finished
+  document. Recovering the reason does not by itself justify prose; the reader
   must still have a material gap.
 - For product documentation, describe the authorized completed contract; temporary
   delivery state does not redefine it. Working records instead preserve verified
@@ -33,10 +40,6 @@ reader's context. When no material gap remains, add nothing.
   only while later decisions preserve its material reader, distribution,
   scope, and product assumptions; a decision that breaks one re-opens exactly
   the consequences it created, never the validated intent itself.
-- When product or distribution decisions may change an external consumer's
-  context, apply [product evidence and topology](references/locality-ladder.md#product-evidence-and-topology)
-  before keeping the established route. Delivery state alone does not trigger
-  recasting; code comments and repository-only orientation do not enter it.
 - Follow the environment's established owner and submission route. Locality can
   explain or propose a fit; it cannot authorize a surface, displace an owner,
   or widen the requested topology or mutation scope.
@@ -48,9 +51,6 @@ reader's context. When no material gap remains, add nothing.
   receives it, and retain a code-local route only when a symbol or diff reader
   can bypass that context. Count search or indexing only when the actual
   workflow supplies the relevant result before action.
-- Orient before mechanism. Lead an entry surface or owning section with the
-  reader-relevant purpose, pressure, consequence, responsibility, or boundary;
-  keep the governed subject inferable there.
 - Make a selective map, not an implementation transcript. Preserve invisible
   causes, relationships, contracts, and boundaries that change a decision;
   omit visible mechanics and facts the reader can safely recover.
@@ -62,6 +62,23 @@ reader's context. When no material gap remains, add nothing.
   subject's internal details earn only a material local consequence and route.
   Recruit shared concepts by name. Teach prerequisites only when the surface's
   reader and authorial goal require it.
+- Treat prompts, conversations, interviews, and working notes as evidence and
+  intent, not publishable wording. Use the authorized surface's register;
+  preserve exact voice or attribution only when its durable contract requires
+  that voice or provenance. Do not import a conversational `we` whose referent
+  the durable reader cannot recover.
+- Document the governed subject, not the drafting or validation process. Add a
+  framework distinction only when it changes the reader's decision.
+
+### On non-inline surfaces
+
+- When product or distribution decisions may change an external consumer's
+  context, apply [product evidence and topology](references/locality-ladder.md#product-evidence-and-topology)
+  before keeping the established route. Delivery state alone does not trigger
+  recasting; code comments and repository-only orientation do not enter it.
+- Orient before mechanism. Lead an entry surface or owning section with the
+  reader-relevant purpose, pressure, consequence, responsibility, or boundary;
+  keep the governed subject inferable there.
 - Choose Guided for an explicit teaching responsibility, Balanced for a mixed or
   unspecified reader, and Compressed for a known expert or model. Density changes
   representation, never facts or guarantees; do not re-teach established priors.
@@ -74,16 +91,10 @@ reader's context. When no material gap remains, add nothing.
 - For a new, substantially reworked, or challenged story, test the supplied
   reader, goal, subject, and surface before drafting. A bounded revision with an
   explicit, unchallenged story keeps that contract.
-- Follow a project-owned reader cast and service priority when one exists. With
-  no durable cast, serve the explicit task reader; do not import a universal
-  persona taxonomy.
-- Treat prompts, conversations, interviews, and working notes as evidence and
-  intent, not publishable wording. Use the authorized surface's register;
-  preserve exact voice or attribution only when its durable contract requires
-  that voice or provenance. Do not import a conversational `we` whose referent
-  the durable reader cannot recover.
-- Document the governed subject, not the drafting or validation process. Add a
-  framework distinction only when it changes the reader's decision.
+- Follow a project-owned reader cast and service priority when one exists—by
+  convention a `CONTENT-PERSONAS.md` under the project's `.agents` or
+  `.context-docs` directory. With no durable cast, serve the explicit task
+  reader; do not import a universal persona taxonomy.
 - Review finished non-inline documentation once at wrap-up. Never run that
   review for line, block, or file comments; JSDoc on an established
   public-contract symbol remains a public-contract surface. Once an audit or
@@ -98,9 +109,10 @@ the requested artifact genuinely spans them.
 | Task | Load and follow |
 | --- | --- |
 | Bounded revision to an established README, landing page, documentation home or site, tutorial, how-to, explanation, working document, or handoff note | Follow the [routine current-document path](#edit-an-established-current-document). Load a specialist guide only for a condition named there. |
-| New, substantially reworked, or challenged story—including a working document, implementation handoff, or continuation note; unresolved authorial goal; conflicting reader paths; uncertain surface role; or a revoked topology on an external-consumer surface | Follow [casting](references/casting.md). After `PROCEED`, load [content architecture](references/content-architecture.md) only while a story, surface-role, working-document contract, scan-path, or multi-reader alignment decision remains live. Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. |
+| New, substantially reworked, or challenged story; unresolved authorial goal; conflicting reader paths; uncertain surface role; or a revoked topology on an external-consumer surface | Follow [casting](references/casting.md). After `PROCEED`, load [content architecture](references/content-architecture.md) only while a story, surface-role, working-document contract, scan-path, or multi-reader alignment decision remains live. Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. |
+| New working document, implementation handoff, or continuation note whose resume reader and purpose are explicit and unchallenged | Keep the working-document contract that the cross-route contract's reader-contracts rule states and follow [Working documents and handoffs](references/content-architecture.md#working-documents-and-handoffs). Load [casting](references/casting.md) only when the reader kind, authorial goal, or evidence route is in doubt. |
 | API or configuration reference, public JSDoc/TSDoc, or standalone public API, configuration, or code example | Follow [Document a public contract or standalone example](references/public-contracts.md#document-a-public-contract-or-standalone-example). Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. Finish non-inline work with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
-| Line, block, or file comment | Apply the [selective-context authoring decision](references/code-comments.md#selective-context-authoring-decision). Load the [locality ladder](references/locality-ladder.md) only when the owner or line/block/file placement remains unresolved. Stop after the code-local disposition; do not run documentation review. |
+| Line, block, or file comment | Keep only the every-route group of the cross-route contract and apply the [selective-context authoring decision](references/code-comments.md#selective-context-authoring-decision). Load the [locality ladder](references/locality-ladder.md) only when the owner or line/block/file placement remains unresolved. Stop after the code-local disposition; do not run documentation review. |
 | Documentation audit, review, release check, or maintenance plan | Follow [Audit documentation](references/quality-maintenance.md#audit-documentation), which names the additional guide required by each in-scope surface. Review only; do not edit unless the user separately authorizes changes. |
 | Changelog, migration guide, or release documentation | Apply the [change triggers and dispositions](references/quality-maintenance.md#change-triggers), keep historical and current time domains separate, and route each affected current surface through the applicable row above. Finish with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
 
@@ -111,8 +123,10 @@ non-documentation parts.
 ## Edit an established current document
 
 Use this path only when the authorized surface, owner, reader task, and story
-are already settled. If one becomes disputed, return to the route table and
-take the named conditional path.
+are already settled. Treat one as disputed when the request or the frozen
+evidence contradicts the surface's current reader, subject, authorial goal,
+owner, or opening claim; then return to the route table and take the named
+conditional path.
 
 1. Freeze the requested scope, current source evidence, and state expected when
    the work completes. Keep product intent distinct from observed

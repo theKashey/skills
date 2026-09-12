@@ -188,8 +188,10 @@ Being true or relevant is not admission. Name the decision, task, or
 continuation need an admitted statement serves. Exact reference contracts and
 explicit teaching prerequisites need no invented unsafe alternative. Other
 explanations must avert a named wrong turn, repeated investigation, or unsafe
-continuation; when no such turn can be named, the disposition is `No document` and existing prose is
-a deletion candidate.
+continuation; when no such turn can be named, the disposition is `No document`.
+Existing prose becomes a deletion candidate only once its purpose has been
+investigated and found to avert nothing; while that purpose is unknown it
+remains a Chesterton's Fence and keeps its current form.
 
 The gate suppresses generic explanation, not exact project truth. A public API
 or configuration reference still exposes its in-scope signatures, defaults,
@@ -371,10 +373,12 @@ does not create a landing-page task or a required follow-up proposal.
 ## Working documents and handoffs
 
 A working document, implementation handoff, or continuation note serves whoever
-resumes unfinished work. Cast that reader like any other: a human maintainer
-and a frontier model need materially different starting context, representation,
-proof, and success conditions. A frontier-model document defaults to a
-compressed representation contract until the project or user selects another.
+resumes unfinished work. Cast that reader like any other—an explicit,
+unchallenged resume reader is already cast and needs no persona file—because a
+human maintainer and a frontier model need materially different starting
+context, representation, proof, and success conditions. A frontier-model
+document defaults to a compressed representation contract until the project or
+user selects another.
 
 What it must leave is a **reconstructable decision trace**—the smallest durable
 record from which the intended reader can recover current state and continue:
