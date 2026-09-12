@@ -63,7 +63,7 @@ enter it, nor does orientation whose every material reader receives the reposito
 5. Follow the established owner. If it cannot be updated, return a placement
    proposal for that owner instead of inventing a fallback record.
 6. For line, block, or file comments, first apply the [selective-context
-   authoring decision](api-jsdoc-examples.md#selective-context-authoring-decision).
+   authoring decision](code-comments.md#selective-context-authoring-decision).
    Place only an explanation that passes that admission gate.
 
 ## Connect encounter points to the owner

@@ -99,8 +99,8 @@ the requested artifact genuinely spans them.
 | --- | --- |
 | Bounded revision to an established README, landing page, documentation home or site, tutorial, how-to, explanation, working document, or handoff note | Follow the [routine current-document path](#edit-an-established-current-document). Load a specialist guide only for a condition named there. |
 | New, substantially reworked, or challenged story—including a working document, implementation handoff, or continuation note; unresolved authorial goal; conflicting reader paths; uncertain surface role; or a revoked topology on an external-consumer surface | Follow [casting](references/casting.md). After `PROCEED`, load [content architecture](references/content-architecture.md) only while a story, surface-role, working-document contract, scan-path, or multi-reader alignment decision remains live. Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. |
-| API or configuration reference, public JSDoc/TSDoc, or standalone public API, configuration, or code example | Follow [Document a public contract or standalone example](references/api-jsdoc-examples.md#document-a-public-contract-or-standalone-example). Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. Finish non-inline work with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
-| Line, block, or file comment | Apply the [selective-context authoring decision](references/api-jsdoc-examples.md#selective-context-authoring-decision). Load the [locality ladder](references/locality-ladder.md) only when the owner or line/block/file placement remains unresolved. Stop after the code-local disposition; do not run documentation review. |
+| API or configuration reference, public JSDoc/TSDoc, or standalone public API, configuration, or code example | Follow [Document a public contract or standalone example](references/public-contracts.md#document-a-public-contract-or-standalone-example). Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. Finish non-inline work with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
+| Line, block, or file comment | Apply the [selective-context authoring decision](references/code-comments.md#selective-context-authoring-decision). Load the [locality ladder](references/locality-ladder.md) only when the owner or line/block/file placement remains unresolved. Stop after the code-local disposition; do not run documentation review. |
 | Documentation audit, review, release check, or maintenance plan | Follow [Audit documentation](references/quality-maintenance.md#audit-documentation), which names the additional guide required by each in-scope surface. Review only; do not edit unless the user separately authorizes changes. |
 | Changelog, migration guide, or release documentation | Apply the [change triggers and dispositions](references/quality-maintenance.md#change-triggers), keep historical and current time domains separate, and route each affected current surface through the applicable row above. Finish with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
 
@@ -130,7 +130,7 @@ take the named conditional path.
    facts. Give the project-prioritized reader a compact direct path; route a
    materially different lower-frequency need to its canonical detail.
 4. Load [public contracts, JSDoc, and
-   examples](references/api-jsdoc-examples.md) only when the requested change
+   examples](references/public-contracts.md) only when the requested change
    affects a public API, configuration contract, or non-trivial code example.
    After completed non-inline work, follow [Review documentation at
    wrap-up](references/review-documentation-at-wrap-up.md) once.

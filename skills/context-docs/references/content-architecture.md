@@ -525,9 +525,10 @@ level.
 ## Explain-before-code pattern
 
 For a non-trivial example, follow [Prepare a non-trivial
-example](api-jsdoc-examples.md#prepare-a-non-trivial-example). That section owns
-example framing and code-comment admission; this reference owns where the
-example fits the document's reader path.
+example](public-contracts.md#prepare-a-non-trivial-example). That section owns
+example framing, and [code comments](code-comments.md) own the admission gate
+for comments inside the sample; this reference owns where the example fits the
+document's reader path.
 
 ## Meaningful visuals
 

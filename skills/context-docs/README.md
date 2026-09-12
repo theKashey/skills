@@ -259,7 +259,8 @@ preferred document, or create an unauthorized fallback.
 | [casting](references/casting.md) | Reader discovery, goal scaffolding, class-frequency evidence, top-`N` service priority, casting outcomes, assumed priors and the representation contract, and durable cast boundaries. | A change affects how a reader, goal, subject, surface, service priority, or assumed base level is challenged before drafting. |
 | [content architecture](references/content-architecture.md) | Deep alignment for authorial intent, story contracts, reader paths, document roles, procedure structure, and progressive disclosure; the prior-and-speciality admission gate, the working-document and handoff contract, and the reconstructable decision trace. | A change affects a new or challenged story, surface role, scan path, multi-reader alignment decision, or what admission keeps before density is chosen. |
 | [locality ladder](references/locality-ladder.md) | Compact existence, ownership, scope, and placement reasoning from a line comment to top-level documentation; product evidence and topology decisions; the delivered-versus-reachable, external-consumer, and effective-root definitions. | A change affects unresolved existence, ownership, scope, or placement without overriding an established owner, or how product evidence and decision-driven topology changes are handled. |
-| [API, JSDoc, and examples](references/api-jsdoc-examples.md) | Public-contract workflow, JSDoc/TSDoc, code-local rationale, and example framing and integrity. | A change affects API semantics, snippets, or code comments. |
+| [public contracts](references/public-contracts.md) | Public-contract workflow and checklist, public JSDoc/TSDoc and its route to the page that owns the rest, and example framing and integrity. | A change affects API or configuration semantics, public symbol documentation, or snippets. |
+| [code comments](references/code-comments.md) | Line, block, and file comment admission: the selective-context authoring decision and the Chesterton's Fence test. | A change affects when code-local rationale is written or refused. |
 | [review at wrap-up](references/review-documentation-at-wrap-up.md) | One-time minimum completion checks, the compact end-state gate, and the condition for loading the full scorecard. | A change affects routine non-inline completion. |
 | [quality and maintenance](references/quality-maintenance.md) | Audit workflow and evidence, change triggers, and release and drift checks. | A change affects audits, releases, or how documentation quality is assessed or maintained. |
 
@@ -345,9 +346,10 @@ maintenance detail. [Casting](references/casting.md) owns reader selection,
 frequency evidence, and goal shifts; the [locality
 ladder](references/locality-ladder.md) owns unresolved existence, scope, and
 placement; [content architecture](references/content-architecture.md) owns deep
-reader-path and document-role alignment after the cast survives; [API, JSDoc, and
-examples](references/api-jsdoc-examples.md) owns public-contract and code-local
-detail; [review at
+reader-path and document-role alignment after the cast survives; [public
+contracts](references/public-contracts.md) owns public-contract and example
+detail while [code comments](references/code-comments.md) owns code-local
+rationale; [review at
 wrap-up](references/review-documentation-at-wrap-up.md) owns routine completion;
 and [quality and maintenance](references/quality-maintenance.md) owns audits,
 release evidence, and drift checks.
@@ -355,7 +357,10 @@ release evidence, and drift checks.
 This split keeps an established-document edit on the compact runtime and
 wrap-up path. It exposes content architecture, locality, casting, specialist
 contract guidance, and comprehensive audit doctrine only when the choice they
-own becomes live. It also keeps technical
+own becomes live. Public-contract work and code-comment work are separated for
+the same reason: a comment decision loads the admission gate alone, and a
+reference task reaches that gate only when the sample it is preparing carries
+comments. It also keeps technical
 READMEs, public documentation homes, and product presentation pages distinct
 because they serve different readers and entry contexts. Diátaxis supplies a
 reader-question vocabulary, not a required file tree.

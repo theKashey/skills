@@ -40,7 +40,7 @@ or file comments.
    [casting](casting.md), honor its outcome, and report it before judging story
    coherence. When the scope includes a public contract, configuration
    reference, public JSDoc or TSDoc, or an example, also read [public contracts,
-   JSDoc, and examples](api-jsdoc-examples.md).
+   JSDoc, and examples](public-contracts.md).
 3. Apply the [evidence scorecard](#evidence-scorecard) only to the gates in the
    stated scope. Distinguish a present-contract defect from missing change
    history; do not recommend the same prose in both places.
