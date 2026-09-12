@@ -86,10 +86,10 @@ runnable code complete and free of commentary readers must delete.
 
 After the code, state the expected result, a meaningful limit, ownership
 boundary, or failure case, and the next useful path. Do not narrate every line.
-Apply the [selective-context authoring
-decision](code-comments.md#selective-context-authoring-decision) to code
-comments, and retain an
-admitted comment only when it remains true after the sample is copied.
+Put each comment in the sample through the code-comment gate, continuing into
+[code comments](code-comments.md#selective-context-authoring-decision) when it
+holds, and retain an admitted comment only when it remains true after the sample
+is copied.
 
 ## Public-contract symbol JSDoc
 

@@ -62,9 +62,9 @@ enter it, nor does orientation whose every material reader receives the reposito
    here and route the rest to the external owner.
 5. Follow the established owner. If it cannot be updated, return a placement
    proposal for that owner instead of inventing a fallback record.
-6. For line, block, or file comments, first apply the [selective-context
-   authoring decision](code-comments.md#selective-context-authoring-decision).
-   Place only an explanation that passes that admission gate.
+6. For line, block, or file comments, the code-comment gate settles admission
+   first; place only an explanation that passes it and its continuation in
+   [code comments](code-comments.md#selective-context-authoring-decision).
 
 ## Connect encounter points to the owner
 

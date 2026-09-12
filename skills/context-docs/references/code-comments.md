@@ -1,8 +1,9 @@
 # Code comments
 
 A line, block, or file comment earns its place only by preserving a cause the
-code around it cannot show. Use this reference to admit that rationale and to
-reject prose that narrates what is already visible. JSDoc on an in-scope
+code around it cannot show. Load this reference once SKILL.md's code-comment
+gate holds: it settles where the comment belongs, who owns the choice, and
+whether clearer code can retire the prose instead. JSDoc on an in-scope
 public-contract symbol is a public surface rather than a code comment; it is
 governed by [public contracts](public-contracts.md#public-contract-symbol-jsdoc).
 
@@ -36,17 +37,10 @@ unresolved:
 
 ## Selective-context authoring decision
 
-Before writing code-local documentation, identify the applicable local context
-the intended reader actually receives, then work as if only the changed symbol,
-nearby lines, search matches, and that genuinely available context were visible:
+SKILL.md holds the first three steps—the site's decision, a selectable and
+apparently reasonable alternative, and the non-visible cause that makes it
+unsafe—and most candidates end there. Continue once all three hold:
 
-1. Name the code decision available at this site.
-2. Identify an alternative that is selectable and appears reasonable under the
-   types, interfaces, control flow, and established patterns visible here. An
-   imagined redesign is not enough.
-3. Establish the implementation detail, parallel process, lifecycle state,
-   past event, or future event that is not locally visible and makes that
-   alternative unsafe. State its material consequence here.
 4. Confirm that this site owns the choice. If the fact only explains how a
    called abstraction stores, emits, or implements the selected operation, do
    not comment its caller. If remote behavior constrains a distinct caller-owned
@@ -69,12 +63,6 @@ nearby lines, search matches, and that genuinely available context were visible:
      mechanics
      may still carry non-local system meaning that code at this site cannot
      expose.
-
-Write the comment only when evidence establishes a locally selectable,
-apparently reasonable alternative and the non-visible cause that makes it
-unsafe. Missing local information alone is insufficient: inevitable behavior,
-callee semantics without a separate local consequence, and hypothetical
-alternate architectures do not create a comment obligation.
 
 Documentation clustered around an area is evidence of uncertainty, not proof
 of bad code. It may reveal accidental opacity, essential concurrency or

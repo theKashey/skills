@@ -112,7 +112,7 @@ the requested artifact genuinely spans them.
 | New, substantially reworked, or challenged story; unresolved authorial goal; conflicting reader paths; uncertain surface role; or a revoked topology on an external-consumer surface | Follow [casting](references/casting.md). After `PROCEED`, load [content architecture](references/content-architecture.md) only while a story, surface-role, working-document contract, scan-path, or multi-reader alignment decision remains live. Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. |
 | New working document, implementation handoff, or continuation note whose resume reader and purpose are explicit and unchallenged | Keep the working-document contract that the cross-route contract's reader-contracts rule states and follow [Working documents and handoffs](references/content-architecture.md#working-documents-and-handoffs). Load [casting](references/casting.md) only when the reader kind, authorial goal, or evidence route is in doubt. |
 | API or configuration reference, public JSDoc/TSDoc, or standalone public API, configuration, or code example | Follow [Document a public contract or standalone example](references/public-contracts.md#document-a-public-contract-or-standalone-example). Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. Finish non-inline work with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
-| Line, block, or file comment | Keep only the every-route group of the cross-route contract and apply the [selective-context authoring decision](references/code-comments.md#selective-context-authoring-decision). Load the [locality ladder](references/locality-ladder.md) only when the owner or line/block/file placement remains unresolved. Stop after the code-local disposition; do not run documentation review. |
+| Line, block, or file comment | Keep only the every-route group of the cross-route contract and follow the [code-comment gate](#decide-a-code-comment). Load [code comments](references/code-comments.md) only once that gate holds, and the [locality ladder](references/locality-ladder.md) only when the owner or line/block/file placement remains unresolved. Stop after the code-local disposition; do not run documentation review. |
 | Documentation audit, review, release check, or maintenance plan | Follow [Audit documentation](references/quality-maintenance.md#audit-documentation), which names the additional guide required by each in-scope surface. Review only; do not edit unless the user separately authorizes changes. |
 | Changelog, migration guide, or release documentation | Apply the [change triggers and dispositions](references/quality-maintenance.md#change-triggers), keep historical and current time domains separate, and route each affected current surface through the applicable row above. Finish with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
 
@@ -148,6 +148,27 @@ conditional path.
    affects a public API, configuration contract, or non-trivial code example.
    After completed non-inline work, follow [Review documentation at
    wrap-up](references/review-documentation-at-wrap-up.md) once.
+
+## Decide a code comment
+
+Settle this route here; load a reference only once the gate holds. Work as if
+only the changed symbol, nearby lines, search matches, and the local context the
+reader actually receives were visible:
+
+1. Name the code decision this site owns.
+2. Identify an alternative that is selectable and appears reasonable under the
+   types, interfaces, control flow, and established patterns visible here. An
+   imagined redesign is not enough.
+3. Establish the implementation detail, parallel process, lifecycle state, past
+   event, or future event that is not locally visible and makes that alternative
+   unsafe. State its material consequence here.
+
+A step that fails ends the route: add nothing. Missing local information alone
+is not a gap—inevitable behavior, callee semantics without a separate local
+consequence, and hypothetical alternate architectures create no comment
+obligation. When all three hold, load [code
+comments](references/code-comments.md) for ownership, placement, the
+invisible-reef-to-visible-cliff disposition, and worked examples.
 
 ## Complete the selected route
 
