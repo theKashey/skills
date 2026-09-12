@@ -10,6 +10,7 @@ examples without paraphrasing mechanics already visible to their reader.
 - [Contract checklist](#contract-checklist)
 - [Prepare a non-trivial example](#prepare-a-non-trivial-example)
 - [Code-local documentation](#code-local-documentation)
+- [Route an entry-point symbol to its owner](#route-an-entry-point-symbol-to-its-owner)
 - [Selective-context authoring decision](#selective-context-authoring-decision)
 - [Chesterton's Fence test](#chestertons-fence-test)
 - [Example integrity](#example-integrity)
@@ -121,12 +122,46 @@ unresolved:
 | Line | Which non-locally-visible cause makes a selectable, apparently reasonable local alternative unsafe. | A paraphrase of the expression, an inevitable effect of the selected operation, or remote mechanics with no material consequence here. |
 | Block | Why a parallel process, lifecycle state, or other non-local invariant rules out an apparently reasonable reordering, omission, algorithm, or guard. | A translation of the statements or an imagined alternative that current interfaces do not permit. |
 | File | Why the file exists, the boundary it owns, and a non-obvious relationship to another subsystem. | A tour of declarations or imports. |
-| Public-contract symbol JSDoc | Purpose and public semantics the signature cannot encode: runtime defaults, failures, lifecycle, ownership, security boundaries, and important interactions. | Type narration, implementation history, or a duplicate reference page. |
+| Public-contract symbol JSDoc | Purpose and public semantics the signature cannot encode: runtime defaults, failures, lifecycle, ownership, security boundaries, and important interactions; and a resolvable route to the page that owns the rest. | Type narration, implementation history, or a reference page restated here instead of linked. |
 
 Symbols outside the supplied public-contract scope need no public JSDoc by
 default. Extractability alone does not justify low-value prose. Public-contract
 JSDoc is a surface layered on a symbol; it does not sit between file and block
 in the locality ladder.
+
+### Route an entry-point symbol to its owner
+
+A page that explains what the signature cannot carry—which layer a requirement
+belongs in, what a fact does and does not establish, what an option gives
+up—is reachable context, not received context. An editor hover delivers the
+symbol's docblock at the decision and nothing else, so the entry-point symbol
+carries the route itself:
+
+```ts
+/**
+ * User-controlled retention durations. Both values must be positive and finite.
+ *
+ * @see {@link ../../docs/compaction.md | Compaction}
+ *   — when `compactAfterMs` makes compaction mandatory, and what happens to a
+ *   replica that stays away past `maxOfflineMs`.
+ */
+```
+
+Use the environment's machine-readable form so tooling delivers it. The line
+after the link states what the page settles that the signature cannot; a
+boundary is usually its sharpest form. A bare `@see ../../docs/compaction.md`
+is a filename, not a route.
+
+Drive coverage from the published pages, not from the symbols: check that every
+shipped page has at least one entry-point symbol reaching it. Most symbols take
+no route. A page whose every reader arrives through another page that is already
+routed needs no second pointer, and one broader route still outranks a copy at
+every caller.
+
+Verify each route against the artifact the reader receives rather than the
+working tree: resolve it from the emitted declarations, and keep it inside the
+unit that ships together. A relative link crossing a published package boundary
+resolves in the repository and breaks for an installed consumer.
 
 ### Selective-context authoring decision
 

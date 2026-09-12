@@ -96,6 +96,12 @@ narrowest existing or authorized surface. Include only:
 - for rationale, the verified causal edge and material local consequence; and
 - a direct, descriptive route to the canonical detail.
 
+A route is only a route where it resolves in the context the reader receives.
+Verify it against the artifact that reaches them—emitted declarations, the
+published package, the rendered page—not only the repository working tree. A
+relative link that crosses a delivery boundary the reader never receives
+resolves for a repository reader and fails for the consumer.
+
 Keep procedure, configuration, and implementation mechanics with the owner.
 Multiple breadcrumbs are intentional when each serves an independent encounter
 path; the number of callers alone proves nothing. Prefer one broader local
