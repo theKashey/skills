@@ -5,7 +5,7 @@ code around it cannot show. Load this reference once SKILL.md's code-comment
 gate holds: it settles where the comment belongs, who owns the choice, and
 whether clearer code can retire the prose instead. JSDoc on an in-scope
 public-contract symbol is a public surface rather than a code comment; it is
-governed by [public contracts](public-contracts.md#public-contract-symbol-jsdoc).
+governed by [symbol JSDoc](symbol-jsdoc.md).
 
 - [Where a comment belongs](#where-a-comment-belongs)
 - [Selective-context authoring decision](#selective-context-authoring-decision)

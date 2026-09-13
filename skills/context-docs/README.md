@@ -260,7 +260,8 @@ preferred document, or create an unauthorized fallback.
 | [casting](references/casting.md) | Reader discovery, goal scaffolding, class-frequency evidence, top-`N` service priority, casting outcomes, assumed priors and the representation contract, and durable cast boundaries. | A change affects how a reader, goal, subject, surface, service priority, or assumed base level is challenged before drafting. |
 | [content architecture](references/content-architecture.md) | Deep alignment for authorial intent, story contracts, reader paths, document roles, procedure structure, and progressive disclosure; the prior-and-speciality admission gate, the working-document and handoff contract, and the reconstructable decision trace. | A change affects a new or challenged story, surface role, scan path, multi-reader alignment decision, or what admission keeps before density is chosen. |
 | [locality ladder](references/locality-ladder.md) | Compact existence, ownership, scope, and placement reasoning from a line comment to top-level documentation; product evidence and topology decisions; the delivered-versus-reachable, external-consumer, and effective-root definitions. | A change affects unresolved existence, ownership, scope, or placement without overriding an established owner, or how product evidence and decision-driven topology changes are handled. |
-| [public contracts](references/public-contracts.md) | Public-contract workflow and checklist, public JSDoc/TSDoc and its route to the page that owns the rest, and example framing and integrity. | A change affects API or configuration semantics, public symbol documentation, or snippets. |
+| [symbol JSDoc](references/symbol-jsdoc.md) | Public-contract membership as an input, what a symbol's docblock says that its signature cannot, the entry-point route to the page that owns the rest, and the consumer-surface check that completes a docblock-only change. | A change affects how a public symbol's documentation is written, routed, or verified. |
+| [public contracts](references/public-contracts.md) | Public-contract inventory workflow and checklist, and example framing and integrity. | A change affects API or configuration reference semantics or snippets. |
 | [code comments](references/code-comments.md) | What a comment that passed the gate must do: placement, ownership, the invisible-reef-to-visible-cliff disposition, worked examples, and the Chesterton's Fence test. | A change affects how code-local rationale is written, placed, or retired. |
 | [review at wrap-up](references/review-documentation-at-wrap-up.md) | One-time minimum completion checks, the compact end-state gate, and the condition for loading the full scorecard. | A change affects routine non-inline completion. |
 | [quality and maintenance](references/quality-maintenance.md) | Audit workflow and evidence, change triggers, the historical-surface contract for changelogs and migration guides, and release and drift checks. | A change affects audits, releases, or how documentation quality is assessed or maintained. |
@@ -347,10 +348,11 @@ maintenance detail. [Casting](references/casting.md) owns reader selection,
 frequency evidence, and goal shifts; the [locality
 ladder](references/locality-ladder.md) owns unresolved existence, scope, and
 placement; [content architecture](references/content-architecture.md) owns deep
-reader-path and document-role alignment after the cast survives; [public
-contracts](references/public-contracts.md) owns public-contract and example
-detail while [code comments](references/code-comments.md) owns code-local
-rationale; [review at
+reader-path and document-role alignment after the cast survives; [symbol
+JSDoc](references/symbol-jsdoc.md) owns a public symbol's docblock and its
+route while [public contracts](references/public-contracts.md) owns
+reference-page and example detail, and [code
+comments](references/code-comments.md) owns code-local rationale; [review at
 wrap-up](references/review-documentation-at-wrap-up.md) owns routine completion;
 and [quality and maintenance](references/quality-maintenance.md) owns audits,
 release evidence, and drift checks.
@@ -365,11 +367,14 @@ reaches that gate only when the sample it is preparing carries comments. The
 routes are also weighted by how often each fires. Leaving a comment while
 changing code is the most frequent authoring event and most often ends in adding
 nothing, so the test that reaches that answer sits in the runtime file and the
-reference loads only once it holds; publishing a public contract is rarer and
-can afford a file. It also keeps technical READMEs, public documentation homes,
-and product presentation pages distinct because they serve different readers and
-entry contexts. Diátaxis supplies a reader-question vocabulary, not a required
-file tree.
+reference loads only once it holds. Public-contract work splits on the same
+line: a docblock follows a changed symbol far more often than a reference page
+or example is published, so the symbol rule is its own small file whose
+completion check doubles as that change's wrap-up, and the page workflow loads
+only when a page, inventory, or example enters scope. It also keeps technical
+READMEs, public documentation homes, and product presentation pages distinct
+because they serve different readers and entry contexts. Diátaxis supplies a
+reader-question vocabulary, not a required file tree.
 
 ## Boundaries
 

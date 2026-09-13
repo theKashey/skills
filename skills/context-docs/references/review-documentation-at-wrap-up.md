@@ -30,9 +30,8 @@ mechanical edits across several surfaces use the applicable minimum:
    sections, proof, limits, and completion route against it. Apply the
    [separation test](content-architecture.md#separation-tests) for each
    surface's mode.
-4. When public JSDoc or TSDoc is in scope, verify that its semantics remain on
-   the intended in-scope symbol in the actual extracted, emitted, generated, or
-   IDE-visible surface. A successful build alone is not proof.
+4. When public JSDoc or TSDoc is in scope, run the [consumer-surface
+   check](symbol-jsdoc.md#verify-on-the-consumer-surface).
 5. Build or typecheck examples and documentation when supported. Classify each
    sample and validate the primary reader path from its documented starting
    state. On a human-facing entry surface, also inspect the rendered or

@@ -111,7 +111,8 @@ the requested artifact genuinely spans them.
 | Bounded revision to an established README, landing page, documentation home or site, tutorial, how-to, explanation, working document, or handoff note | Follow the [routine current-document path](#edit-an-established-current-document). Load a specialist guide only for a condition named there. |
 | New, substantially reworked, or challenged story; unresolved authorial goal; conflicting reader paths; uncertain surface role; or a revoked topology on an external-consumer surface | Follow [casting](references/casting.md). After `PROCEED`, load [content architecture](references/content-architecture.md) only while a story, surface-role, working-document contract, scan-path, or multi-reader alignment decision remains live. Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. |
 | New working document, implementation handoff, or continuation note whose resume reader and purpose are explicit and unchallenged | Keep the working-document contract that the cross-route contract's reader-contracts rule states and follow [Working documents and handoffs](references/content-architecture.md#working-documents-and-handoffs). Load [casting](references/casting.md) only when the reader kind, authorial goal, or evidence route is in doubt. |
-| API or configuration reference, public JSDoc/TSDoc, or standalone public API, configuration, or code example | Follow [Document a public contract or standalone example](references/public-contracts.md#document-a-public-contract-or-standalone-example). Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. Finish non-inline work with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
+| JSDoc or TSDoc on a public-contract symbol, with no reference page, contract inventory, or example in the change | A symbol outside the task- or owner-supplied public-contract scope takes no public docblock; for one inside it, follow [symbol JSDoc](references/symbol-jsdoc.md), whose consumer-surface check is the wrap-up for that change. Load [public contracts](references/public-contracts.md) only when a page, inventory, or example enters scope. |
+| API or configuration reference, or standalone public API, configuration, or code example | Follow [Document a public contract or standalone example](references/public-contracts.md#document-a-public-contract-or-standalone-example). Load the [locality ladder](references/locality-ladder.md) only when existence, ownership, scope, or placement is unresolved. Finish non-inline work with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
 | Line, block, or file comment | Keep only the every-route group of the cross-route contract and follow the [code-comment gate](#decide-a-code-comment). Load [code comments](references/code-comments.md) only once that gate holds, and the [locality ladder](references/locality-ladder.md) only when the owner or line/block/file placement remains unresolved. Stop after the code-local disposition; do not run documentation review. |
 | Documentation audit, review, release check, or maintenance plan | Follow [Audit documentation](references/quality-maintenance.md#audit-documentation), which names the additional guide required by each in-scope surface. Review only; do not edit unless the user separately authorizes changes. |
 | Changelog, migration guide, or release documentation | Apply the [change triggers and dispositions](references/quality-maintenance.md#change-triggers), keep historical and current time domains separate, and route each affected current surface through the applicable row above. Finish with [Review documentation at wrap-up](references/review-documentation-at-wrap-up.md). |
@@ -143,10 +144,11 @@ conditional path.
    behavior, evidence, boundary, and next route without repeating recoverable
    facts. Give the project-prioritized reader a compact direct path; route a
    materially different lower-frequency need to its canonical detail.
-4. Load [public contracts, JSDoc, and
-   examples](references/public-contracts.md) only when the requested change
-   affects a public API, configuration contract, or non-trivial code example.
-   After completed non-inline work, follow [Review documentation at
+4. Load [symbol JSDoc](references/symbol-jsdoc.md) only when the change
+   touches a public-contract symbol's docblock, and [public
+   contracts](references/public-contracts.md) only when it affects an API or
+   configuration reference, a contract inventory, or a non-trivial code
+   example. After completed non-inline work, follow [Review documentation at
    wrap-up](references/review-documentation-at-wrap-up.md) once.
 
 ## Decide a code comment

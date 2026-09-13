@@ -39,8 +39,9 @@ or file comments.
    audit questions the reader, goal, subject, or surface, read
    [casting](casting.md), honor its outcome, and report it before judging story
    coherence. When the scope includes a public contract, configuration
-   reference, public JSDoc or TSDoc, or an example, also read [public contracts,
-   JSDoc, and examples](public-contracts.md).
+   reference, or an example, also read [public
+   contracts](public-contracts.md); when it includes public JSDoc or TSDoc,
+   read [symbol JSDoc](symbol-jsdoc.md).
 3. Apply the [evidence scorecard](#evidence-scorecard) only to the gates in the
    stated scope. Distinguish a present-contract defect from missing change
    history; do not recommend the same prose in both places.
