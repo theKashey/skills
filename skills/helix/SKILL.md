@@ -12,8 +12,10 @@ progress.
 ## Keep the transition laws visible
 
 - **Checkpoint before work.** Require an explicitly configured surface,
-  reference, representation, and read/write authority. If any is missing,
-  return `NEEDS-HUMAN-DECISION`; never invent a file, service, or transcript
+  reference, representation, and read/write authority. Its lifetime is the
+  user's choice and may end with the session; the requirement is that it was
+  configured, not that it outlives the work. If any is missing, return
+  `NEEDS-HUMAN-DECISION`; never invent a file, service, or transcript
   fallback. A Ralph-style or goal loop's persisted prompt or plan file carries
   execution and intent, not learning; treat it as the checkpoint only when the
   user has configured it as the surface.
@@ -33,7 +35,10 @@ progress.
   not evidence.
 - **Collapse every ended move.** Sort delivered work to its store of record,
   retired work to an epitaph, and everything else to deliberate disposal.
-  Rewrite the checkpoint with exactly one **Next** before another Act.
+  Rewrite the checkpoint with exactly one **Next** before another Act. When a
+  second consecutive collapse leaves the outcome's proof unmoved, make **Next**
+  a move on the branch that produced them whose observation source is the
+  checkpoint itself, even when every result was `Expected`.
 
 The checkpoint stores verdicts, not deliberation: outcome, surviving branches,
 active arranged moves and results, open links, epitaphs, and one **Next**. Re-derive
@@ -60,7 +65,8 @@ Load only the applicable section of
 - configure or reconstruct a checkpoint;
 - repair an orphan or unknown link;
 - resolve `Mixed` or `Inconclusive` evidence;
-- retire, resurrect, retry, or dispose of work.
+- retire, resurrect, retry, or dispose of work;
+- read the checkpoint against an unmoved outcome.
 
 Return the checkpoint reference, **Next**, and every orphan, unknown, or
 authority block.

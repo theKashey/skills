@@ -6,9 +6,10 @@ core loop after its completion condition holds.
 ## Configure or reconstruct the checkpoint
 
 Require a configured checkpoint surface before the first cycle. Its
-configuration names a durable reference, how it represents the semantics below,
-and the available read and write authority. It may be local, shared, or
-network-backed; never choose one for the user.
+configuration names a reference the loop can re-read and rewrite across cycles,
+how it represents the semantics below, and the available read and write
+authority. It may be local, shared, or network-backed, and it may last one
+session or many; never choose either for the user.
 
 | Semantic | Required content |
 | --- | --- |
@@ -83,3 +84,29 @@ admitted a new branch, and select exactly one **Next**: move, repair, block, or
 
 Disposal is complete when no ended work remains unsorted and the next cycle can
 resume from one checkpoint read.
+
+## Read the checkpoint against an unmoved outcome
+
+A run of `Expected` results can leave the outcome exactly where it started:
+every move succeeded inside its own boundary and none bore on the proof. The
+record holds no contradiction, so no other route fires.
+
+Arrange this as an ordinary move on the branch that produced the run: that
+branch is its contribution, the reading is its bounded action, the checkpoint
+is its observation source, its return is the review point. Freeze both
+readbacks — that the appended results changed what the proof requires, and that
+they did not.
+
+Supply the outcome with its proof and the results appended since the proof last
+moved. Ask which of them changed what the proof requires, and what remains
+outstanding. Withhold the ranking that selected the branch and the reasons its
+moves were expected to work; prefer a fresh subagent or new session, which
+cannot recognize its own reasoning in the run. Read only the record — never the
+work, the environment, or the implementation.
+
+Classify the return with the ordinary result table. `Disconfirming` retires the
+branch and its dependent moves, and the reading is the killing result its
+epitaph records; the next Expand derives from the outcome without it.
+
+This route is complete when the proof has moved or the branch that was not
+moving it is retired.

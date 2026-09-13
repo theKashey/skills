@@ -27,7 +27,10 @@ persists intent — what it keeps working toward; Helix persists learning — wh
 is different now. A loop amplifies whatever it preserves, including a
 contaminated explanation, and can travel just as far in the wrong direction;
 that risk, not storage economy alone, is why the checkpoint carries verdicts
-and epitaphs rather than the reasoning that produced them. Helix does not
+and epitaphs rather than the reasoning that produced them. Nor does that risk
+need a long horizon. A loop can accumulate stale branches, dilute its own
+attention, and acquire a retrospective story inside a single working day, while
+its state stays intact and every cycle closes correctly. Helix does not
 compete with or replace such a loop; it disciplines what survives between
 iterations.
 
@@ -48,6 +51,42 @@ Helix selects the wider branch contribution and sequences a supplied move. It
 does not classify the causal regime or design the evidence-producing probe;
 when separately installed, Read the Terrain owns that upstream work. This is
 external composition rather than a runtime dependency.
+
+## When success stops moving the outcome
+
+The transition laws already forbid the failure this route detects: Expand must
+derive branches from the outcome and latest results, both rather than the
+latest alone, and activity volume is not progress. What was missing is a state
+in which the violation becomes visible. Every other route that redirects the
+loop keys on a defective record or on disconfirming evidence, and an
+`Expected` result carries exactly one consequence — continue
+inside the observed boundary. So a loop whose every result is `Expected`
+reaches no state where any rule fires, while each cycle derives its next branch
+from the last one's closure and the outcome is never revisited.
+
+The trip is the second consecutive collapse leaving the proof unmoved. One is
+ordinary: a move can confirm something inside its boundary without advancing
+the outcome, which is exactly what a matching readback is warned not to prove.
+Two is the first point at which it describes the loop rather than a move. This
+bound is not the one the sibling skills Read the Terrain and Retrospective use
+after repeated inconclusive moves; theirs are calibrated to a dead observation
+channel, and this channel is live.
+
+The resulting move reads the checkpoint, not the work. That keeps it inside
+what Helix already owns — it authors an unrequested next whenever its own
+record is defective — and clear of the upstream classification Read the Terrain
+owns. The discriminator is the observation source every move must name anyway.
+
+A circuit breaker was rejected. Halting the loop or returning the question to
+its user replaces a stalled loop with a stalled human, and the loop can retire
+the branch itself; nothing on this route escalates.
+
+The trip depends on the run staying legible in one checkpoint read. It does
+while the branch producing it remains active, because moves and results are
+appended there and never rewritten. A loop that terminally closes each cycle
+and starts the next from its successor sends those records to their store of
+record, leaving nothing to count — that shape is uncovered, and covering it
+would mean storing a tally the tense law does not allow.
 
 ## What survives a collapse
 
@@ -90,8 +129,11 @@ Helix requires an explicitly configured checkpoint surface. The
 configuration names its reference, its representation of the checkpoint
 semantics, and the available read and write authority. It may use a local
 artifact, shared system, or network integration; the skill does not choose
-among them or offer a default. Without configuration, it asks the user to
-configure the surface instead of storing state in a transcript.
+among them or offer a default. Nor does it choose a lifetime: a scratch file
+opened for one session's work and deleted at the end of it is a checkpoint,
+because the loop reads and rewrites it by reference. Without configuration, it
+asks the user to configure the surface instead of storing state in a
+transcript.
 
 Helix does not prove an outcome is valuable, a branch is causal, or an
 implementation is correct, and it does not replace a routine task with a
