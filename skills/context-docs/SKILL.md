@@ -51,6 +51,16 @@ surfaces; a line, block, or file comment stops after the first group.
   receives it, and retain a code-local route only when a symbol or diff reader
   can bypass that context. Count search or indexing only when the actual
   workflow supplies the relevant result before action.
+- Write for a capable reader with the context actually delivered and the
+  attention the surface can reasonably demand. Supply missing orientation and
+  reduce scan or working-memory cost without diluting precise names, concepts,
+  causal links, consequences, or boundaries. Treat delivered context, subject
+  familiarity, available attention, and cognitive ability as independent;
+  never infer the last from the others. Use analogy only as a bounded bridge to
+  the real concept. A distinctive voice does not authorize a sustained analogy;
+  use one only when the surface contract explicitly requires that device, keep
+  precise terms adjacent, and never make it the sole carrier of a decision or
+  boundary.
 - Make a selective map, not an implementation transcript. Preserve invisible
   causes, relationships, contracts, and boundaries that change a decision;
   omit visible mechanics and facts the reader can safely recover.

@@ -110,6 +110,19 @@ intervention. Casting can replace the reader, revise the goal, change the
 surface or subject, or conclude that no document is needed. Only a surviving
 contract earns a full draft and one verified through-line.
 
+The reader's knowledge boundary is not an estimate of intelligence. A reader
+can arrive without local context, lack subject familiarity, or have little
+attention to spare while remaining capable of difficult reasoning. Collapsing
+those conditions produces opposite failures: an unexplained specialist
+transcript when missing context is ignored, or infantilizing euphemism and
+sustained allegory when low context or scarce attention is mistaken for low
+ability. Context Docs treats them separately: supply the missing orientation;
+compress and structure for the available attention; preserve precise concepts
+and their consequences. An analogy may bridge to a real term, but it does not
+replace it. A project may deliberately require a sustained fictional device; a
+request for simple, engaging, accessible, or distinctive prose does not imply
+one. Even then, real terms stay adjacent and carry every decision and boundary.
+
 Casting also fixes what the reader already knows. A competent intended reader
 brings the language, platform, tooling, and named engineering concepts the work
 runs on; an underlying abstraction or an executable gate may already prevent

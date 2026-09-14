@@ -166,12 +166,26 @@ both depend on them:
   named concepts, and ordinary tool or platform competence the cast reader
   brings to this document. Record a prior only where it changes what may be
   admitted or how it is represented. Do not inventory what the reader or model
-  is believed to know, and do not build a capability catalog by vendor,
+  is believed to know, turn subject familiarity into an estimate of cognitive
+  ability or available attention, or build a capability catalog by vendor,
   version, or tier.
 - **Representation contract:** the voice, compression, evidence form, and
   continuation needs this document owes that reader, selected from the class,
-  the surface, and the authorial goal. A working document cast to a frontier
-  model defaults to compressed until the project or user selects otherwise.
+  the surface, the attention it can reasonably demand, and the authorial goal.
+  Reduce reading and working-memory cost through structure, selection, and
+  compression without diluting the concepts or consequences the reader needs.
+  A working document cast to a frontier model defaults to compressed until the
+  project or user selects otherwise.
+
+Keep delivered context, subject familiarity, and available attention separate,
+and do not infer cognitive ability from any of them. Missing context calls for
+self-contained orientation; scarce attention calls for compression and scan
+anchors. Neither authorizes infantilizing language or conceptual dilution. An
+analogy may introduce a precise concept, but it does not replace that concept's
+name. A distinctive voice does not by itself authorize a sustained analogy:
+record that device separately, use it only when the surface contract explicitly
+requires it, keep real terms adjacent, and never let it become the only carrier
+of a decision or boundary.
 
 Both are task-local unless the project already owns a durable cast, and both
 are adjustable per document: neither may be inferred as a universal property of
