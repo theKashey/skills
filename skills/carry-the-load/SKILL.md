@@ -65,6 +65,25 @@ Use established repository checks and consumer surfaces. Do not add a new
 framework, service, abstraction, or review layer when an existing path can
 produce the required readback at lower total cost.
 
+A **lever** is a rerunnable mechanism — a script, codemod, generator, check,
+or bounded delegate contract — that performs or proves the increment. Prefer
+one when repeated manual execution, divergent application, or repeated review
+would cost more or provide weaker evidence than the smallest such mechanism.
+When the recipe is uncertain, perform one bounded unit to learn it, then rerun
+the lever against that unit and compare the result. Keep it safe to rerun,
+inside the frozen Increment, and subject to the protection audit. Producing the
+lever is not completion; the recipient-visible effect must still pass the
+executed Readback.
+
+When the selected increment creates, moves, or materially changes a boundary
+whose promise or relationship effects are unresolved, invoke Boundary Fit when
+it is installed before selecting the structural response. Supply the candidate
+boundary, observed level, promise, material relationships, evidence, and
+authority; consume its verdict and recommendation, not its internal procedure.
+Its assessment does not authorize restructuring. When it is unavailable and
+the unresolved fit is material to the completed-state contract, return
+`NEEDS-HUMAN-DECISION` rather than inventing the boundary promise or fit.
+
 When a problem surfaces outside the frozen Increment's maximum scope, do not
 expand the increment to absorb it. A problem that does not gate the readback
 becomes an explicit deferral in the completion report.

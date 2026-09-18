@@ -50,7 +50,15 @@ be evaluated in representative multi-cycle use.
 Helix selects the wider branch contribution and sequences a supplied move. It
 does not classify the causal regime or design the evidence-producing probe;
 when separately installed, Read the Terrain owns that upstream work. This is
-external composition rather than a runtime dependency.
+conditional composition rather than duplicated expertise.
+
+An arranged move may use a rerunnable mechanism or an installed specialist as
+a lever, but the mechanism does not become progress until its frozen readback
+changes what the branch can claim or what happens next. For an engineering
+implementation move, an installed Carry the Load can act as the conditional
+executor: Helix retains branch selection, sequence, and collapse, while Carry
+the Load owns the increment through its executed readback. Helix remains able
+to Act without that package and does not reproduce its internal procedure.
 
 ## When success stops moving the outcome
 

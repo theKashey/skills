@@ -40,6 +40,18 @@ progress.
   a move on the branch that produced them whose observation source is the
   checkpoint itself, even when every result was `Expected`.
 
+A **lever** is the narrowest rerunnable mechanism or installed specialist that
+can execute an arranged move or make its result checkable. Select one only when
+the frozen readbacks make its result consequential to the branch or next
+decision; building a tool or invoking a skill is activity, not progress. For an
+arranged engineering implementation move, invoke Carry the Load when it is
+installed. Give it the outcome boundary, branch contribution, move, observation
+source, review point, and readbacks; consume its executed readback and terminal
+status. Helix retains branch selection, sequence, classification, and collapse,
+while Carry the Load owns the increment's implementation, containment, and
+completion. When it is unavailable, Act once under Helix's existing boundary
+rather than reproducing Carry the Load's procedure.
+
 The checkpoint stores verdicts, not deliberation: outcome, surviving branches,
 active arranged moves and results, open links, epitaphs, and one **Next**. Re-derive
 candidates and ranking each cycle. A matching readback establishes only what

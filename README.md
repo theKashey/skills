@@ -71,8 +71,11 @@ not yet provide.
   boundary has an address on the path of work, and the chart survives a
   reimplementation of the code beneath it.
 
-Each skill is independently installable. Their support relationships do not
-make them stages in one loop or runtime dependencies.
+Each skill is independently installable. That packaging boundary does not ban
+conditional runtime composition: an active skill may invoke an installed
+counterpart through a named handoff while retaining its own selection, scope,
+and stopping conditions. These edges do not form a mandatory whole-lifecycle
+pipeline or an undeclared package dependency.
 
 ## Choose by problem
 
@@ -91,7 +94,7 @@ make them stages in one loop or runtime dependencies.
 
 ## How the skills support each other
 
-There are four supported compositions, not one complete loop:
+There are five supported compositions, not one complete loop:
 
 **Documentation:** Context Docs can complete a documentation task on its own.
 
@@ -135,6 +138,27 @@ flowchart LR
     end
 ```
 
+**Engineering increment:** Helix owns branch selection, sequencing, and
+collapse. For an arranged engineering implementation move, it may use an
+installed Carry the Load as the executor. When that increment creates, moves,
+or materially changes an unresolved boundary, Carry the Load may consume an
+installed Boundary Fit assessment before selecting a structural response.
+
+```mermaid
+flowchart LR
+    subgraph F4["4 · Engineering increment"]
+        D1["Helix: arranged engineering move"] -->|"conditional executor"| D2["Carry the Load"]
+        D2 -->|"unresolved boundary fit"| D3["Boundary Fit"]
+        D3 -->|"verdict, not authority"| D2
+        D2 -->|"executed readback"| D1
+    end
+```
+
+Each handoff is a lever with a bounded interface. The invoking skill keeps the
+decision it owns; the invoked skill keeps its internal procedure and terminal
+contract. An unavailable counterpart does not license the caller to imitate or
+invent that expertise.
+
 **Structural enforcement:** Screaming Reefs gives a documented constraint a
 structural owner—such as a name, type, API, ownership boundary, or filesystem
 location—when that change is explicitly authorized. A documentation finding
@@ -142,9 +166,9 @@ does not authorize the change.
 
 ```mermaid
 flowchart LR
-    subgraph F4["4 · Structural enforcement"]
-        D1["Documented reef"] --> D2["Screaming Reefs"]
-        D2 -->|"authorized change"| D3["Constraint visible in structure"]
+    subgraph F5["5 · Structural enforcement"]
+        E1["Documented reef"] --> E2["Screaming Reefs"]
+        E2 -->|"authorized change"| E3["Constraint visible in structure"]
     end
 ```
 
@@ -160,9 +184,10 @@ advises on activation, runtime decisions, isolation, and evaluation. Neither
 package creates or mutates the other, and each still works when installed
 alone.
 
-The host agent decides which installed skill description matches the problem;
-this repository does not orchestrate that selection. The diagrams describe how
-the resulting outcomes can relate; they are not a prompt recipe or required
+The host agent decides which installed skill description matches the initial
+problem. Once active, a skill may invoke an installed counterpart only at a
+named condition and interface in its runtime contract. The diagrams describe
+those optional relationships; they are not a prompt recipe or required
 execution order.
 
 ## Install

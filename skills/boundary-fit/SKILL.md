@@ -51,6 +51,10 @@ For each relationship, record:
   another unauthoritative copy is corroboration, not an oracle.
 - **Effects that travel:** change, failure, data placement, migration,
   deployment, provisioning, retirement, policy, capacity, or operator action.
+- **Leverage mechanism:** whether a script, generator, check, distribution
+  path, or delegate contract repeatedly performs or proves the relationship;
+  who owns its semantics; where reruns and review occur; and which change,
+  failure, lifecycle, or ownership effects its use carries across the boundary.
 - **Structural span:** which code, module, deployable, cell, runtime, and team
   boundaries it crosses.
 - **Change pressure:** why the relationship is expected to change frequently,
@@ -124,6 +128,10 @@ that transfers the effect the boundary claims to contain.
 - When separation must remain, reduce the relationship to an explicit boundary
   contract and place translation at the boundary so neither side imports the
   other's internal model.
+- When a lever maintains or proves a boundary relationship, keep its semantic
+  owner and enforcement point explicit and classify the lever's own change,
+  failure, lifecycle, and ownership effects. Repeatability can narrow a bridge;
+  it does not by itself make the relationship fit.
 - Use intended duplication when its local availability, ownership, or coupling
   benefit is evidenced and either divergence is safe or one semantic owner plus
   enforced distribution or cross-boundary conformance preserves required

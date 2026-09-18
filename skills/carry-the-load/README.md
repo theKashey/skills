@@ -72,6 +72,13 @@ confuse smallest with fewest lines. A test, fallback, buffer, abstraction, or
 second implementation may be the cheapest sufficient design when consequence
 or reversibility demands it.
 
+A rerunnable script, codemod, generator, check, or bounded delegate contract is
+a lever when it performs or proves the increment more reliably than repeated
+manual work. The lever earns its cost from the current constraint, review
+burden, or divergence risk; non-triviality alone is not enough. Its file is not
+the value or the proof—the recipient-visible effect and executed readback remain
+the completion boundary.
+
 “Delete what protects nothing” belongs here as a protection audit, not as the
 definition of Lean. A protection stays when it names a current load or credible
 failure, reaches the affected path, and is cheaper than the consequence it
@@ -90,6 +97,8 @@ agent:
   it into the increment;
 - pull context, tools, abstraction, and protection when the increment demands
   them rather than accumulating them in advance;
+- prefer the smallest safe-to-rerun lever when it carries the increment or its
+  proof at lower total cost than repeated manual execution;
 - state a credible misfire and containment before committing to the change;
 - verify at the first surface capable of observing the promised effect;
 - distinguish resilience from learning and persist only material learning;
@@ -120,9 +129,19 @@ selected and shapes its implementation, containment, and learning.
 
 Helix persists verdicts and sequences moves across uncertain cycles. Carry the
 Load governs the engineering flow inside one selected increment and does not
-own a planning checkpoint. Helix also declares that it never edits `AGENTS.md`
+own a planning checkpoint. When both are installed, Helix may use Carry the
+Load as the executor for one arranged engineering move: Helix owns branch
+selection, sequence, and collapse; Carry the Load owns the increment through
+its executed readback. Helix also declares that it never edits `AGENTS.md`
 during ordinary use; Carry the Load diverges deliberately by carrying an
 authority-gated write path, and the authority gate, not the skill, decides.
+
+Boundary Fit evaluates whether material relationships support a boundary's
+promised locality. When an increment creates, moves, or materially changes an
+unresolved boundary, Carry the Load may consume an installed Boundary Fit
+verdict before selecting the structural response. The verdict supplies an
+assessment, not implementation or restructuring authority; Carry the Load
+retains the increment boundary and completion contract.
 
 Context Docs decides whether an explanation is truthful, necessary, and local,
 and owns admission and placement of reader-facing facts — including local
@@ -154,13 +173,14 @@ skill-guidance's `LAWS.md` remains the canonical statement. The procedure's
 validation step checks its own principle's effect; it is self-validation, not
 the advisory review Skill Guidance provides.
 
-These are external compositions of separately installed skills, not runtime
-dependencies; the package completes alone. One maintenance invariant follows
-from the overlap: the load card's Readback field in [SKILL.md](SKILL.md) is a
-deliberate verbatim duplicate of Read the Terrain's terrain-card Readback
-field, and read-the-terrain remains its canonical owner. Keep the two fields
-identical when either changes, or record a deliberate divergence; an
-accidental paraphrase between them is a defect.
+These are conditional runtime compositions among separately installed skills,
+not package dependencies. Carry the Load keeps an explicit unavailable path
+and does not import another skill's procedure. One maintenance invariant
+follows from the overlap: the load card's Readback field in
+[SKILL.md](SKILL.md) is a deliberate verbatim duplicate of Read the Terrain's
+terrain-card Readback field, and read-the-terrain remains its canonical owner.
+Keep the two fields identical when either changes, or record a deliberate
+divergence; an accidental paraphrase between them is a defect.
 
 ## Ownership
 

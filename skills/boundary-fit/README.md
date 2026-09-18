@@ -70,6 +70,11 @@ copy establishes current equality, not maintained identity.
   centralization. The relevant evidence is whether copies may evolve
   independently, what inconsistent behavior drift would cause, and how any
   required semantic identity is owned and enforced.
+- **Leverage is a relationship, not proof of fit.** A generator, shared check,
+  distribution path, or delegate contract can make execution repeatable and
+  reviewable, but it also concentrates semantics, lifecycle, and failure. The
+  assessment traces those effects before calling the mechanism a boundary
+  bridge rather than a boundary knot.
 - **The analysis is fractal.** The reviewer declares the observed level so a
   system-level conclusion does not conceal a module-, service-, or team-level
   mismatch. Materially different boundary cuts or promises receive separate
@@ -101,7 +106,7 @@ boundary promise; similarity outside that frame is out of scope.
 An assessment does not authorize a restructure. Review, conceptual design, and
 implementation remain separate authority levels.
 
-## Relationship to Compass
+## Relationships to other skills
 
 Compass records the semantic system, its responsibilities, and the boundaries
 humans have ratified. Boundary Fit evaluates whether relationships around a
@@ -109,6 +114,12 @@ candidate boundary support the separation and locality that boundary claims to
 provide. It can use a chart as evidence, but it neither creates nor requires
 one. The two skills remain independently installable and neither invokes the
 other.
+
+Carry the Load may invoke an installed Boundary Fit when a selected increment
+creates, moves, or materially changes a boundary whose promise or relationship
+effects remain unresolved. Boundary Fit returns an assessment; it does not
+execute the increment or authorize restructuring. The packages remain
+independently installable, and Carry the Load owns the unavailable path.
 
 ## Ownership
 
