@@ -132,9 +132,12 @@ carried, and not pointed into.
   without letting it sentence.
 - **A glossary per root**, instead of vocabulary scattered through domain
   prose. Terminology needs one canonical owner to be checkable at all, and
-  recording implementation aliases explicitly is what stops source naming from
-  quietly becoming the domain language. `DOMAIN.md` keeps relationships,
-  contexts, aggregates, events, and invariants; `GLOSSARY.md` keeps words.
+  keeping every other form of a word — the code stems, the spoken
+  abbreviation, the place it lives — in one tool-written lexicon is what stops
+  source naming from quietly becoming the domain language. `DOMAIN.md` keeps
+  relationships, contexts, aggregates, events, and invariants; `GLOSSARY.md`
+  keeps meaning; `LEXICON.jsonl` keeps forms, and a row is admitted only when
+  identifier-split search could not have made the hop on its own.
 - **`README.md` is every architectural directory's identity document**,
   instead of `SCOPE.md`/`CONTEXT.md`/`BLOCK.md`/`COMPONENT.md`. The layout was
   already directory-as-zoom; naming the landing file `README.md` completes it,
@@ -194,8 +197,10 @@ carried, and not pointed into.
   every chart, so they are settled before first use. Checklists and thresholds
   only change how the next pass judges an existing chart, so they may tighten
   release by release without invalidating anything already built. The usage hook
-  and the chart check are installed copies a host approved once: a release that
-  changes their templates rewrites nothing in a host; the next Create activation
+  and the chart check are installed copies a host approved once, and the
+  lexicon check is a host test that calls the skill's script by path, so it is
+  never a copy: a release that changes the templates rewrites nothing in a
+  host; the next Create activation
   compares the installed hook with `references/agent-hook.md`, a missing
   instruction is Phase E work, and a stale chart check fails the named-abstraction
   gate's fixture row until it is changed, ask-first.
@@ -266,6 +271,8 @@ agents then follow it is outside the skill's evaluation boundary.
 | [references/consume-change.md](references/consume-change.md) | Conditional estimation, review, refactor, overreach, and architectural-pull paths |
 | [references/consume-named-abstractions.md](references/consume-named-abstractions.md) | Read-only interpretation of existing named-abstraction definitions and claims |
 | [scripts/compass_search.py](scripts/compass_search.py) | Live, read-only structured lookup over a host-declared chart root, with deterministic address, exact, heading, and literal tiers and optional BM25-related candidates |
+| [scripts/compass_lex.py](scripts/compass_lex.py) | The lexicon's only writer and reader: `resolve` a sentence in any language to concepts, stems, and scopes with the expansion disclosed; `reverse` a symbol, path, or address to what people call it; `add` gated batches; `check` for the host suite; `sort` and `list` |
+| [references/lexicon.md](references/lexicon.md) | The lexicon: why three languages need a database of forms, the row schema, the gap gate, admission as its own Create task, the installed check, and how Consume reads it |
 | [references/agent-hook.md](references/agent-hook.md) | Canonical four-line search-and-consult block copied into host agent instructions after human approval |
 | [references/structural-signals.md](references/structural-signals.md) | Shared read-only warning signs for level contamination and overreach; both flows may consult it without importing the other's procedure |
 | [references/exploration.md](references/exploration.md) | The orient→scan→probe→adjust loop, triangulation and evidence sources, per-state procedures and exits, level calibration, scratchpad format |

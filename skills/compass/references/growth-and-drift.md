@@ -33,7 +33,7 @@ Run the state 0 exploration loop (see [`exploration.md`](exploration.md)). End w
 
 Human-checkpointed, agent-written. The agent collects product and domain vocabulary, proposes bounded contexts with product evidence, and presents them as falsifiable claims. The human draws the actual boundaries; the agent writes `DOMAIN.md` and `GLOSSARY.md` together.
 
-L0 is prose only — no technology, no code paths, no coordinates. Every architecturally used term lands in the glossary, with implementation aliases recorded where product and code disagree. This is the hardest pair of documents to write and the most stable once written.
+L0 is prose only — no technology, no code paths, no coordinates. Every architecturally used term lands in the glossary; where product and code disagree, a code form identifier-split search cannot reach is a candidate lexicon row in the task record; Phase A completes with the candidates recorded, and a separate admission task turns them into rows (`lexicon.md` §Admission). This is the hardest pair of documents to write and the most stable once written.
 
 ### Phase B — Frame System (L1 + L2)
 

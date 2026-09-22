@@ -18,8 +18,21 @@ python3 "{compass-skill}/scripts/compass_search.py" \
 
 Read address, exact, heading, and literal matches first. Treat BM25-related
 matches as leads, not semantic proof. The `Named nowhere in the chart` line
-lists the task words no chart heading, slug, or identifier names: re-search
-with the glossary's own terms before reading the gap as missing content. Consult the matched owning sections, then traverse the implicated
+lists the task words no chart heading, slug, or identifier names. When
+`{chart-root}/LEXICON.jsonl` exists, translate before reading the gap as
+missing content:
+
+```bash
+python3 "{compass-skill}/scripts/compass_lex.py" \
+  --chart-root "{chart-root}" resolve "{task sentence}"
+```
+
+Search again with the strict tokens it prints; use the disclosed expansion
+only when strict misses, and say so. A `looks like shorthand with no row`
+line is a finding for the task record, not a word to guess at. Without a
+lexicon, re-search with the glossary's own terms.
+
+Consult the matched owning sections, then traverse the implicated
 branch — the root, block, and component the matches name — through every
 chart level present:
 
@@ -46,6 +59,8 @@ change could duplicate, and classify every chart/code disagreement.
 
 - For a narrower kind, different output bounds, or glossary interpretation, read
   [Search and interpret chart content](consume-search.md).
+- To go from a symbol, path, or address back to what people call it, or to
+  read what `resolve` prints, read [The Lexicon](lexicon.md) §Reading it.
 - For code rationale, a component, or cross-block debugging, read
   [Investigate through a Compass chart](consume-investigation.md).
 - For estimation, review, refactoring, overreach, or architectural pull, read

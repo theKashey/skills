@@ -126,7 +126,7 @@ When a glossary-defined term is used semantically in chart prose, render it in *
 
 Terms need not be globally unique. When one word means different things in different bounded contexts, record each meaning with its context explicitly.
 
-Where product language and implementation language differ, the product or domain term is canonical and the code term is recorded as an implementation alias. Source naming never silently wins.
+Where product language and implementation language differ, the product or domain term is canonical. A form identifier-split search cannot reach from it — the spoken abbreviation, a renamed code stem — is a row in the lexicon, `{chart-root}/LEXICON.jsonl`, linked from the term's `### Lexicon` section; a form the search already reaches (`MatterRecord` for **Matter**) is recorded nowhere. Source naming never silently wins, and the glossary never carries the forms itself: one owner per form. Admission is its own Create task with a gate ([`lexicon.md`](lexicon.md) §Admission).
 
 `GLOSSARY.md` owns terminology. `DOMAIN.md` owns relationships, contexts, aggregates, events, and invariants.
 
@@ -325,6 +325,7 @@ and **the identity document of every architectural directory is its
   README.md                   ← chart identity: scope + the roots below
   COMPASS.md                  ← registry (roots / L1 externals / demoted externals)
   ABSTRACTIONS.md             ← optional implementation-design definitions; not a zoom level
+  LEXICON.jsonl               ← optional; speech, code stems, and location per concept, tool-written
   externals/                  ← one doc per L1 external, linked from its COMPASS.md row
     {external-name}.md
   {root}/                     ← one ratified logical root of orientation
@@ -343,7 +344,7 @@ and **the identity document of every architectural directory is its
 
 Three constraints the tree cannot carry: `{root}/README.md` is a black box — actors and external systems only, never internal structure; `DOMAIN.md` carries domain language only, never technology or coordinates; and a demoted external gets no `externals/` doc at all — it lives in the adapter that uses it.
 
-`README.md` is promoted, never duplicated: an entity's identity document *is* its `README.md`. There is no `SCOPE.md`, `CONTEXT.md`, `BLOCK.md`, or `COMPONENT.md`. Explicitly named alternate artifacts and views — `COMPASS.md`, `ABSTRACTIONS.md`, `DOMAIN.md`, `GLOSSARY.md`, `CONTAINERS.md`, `VIEWPORTS.md` — keep their names because they are not entity identities. `ABSTRACTIONS.md` sits beside the zoom chain rather than inside it.
+`README.md` is promoted, never duplicated: an entity's identity document *is* its `README.md`. There is no `SCOPE.md`, `CONTEXT.md`, `BLOCK.md`, or `COMPONENT.md`. Explicitly named alternate artifacts and views — `COMPASS.md`, `ABSTRACTIONS.md`, `LEXICON.jsonl`, `DOMAIN.md`, `GLOSSARY.md`, `CONTAINERS.md`, `VIEWPORTS.md` — keep their names because they are not entity identities. `ABSTRACTIONS.md` and `LEXICON.jsonl` sit beside the zoom chain rather than inside it.
 
 **Semantic fields are real Markdown.** Use headings for fields, lists for sets, tables for homogeneous collections, links for navigation, Mermaid for diagrams. Never pseudo-fields (`Responsibility — …`) — the Markdown AST should expose the schema instead of forcing an agent to infer it from prose punctuation.
 
@@ -413,6 +414,6 @@ diverges, and the divergent copy is the one an agent finds — read the gate.
 
 ✅ Always: read the declared chart root before chart work, and compare an installed usage hook with [the canonical template](agent-hook.md) and an installed chart check with the fence in `verification.md` §First — a missing instruction or a stale check is Phase E work (`growth-and-drift.md` §Phase E); declare scope before L0; apply the rewrite test to every semantic candidate; propagate top → down; document relationships in consumers; keep within size budgets; classify disagreement before repairing it; state confidence explicitly.
 
-⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; admitting or retiring a named abstraction; writing or updating [the usage hook](agent-hook.md) in the host's agent instructions; installing or changing the chart check in the host's test suite (§Verification); adding or changing `compass:` or `compass-abstraction:` comments in source. The usage hook, chart check, and two source-marker forms are everything the skill touches outside the chart root. The task's own PR, issue, or task record is the task's surface, not the skill's: recording a classified finding there is not a Compass write (`SKILL.md` §Choose exactly one flow).
+⚠️ Ask first: proposing, promoting, or retiring a root; changes to scope; introducing viewports beyond 3–4; L0 boundary changes; renaming a glossary term; admitting or retiring a named abstraction; writing or updating [the usage hook](agent-hook.md) in the host's agent instructions; installing or changing the chart check or the lexicon check in the host's test suite (§Verification, [`lexicon.md`](lexicon.md) §The installed check); adding or changing `compass:` or `compass-abstraction:` comments in source. The usage hook, the two checks, and two source-marker forms are everything the skill touches outside the chart root. The task's own PR, issue, or task record is the task's surface, not the skill's: recording a classified finding there is not a Compass write (`SKILL.md` §Choose exactly one flow).
 
 🚫 Never: write chart files outside the declared chart root or invent a root when none is configured; invent a logical root without human ratification; let code alone ratify L0–L2 semantic identity; document infrastructure as architecture (L5); contradict higher levels; treat a moved code path as evidence the semantics are wrong; demand implementation reshaping because topology and chart differ; seal coordinates before boundaries stabilize; skip human checkpoint at state 0 exit — when no human is available, stop there and report; do not proceed past any checkpoint unattended.

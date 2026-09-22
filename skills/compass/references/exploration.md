@@ -36,7 +36,7 @@ At early states, run this order — evidence before boundaries, boundaries befor
 7. Map them to product appearance.
 8. Map them to implementation coordinates.
 9. Populate or update `GLOSSARY.md`.
-10. Record code/product terminology differences as implementation aliases.
+10. Record code/product terminology differences as candidate lexicon rows for the admission task (`lexicon.md` §Admission).
 11. Surface uncertainty.
 12. Obtain the required human ratification.
 
@@ -183,7 +183,7 @@ The orient → scan → probe → adjust cycle runs again, narrower and deeper:
 ```
 - "The codebase says `Tenant`; the product UI says Workspace.
    Which is the domain term? I propose **Workspace**, with
-   `Tenant` recorded as an implementation alias."
+   `tenant` as a code stem in its lexicon row."
 - "A module imports from both {domain-a} and {domain-b}.
    Is it serving two phenomena, or bridging them?"
 - "No clear boundary between X and Y. One block or two?
@@ -318,7 +318,7 @@ Exploration is maintenance, triggered by events:
   [modules]. Still one thing after a rewrite? [yes/no]
 
 ## Domain Terms Found
-- [term]: product says [X], code says [Y]. Canonical: [X]. Alias: [Y]
+- [term]: product says [X], code says [Y]. Canonical: [X]. Candidate row: stem [y]
 - [term]: appears in [locations], seems to mean [definition]
 - CONTEXT-SPECIFIC: [term] means [A] in [context 1] and [B] in
   [context 2]. Record both, do not merge.

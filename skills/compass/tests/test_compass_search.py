@@ -85,9 +85,9 @@ class CompassSearchTest(unittest.TestCase):
 
             The workspace switcher.
 
-            ### Implementation aliases
+            ### Lexicon
 
-            `Tenant`
+            `workspace`
 
             ## **Status**
 
@@ -165,12 +165,12 @@ class CompassSearchTest(unittest.TestCase):
             text=True,
         )
 
-    def test_glossary_alias_returns_complete_owning_term(self) -> None:
-        result = self.run_search("--kind", "glossary", "--literal-only", "Tenant")
+    def test_glossary_lexicon_link_returns_complete_owning_term(self) -> None:
+        result = self.run_search("--kind", "glossary", "--literal-only", "workspace")
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("signal=exact", result.stdout)
         self.assertIn("A customer's isolated collaboration area.", result.stdout)
-        self.assertIn("`Tenant`", result.stdout)
+        self.assertIn("`workspace`", result.stdout)
         self.assertNotIn("current parcel progress", result.stdout)
 
     def test_context_specific_glossary_meanings_stay_together(self) -> None:

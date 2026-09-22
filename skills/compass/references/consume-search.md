@@ -37,9 +37,10 @@ Lookup changes neither the chart nor `compass-abstraction:` source incidence.
 ## Understand a term
 
 1. Search with `--kind glossary`, then read the complete returned term section,
-   including its bounded context, product appearance, and implementation aliases.
+   including its bounded context, product appearance, and `### Lexicon` link.
 2. Open that root's `DOMAIN.md` for the context, concepts, invariants, and
    relationships.
 
-If code uses a glossary alias, use the canonical glossary term in chart
-documents, commit messages, and discussions of intent.
+If code uses a form the lexicon records, use the canonical glossary term in
+chart documents, commit messages, and discussions of intent; `compass_lex.py
+--chart-root {chart-root} reverse {symbol}` names it.

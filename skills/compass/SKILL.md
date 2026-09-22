@@ -40,8 +40,8 @@ Select one flow before loading any reference. Do not combine the flows in one
 task.
 
 - **Create** — the task establishes or changes Compass-owned state: chart files,
-  semantic entities, coordinates, viewports, the host usage hook or chart
-  check, or named-abstraction definitions and claims. Maintenance, remapping,
+  semantic entities, coordinates, viewports, lexicon rows, the host usage
+  hook or installed checks, or named-abstraction definitions and claims. Maintenance, remapping,
   retirement, and completion verification are Create work. Read
   [references/create.md](references/create.md). Do not load the Consume guide.
 - **Consume** — the task reads and applies an existing chart without changing

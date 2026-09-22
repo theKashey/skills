@@ -286,7 +286,7 @@ No technology. No storage. No code paths.
 
 ## GLOSSARY.md Format
 
-`{root}/GLOSSARY.md` is the canonical owner of that root's ubiquitous language. Every local product or domain term used architecturally must appear here. Implementation terminology belongs here only when humans genuinely use it as part of the domain — otherwise it is recorded as an alias.
+`{root}/GLOSSARY.md` is the canonical owner of that root's ubiquitous language. Every local product or domain term used architecturally must appear here. Implementation terminology belongs here only when humans genuinely use it as part of the domain — otherwise it is a form in the lexicon, never a glossary heading.
 
 One `##` heading per term, the term itself in bold:
 
@@ -307,22 +307,24 @@ A unit of legal work handled for a client.
 
 Appears as a matter in the matter list and workspace.
 
-### Implementation aliases
+### Lexicon
 
-`Case`, `MatterRecord`
+`matter`
 ```
 
 **Context-specific meaning.** Do not force globally unique definitions. When the same word means different things in different bounded contexts, give the term one `##` heading with one `### Meaning` / `### Bounded context` pair per context, each labelled — the collision is a fact about the domain, and hiding it behind one blended definition loses it.
 
-**Implementation aliases** record where code and product disagree. The product or domain term is canonical; the code term is the alias, never the reverse. When the difference is discovered during exploration, record it rather than resolving it silently:
+**`### Lexicon`** names the term's row in `{chart-root}/LEXICON.jsonl`, the one owner of every form the concept takes — what people say, the stems code uses, where it lives. The product or domain term is canonical and is the row's first speech form; the code term is a stem in that row, never the reverse, and never a second heading. Only a form identifier-split search cannot reach gets a row — `tenant` for **Workspace**, not `MatterRecord` for **Matter**. When exploration finds such a difference, record it as a candidate row for the admission task rather than resolving it silently:
 
 ```text
 Product/domain language: **Workspace**
 Implementation language: `Tenant`
 
 Canonical Compass language: **Workspace**
-Implementation alias: `Tenant`
+Candidate row: {"concept":"workspace","speech":["Workspace"],"code":["tenant"],"chart":"…"}
 ```
+
+A glossary with no lexicon links to nothing; the section appears with the first admitted row ([`lexicon.md`](lexicon.md)).
 
 ---
 
