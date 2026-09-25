@@ -30,7 +30,12 @@ python3 "{compass-skill}/scripts/compass_lex.py" \
 Search again with the strict tokens it prints; use the disclosed expansion
 only when strict misses, and say so. A `looks like shorthand with no row`
 line is a finding for the task record, not a word to guess at. Without a
-lexicon, re-search with the glossary's own terms.
+lexicon, search the task words with `--kind glossary`; the terms its exact and
+BM25-related sections name are the glossary's own, and you search again with
+those. When the glossary search on the task words, and any search on the
+terms it named, matches nothing, take the bold terms and headings from
+the `DOMAIN.md` of each root `COMPASS.md` lists, and search with them. A task
+word still named nowhere is a vocabulary finding for the task record.
 
 Consult the matched owning sections, then traverse the implicated
 branch — the root, block, and component the matches name — through every
@@ -38,14 +43,30 @@ chart level present:
 
 ```text
 {chart-root}/README.md → COMPASS.md → {root}/README.md
-  → DOMAIN.md + GLOSSARY.md → CONTAINERS.md
+  → DOMAIN.md → CONTAINERS.md
   → {block}/README.md → {component}/README.md
   → VIEWPORTS.md, when it exists
 ```
 
 Do not skip a present level. Search narrows the branch and candidate sections;
-it does not replace semantic context. If output reports omitted section lines,
-open that owning section before deciding.
+it does not replace semantic context. If output reports omitted lines in a
+section outside `GLOSSARY.md`, open that owning section before deciding.
+
+`GLOSSARY.md` is not a level you open. Read it one term at a time, through the
+search, for each bold term in a section you consulted and each task word the
+chart names:
+
+```sh
+python3 "{compass-skill}/scripts/compass_search.py" \
+  --chart-root "{chart-root}" --kind glossary "{term}"
+```
+
+A term section comes back with its bounded context and lexicon link, up to
+`--max-lines`. When any result from `GLOSSARY.md`, from any search, reports
+omitted section lines, search that section's heading term with
+`--kind glossary` and a larger `--max-lines`; when a `--kind glossary` search
+reports sections omitted by `--limit`, raise `--limit`.
+Do not open the file to finish either.
 
 For a new capability, also search `ABSTRACTIONS.md` with capability terms when
 the file exists. On a match, read

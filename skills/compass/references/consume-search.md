@@ -38,6 +38,8 @@ Lookup changes neither the chart nor `compass-abstraction:` source incidence.
 
 1. Search with `--kind glossary`, then read the complete returned term section,
    including its bounded context, product appearance, and `### Lexicon` link.
+   [Consume](consume.md) says how to finish a result that reports omitted
+   lines.
 2. Open that root's `DOMAIN.md` for the context, concepts, invariants, and
    relationships.
 

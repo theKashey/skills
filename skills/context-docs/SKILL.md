@@ -89,6 +89,14 @@ surfaces; a line, block, or file comment stops after the first group.
 - Orient before mechanism. Lead an entry surface or owning section with the
   reader-relevant purpose, pressure, consequence, responsibility, or boundary;
   keep the governed subject inferable there.
+- Write published prose to the [published prose
+  register](references/content-architecture.md#published-prose-register); read
+  only that section unless the route loads the rest of the guide. Also read
+  [Reader entry and scan
+  path](references/content-architecture.md#reader-entry-and-scan-path) when
+  writing a lead or a section that states the subject's distinction, and
+  [Meaningful visuals](references/content-architecture.md#meaningful-visuals)
+  when adding a figure.
 - Choose Guided for an explicit teaching responsibility, Balanced for a mixed or
   unspecified reader, and Compressed for a known expert or model. Density changes
   representation, never facts or guarantees; do not re-teach established priors.
@@ -153,7 +161,10 @@ conditional path.
 3. Preserve the established through-line. Write the minimum missing purpose,
    behavior, evidence, boundary, and next route without repeating recoverable
    facts. Give the project-prioritized reader a compact direct path; route a
-   materially different lower-frequency need to its canonical detail.
+   materially different lower-frequency need to its canonical detail. On a
+   published surface, write to the published prose register as the
+   cross-route contract states, with its entry and visuals sections when
+   they apply.
 4. Load [symbol JSDoc](references/symbol-jsdoc.md) only when the change
    touches a public-contract symbol's docblock, and [public
    contracts](references/public-contracts.md) only when it affects an API or

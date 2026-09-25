@@ -137,7 +137,11 @@ carried, and not pointed into.
   source naming from quietly becoming the domain language. `DOMAIN.md` keeps
   relationships, contexts, aggregates, events, and invariants; `GLOSSARY.md`
   keeps meaning; `LEXICON.jsonl` keeps forms, and a row is admitted only when
-  identifier-split search could not have made the hop on its own.
+  identifier-split search could not have made the hop on its own. Consume
+  reads the glossary one term at a time through `compass_search.py --kind
+  glossary`, never as a level of the traversal: a glossary grows with every
+  term the system names, a task touches a handful, and the search already
+  returns a term's section with its contexts attached.
 - **`README.md` is every architectural directory's identity document**,
   instead of `SCOPE.md`/`CONTEXT.md`/`BLOCK.md`/`COMPONENT.md`. The layout was
   already directory-as-zoom; naming the landing file `README.md` completes it,

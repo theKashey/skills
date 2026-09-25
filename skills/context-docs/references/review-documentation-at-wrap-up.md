@@ -27,7 +27,12 @@ mechanical edits across several surfaces use the applicable minimum:
 3. Confirm that each surface gives its intended reader enough relevance,
    behavior, evidence, and boundary to act without unsafe inference. When a
    task-local story contract governed the change, verify the opening, major
-   sections, proof, limits, and completion route against it. Apply the
+   sections, proof, limits, and completion route against it. Confirm that the
+   opening, and any section that states the subject's distinction, meets
+   [Reader entry and scan
+   path](content-architecture.md#reader-entry-and-scan-path) and that each
+   explanatory figure carries one claim under [Meaningful
+   visuals](content-architecture.md#meaningful-visuals). Apply the
    [separation test](content-architecture.md#separation-tests) for each
    surface's mode.
 4. When public JSDoc or TSDoc is in scope, run the [consumer-surface
@@ -42,7 +47,10 @@ mechanical edits across several surfaces use the applicable minimum:
    credential, or environment assumption that remains untested.
 6. Check links, navigation, code-fence status, terminology, defaults, historical
    leakage, source-to-artifact register leakage, mid-process wording, and
-   copy-paste integrity.
+   copy-paste integrity. On a published surface, confirm that the page meets
+   the [published prose
+   register](content-architecture.md#published-prose-register), which also
+   defines historical leakage there.
 7. Apply the [end-state exit gate](#end-state-exit-gate).
 
 ## End-state exit gate

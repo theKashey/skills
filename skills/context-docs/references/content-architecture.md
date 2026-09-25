@@ -18,6 +18,7 @@ from its filename, repository visibility, or marketing posture.
 - [Progressive disclosure](#progressive-disclosure)
 - [Explain-before-code pattern](#explain-before-code-pattern)
 - [Meaningful visuals](#meaningful-visuals)
+- [Published prose register](#published-prose-register)
 - [Separation tests](#separation-tests)
 
 ## Reader contexts
@@ -444,6 +445,18 @@ before detailed methodology or parts. A chooser may own that selection context
 for compact catalog entries. A parent summary or sibling section cannot orient
 a standalone subject page.
 
+When the subject is something the reader might adopt beside or in place of a
+tool they already run, and its value depends on a distinction that tool does not
+make, state that distinction in the lead, or in the first sentence of the
+section that owns it, before the mechanism. Name it in the reader's terms: the
+outcome they would see, not the internal representation that produces it.
+Wherever the distinction is stated, bold only the phrase that states it, not
+the sentence around it. When adopting the subject could seem to replace a tool the reader
+keeps, say which tools stay in place; in a README this is an integration
+boundary, not a comparison. Do not manufacture novelty:
+a reference remains a reference, and an opening that already states its
+uncommon claim needs no slogan added.
+
 For a README, state the technical reader, task, and starting context before
 giving a route. Establish that context from the authorized completed product
 and distribution contract. Missing current packages, versions, tags, releases,
@@ -540,6 +553,102 @@ When a diagram, screenshot, or image carries a fact, state, decision, or
 relationship needed to act, expose it in concise contextual alt text or nearby
 prose. Do not make a contract, requirement, or necessary state visible only in
 the visual.
+
+A diagram or other explanatory figure earns its place with one claim, given
+before the prose develops it: a mental model of the structure, the trade-off,
+or the change the page is about. One that shows no structure, trade-off, or
+change more directly than the prose is decoration; cut it. Repeating its claim
+in prose or alt text, as required above, does not make it decoration. A
+screenshot of a state the reader must recognize is evidence, not an
+explanatory figure, and this test does not apply to it. Use the fewest objects and labels that can carry the claim.
+
+## Published prose register
+
+Apply this to every sentence a published surface delivers. The published set
+is what the project renders or distributes to its readers, and the project
+decides its membership; a record that sits in the repository is not published
+by that alone. Where the project has declared nothing, treat as published what
+ships in a package, what renders on its documentation or website, and the
+top-level README, and ask the owner about anything else. Inside that set, a
+surface may be a README, a documentation home or page, a public website
+presentation page, a changelog, a release note, or a migration guide. A public
+docblock follows [symbol JSDoc](symbol-jsdoc.md) instead. A changelog, release note, or migration
+guide keeps its historical time domain and follows every other rule here. A working document follows its own
+contract instead. The project's established register decides voice,
+punctuation, and which of its own names stay. Where the surface contract
+requires a device these rules cut, such as a sustained analogy, the contract governs;
+keep the precise terms next to it.
+
+A reader can land on any published page from a search result, a shared link, or
+an agent's citation, without the pages before it:
+
+- **Link at first use.** Link each concept the project defines at its first
+  use on the page to the one page that owns it, with a section anchor when that
+  section answers the immediate question. A term the project coined is
+  introduced on its owning page before any other page depends on it; when
+  that page is outside the requested scope, do not depend on the term, and
+  propose the introduction to its owner.
+- **Keep unpublished records off the reader path.** Never route the reader to a
+  record the project keeps outside its published set, such as an internal
+  decision record, a journal, a specification note, or a working document.
+  Pages outside the project, such as a standard or another tool's
+  documentation, are not records and stay linkable, and so is contribution
+  material on a contributor route, whose reader works in the checkout. When
+  the user-facing reader needs the reasoning, state it on the published page,
+  or link the published owner of the detail.
+
+Write for the surface's cast reader, who may not know this project and may read
+English as a second language. That last condition decides the words.
+
+- **Present tense, named actor.** Outside a historical time domain, describe
+  the subject as it is now, and name who acts rather than hiding the actor in
+  a passive. The page is not the history of the work: cut a date that records
+  when the work happened, a narrated absence, and a comparison with an earlier
+  version of the same thing. Keep a date that is part of the contract,
+  measurement provenance, or example data.
+- **Claims rest on evidence.** Meet the Claim evidence gate in the [evidence
+  scorecard](quality-maintenance.md#evidence-scorecard). A timing names the
+  machine it was measured on.
+- **A word means what it says.** A term of art is free, and a page may use as
+  many as it needs. A figure of speech is not. Before writing a general verb,
+  ask how many senses it has: a word that fits any sentence makes the reader
+  choose one. Use such a word only in its literal sense, and otherwise write
+  the verb that names what happened, such as *imports*, *calls*, *changes*, or
+  *records*.
+- **Plain words, plain sentences.** Use the most common word that still means
+  it: *use*, not *utilise*; *enough*, not *sufficient*. Give each clause one
+  idea. Leave out idiom, irony, and cultural reference. A hard word is allowed
+  when it is a term of art or a name the project defines and links, not when
+  it is style.
+- **One word, one job.** Never replace a word with a synonym for variety. To a
+  reader translating as they go, a new word means a new thing.
+- **A limitation is a present-tense boundary.** State what the product does not
+  do. Outside a historical time domain, do not narrate an absence or the
+  story of an attempt.
+
+Plain language is not a plain subject. Keep every distinction, term of art, and
+step of reasoning the page needs; a sentence may be long when each part is plain
+and it carries one idea.
+
+Cut these habits:
+
+- compressed syntax: arrows, dropped articles, and abbreviations that the
+  reader must decode before reading. The Compressed detail level changes how
+  much surrounding explanation appears, never the syntax;
+- a point buried in a paragraph where a scanning reader cannot find it; give
+  each limit, case, or question its own item, heading, or bold lead;
+- an adverb supporting a weak verb, where the number or a stronger verb belongs;
+- *serves as*, *features*, or *boasts* where *is* or *has* belongs;
+- filler phrases and trailing clauses that add nothing;
+- stacked hedges; one hedge, or none;
+- a list forced to three items, or *from X to Y* where X and Y share no scale;
+- *not just X, but Y*, where Y alone is the claim;
+- a bold label that repeats its own line;
+- an ending or sentence that would be true of another project's documentation.
+
+To check one sentence, ask who says it, what makes it true, which word is not
+meant literally, and which word a good non-native reader would look up. That
+last word passes only when it is a term of art or a defined name.
 
 ## Separation tests
 
