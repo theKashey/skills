@@ -83,7 +83,7 @@ counterpart → governed choice or result → relation and direction
 When a counterpart cannot be established, record the owner as unknown or
 return `Needs-human-decision`; do not invent a skill, delegation, or dependency.
 
-Apply the admission questions from `SKILL.md`, then recommend:
+Apply the [obligation tests](../SKILL.md#test-each-obligation), then recommend:
 
 - `No-op` when existing context or enforcement already resolves the choice.
 - `Amend` when an existing skill owns the missing decision.
@@ -92,7 +92,8 @@ Apply the admission questions from `SKILL.md`, then recommend:
 - `Create skill` when the capability has distinct expertise, independent
   invocation, and a material behavioral delta.
 - `Split or merge` when current boundaries hide a required route or duplicate
-  one owner.
+  one owner; apply
+  [Law X](../LAWS.md#law-x--restructure-overlap-do-not-reword-it).
 
 Keep the recommendation within the user's authorized mutation scope. The host
 skill creator owns package mechanics and any file changes. If authority is
@@ -109,7 +110,11 @@ without selecting the testing strategy.
 
 Recommend model discovery only when an agent or another skill must reach the
 capability without a user naming it. Otherwise recommend explicit invocation
-and avoid permanent description load.
+and avoid permanent description load. When side effects or their timing belong
+to the user, recommend the host's explicit-only invocation control, not a kind
+word such as "playbook" or "workflow" in the name or description; a label does
+not stop automatic selection. When the host has no such control, record that
+the risk remains.
 
 Check that all skill-level activation conditions are in the frontmatter
 description, every-run choices and invariants are inline, and branch-specific
@@ -133,9 +138,11 @@ premature completion.
 
 Check the frontmatter description against the activation boundary contract in
 the parent `SKILL.md`. Recommend omitting implementation details, resources,
-benefits, reasons, and output promises unless a detail distinguishes
-activation. Skill-level "when to use" and "when not to use" guidance belongs
-outside the body.
+benefits, and reasons unless a detail distinguishes activation. Before
+recommending any description change, apply the
+[description routing check](validate-changes.md#check-description-routing).
+Skill-level "when to use" and "when not to use" guidance belongs outside the
+body.
 
 The body should open at the first post-trigger decision or action, use
 imperative language for actions and declarative language for execution facts

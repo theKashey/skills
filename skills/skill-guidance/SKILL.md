@@ -12,22 +12,25 @@ creator.
 ## Review the activation boundary
 
 **Activation boundary — Separate activation from execution.** Check that every
-skill-level activation condition is in the frontmatter description, naming the
-concrete situation and behavior that need the skill without listing
-hypothetical failures, adjacent tools, or workflow phases. It states what the
-skill does and when to use it. For *what*, name the response or outcome that
-separates it from another skill with the same trigger, not an inventory of
-mechanisms. For *when*, name the task, artifact, or work situation that
-requires it—*adding or changing a migration*, not *working with
-databases*—because a topic-wide trigger loads the skill for every nearby task.
-Add a `not for` clause only for a neighboring task that would otherwise
-activate it. Aim for at most 240 characters, because every installed
-description shares one listing budget; exceed that only when a needed *what*,
-*when*, or `not for` clause cannot fit once the excluded content is gone, and
-never beyond 500. The validator warns on any description over 240 and rejects
-one over 500. The body must start after activation and retain only post-trigger
-decisions, actions, resources, boundaries, and completion checks. Internal
-branch conditions remain execution logic.
+skill-level activation condition is in the frontmatter description, without the
+skill's own steps or procedure, an inventory of mechanisms, hypothetical
+failures, or adjacent tools. State *what*: the response or outcome that
+separates it from another skill with the same trigger; when no task evidence
+selects between those outcomes, apply
+[Law X](LAWS.md#law-x--restructure-overlap-do-not-reword-it) instead. State
+*when*: the task or work situation that requires it, or the artifact its
+operation changes, verifies, or must interpret—*adding or changing a
+migration*, not *working with databases*—because a topic-wide trigger, or an
+artifact merely in view, loads the skill for every nearby task. A timing
+condition may bound that task, never replace it. Add a `not for` clause only
+for a neighboring task that would otherwise activate it. Aim for at most 240
+characters, because every installed description shares one listing budget;
+exceed that only when a needed *what*, *when*, or `not for` clause cannot fit
+once the excluded content is gone, and never beyond 500. The validator warns on
+any description over 240 and rejects one over 500. The body must start after
+activation and retain only post-trigger decisions, actions, resources,
+boundaries, and completion checks. Internal branch conditions remain execution
+logic.
 
 ## Apply the decision laws
 

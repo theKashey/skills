@@ -99,6 +99,24 @@ Assess:
 Reference loading, tool use, produced files, and literal instruction compliance
 are evidence only when they contribute to the frozen outcome.
 
+### Check description routing
+
+Reword a description only for an observed or reproduced misroute, frozen as a
+prompt, or a named activation-contract violation; a contract repair still
+leaves routing `UNVALIDATED` until this check runs. Freeze the co-installed
+description set plus `none`; a result does not transfer to another set. A
+fresh author who is not the proposer writes the prompts: positives as user
+requests and as post-inspection task states; near-misses owned by a
+co-installed skill that carry the target's trigger words; and routine tasks,
+or tasks with an artifact merely in view, that no contract claims. Evaluators
+see only the frozen set and one prompt; the proposer neither evaluates nor
+revises prompts after results. Report `BLOCK` when the candidate loses a
+prompt the baseline routed correctly. When baseline and candidate both split a
+prompt between skills whose contracts claim it, report
+`NEEDS-HUMAN-DECISION` with a
+[Law X](../LAWS.md#law-x--restructure-overlap-do-not-reword-it)
+restructuring recommendation instead of rewording.
+
 ## 4. Decide and record
 
 - `PASS` when the candidate preserves invariants and improves or matches the
