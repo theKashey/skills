@@ -1,6 +1,6 @@
 ---
 name: helix
-description: Use when uncertain or inherited work risks unframed experiments or accumulating plans and needs one bounded evidence loop plus a compact checkpoint; not for routine work with clear scope and order.
+description: Keeps one rewritten checkpoint of verdicts and surviving branches across cycles. Use when uncertain or inherited work spans several moves; not for routine work with clear scope and order or a single uncertain next move.
 ---
 
 # Helix

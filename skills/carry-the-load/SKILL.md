@@ -1,6 +1,6 @@
 ---
 name: carry-the-load
-description: Use after an engineering outcome or move is selected, before implementation expands, to shape one value-bearing increment with bounded failure; not for choosing the move, multi-cycle planning state, or interrogating a finished claim.
+description: Shapes one value-bearing increment with a contained misfire. Use when implementing a selected engineering outcome or move, before the work expands; not for choosing the move, multi-cycle planning state, or interrogating a finished claim.
 ---
 
 # Carry the Load
