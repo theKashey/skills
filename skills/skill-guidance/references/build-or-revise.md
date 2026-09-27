@@ -132,10 +132,10 @@ premature completion.
 ## 4. Review the runtime contract
 
 Check the frontmatter description against the activation boundary contract in
-the parent `SKILL.md`. Recommend omitting capability summaries, implementation
-details, resources, benefits, reasons, and output promises unless a detail
-distinguishes activation. Skill-level "when to use" and "when not to use"
-guidance belongs outside the body.
+the parent `SKILL.md`. Recommend omitting implementation details, resources,
+benefits, reasons, and output promises unless a detail distinguishes
+activation. Skill-level "when to use" and "when not to use" guidance belongs
+outside the body.
 
 The body should open at the first post-trigger decision or action, use
 imperative language for actions and declarative language for execution facts

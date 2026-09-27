@@ -2,7 +2,7 @@
 """Deterministic structural validation for one standalone Agent Skill package.
 
 Checks only mechanically decidable properties: frontmatter contract including
-the single-sentence description, text encoding, forbidden artifacts, local
+the description hard maximum, text encoding, forbidden artifacts, local
 link and heading-anchor closure, README runtime exclusion, network commands,
 and parent-directory escapes in scripts and structured data. Literal network
 references produce REVIEW findings, not dependency errors: whether a mention
@@ -10,7 +10,8 @@ is load-bearing belongs to the audit route. PASS establishes only mechanical
 validity. Exit 1 means mechanical failure; exit 2 means unresolved REVIEW
 findings, even if mechanical checks pass; exit 0 means neither was found.
 Semantic network isolation remains UNVALIDATED until the audit resolves every
-REVIEW finding.
+REVIEW finding. A description over the length target produces a WARNING that
+never changes the exit code.
 
 A mechanically valid package also gets a runtime flow report: every text file
 in the runtime set (SKILL.md, files under agents/ and references/, and files
@@ -60,9 +61,8 @@ COMMAND_SURFACES = {".md", ".ps1", ".sh", ".txt", ".yaml", ".yml"}
 # example assets/) is treated as runtime only when the SKILL.md link graph
 # reaches it.
 RUNTIME_ROOTS = {"agents", "references", "scripts"}
-MAX_DESCRIPTION = 240
-SENTENCE_BREAK_RE = re.compile(r"[.!?]\s+\S")
-ABBREVIATION_RE = re.compile(r"\b(?:e\.g|i\.e|etc|vs|cf)\.\s", re.IGNORECASE)
+MAX_DESCRIPTION = 500  # hard ceiling, below the Agent Skills 1,024 maximum
+TARGET_DESCRIPTION = 240  # shared listing budget; warns, never fails
 
 
 def decode_text(path: Path) -> tuple[str | None, str | None]:
@@ -244,11 +244,13 @@ def fenced_shell_escape_errors(relative: Path, path: Path, root: Path, text: str
 
 
 def validate_skill(
-    skill_root: Path, report: list[tuple[str, int, int]] | None = None
+    skill_root: Path,
+    report: list[tuple[str, int, int]] | None = None,
+    warnings: list[str] | None = None,
 ) -> tuple[list[str], list[str]]:
     """Return (mechanical errors, REVIEW findings); when `report` is given,
     fill it with (path, lines, words) for each runtime file an activation can
-    read."""
+    read; when `warnings` is given, append non-failing warnings."""
     if skill_root.is_symlink():
         return [f"{skill_root}: package root must not be a symlink"], []
     root = skill_root.resolve()
@@ -270,8 +272,11 @@ def validate_skill(
         errors.append(f"{skill_file}: missing frontmatter description")
     elif len(description) > MAX_DESCRIPTION:
         errors.append(f"{skill_file}: description exceeds {MAX_DESCRIPTION} characters")
-    elif SENTENCE_BREAK_RE.search(ABBREVIATION_RE.sub("", description)):
-        errors.append(f"{skill_file}: description must be one sentence")
+    elif len(description) > TARGET_DESCRIPTION and warnings is not None:
+        warnings.append(
+            f"{skill_file}: description is {len(description)} characters, over the "
+            f"{TARGET_DESCRIPTION}-character target; confirm every clause is needed"
+        )
 
     texts: dict[Path, str] = {}
     links: dict[Path, list[Path]] = {}
@@ -422,11 +427,15 @@ def run_self_test() -> tuple[list[str], int]:
         binary_errors, _ = validate_skill(binary, flow)
         if binary_errors or flow != [("SKILL.md", 8, 12)]:
             failures.append(f"linked binary asset: errors={binary_errors} flow={flow}")
-        expect("overlong description", make("overlong", "Body.", "x" * 241), False, "exceeds")
+        expect("overlong description", make("overlong", "Body.", "x" * 501), False, "exceeds")
+        expect("description at hard maximum", make("at-max", "Body.", "x" * 500), True)
+        warnings: list[str] = []
+        count += 1
+        over_target_errors, _ = validate_skill(make("over-target", "Body.", "x" * 241), warnings=warnings)
+        if over_target_errors or len(warnings) != 1 or "target" not in warnings[0]:
+            failures.append(f"over-target description: errors={over_target_errors} warnings={warnings}")
         expect("multi-sentence description", make("two-sentence", "Body.",
-            "Use when X applies. Also use when Y applies."), False, "one sentence")
-        expect("abbreviated description", make("abbrev-ok", "Body.",
-            "Use when X needs e.g. a check; not for Y."), True)
+            "Does X. Use when Y applies."), True)
         expect("missing cross-file anchor", make("anchor-miss", "See [a](references/a.md#absent).", files=[
             ("references/a.md", "# Present topic\n\nBody.\n")]), False, "missing anchor")
         expect("present cross-file anchor", make("anchor-hit", "See [a](references/a.md#present-topic).", files=[
@@ -502,7 +511,8 @@ def main() -> int:
     if args.skill:
         target = args.skill.resolve()
         flow: list[tuple[str, int, int]] = []
-        package_errors, reviews = validate_skill(target, flow)
+        warnings: list[str] = []
+        package_errors, reviews = validate_skill(target, flow, warnings)
         errors.extend(package_errors)
         if not errors:
             files = sum(1 for p in target.rglob("*") if p.is_file())
@@ -512,6 +522,8 @@ def main() -> int:
             for path, lines, words in flow:
                 print(f"  {path:<{width}}  {lines:>5} {words:>6}")
             print(f"  {'all runtime files':<{width}}  {sum(f[1] for f in flow):>5} {sum(f[2] for f in flow):>6}")
+        for warning in warnings:
+            print(f"WARNING {warning}")
         for review in reviews:
             print(f"REVIEW {review}")
         if reviews:

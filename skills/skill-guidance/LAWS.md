@@ -91,3 +91,13 @@ confidence of a live one.
 A specialist owns only a named conditional delta from an established broader
 owner's default; a normal-case change belongs to that owner, and an orthogonal
 concern keeps its own selection logic.
+
+## Law X — Restructure overlap; do not reword it
+
+When selectable units—skills, route rows, or conditional references—claim the
+same trigger with different moves the task cannot choose between (a crowded
+shelf), or one unit claims triggers that share no capability (a bloated book),
+no wording lets the agent select correctly. Merge the competitors or demote
+one, split the disjoint part, or establish a Law IX relation. Reword only when
+both inspected contracts show distinct scopes; a shared topic is not a shared
+trigger, and many synonyms for one capability do not justify a split.

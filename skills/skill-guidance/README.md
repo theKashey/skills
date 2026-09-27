@@ -25,6 +25,15 @@ references can improve clarity and signal-to-noise, but each serial discovery
 adds latency; the main `SKILL.md` should expose materially long journeys so the
 agent can plan the required reads.
 
+Descriptions carry a separate, shared cost: every installed skill's
+description loads in every session, so long ones crowd other skills out of one
+bounded listing. The 240-character target is a working budget; exceeding it
+is allowed only for a clause that separates the skill from a neighbor or
+matches an intended task, and dropping the skill's distinguishing outcome to
+meet the number is the rejected shortcut. 500 characters is a hard ceiling,
+well below the platform's 1,024, because at the platform size a few
+descriptions would consume the whole listing.
+
 Lower context cost matters only while the agent can still choose reliably.
 Equivalent prose and a table can impose different retrieval costs; a local cue
 can prevent a wrong turn even when the complete rule lives elsewhere. Likewise,
