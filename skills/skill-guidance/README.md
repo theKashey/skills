@@ -36,9 +36,9 @@ descriptions would consume the whole listing.
 
 A description is read by a router model, not a person, and the least capable
 model a consumer supports moves over time. Terse wording is acceptable when
-that floor model routes correctly on it, so each skill ships the queries it
-must answer in `evals/eval_queries.jsonl`, letting whoever installs it rerun
-them when their floor changes. A skill installed alone carries only its own
+that floor model routes correctly on it, so Skill Guidance recommends that a
+skill ship the queries it should answer in `evals/eval_queries.jsonl`, letting
+whoever installs it rerun them when their floor changes. A skill installed alone carries only its own
 directory, so queries kept elsewhere do not ship at all; an agent that acts on
 an unlinked file it was never pointed at is the agent's defect. The skill
 wakes among unknown neighbors, so its queries speak only for it and name no
