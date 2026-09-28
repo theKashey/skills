@@ -132,7 +132,8 @@ read journey, recommend marking required and conditional steps so independent
 reads can be planned together. Treat line count as a signal, not a placement
 rule. Split by invocation when a branch needs independent discovery. Split by
 sequence only after a sharper completion criterion fails to prevent observed
-premature completion.
+premature completion: several steps' work landing in one response, or a later
+step reported done although its instructions were never read.
 
 ## 4. Review the runtime contract
 
@@ -154,8 +155,14 @@ For every procedure, check:
 1. State its internal branch condition and authorized scope.
 2. Apply each [Agent Instruction Law](../LAWS.md) whose condition arises.
 3. Put warnings immediately before the action they govern.
-4. End each meaningful step with a checkable completion condition.
+4. End each meaningful step with a checkable completion condition. When the
+   skill ends in a handover artifact, make that artifact its only skill-level
+   completion, so a run does not stop at an intermediate result.
 5. Use an example only when it resolves ambiguity left by the decision laws.
+   Show the recurring problem and how it is recognized, not the fix one case
+   received; a baked-in fix goes stale with the code.
+6. In a sequenced procedure, let order govern presentation, never disclosure:
+   a finding that bears on a pending user decision is reported when found.
 
 Recommend removing explanations, excuses, defenses, anticipated objections,
 authoring help, and design history from the body and runtime references. Retain

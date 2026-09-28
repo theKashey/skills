@@ -53,6 +53,9 @@ for each failure. Also check that:
 - the body and runtime references contain no skill-level triggers, support,
   explanations, or excuses;
 - retained causal rationale improves behavior;
+- a sequenced route reports a finding that bears on a pending user decision
+  when found, not at a later step, and a skill ending in a handover artifact
+  names that artifact as its only skill-level completion;
 - an existing maintainer README holds only the durable subject-facing reasons
   the parent reader contract in `SKILL.md` assigns it;
 - description-to-route coverage, direct and conditional reference pointers,

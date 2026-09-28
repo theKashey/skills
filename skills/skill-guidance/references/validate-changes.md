@@ -13,7 +13,8 @@ environment, clean observer, or check is `UNVALIDATED`, never an inferred pass.
 
 Before observing a run, record:
 
-- candidate revision and target harness;
+- candidate revision, target harness, and executing model: the named floor, as
+  for routing;
 - representative task and supplied context;
 - intended outcome and non-negotiable invariants;
 - choice the skill must change and plausible default it must beat;
@@ -89,7 +90,9 @@ Assess:
 3. generalization to an unseen case when rationale should transfer;
 4. distinction between user intent, current behavior, and mechanical facts;
 5. authorized scope and avoidance of unrelated ritual;
-6. satisfaction of the checkable completion criterion;
+6. satisfaction of the checkable completion criterion; a pass that relied on
+   a critical input the skill never elicited, but the user or task happened to
+   supply, is not evidence of its process—recommend an eliciting step;
 7. decision reliability and total reading, retrieval, and execution cost,
    including recurring context and traversal latency, with the loaded flow's
    size for candidate and baseline taken from the validator's runtime flow
