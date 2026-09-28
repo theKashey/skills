@@ -118,13 +118,25 @@ creating it from this check's prompts. A fresh author who is not the proposer
 writes the prompts: positives as user requests and as post-inspection task
 states; near-misses owned by a co-installed skill that carry the target's
 trigger words; and routine tasks, or tasks with an artifact merely in view, that
-no contract claims. Evaluators see only the frozen set and one `query`, never
-its `note`; the proposer neither evaluates nor revises prompts after results.
-Report `BLOCK` when the candidate loses a prompt the baseline routed correctly.
-When baseline and candidate both split a prompt between skills whose contracts
-claim it, report `NEEDS-HUMAN-DECISION` with a
-[Law X](../LAWS.md#law-x--restructure-overlap-do-not-reword-it) restructuring
-recommendation instead of rewording.
+no contract claims. Each evaluator sees only the whole frozen set plus `none`
+and one `query`, never its `note`, and returns up to three ranked candidates
+with scores, marking which it would load; run each query three times. The proposer neither
+evaluates nor revises prompts after results. Classify the target per query:
+
+| Target across runs | `should_trigger: true` | `should_trigger: false` |
+| --- | --- | --- |
+| Sole winner in every run | Go | Overtrigger |
+| Among winners in any run, or sole winner in only some runs | Grey | Overtrigger |
+| Not a winner in any run, including when `none` wins | Loser | Go |
+
+Scores support the ranking; they set no threshold. The candidate passes only
+when every query is a go. A loser means sharpening the target's own *what* or
+*when*. Grey means the same when the inspected contracts show distinct scopes;
+when more than one claims the prompt, report `NEEDS-HUMAN-DECISION` with a
+[Law X](../LAWS.md#law-x--restructure-overlap-do-not-reword-it) recommendation
+to rescope the competitors instead of rewording. Report `BLOCK` for any other
+query that is not a go, and always when the candidate turns a baseline go into
+any other cell.
 
 ## 4. Decide and record
 
