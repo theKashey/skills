@@ -34,6 +34,20 @@ meet the number is the rejected shortcut. 500 characters is a hard ceiling,
 well below the platform's 1,024, because at the platform size a few
 descriptions would consume the whole listing.
 
+A description is read by a router model, not a person, and the least capable
+model a consumer supports moves over time. Terse wording is acceptable when
+that floor model routes correctly on it, so each skill ships the queries it
+must answer in `evals/eval_queries.jsonl`, letting whoever installs it rerun
+them when their floor changes. A skill installed alone carries only its own
+directory, so queries kept elsewhere do not ship at all; an agent that acts on
+an unlinked file it was never pointed at is the agent's defect. The skill
+wakes among unknown neighbors, so its queries speak only for it and name no
+other skill; relations between skills belong wherever a set is assembled.
+Descriptions never demand selection: if every skill insists on being used,
+the router has nothing to choose by, which is the pressure description
+poisoning exploits. Pushy wording to cure an undertrigger is the rejected
+shortcut.
+
 Lower context cost matters only while the agent can still choose reliably.
 Equivalent prose and a table can impose different retrieval costs; a local cue
 can prevent a wrong turn even when the complete rule lives elsewhere. Likewise,
@@ -106,7 +120,7 @@ Docs governs the prose of that README, not its ownership boundary.
 
 The validator treats `SKILL.md`, `agents/`, `references/`, `scripts/`, and
 everything they link as the runtime set and rejects a package whose runtime
-links reach `README.md`.
+links reach `README.md` or `evals/`.
 
 `LAWS.md` is loaded by every route, so its separate file is an ownership
 boundary rather than progressive disclosure: Carry the Load, a separately

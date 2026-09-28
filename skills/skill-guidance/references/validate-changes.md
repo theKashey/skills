@@ -102,20 +102,29 @@ are evidence only when they contribute to the frozen outcome.
 ### Check description routing
 
 Reword a description only for an observed or reproduced misroute, frozen as a
-prompt, or a named activation-contract violation; a contract repair still
-leaves routing `UNVALIDATED` until this check runs. Freeze the co-installed
-description set plus `none`; a result does not transfer to another set. A
-fresh author who is not the proposer writes the prompts: positives as user
-requests and as post-inspection task states; near-misses owned by a
-co-installed skill that carry the target's trigger words; and routine tasks,
-or tasks with an artifact merely in view, that no contract claims. Evaluators
-see only the frozen set and one prompt; the proposer neither evaluates nor
-revises prompts after results. Report `BLOCK` when the candidate loses a
-prompt the baseline routed correctly. When baseline and candidate both split a
-prompt between skills whose contracts claim it, report
-`NEEDS-HUMAN-DECISION` with a
-[Law X](../LAWS.md#law-x--restructure-overlap-do-not-reword-it)
-restructuring recommendation instead of rewording.
+prompt, or a named activation-contract violation; a contract repair still leaves
+routing `UNVALIDATED` until this check runs. Freeze the co-installed description
+set plus `none`, and the evaluator model: the floor, the least capable model the
+skill must support, as the maintainer or consumer names it. A result transfers
+to neither another set nor another model; without a named floor, routing is
+`UNVALIDATED`. A floor change is a reason to rerun, and a prompt it loses is the
+measured misroute that permits rewording. The target's
+`evals/eval_queries.jsonl` is its must-not-lose baseline: one object per line
+with `query`, `should_trigger`, and an optional `note`, speaking only for the
+target and naming no other skill. Recommend appended lines to the host skill
+creator; only a frozen observed misroute or a fresh author adds one, never the
+proposer after seeing results. When the target has no such file, recommend
+creating it from this check's prompts. A fresh author who is not the proposer
+writes the prompts: positives as user requests and as post-inspection task
+states; near-misses owned by a co-installed skill that carry the target's
+trigger words; and routine tasks, or tasks with an artifact merely in view, that
+no contract claims. Evaluators see only the frozen set and one `query`, never
+its `note`; the proposer neither evaluates nor revises prompts after results.
+Report `BLOCK` when the candidate loses a prompt the baseline routed correctly.
+When baseline and candidate both split a prompt between skills whose contracts
+claim it, report `NEEDS-HUMAN-DECISION` with a
+[Law X](../LAWS.md#law-x--restructure-overlap-do-not-reword-it) restructuring
+recommendation instead of rewording.
 
 ## 4. Decide and record
 

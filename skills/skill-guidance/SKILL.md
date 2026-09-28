@@ -17,17 +17,22 @@ skill's own steps or procedure, an inventory of mechanisms, hypothetical
 failures, or adjacent tools. State *what*: the response or outcome that
 separates it from another skill with the same trigger; when no task evidence
 selects between those outcomes, apply
-[Law X](LAWS.md#law-x--restructure-overlap-do-not-reword-it) instead. State
-*when*: the task or work situation that requires it, or the artifact its
-operation changes, verifies, or must interpret—*adding or changing a
-migration*, not *working with databases*—because a topic-wide trigger, or an
-artifact merely in view, loads the skill for every nearby task. A timing
-condition may bound that task, never replace it. Add a `not for` clause only
-for a neighboring task that would otherwise activate it. Aim for at most 240
-characters, because every installed description shares one listing budget;
-exceed that only when a needed *what*, *when*, or `not for` clause cannot fit
-once the excluded content is gone, and never beyond 500. The validator warns on
-any description over 240 and rejects one over 500. The body must start after
+[Law X](LAWS.md#law-x--restructure-overlap-do-not-reword-it) instead. State *when*:
+the task or work situation that requires it, or the artifact its operation
+changes, verifies, or must interpret—*adding or changing a migration*, not
+*working with databases*—because a topic-wide trigger, or an artifact merely in
+view, loads the skill for every nearby task. A timing condition may bound that
+task, never replace it. Add a `not for` clause only for a neighboring task that
+would otherwise activate it. Never demand selection—*always use*, *most
+effective*, *whenever possible*, *even if they don't ask*—because demands from
+every installed skill leave the router nothing to choose by; fix an undertrigger
+with a sharper *what* or *when*, or Law X. Terse wording that leans on shared
+priors is fine when the floor model—the least capable model the skill must
+support—routes correctly on it. Aim for at most 240 characters, because every
+installed description shares one listing budget; exceed that only when a needed
+*what*, *when*, or `not for` clause cannot fit once the excluded content is
+gone, and never beyond 500. The validator warns on any description over 240 or
+with demanding wording and rejects one over 500. The body must start after
 activation and retain only post-trigger decisions, actions, resources,
 boundaries, and completion checks. Internal branch conditions remain execution
 logic.

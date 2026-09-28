@@ -3,15 +3,16 @@
 
 Checks only mechanically decidable properties: frontmatter contract including
 the description hard maximum, text encoding, forbidden artifacts, local
-link and heading-anchor closure, README runtime exclusion, network commands,
-and parent-directory escapes in scripts and structured data. Literal network
+link and heading-anchor closure, README and evals/ runtime exclusion, the
+evals/eval_queries.jsonl line schema, network commands, and parent-directory
+escapes in scripts and structured data. Literal network
 references produce REVIEW findings, not dependency errors: whether a mention
 is load-bearing belongs to the audit route. PASS establishes only mechanical
 validity. Exit 1 means mechanical failure; exit 2 means unresolved REVIEW
 findings, even if mechanical checks pass; exit 0 means neither was found.
 Semantic network isolation remains UNVALIDATED until the audit resolves every
-REVIEW finding. A description over the length target produces a WARNING that
-never changes the exit code.
+REVIEW finding. A description over the length target or with demanding
+wording produces a WARNING that never changes the exit code.
 
 A mechanically valid package also gets a runtime flow report: every text file
 in the runtime set (SKILL.md, files under agents/ and references/, and files
@@ -25,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import codecs
+import json
 import re
 import sys
 import tempfile
@@ -48,7 +50,7 @@ NETWORK_COMMAND_RE = re.compile(
 SCHEMA_LINE_RE = re.compile(r"""["']?\$schema["']?\s*:""")
 PARENT_TOKEN_RE = re.compile(r"""(?:^|[\s"'`=(\[{,;])((?:\.\./)+[\w@()./-]*)""")
 TEXT_SUFFIXES = {
-    ".css", ".csv", ".html", ".ini", ".js", ".json", ".jsx", ".md", ".mjs",
+    ".css", ".csv", ".html", ".ini", ".js", ".json", ".jsonl", ".jsx", ".md", ".mjs",
     ".ps1", ".py", ".rb", ".sh", ".svg", ".toml", ".ts", ".tsx", ".txt",
     ".xml", ".yaml", ".yml",
 }
@@ -63,6 +65,14 @@ COMMAND_SURFACES = {".md", ".ps1", ".sh", ".txt", ".yaml", ".yml"}
 RUNTIME_ROOTS = {"agents", "references", "scripts"}
 MAX_DESCRIPTION = 500  # hard ceiling, below the Agent Skills 1,024 maximum
 TARGET_DESCRIPTION = 240  # shared listing budget; warns, never fails
+DEMAND_RE = re.compile(
+    r"\b(?:always|must|make sure to)\s+(?:use|invoke|load|call)\b|\bmost effective\b"
+    r"|\bwhenever possible\b|\buse (?:this|me) first\b"
+    r"|\beven if (?:they|the user) (?:don't|do not|doesn't)\b",
+    re.IGNORECASE,
+)
+QUERIES_FILE = Path("evals/eval_queries.jsonl")
+QUERY_KEYS = {"query", "should_trigger", "note"}
 
 
 def decode_text(path: Path) -> tuple[str | None, str | None]:
@@ -243,6 +253,40 @@ def fenced_shell_escape_errors(relative: Path, path: Path, root: Path, text: str
     return errors
 
 
+def query_findings(skill_root: Path, content: str) -> list[str]:
+    """Check each routing-query line: an object with a non-empty string
+    `query`, a boolean `should_trigger`, an optional string `note`, nothing
+    else, and no repeated query."""
+    errors: list[str] = []
+    seen: set[str] = set()
+    for number, line in enumerate(content.splitlines(), 1):
+        if not line.strip():
+            continue
+        where = f"{skill_root}/{QUERIES_FILE}:{number}"
+        try:
+            item = json.loads(line)
+        except json.JSONDecodeError as exc:
+            errors.append(f"{where}: invalid JSON ({exc.msg})")
+            continue
+        if not isinstance(item, dict):
+            errors.append(f"{where}: each line must be a JSON object")
+            continue
+        if extra := sorted(set(item) - QUERY_KEYS):
+            errors.append(f"{where}: unknown keys {extra}; a skill speaks only for itself")
+        query = item.get("query")
+        if not isinstance(query, str) or not query.strip():
+            errors.append(f"{where}: query must be a non-empty string")
+        elif query in seen:
+            errors.append(f"{where}: duplicate query")
+        else:
+            seen.add(query)
+        if not isinstance(item.get("should_trigger"), bool):
+            errors.append(f"{where}: should_trigger must be a boolean")
+        if "note" in item and not isinstance(item["note"], str):
+            errors.append(f"{where}: note must be a string")
+    return errors
+
+
 def validate_skill(
     skill_root: Path,
     report: list[tuple[str, int, int]] | None = None,
@@ -276,6 +320,11 @@ def validate_skill(
         warnings.append(
             f"{skill_file}: description is {len(description)} characters, over the "
             f"{TARGET_DESCRIPTION}-character target; confirm every clause is needed"
+        )
+    if description and warnings is not None and (demand := DEMAND_RE.search(description)):
+        warnings.append(
+            f"{skill_file}: description demands selection ({demand.group(0)!r}); "
+            "state when and what instead"
         )
 
     texts: dict[Path, str] = {}
@@ -356,6 +405,10 @@ def validate_skill(
         errors.append(
             f"{skill_root}/README.md: maintainer README must not be a runtime dependency"
         )
+    for relative in sorted(r for r in runtime if r.parts[0] == "evals"):
+        errors.append(f"{skill_root}/{relative}: evals must not be a runtime dependency")
+    if QUERIES_FILE in texts:
+        errors.extend(query_findings(skill_root, texts[QUERIES_FILE]))
     if report is not None:
         for relative in sorted(runtime, key=lambda r: (r.name != "SKILL.md", str(r))):
             if relative.parts[0] == "scripts":
@@ -436,6 +489,23 @@ def run_self_test() -> tuple[list[str], int]:
             failures.append(f"over-target description: errors={over_target_errors} warnings={warnings}")
         expect("multi-sentence description", make("two-sentence", "Body.",
             "Does X. Use when Y applies."), True)
+        warnings = []
+        count += 1
+        validate_skill(make("demanding", "Body.", "Always use this for X."), warnings=warnings)
+        if len(warnings) != 1 or "demands" not in warnings[0]:
+            failures.append(f"demanding description: warnings={warnings}")
+        good_line = '{"query": "Q", "should_trigger": true, "note": "why"}\n'
+        expect("valid routing queries", make("queries-ok", "Body.", files=[
+            ("evals/eval_queries.jsonl", good_line + '{"query": "R", "should_trigger": false}\n')]), True)
+        expect("routing query bad type", make("queries-type", "Body.", files=[
+            ("evals/eval_queries.jsonl", '{"query": "Q", "should_trigger": "yes"}\n')]), False, "boolean")
+        expect("routing query sibling field", make("queries-sibling", "Body.", files=[
+            ("evals/eval_queries.jsonl", '{"query": "Q", "should_trigger": false, '
+             '"expected_alternative_skill": "other"}\n')]), False, "speaks only for itself")
+        expect("routing query duplicate", make("queries-dup", "Body.", files=[
+            ("evals/eval_queries.jsonl", good_line + good_line)]), False, "duplicate")
+        expect("runtime evals link", make("queries-rt", "See [q](evals/eval_queries.jsonl).", files=[
+            ("evals/eval_queries.jsonl", good_line)]), False, "evals must not be a runtime dependency")
         expect("missing cross-file anchor", make("anchor-miss", "See [a](references/a.md#absent).", files=[
             ("references/a.md", "# Present topic\n\nBody.\n")]), False, "missing anchor")
         expect("present cross-file anchor", make("anchor-hit", "See [a](references/a.md#present-topic).", files=[
