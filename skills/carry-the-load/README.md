@@ -191,6 +191,7 @@ divergence; an accidental paraphrase between them is a defect.
 | [Behavior principles](references/behavior-principles.md) | Conditional admission, placement, wording, and validation of learned agent behavior |
 | [Lean development](references/lean-development.md) | Expanded doctrine: what Lean is, why it works, and its mapping to AI-assisted development; maintainer support only |
 | [Antifragility](references/antifragility.md) | Expanded doctrine: the triad, why convexity works, and its software mapping; maintainer support only |
+| [Routing queries](evals/eval_queries.jsonl) | Prompts whose routing a description change must not lose, each with its reason; never loaded at runtime |
 
 ## Boundaries
 
