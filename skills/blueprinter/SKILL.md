@@ -55,19 +55,17 @@ While reading, look for:
 **Every answer ends in one of two verdicts.**
 
 - **ok, now what** — the answer holds. Ask the follow-on question it raises,
-  if any: "this data comes from GraphQL, and it is there — now which fields
-  does the task need?"
+  if any: "the data is already available — now which part does the task
+  need?"
 - **yes, but …** — something stands in the way: a source you cannot read, a
   convention that forbids the obvious route, an unfamiliar system, an unread
-  document. "The state lives here, but I am not allowed to read it." "One REST
-  call does it, but this team does not use REST." Before moving on, you may
-  put a question in front of it: research the obstacle, or ask why until the
-  requirement behind it is clear. Then take the way around and record it. A
-  yes-but never stops the work.
+  document. Before moving on, you may put a question in front of it: research
+  the obstacle, or ask why until the requirement behind it is clear. Then take
+  the way around and record it. A yes-but never stops the work.
 
 **Trace what the task needs, as far as it needs.** If the task changes what
-other services see, read those services. If it only reads a prop the parent
-already passes, there is nothing to trace. Stop following a question when more
+other services see, read those services. If it only uses input the block
+already receives, there is nothing to trace. Stop following a question when more
 reading cannot change the surgery, and record where you stopped.
 
 Orient draws the system as it is. The only marks it sets are Existing and
@@ -174,9 +172,9 @@ keeps its `⚠`.
 ## 4. Take corrections
 
 The developer corrects by naming a question, block, or layer: "go further at
-Q4", "stop at Q7", "yes, but Q2 is owned by another team", "B3 already exists
-in billing", "put it in B2, not B5", "split B4", "extract B1 first", "buy,
-don't build B6". For each correction:
+Q4", "stop at Q7", "yes, but Q2 is owned by another team", "B3 already exists",
+"put it in B2, not B5", "split B4", "extract B1 first", "buy, don't build
+B6". For each correction:
 
 1. Redraw every layer the correction lands on. A correction to orientation
    redraws the orientation first, then every surgery view it changes.

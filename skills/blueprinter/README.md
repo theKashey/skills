@@ -33,12 +33,12 @@ switch and a hand-off. Blueprinter keeps plan mode's investigate-before-code
 step without its separate mode or its whole-plan approval.
 
 Blueprinter exists so that the developer can correct the structure in the
-vocabulary of structure: "you missed the existing billing system", "change it
-here, not there", "make two blocks, not one", "extract this first". **Each
-correction lands on one named block, and the agent redraws the blueprint
-instead of rewriting a plan.** The intended effect is that a wrong placement,
-a missed existing system, or a wrong split is found while it is still one
-sentence of correction, not after it is a diff across many files.
+vocabulary of structure: "you missed the existing system that does this",
+"change it here, not there", "make two blocks, not one", "extract this
+first". **Each correction lands on one named block, and the agent redraws the
+blueprint instead of rewriting a plan.** The intended effect is that a wrong
+placement, a missed existing system, or a wrong split is found while it is
+still one sentence of correction, not after it is a diff across many files.
 
 A small, clean task is weak evidence for that effect. It has no hidden
 existing system to miss and no competing places for the change to land.
@@ -77,7 +77,7 @@ the agent must know, need, or do; how it reaches, proves, or deploys the
 result; whom it must read or inform; and where the data, state, or
 information comes from. The task sets the depth. A change that alters what
 other services see sends the agent to read those services; a change that
-only reads a prop a parent component already passes needs no tracing at all.
+only uses input a block already receives needs no tracing at all.
 Tracing stops where more reading could not change the surgery, and the
 blueprint shows where it stopped, so the developer can send the agent
 further. The agent may also research online, for example a vendor API, and
@@ -161,7 +161,7 @@ charts for logistics, and state charts for tactics.
 - **Orientation bounded by the task**, instead of a full scan of the codebase
   or a fixed depth. What the task needs decides how far each slice is traced.
 - **Questions factored per task**, instead of a fixed checklist. A fixed list
-  asks the same things of a prop change and a cross-service change, and
+  asks the same things of a local change and a cross-service change, and
   misses what only this task raises.
 - **No gate between the phases.** One blueprint holds orientation and
   surgery; a correction to orientation redraws the surgery instead of waiting
