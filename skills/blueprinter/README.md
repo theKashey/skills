@@ -77,10 +77,11 @@ the agent must know, need, or do; how it reaches, proves, or deploys the
 result; whom it must read or inform; and where the data, state, or
 information comes from. The task sets the depth. A change that alters what
 other services see sends the agent to read those services; a change that
-reads a prop from a parent component needs no tracing at all. Tracing stops
-where more reading could not change the surgery, and the blueprint shows
-where it stopped, so the developer can send the agent further. The agent may
-also research online, for example a vendor API, and cites what it read.
+only reads a prop a parent component already passes needs no tracing at all.
+Tracing stops where more reading could not change the surgery, and the
+blueprint shows where it stopped, so the developer can send the agent
+further. The agent may also research online, for example a vendor API, and
+cites what it read.
 
 Every answer ends in **ok, now what** or **yes, but**. An ok raises the next
 question. A yes-but names what stands in the way: a source the agent cannot

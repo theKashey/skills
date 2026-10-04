@@ -116,9 +116,10 @@ flowchart TB
 
 1. Scope challenger (D1): this changes what the skill does first.
 2. B4 Orient and B12 orientation view.
-3. B5 Operate, then B6, B7, B8.
-4. B11 description; README B14, B1, B2, B3.
+3. B5 Operate, then B6, B7, B8, B9.
+4. B11 description; README B14, B1, B2, B3, under D2.
 5. `validate_skills.py`, preservation review.
+6. Closing commit removes this blueprint.
 
 ## Block cards
 

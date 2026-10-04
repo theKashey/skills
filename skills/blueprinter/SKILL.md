@@ -66,8 +66,8 @@ While reading, look for:
   yes-but never stops the work.
 
 **Trace what the task needs, as far as it needs.** If the task changes what
-other services see, read those services. If it reads a prop from a parent
-component, there is nothing to trace. Stop following a question when more
+other services see, read those services. If it only reads a prop the parent
+already passes, there is nothing to trace. Stop following a question when more
 reading cannot change the surgery, and record where you stopped.
 
 Orient draws the system as it is. The only marks it sets are Existing and
@@ -199,9 +199,10 @@ only, as a section of the blueprint:
 - **Tests** that verify the block. They belong to the block's amendment, not
   to a block of their own.
 - **Diff** as a unified patch. Before presenting it, apply it to a scratch copy
-  or worktree and run the affected tests and the type check: the patch must
-  apply, and results must be no worse than before. Report what you ran. Do not
-  apply the diff to the host tree unless the developer asks.
+  or worktree and run the affected tests and the type check the host has: the
+  patch must apply, and results must be no worse than before. Report what you
+  ran, and name each check the host lacks. Do not apply the diff to the host
+  tree unless the developer asks.
 
 ## 6. Close the change
 
