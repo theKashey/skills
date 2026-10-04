@@ -189,9 +189,10 @@ charts for logistics, and state charts for tactics.
   Load shapes the accepted change into one increment, and Helix keeps state
   across cycles of uncertain work. Blueprinter places one change; it does not
   hold a checkpoint across cycles or reproduce those procedures.
-- **A blueprint belongs to one change.** It is committed with the work and
-  removed when the change lands, like a changeset. Version history keeps it;
-  the working tree does not, so a blueprint never becomes a standing
-  specification that the code must stay consistent with.
+- **A blueprint belongs to one change.** It is a working file, excluded from
+  version control by the clone's own exclude file and deleted when the change
+  lands. It never enters history, so nothing has to remember to remove it and
+  a blueprint never becomes a standing specification that the code must stay
+  consistent with.
 - **A blueprint is not proof.** It shows where a change lands and what it
   touches. It does not prove that the change is correct, valuable, or complete.

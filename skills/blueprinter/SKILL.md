@@ -10,8 +10,8 @@ existing system as far as the task needs. **Operate** proposes the surgery on
 what Orient traced, as marked blocks. The developer judges and corrects
 structure; prose and diffs appear only for the block under discussion.
 
-Do not edit host code while orienting or operating. The blueprint file is the
-only thing you write.
+Do not edit host code while orienting or operating. The blueprint file and
+its exclude entry are the only things you write.
 
 ## 1. Orient
 
@@ -112,7 +112,10 @@ references must keep pointing at the same thing.
 
 Write one blueprint per change to `.blueprints/<change-slug>.md` in the host
 repository, and show its views in the conversation. Revise that file in
-place; version history holds earlier revisions.
+place. It is a working file, never committed: before the first write, make
+sure `.blueprints/` is listed in the clone's exclude file — the path
+`git rev-parse --git-path info/exclude` prints — so it cannot be committed by
+accident. Earlier revisions live in the deltas you report.
 
 Use Mermaid. Every view must be readable at a glance.
 
@@ -204,7 +207,6 @@ only, as a section of the blueprint:
 
 ## 6. Close the change
 
-The blueprint travels with the change, like a changeset. Commit it with the
-change's work when the developer commits. When the last block has landed,
-remove the file in the closing commit. Follow the host repository's commit
-rules; do not commit on your own.
+The blueprint lives only as long as its change. When the last block has
+landed, delete the file. For the change's own work, follow the host
+repository's commit rules; do not commit on your own.
