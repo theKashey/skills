@@ -1,18 +1,28 @@
 ---
 name: blueprinter
-description: Use when planning, scoping, or placing a change in an existing codebase, before code — a blueprint of marked blocks the developer corrects one at a time and tracks until each lands; not for shaping the accepted increment or creating an architecture chart.
+description: Use when planning, scoping, placing, or making a change in existing code — finds blocks to use, extend, change, or create, with evidence; checks in isolation; builds each block; not for shaping the accepted increment or architecture charts.
 ---
 
 # Blueprinter
 
-Lay out a change in two phases before writing code. **Orient** traces the
-existing system as far as the task needs. **Operate** proposes the surgery on
-what Orient traced, as marked blocks. The blueprint then tracks the change
-while it is built, until every block has landed. The developer judges and
-corrects structure; prose and diffs appear only for the block under discussion.
+Lay out a change, check it, and build it. **Orient** traces the existing
+system as far as the task needs and finds what already does part of the job.
+**Operate** proposes the surgery on what Orient traced, as marked blocks. The
+blueprint is checked, then tracks the change while it is built, until every
+block has landed. The developer judges and corrects structure; prose and diffs
+appear only for the block under discussion.
 
-Do not edit host code while orienting or operating. The blueprint file, the
-page rendered from it, and its exclude entry are the only things you write.
+**The context that proposes never judges its own proposal.** Discovery (§1),
+review of the blueprint (§4), and the check of each built block (§6) each run
+in a fresh subagent that receives only the inputs its brief in
+[references/briefs.md](references/briefs.md) lists — never your proposal or
+reasoning. A context that has settled on a solution reads the code to confirm
+it and checks its own work against its own intent. When the host offers no
+subagents, run each step as a separate pass before the work it judges, and
+record "not isolated" as a yes-but on what it informs.
+
+Do not edit host code before §6. Until then, the blueprint file, the page
+rendered from it, and its exclude entry are the only things you write.
 
 ## 1. Orient
 
@@ -23,7 +33,7 @@ orienting and while drawing, question your own change at every layer, not only
 the code: going down asks how the layer above is achieved; going up asks what
 this answer solves there. When an answer at any layer changes or ends in
 yes-but, go up and re-ask whether each layer above still holds, up to the
-problem, then back down, redrawing what changes as §4's steps 1 and 2 do. If
+problem, then back down, redrawing what changes as §5's steps 1 and 2 do. If
 the problem itself changes, keep planning the task as asked and list the
 revised problem under Assumptions.
 
@@ -35,6 +45,14 @@ When nothing remains, or only a check that it holds, the blueprint is the stands
 table, the orientation behind it, and that check. A claim that reaches an
 Existing block is the reason to read that block's logic; this is how a defect in
 "unchanged" code is found.
+
+**Then find what already does the job, before proposing anything.** Give a
+discovery subagent the discovery brief, the task text, and the problem as you
+stated it. It restates the task as capabilities in the application's own
+terms, numbered `C1`, `C2`…, and returns for each one what to use, extend, or
+change, or none, with `path:line` and the searches behind it. Read each result
+it cites before you rely on it; a cited result you have not read is a yes-but.
+Its paths and claims feed the claims check and the questions below.
 
 **Then ask the questions this task raises.** They are not a fixed list. Factor
 them from the task, drawing on four directions:
@@ -118,6 +136,12 @@ touches carries one mark.
 Whether existing code already does what the task asks is a claims-check
 result, not a mark.
 
+**Discovery sets the starting marks.** A use result is an Existing block; an
+extend or change result is an Upgrade or an Extract. A Ghost or Acquire names
+the capability it serves. When that capability's discovery found a candidate
+and you build or bring in anyway, an Assumptions line names the capability and
+why its candidate does not fit.
+
 An Extract's amendment includes the origin's switch to calling it. Mark the
 origin Upgrade only when it also changes for another reason.
 
@@ -142,15 +166,15 @@ earlier references must keep pointing at the same thing.
 **Marks are intent; status is observed.** Every block also carries a status:
 planned, in progress, landed, or dropped. Never set one by declaring it. In
 progress means a file at the block's location changed since the evidence record.
-Landed means a commit holds the block's whole amendment, its tests included,
-and you read it against the amendment; cite the commit and the check that
+Landed means a commit holds the block's whole amendment, its tests included, and
+the §6 check read it against the amendment; cite the commit and the check that
 passed. Until every part has landed, the block stays in progress and its card
-names each part still open. A check counts only if you ran it and it observes
+names each part still open. A check counts only if it was run and it observes
 what the status or claim states; cite its command and result. A test that does
 not assert a claim's stated symptom does not pin that claim. What a commit says
 about itself, in its message or comments, is a claim to check, not evidence.
 Dropped means the developer removed the block. When built code differs from its
-amendment, that is a yes-but on the block's card, corrected under §4; never
+amendment, that is a yes-but on the block's card, corrected under §5; never
 rewrite the amendment yourself to match what was built. A landed block is
 history: a correction to landed work adds a new block at the landed code under
 the next free ID.
@@ -158,11 +182,11 @@ the next free ID.
 ## 3. Draw the blueprint
 
 Write one blueprint per change to `.blueprints/<change-slug>.md` in the host
-repository. In the conversation, show the stands table and the strategy view on
-the first draw, and the strategy view and the delta after each correction; the
-other views stay in the file. Revise that file in place. Start it with the
-commit the evidence was read at and an `evidence` fence: one line per file you
-cite or locate a block in, printed by `python3 "<this skill's
+repository. In the conversation, show the stands table, the discovery table, and
+the strategy view on the first draw, and the strategy view and the delta after
+each correction; the other views stay in the file. Revise that file in place.
+Start it with the commit the evidence was read at and an `evidence` fence: one
+line per file you cite or locate a block in, printed by `python3 "<this skill's
 directory>/scripts/evidence.py" record <path>...` from the host root; a path not
 yet created is recorded as absent. Before each redraw, run `evidence.py check
 .blueprints/<change-slug>.md`; it lists each of those files whose content
@@ -189,6 +213,10 @@ blueprint or write the page; say so and go on with the Markdown.
 **Where the task stands** — one line: the problem, and where it was stated or
 that it was inferred. Then a table: claim, state (met / partly / not met /
 contradicted), evidence with `path:line`.
+
+**Discovery** — a table: ID, capability, result (use / extend / change /
+none), evidence with `path:line`. Under it, the searches discovery ran and
+what they could miss, and "not isolated" when it ran in your context.
 
 **Orientation** — one view per vertical slice the task touches, without change
 marks.
@@ -240,7 +268,8 @@ Extract blocks and refactoring first. While the change is built, name the next
 block: the first one not landed whose dependencies have landed.
 
 **Block cards** — one table row per block: ID, mark, status, location, the
-amendment in one sentence, the open yes-but questions it depends on.
+capability it serves, the amendment in one sentence, the open yes-but
+questions it depends on.
 
 **Logistics** — one `sequenceDiagram` per flow the change adds or alters.
 Start the text of each new or changed message with `+`.
@@ -256,7 +285,24 @@ way around settles it moves here and leaves the block cards; it never appears
 in both. One that no way around settles stays on the card, and the block
 keeps its `⚠`.
 
-## 4. Take corrections
+## 4. Check the blueprint
+
+Before you show a draw as ready, and after each correction:
+
+1. Run `python3 "<this skill's directory>/scripts/lint.py"
+   .blueprints/<change-slug>.md` from the host root. It reports each cited
+   `path:line` missing from the evidence fence or past its file's end, each
+   reused block ID, each unknown mark, each Existing, Upgrade, or Deconstruct
+   file that does not exist, and each Ghost or Acquire with no capability or
+   with a found candidate that no Assumptions line answers. Exit 1: fix each
+   line and run it again. Exit 2: say so and go on.
+2. On the first draw, and after a correction that adds or re-marks blocks,
+   give a review subagent the review brief, the block cards, the build order,
+   and the strategy view. Each site it finds that no block covers, and each
+   Ghost or Acquire it refutes, is a correction: take it under §5 at once and
+   name the review as its source in the delta.
+
+## 5. Take corrections
 
 The developer corrects by naming a question, block, or layer: "go further at
 Q4", "stop at Q7", "yes, but Q2 is owned by another team", "B3 already exists",
@@ -275,23 +321,33 @@ correction:
 If the developer does not answer about a question or block, keep your answer
 or placement and leave it under Assumptions. Do not stop to wait.
 
-## 5. Amend one block
+## 6. Build block by block
 
-When the developer asks for a block's amendment, produce it for that block
-only, as a section of the blueprint:
+When the task asks for the change, not only a plan, start building once the
+first checked draw is shown; do not wait for approval. A correction that
+arrives meanwhile is taken first. When the developer asks only for a plan or
+for one block's amendment, write the amendment and stop there.
+
+Take blocks in build order. For each, write its amendment as a section of the
+blueprint:
 
 - **Transitions** it adds, changes, or removes. When the block holds logic
   but no transition changes — an extraction, a move — say "no transitions
   change" and name the callers that change.
 - **Tests** that verify the block. They belong to the block's amendment, not
   to a block of their own.
-- **Diff** as a unified patch. Before presenting it, apply it to a scratch copy
-  or worktree and run the affected tests and the type check the host has: the
-  patch must apply, and results must be no worse than before. Report what you
-  ran, and name each check the host lacks. Do not apply the diff to the host
-  tree unless the developer asks.
+- **Diff** as a unified patch. Apply it to the host tree when building, or to
+  a scratch copy or worktree when only writing the amendment, and run the
+  affected tests and the type check the host has: the patch must apply, and
+  results must be no worse than before. Report what you ran, and name each
+  check the host lacks.
 
-## 6. Close the change
+Then give a check subagent the check brief, the block's card and amendment,
+and the diff or commit. Its met and open parts set the block's status under
+§2; each open part, and anything built that the amendment does not name, is a
+yes-but on the card, corrected under §5.
+
+## 7. Close the change
 
 The blueprint lives only as long as its change. When every block is landed or
 dropped, delete the file and its rendered page. For the change's own work,

@@ -1,9 +1,10 @@
 # Blueprinter
 
 Blueprinter turns a change request into a blueprint before the agent changes
-code, in two phases. **Orient** builds a guided, task-shaped understanding of
-the existing system: the vertical slices the task touches, traced as far as
-the task needs. **Operate** then proposes the surgery on those slices and
+code, checks it, and builds it. **Orient** builds a guided, task-shaped
+understanding of the existing system: what already does part of the job, and
+the vertical slices the task touches, traced as far as the task needs.
+**Operate** then proposes the surgery on those slices and
 places every part of the change on one block map: what already exists and
 stays, what must be modified, what must be built because nothing supports it,
 what must be brought in from outside, what must be removed, and which existing
@@ -32,6 +33,21 @@ written before the work has the detail but not the structure, and adds another
 document to read. A separate plan mode with an approval step adds a mode
 switch and a hand-off. Blueprinter keeps plan mode's investigate-before-code
 step without its separate mode or its whole-plan approval.
+
+Neither answer removes the failures that recur in a large codebase: new code
+written without consulting the old, an existing feature that could be
+extended left undiscovered, and a plan that nothing validates. All three
+share a cause. One context that investigates, proposes, and checks its own
+work poisons itself: once it has settled on a solution, it reads the code to
+confirm that solution and checks the result against its own intent. Asking
+that context a reuse question does not help, because the context that wants
+to build answers it. Blueprinter therefore splits the work into steps and
+runs each step that judges another step's output in a fresh context that
+never sees the proposal: discovery of what exists runs before anything is
+proposed, review of the blueprint receives only its blocks, and the check of
+each built block receives only the amendment and the diff. Where a check can
+be a script, it is one, so a blueprint whose new block cites no search for
+existing capability fails mechanically instead of by judgment.
 
 Blueprinter exists so that the developer can correct the structure in the
 vocabulary of structure: "you missed the existing system that does this",
@@ -83,6 +99,14 @@ answer solves there. A finding low down — a state machine that cannot take
 the transition, a flow that crosses an owner — is often evidence that a layer
 above, or the problem itself, was stated wrongly, so the agent goes back up
 and redraws before the developer has to correct it.
+
+Before any block is proposed, discovery restates the task as capabilities in
+the application's own vocabulary and searches the whole codebase for each one,
+classifying what it finds as something to use, extend, or change, or nothing.
+A searcher that already knows the intended solution looks where that solution
+would go; one that knows only the task looks everywhere. Discovery's results
+set the starting marks, and a block built from scratch must name the
+capability it serves and answer whatever discovery found for it.
 
 It then checks the task's claims against the code. A task description is
 often older than the code it describes: part of the work may already exist,
@@ -167,11 +191,13 @@ work adds a new block rather than rewriting one the developer already
 accepted, and the agent never rewrites an amendment to match what was built,
 because that would erase the difference the developer needs to see.
 
-Tracking reads progress; it does not drive it. The build order names the next
-block whose dependencies have landed, but how an increment is shaped, limited,
-or declared done belongs to whoever builds it. The blueprint stays out of
-version control, so the team sees progress through views pasted into a pull
-request, not through a shared board.
+When the task asks for the change, the agent builds it in build order once
+the first checked blueprint is shown, without waiting for approval; a
+correction that arrives meanwhile is taken first, and nothing is committed on
+the agent's own initiative. Building each block and judging it are separate
+steps: the context that wrote the code does not decide that it landed. The
+blueprint stays out of version control, so the team sees progress through
+views pasted into a pull request, not through a shared board.
 
 ## Why state machines carry the tactics
 
@@ -242,6 +268,15 @@ work installed alone.
 - **Questions that move between layers**, instead of a problem statement
   asked once at the start. A premise checked only on the way down is never
   tested by what the lower layers find.
+- **Isolated steps**, instead of one context from task to commit. Discovery,
+  blueprint review, and the check of each built block run in fresh contexts
+  that receive only their inputs, and their findings return as corrections
+  the agent takes, not as gates that wait for the developer. Without
+  subagents the steps still run as separate passes, and the blueprint says
+  they were not isolated.
+- **Scripted checks first**, instead of review by reading alone. Citations,
+  IDs, marks, locations, and the link from each new block to discovery are
+  checked by a script before a reviewer reads the blueprint.
 - **No gate between the phases.** One blueprint holds orientation and
   surgery; a correction to orientation redraws the surgery instead of waiting
   for a separate approval.
@@ -251,7 +286,8 @@ work installed alone.
 - **Conversation is the interface.** The skill ships no web interface,
   server, or editor; the rendered page is read-only. The developer corrects
   the blueprint by naming blocks, and the agent redraws the affected views,
-  without handing the work to a separate document, mode, or agent.
+  without handing the work to a separate document or mode. Subagents run
+  the isolated steps; they never become a second place to correct the work.
 - **Blueprinter draws; it does not govern host code.** It models the state
   machines it finds or proposes. It does not add decorators, markers, or
   runtime tracing to the host project.
@@ -266,9 +302,10 @@ work installed alone.
   separately, Read the Terrain owns the next move when a cause is unclear,
   Boundary Fit judges whether a separation fits its relationships, Carry the
   Load shapes the accepted change into one increment, and Helix keeps state
-  across cycles of uncertain work. Blueprinter places one change and tracks its
-  blocks until they land; it does not choose among branches of uncertain work,
-  keep verdicts past the change, or reproduce those procedures.
+  across cycles of uncertain work. Blueprinter places one change, builds it,
+  and tracks its blocks until they land; it does not choose among branches of
+  uncertain work, keep verdicts past the change, or reproduce those
+  procedures.
 - **A blueprint belongs to one change.** It is a working file, excluded from
   version control by the clone's own exclude file and deleted, with its
   rendered page, when every block has landed or been dropped. It never enters
