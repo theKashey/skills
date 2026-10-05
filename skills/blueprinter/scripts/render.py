@@ -7,8 +7,9 @@ Writes <slug>.html beside the blueprint, using only the Python standard
 library: the Markdown as HTML, a subset of flowchart, stateDiagram-v2, and
 sequenceDiagram drawn as inline SVG, a legend built from the blueprint's own
 classDef lines, and each block's or question's table row shown on hover. A
-view outside that subset stays as Mermaid source on the page. The layout is
-simpler than GitHub's; the Markdown stays the source.
+view outside that subset, or one whose drawing would lose any of its text,
+stays as Mermaid source on the page. The layout is simpler than GitHub's; the
+Markdown stays the source.
 
 Each hazard that would break a view pasted into GitHub prints as
 path:line: message. Exit 0 when the page is written with no hazard, 1 when a
@@ -105,7 +106,8 @@ def style(spec: str) -> dict[str, str]:
 
 
 def parse_graph(body: list[str], state: bool):
-    nodes, edges, groups, classes, stack = {}, [], {}, {}, []
+    nodes, edges, groups, classes, stack, notes = {}, [], {}, {}, [], []
+    lines = iter(body)
 
     def add(ident, raw, cls, end=""):
         ident = ident + end if ident == "[*]" else ident
@@ -118,23 +120,40 @@ def parse_graph(body: list[str], state: bool):
             node["group"] = stack[-1]
         return ident
 
-    for line in body:
+    for line in lines:
         s = line.strip()
-        if not s or s.startswith("%%") or s.startswith(("direction", "note", "Note")):
+        if not s or s.startswith(("%%", "direction")):
             continue
-        if m := CLASSDEF.match(s):
+        if state and (m := re.match(r"^note\s+(?:left|right)\s+of\s+([\w-]+)\s*(?::\s*(.*))?$", s)):
+            text = m.group(2)
+            if text is None:  # a block note runs to `end note`
+                block = []
+                for inner in lines:
+                    if inner.strip() == "end note":
+                        break
+                    block.append(inner.strip())
+                else:
+                    return None
+                text = "\n".join(block)
+            notes.append((add(m.group(1), None, None), text.strip()))
+        elif m := CLASSDEF.match(s):
             classes[m.group(1)] = style(m.group(2))
         elif m := re.match(r"^subgraph\s+([\w-]+)?\s*(?:\[\"?(.*?)\"?\])?\s*(.*)$", s):
             gid = m.group(1) or f"g{len(groups)}"
             groups[gid] = label(m.group(2) or m.group(3) or gid, gid)
+            if stack:  # boxes are not nested, so a box names its outer groups
+                groups[gid] = f"{groups[stack[-1]]} › {groups[gid]}"
             stack.append(gid)
         elif s == "end" or s == "}":
             stack and stack.pop()
         elif m := re.match(r"^class\s+([\w,-]+)\s+([\w-]+)", s):
             for ident in m.group(1).split(","):
                 add(ident, None, m.group(2))
-        elif m := re.match(r'^state\s+"(.*?)"\s+as\s+([\w-]+)', s):
+        elif m := re.match(r'^state\s+"(.*?)"\s+as\s+([\w-]+)$', s):
             add(m.group(2), m.group(1), None)
+        elif state and (m := re.match(r"^([\w-]+)\s*:\s*(.+)$", s)):
+            ident = add(m.group(1), None, None)
+            nodes[ident]["label"] += "\n" + m.group(2).strip()
         elif EDGE_LINE.match(s):
             core, _, tail = s.partition(":") if state else (s, "", "")
             pos, prev = 0, None
@@ -158,14 +177,14 @@ def parse_graph(body: list[str], state: bool):
             add(nm.group(1), nm.group(3), nm.group(5))
         else:
             return None
-    return nodes, edges, groups, classes
+    return nodes, edges, groups, classes, notes
 
 
 def draw_graph(body: list[str], hover: dict[str, str]) -> str | None:
     parsed = parse_graph(body[1:], body[0].strip().startswith("state"))
     if not parsed or not parsed[0]:
         return None
-    nodes, edges, groups, classes = parsed
+    nodes, edges, groups, classes, notes = parsed
     rank, seen, back = {n: 0 for n in nodes}, set(), set()
 
     def visit(n, path):  # edges into the current path are back edges
@@ -252,22 +271,34 @@ def draw_graph(body: list[str], hover: dict[str, str]) -> str | None:
         for i, t in enumerate(lines_of[n]):
             out.append(f'<text x="{x + W / 2}" y="{ty0 + i * 16}" text-anchor="middle" fill="{st.get("color", "#1f2328")}">{E(t)}</text>')
         out.append("</g>")
+    for n, text in notes:  # a note keeps its constraint as a keyed badge
+        x, y = pos[n]
+        key.append(f'<li class="nt">Note on {E(name(n))}: {inline(text).replace(chr(10), "<br>")}</li>')
+        out.append(f'<circle cx="{x + W - 4}" cy="{y + 4}" r="8" class="nb"/>'
+                   f'<text x="{x + W - 4}" y="{y + 8}" text-anchor="middle" class="kn">{len(key)}</text>')
     vh = 40 + (max(rank.values()) + 1) * (nh + GAP_Y)
     return svg(x0 + 60, vh, out) + (f'<ol class="key">{"".join(key)}</ol>' if key else "")
 
 
 def draw_sequence(body: list[str]) -> str | None:
-    parts, rows = {}, []
+    parts, rows, number = {}, [], None
     for line in body:
         s = line.strip()
-        if not s or s.startswith("%%") or s in ("autonumber",):
+        if not s or s.startswith("%%"):
+            continue
+        if s == "autonumber":
+            number = 0
             continue
         if m := re.match(r"^(participant|actor)\s+([\w-]+)(?:\s+as\s+(.*))?$", s):
             parts.setdefault(m.group(2), m.group(3) or m.group(2))
         elif m := re.match(r"^(\w+(?:-\w+)*)\s*(--?>>|--?>|--?x|--?\))\s*(\w+(?:-\w+)*)\s*:\s*(.*)$", s):
             for p in (m.group(1), m.group(3)):
                 parts.setdefault(p, p)
-            rows.append(("msg", m.group(1), m.group(3), m.group(4), m.group(2).startswith("--")))
+            text = m.group(4)
+            if number is not None:
+                number += 1
+                text = f"{number}. {text}"
+            rows.append(("msg", m.group(1), m.group(3), text, m.group(2).startswith("--")))
         elif m := re.match(r"^[Nn]ote\s+(?:over|left of|right of)\s+([\w-]+)(?:\s*,\s*([\w-]+))?\s*:\s*(.*)$", s):
             for p in filter(None, (m.group(1), m.group(2))):
                 parts.setdefault(p, p)
@@ -323,6 +354,39 @@ def svg(w: float, h: float, body: list[str]) -> str:
             '<path d="M0,0 L10,5 L0,10 z" fill="#57606a"/></marker></defs>' + "".join(body) + "</svg>")
 
 
+SYNTAX = set("flowchart graph TB TD BT LR RL stateDiagram v2 sequenceDiagram subgraph end state as "
+              "note left right of over participant actor".split())
+QUIET = re.compile(r"^\s*(%%|direction\b|classDef\b|class\s|end\s*$|\}\s*$|autonumber\s*$|$)")
+WORD = re.compile(r"[^\W_]+|[+−~⚠]")
+
+
+def words(text: str) -> set[str]:
+    return set(WORD.findall(text))
+
+
+def lost(code: list[str], drawn: str) -> list[str]:
+    """Words of the source that the drawing does not show.
+
+    Every line except comments and styling or layout directives must leave its
+    words in the drawing, so a line the parser accepted but did not draw
+    sends the view back to its source instead of vanishing.
+    """
+    ids = set()  # names a drawn label or alias stands in for
+    for line in code[1:]:
+        ids |= set(re.findall(r"(\w+(?:-\w+)*)(?:\[|\(|\{|>(?!>)|@\{)", line))
+        ids |= set(re.findall(r"\b(?:participant|actor)\s+([\w-]+)\s+as\b", line))
+        ids |= set(re.findall(r'^\s*state\s+".*"\s+as\s+([\w-]+)\s*$', line))
+        ids |= set(re.findall(r":::([\w-]+)", line))
+    ids = {w for i in ids for w in WORD.findall(i)}
+    shown = words(html.unescape(re.sub(r"<title>.*?</title>|<[^>]+>", " ", drawn)))
+    need = set()
+    for line in code[1:]:
+        if not QUIET.match(line):
+            text = re.sub(r"<br\s*/?>|:::[\w-]+", " ", line)
+            need |= words(re.sub(r"[-=.]*-[-=.]*(?:>>|>|x\b|o\b|\))?|==>", " ", text))
+    return sorted(need - shown - ids - SYNTAX)
+
+
 def diagram(code: list[str], hover: dict[str, str]) -> str:
     head = code[0].strip() if code else ""
     drawn = None
@@ -333,9 +397,12 @@ def diagram(code: list[str], hover: dict[str, str]) -> str:
             drawn = draw_sequence(code[1:])
     except (KeyError, ValueError, IndexError, AttributeError, RecursionError):
         drawn = None
+    why = "outside the subset this page draws"
+    if drawn and (missing := lost(code, drawn)):
+        why, drawn = f"drawing it would drop {', '.join(missing[:6])}", None
     if drawn:
         return f'<figure class="d">{drawn}</figure>'
-    return f'<pre class="raw"><code>{E(chr(10).join(code))}</code></pre><p class="note">Left as Mermaid source: outside the subset this page draws.</p>'
+    return f'<pre class="raw"><code>{E(chr(10).join(code))}</code></pre><p class="note">Left as Mermaid source: {E(why)}.</p>'
 
 # --- Markdown subset to HTML ----------------------------------------------
 
@@ -421,7 +488,8 @@ main{max-width:1200px;margin:0 auto;padding:8px 16px 48px}table{border-collapse:
 td,th{border:1px solid #d0d7de;padding:4px 8px;vertical-align:top}code{background:#eff1f3;padding:1px 4px;border-radius:4px;font-size:90%}
 pre{overflow-x:auto;background:#f6f8fa;padding:8px}.d{margin:12px 0;overflow-x:auto}.note{color:#9a6700;font-size:12px}
 svg{font:12px system-ui,sans-serif;max-width:none}svg .e{fill:none;stroke:#57606a;stroke-width:1.4}svg .l{fill:#57606a;font-size:11px;paint-order:stroke;stroke:#fff;stroke-width:4px}
-svg .g{fill:#59636e;font-weight:600}svg .k{fill:#fff;stroke:#57606a}svg .kn{font-size:10px;font-weight:600}
+svg .g{fill:#59636e;font-weight:600}svg .k{fill:#fff;stroke:#57606a}svg .nb{fill:#fff8c5;stroke:#d4a72c}svg .kn{font-size:10px;font-weight:600}
+.key .nt{background:#fff8c5}
 .key{margin:4px 0 0;font-size:13px;color:#59636e}svg .f{stroke:#8c959f;stroke-dasharray:5 4;fill:none}
 @media print{.bar{position:static}.d,table{break-inside:avoid}}"""
 
