@@ -70,7 +70,12 @@ While reading, look for:
 fallback, changes what something else reads — another service, a published name
 or interface, a document or test that quotes it — find and read those readers.
 If it only uses input the block already receives, there is nothing to trace.
-Stop following a question when more reading cannot change the surgery, and
+When a claim or amendment applies to every instance of something, find them
+all: each instance widens the amendment and the claim's coverage, even when it
+takes the same fix. A search over written text misses instances whose content
+is computed, passed in, or looked up; follow where that content comes from
+too. Every match joins a block or is recorded with why it is left out. Stop
+following a question when more reading cannot change the surgery, and
 record where you stopped and how you searched, so the developer can judge what
 the search could have missed.
 
@@ -142,8 +147,8 @@ marks.
 - A table under it: ID, question, answer with `path:line` or URL, verdict. A
   yes-but names the obstacle and the way around.
 - **Stopped at** — where tracing stopped, how you searched and what that
-  search could miss, and why more reading could not change the surgery, so the
-  developer can say "go further here".
+  search could miss, each match left out and why, and why more reading could
+  not change the surgery, so the developer can say "go further here".
 
 **Strategy** — the touched blocks with their marks.
 - Use `flowchart TB`. Group blocks in `subgraph`s by Compass container or

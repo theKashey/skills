@@ -86,8 +86,11 @@ fallback it proposes; a change that only uses input a block already receives
 needs no tracing at all.
 Tracing stops where more reading could not change the surgery, and the
 blueprint shows where it stopped, so the developer can send the agent
-further. The agent may also research online, for example a vendor API, and
-cites what it read.
+further. When a claim covers every instance of something, an instance that
+takes the same fix still widens the change, and one whose content is computed,
+passed in, or looked up is invisible to a search over written text; a partial
+sweep reports a claim met that is only partly met. The agent may also research
+online, for example a vendor API, and cites what it read.
 
 Every answer ends in **ok, now what** or **yes, but**. An ok raises the next
 question. A yes-but names what stands in the way: a source the agent cannot
