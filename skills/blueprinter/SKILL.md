@@ -1,6 +1,6 @@
 ---
 name: blueprinter
-description: Orient in an existing system as far as a task needs, then lay out the change as marked blocks before code — what exists, changes, is extracted, built, bought, removed, or still in question — for the developer to correct block by block. Use to plan, scope, or place a feature, or to map what a task touches.
+description: Use when planning, scoping, or placing a change in an existing codebase, before code — a blueprint of marked blocks the developer corrects one at a time; not for shaping the accepted increment or creating an architecture chart.
 ---
 
 # Blueprinter
