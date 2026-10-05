@@ -21,6 +21,13 @@ it and checks its own work against its own intent. When the host offers no
 subagents, run each step as a separate pass before the work it judges, and
 record "not isolated" as a yes-but on what it informs.
 
+**Isolated steps classify; they do not write findings.** Each item they judge
+gets one verdict with one `path:line` or command as evidence: **yes** — it
+holds; **no** — it is well posed and false: correct that block under §5;
+**misframed** — what the question presumes is false or contradictory, or the
+inputs cannot decide it: correct the layer the block rests on under §5, then
+judge the block again. A verdict can be wrong and be caught; prose cannot.
+
 Do not edit host code before §6. Until then, the blueprint file, the page
 rendered from it, and its exclude entry are the only things you write.
 
@@ -50,9 +57,10 @@ Existing block is the reason to read that block's logic; this is how a defect in
 discovery subagent the discovery brief, the task text, and the problem as you
 stated it. It restates the task as capabilities in the application's own
 terms, numbered `C1`, `C2`…, and returns for each one what to use, extend, or
-change, or none, with `path:line` and the searches behind it. Read each result
-it cites before you rely on it; a cited result you have not read is a yes-but.
-Its paths and claims feed the claims check and the questions below.
+change, or none, with `path:line` and the searches behind it, and a verdict
+on each claim of the task. Read each result it cites before you rely on it; a
+cited result you have not read is a yes-but. Its paths feed the questions
+below; a claim you record differently from its verdict is a yes-but.
 
 **Then ask the questions this task raises.** They are not a fixed list. Factor
 them from the task, drawing on four directions:
@@ -167,9 +175,9 @@ earlier references must keep pointing at the same thing.
 planned, in progress, landed, or dropped. Never set one by declaring it. In
 progress means a file at the block's location changed since the evidence record.
 Landed means a commit holds the block's whole amendment, its tests included, and
-the §6 check read it against the amendment; cite the commit and the check that
-passed. Until every part has landed, the block stays in progress and its card
-names each part still open. A check counts only if it was run and it observes
+every row of the block's §6 check is yes; cite the commit. Until every part
+has landed, the block stays in progress and its card names each part still
+open. A check counts only if it was run and it observes
 what the status or claim states; cite its command and result. A test that does
 not assert a claim's stated symptom does not pin that claim. What a commit says
 about itself, in its message or comments, is a claim to check, not evidence.
@@ -271,6 +279,9 @@ block: the first one not landed whose dependencies have landed.
 capability it serves, the amendment in one sentence, the open yes-but
 questions it depends on.
 
+**Checks** — the §6 check's rows, one table for all blocks: ID, part, verdict
+(yes / no / misframed), evidence with `path:line` or the command and result.
+
 **Logistics** — one `sequenceDiagram` per flow the change adds or alters.
 Start the text of each new or changed message with `+`.
 
@@ -293,14 +304,16 @@ Before you show a draw as ready, and after each correction:
    .blueprints/<change-slug>.md` from the host root. It reports each cited
    `path:line` missing from the evidence fence or past its file's end, each
    reused block ID, each unknown mark, each Existing, Upgrade, or Deconstruct
-   file that does not exist, and each Ghost or Acquire with no capability or
-   with a found candidate that no Assumptions line answers. Exit 1: fix each
-   line and run it again. Exit 2: say so and go on.
+   file that does not exist, each Ghost or Acquire with no capability or
+   with a found candidate that no Assumptions line answers, each unknown
+   verdict in the Checks table, and each landed block whose check rows are
+   missing or not all yes. Exit 1: fix each line and run it again. Exit 2:
+   say so and go on.
 2. On the first draw, and after a correction that adds or re-marks blocks,
    give a review subagent the review brief, the block cards, the build order,
    and the strategy view. Each site it finds that no block covers, and each
-   Ghost or Acquire it refutes, is a correction: take it under §5 at once and
-   name the review as its source in the delta.
+   verdict it returns that is not yes, is a correction: take it under §5 at
+   once and name the review as its source in the delta.
 
 ## 5. Take corrections
 
@@ -343,9 +356,10 @@ blueprint:
   check the host lacks.
 
 Then give a check subagent the check brief, the block's card and amendment,
-and the diff or commit. Its met and open parts set the block's status under
-§2; each open part, and anything built that the amendment does not name, is a
-yes-but on the card, corrected under §5.
+and the diff or commit, and copy its rows into the Checks table, replacing
+that block's earlier rows. They set the block's status under §2; each row
+that is not yes is a yes-but on the card, corrected under §5 at the block
+when no, one layer up when misframed.
 
 ## 7. Close the change
 

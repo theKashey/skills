@@ -273,10 +273,15 @@ work installed alone.
   that receive only their inputs, and their findings return as corrections
   the agent takes, not as gates that wait for the developer. Without
   subagents the steps still run as separate passes, and the blueprint says
-  they were not isolated.
+  they were not isolated. The steps classify rather than write: each judged
+  item is yes, no, or misframed, with one line of evidence. A verdict can be
+  wrong, compared, and counted by a script; findings prose cannot. Misframed
+  separates a false item from one whose question is wrong, which must be
+  corrected in the layer above it, not patched at the block.
 - **Scripted checks first**, instead of review by reading alone. Citations,
-  IDs, marks, locations, and the link from each new block to discovery are
-  checked by a script before a reviewer reads the blueprint.
+  IDs, marks, locations, the link from each new block to discovery, and each
+  landed block's check verdicts are checked by a script before a reviewer
+  reads the blueprint.
 - **No gate between the phases.** One blueprint holds orientation and
   surgery; a correction to orientation redraws the surgery instead of waiting
   for a separate approval.

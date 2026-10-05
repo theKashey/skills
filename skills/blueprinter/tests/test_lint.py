@@ -79,6 +79,33 @@ class LintTest(unittest.TestCase):
             self.evidence, *rows,
             assumptions="B1: C1's candidate lacks retries")).returncode, 0)
 
+    def test_landed_needs_every_check_yes(self):
+        cards = ("| C1 | send it | none | - |",
+                 "| B1 | Upgrade | landed | `src/a.py` | change it |")
+        checks = ("\n| ID | Part | Verdict | Evidence |"
+                  "\n| --- | --- | --- | --- |"
+                  "\n| B1 | test | {} | `make test` passed |\n")
+        self.assertIn("landed B1", self.lint(blueprint(
+            self.evidence, *cards)).stdout)
+        self.assertEqual(self.lint(blueprint(
+            self.evidence, *cards) + checks.format("yes")).stdout, "")
+        result = self.lint(blueprint(self.evidence, *cards)
+                           + checks.format("misframed"))
+        self.assertIn("landed B1", result.stdout)
+        result = self.lint(blueprint(self.evidence, *cards)
+                           + checks.format("met"))
+        self.assertIn("verdict B1 met", result.stdout)
+
+    def test_question_verdicts_are_not_checks(self):
+        result = self.lint(blueprint(
+            self.evidence, "| C1 | send it | none | - |",
+            "| B1 | Upgrade | planned | `src/a.py` | change it |")
+            + "\n| ID | Question | Answer | Verdict |"
+            "\n| --- | --- | --- | --- |"
+            "\n| Q1 | who reads it | B1 | yes, but owner unknown |"
+            "\n| B1 | does B1 fit | it does | no |\n")
+        self.assertEqual(result.stdout, "")
+
     def test_formatted_none_is_none(self):
         result = self.lint(blueprint(
             self.evidence, "| C1 | send it | **none** | - |",
@@ -107,7 +134,9 @@ class LintTest(unittest.TestCase):
         result = self.lint(blueprint(
             self.evidence, "| C1 | x | none | - |",
             "| B1 | — | dropped | — | retired |\n"
-            "| B2 | Deconstruct | landed `abc` | `src/old.py` | deleted |"))
+            "| B2 | Deconstruct | landed `abc` | `src/old.py` | deleted |")
+            + "\n| ID | Part | Verdict | Evidence |\n| --- | --- | --- | --- |"
+            "\n| B2 | file | yes | `src/old.py` absent |\n")
         self.assertEqual(result.stdout, "")
 
     def test_missing_cards_exit_2(self):

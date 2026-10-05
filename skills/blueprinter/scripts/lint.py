@@ -15,6 +15,10 @@ Reports one line per problem:
                            the discovery table
   candidate <ID> <C>       that capability's discovery found something to use,
                            extend, or change, and no Assumptions line names it
+  verdict <ID> <verdict>   a Checks row whose verdict is not yes, no, or
+                           misframed
+  landed <ID>              a landed block whose Checks rows are missing or not
+                           all yes
 
 Exit 0 when nothing is reported, 1 when anything is, 2 when the blueprint
 cannot be read or has no block cards.
@@ -30,6 +34,7 @@ MARKS = {"existing", "upgrade", "extract", "ghost", "acquire",
          "deconstruct", "document"}
 FENCE = re.compile(r"^```(\w*)\s*\n(.*?)^```", re.M | re.S)
 CITE = re.compile(r"(?<![\w:/.-])([\w.-]*[\w-][/.][\w./-]*\w):(\d+)\b")
+VERDICTS = {"yes", "no", "misframed"}
 CAPABILITY = re.compile(r"\bC\d+\b")
 FILE_LIKE = re.compile(r"^[\w./-]+/[\w.-]+\.\w+$|^[\w.-]+\.\w+$")
 
@@ -84,6 +89,7 @@ def lint(text: str) -> tuple[list[str], bool]:
             problems.append(f"cite {path}:{line} past the end ({length})")
 
     found = {}
+    checks: dict[str, list[str]] = {}
     cards = None
     for header, rows in tables(text):
         if column(header, "capability") is not None and \
@@ -92,6 +98,17 @@ def lint(text: str) -> tuple[list[str], bool]:
             for row in rows:
                 if ic is not None and ic < len(row) and ir < len(row):
                     found[row[ic].strip("` ")] = row[ir].strip("*` ").lower()
+        elif column(header, "id") is not None and \
+                column(header, "part") is not None and \
+                column(header, "verdict") is not None:
+            ic, iv = column(header, "id"), column(header, "verdict")
+            for row in rows:
+                if max(ic, iv) < len(row):
+                    verdict = row[iv].strip("*` ").lower()
+                    bid = row[ic].strip("` ")
+                    if verdict not in VERDICTS:
+                        problems.append(f"verdict {bid} {verdict or '(none)'}")
+                    checks.setdefault(bid, []).append(verdict)
         elif column(header, "id") is not None and \
                 column(header, "mark") is not None and cards is None:
             cards = (header, rows)
@@ -115,7 +132,11 @@ def lint(text: str) -> tuple[list[str], bool]:
         status = row[ist].lower() if ist is not None and ist < len(row) else ""
         if status.startswith("dropped"):
             continue  # a retired ID keeps its row and nothing else
-        gone = mark == "deconstruct" and status.startswith("landed")
+        landed = status.strip("*` ").startswith("landed")
+        if landed and (not checks.get(bid) or
+                       any(v != "yes" for v in checks[bid])):
+            problems.append(f"landed {bid}")
+        gone = mark == "deconstruct" and landed
         if mark not in MARKS:
             problems.append(f"mark {bid} {mark or '(none)'}")
         if mark in {"existing", "upgrade", "deconstruct"} and not gone \
