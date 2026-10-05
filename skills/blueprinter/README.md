@@ -151,6 +151,20 @@ established UML forms a developer already reads, in the style of Rational Rose
 and Telelogic Tau: packages and components with marks for strategy, sequence
 charts for logistics, and state charts for tactics.
 
+The views have two readers. The developer correcting the change reads them
+while the blueprint is being drawn; the team reads them when a view is pasted
+into a pull request or issue. Both read Mermaid in Markdown, so the views stay
+Mermaid source and avoid what GitHub's renderer drops or misreads: click
+directives, inline HTML, a theme that ignores dark mode, a `+` placed where a
+sequence chart reads it as activation.
+[`scripts/render.py`](scripts/render.py) checks for those and renders the
+blueprint as one offline page — Markdown, the views drawn as SVG, a legend of
+marks and verdicts, and each block's card on hover — using only the Python
+standard library. Its layout is plainer than GitHub's and draws a subset of
+Mermaid; the Markdown stays the source. Bundling a JavaScript renderer would
+give a closer picture at the cost of megabytes of vendored code, and loading
+one from a network would break a skill that must work installed alone.
+
 ## Design decisions and rejected alternatives
 
 - **Structure before prose**, instead of a specification document. The
@@ -184,9 +198,9 @@ charts for logistics, and state charts for tactics.
 ## Boundaries
 
 - **Conversation is the interface.** The skill ships no web interface,
-  server, or editor. The developer corrects the blueprint by naming blocks,
-  and the agent redraws the affected views, without handing the work to a
-  separate document, mode, or agent.
+  server, or editor; the rendered page is read-only. The developer corrects
+  the blueprint by naming blocks, and the agent redraws the affected views,
+  without handing the work to a separate document, mode, or agent.
 - **Blueprinter draws; it does not govern host code.** It models the state
   machines it finds or proposes. It does not add decorators, markers, or
   runtime tracing to the host project.
@@ -204,9 +218,9 @@ charts for logistics, and state charts for tactics.
   across cycles of uncertain work. Blueprinter places one change; it does not
   hold a checkpoint across cycles or reproduce those procedures.
 - **A blueprint belongs to one change.** It is a working file, excluded from
-  version control by the clone's own exclude file and deleted when the change
-  lands. It never enters history, so nothing has to remember to remove it and
-  a blueprint never becomes a standing specification that the code must stay
-  consistent with.
+  version control by the clone's own exclude file and deleted, with its
+  rendered page, when the change lands. It never enters history, so nothing
+  has to remember to remove it and a blueprint never becomes a standing
+  specification that the code must stay consistent with.
 - **A blueprint is not proof.** It shows where a change lands and what it
   touches. It does not prove that the change is correct, valuable, or complete.

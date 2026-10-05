@@ -10,8 +10,8 @@ existing system as far as the task needs. **Operate** proposes the surgery on
 what Orient traced, as marked blocks. The developer judges and corrects
 structure; prose and diffs appear only for the block under discussion.
 
-Do not edit host code while orienting or operating. The blueprint file and
-its exclude entry are the only things you write.
+Do not edit host code while orienting or operating. The blueprint file, the
+page rendered from it, and its exclude entry are the only things you write.
 
 ## 1. Orient
 
@@ -133,9 +133,17 @@ the first write, make sure `.blueprints/` is listed in the clone's exclude file
 — the path `git rev-parse --git-path info/exclude` prints — so it cannot be
 committed by accident. Earlier revisions live in the deltas you report.
 
-Use Mermaid. Every view must be readable at a glance. A view with nothing to
-show is one line saying why. Draw only blocks that change, that the change
-path runs through, or that govern it.
+Use Mermaid in ` ```mermaid ` fences, so a view pasted into a pull request or
+issue renders on GitHub. Every view must be readable at a glance. A view with
+nothing to show is one line saying why. Draw only blocks that change, that the
+change path runs through, or that govern it.
+
+After each write, run `python3 "<this skill's directory>/scripts/render.py"
+.blueprints/<change-slug>.md` and give the developer the page path it prints.
+It writes `<change-slug>.html` beside the blueprint and lists each line that
+GitHub would not render. Exit 1 means such lines: fix them in the Markdown and
+run it again before showing the views. Exit 2 means it could not read the
+blueprint or write the page; say so and go on with the Markdown.
 
 **Where the task stands** — a table: claim, state (met / partly / not met /
 contradicted), evidence with `path:line`.
@@ -241,5 +249,5 @@ only, as a section of the blueprint:
 ## 6. Close the change
 
 The blueprint lives only as long as its change. When the last block has
-landed, delete the file. For the change's own work, follow the host
-repository's commit rules; do not commit on your own.
+landed, delete the file and its rendered page. For the change's own work,
+follow the host repository's commit rules; do not commit on your own.
