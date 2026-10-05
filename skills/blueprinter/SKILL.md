@@ -15,7 +15,14 @@ page rendered from it, and its exclude entry are the only things you write.
 
 ## 1. Orient
 
-**First, check the task's claims against the code.** A task description is often
+**First, ask yourself what problem the change solves**, apart from the solution
+the task proposes, and state it in one sentence. When the task names only a
+solution, infer the problem and record the inference under Assumptions, marked
+"problem", with the other reading. A claim that serves no part of the problem,
+or a problem the code already solves another way, is noted in that claim's
+evidence and under Assumptions; keep planning the task as asked.
+
+**Then check the task's claims against the code.** A task description is often
 older than the code. For each claim, requirement, or "done when" item, read the
 code that would satisfy it — including its logic, not only its signature — and
 record one of: met, partly met, not met, contradicted. Plan only what remains.
@@ -145,7 +152,8 @@ GitHub would not render. Exit 1 means such lines: fix them in the Markdown and
 run it again before showing the views. Exit 2 means it could not read the
 blueprint or write the page; say so and go on with the Markdown.
 
-**Where the task stands** — a table: claim, state (met / partly / not met /
+**Where the task stands** — one line: the problem, and where it was stated or
+that it was inferred. Then a table: claim, state (met / partly / not met /
 contradicted), evidence with `path:line`.
 
 **Orientation** — one view per vertical slice the task touches, without change

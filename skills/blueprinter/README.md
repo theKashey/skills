@@ -70,11 +70,16 @@ Tactics are drawn only for blocks that hold logic and change or are new.
 
 ## Orientation before surgery
 
-Orientation starts by checking the task's claims against the code. A task
-description is often older than the code it describes: part of the work may
-already exist, and the description may contradict what the code does. The
-agent reads the code behind each claim and records where the task really
-stands, so the blueprint plans only the work that remains.
+A task often names a solution rather than the problem it answers, and a
+blueprint can place that solution faithfully and still solve the wrong
+problem. Orientation therefore starts by stating the problem in one sentence,
+so a wrong one is corrected while it is still one sentence.
+
+It then checks the task's claims against the code. A task description is
+often older than the code it describes: part of the work may already exist,
+and the description may contradict what the code does. The agent reads the
+code behind each claim and records where the task really stands, so the
+blueprint plans only the work that remains.
 
 Orientation then asks the questions this task raises, not a fixed list: what
 the agent must know, need, or do; how it reaches, proves, or deploys the
