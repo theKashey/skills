@@ -43,7 +43,11 @@ still one sentence of correction, not after it is a diff across many files.
 A small, clean task is weak evidence for that effect. It has no hidden
 existing system to miss and no competing places for the change to land.
 Evaluation needs representative multi-part changes in real codebases, where
-the agent's first placement is plausible and wrong.
+the agent's first placement is plausible and wrong. Read the evidence at each
+change's own scale: a change inside one top-level part is judged by where it
+lands inside that part, and a change across parts by the dependencies it adds
+or removes between them. Pooling both hides the rare change that rewires the
+system.
 
 ## Three layers: strategy, logistics, tactics
 
@@ -162,6 +166,11 @@ charts for logistics, and state charts for tactics.
   yes-but follows the same rule: it ends in a way around, never in waiting.
 - **Orientation bounded by the task**, instead of a full scan of the codebase
   or a fixed depth. What the task needs decides how far each slice is traced.
+- **Grain follows the change's scale**, instead of a fixed depth or a node
+  count. Inside one top-level part, inner placement is where a change drifts,
+  so the blocks are drawn there. Across parts, inner detail buries the
+  dependency the change adds or removes between them, so the strategy view
+  shows the parts and those dependencies, and inner views wait in the file.
 - **Questions factored per task**, instead of a fixed checklist. A fixed list
   asks the same things of a local change and a cross-service change, and
   misses what only this task raises.

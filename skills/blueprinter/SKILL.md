@@ -99,8 +99,9 @@ An Extract's amendment includes the origin's switch to calling it. Mark the
 origin Upgrade only when it also changes for another reason.
 
 **One block or two:** if two parts would get different marks or different
-amendments, they are two blocks. Two files that change together for one
-reason are one block.
+amendments, they are two blocks. Two files that change together for one reason
+are one block, unless one block would hide an ownership, trust, or persistence
+boundary, or a different lifecycle.
 
 **Every block traces to a claim.** A block that serves no claim in the task is
 a scope expansion: list it under Assumptions with the do-nothing alternative.
@@ -119,11 +120,13 @@ earlier references must keep pointing at the same thing.
 Write one blueprint per change to `.blueprints/<change-slug>.md` in the host
 repository. In the conversation, show the stands table and the strategy view on
 the first draw, and the strategy view and the delta after each correction; the
-other views stay in the file. Revise that file in place. It is a working file,
-never committed: before the first write, make sure `.blueprints/` is listed in
-the clone's exclude file — the path `git rev-parse --git-path info/exclude`
-prints — so it cannot be committed by accident. Earlier revisions live in the
-deltas you report.
+other views stay in the file. Revise that file in place. Start it with the
+commit the evidence was read at and the paths that were uncommitted then; when a
+redraw finds either changed, re-read the evidence on changed paths, update that
+record, and say so in the delta. It is a working file, never committed: before
+the first write, make sure `.blueprints/` is listed in the clone's exclude file
+— the path `git rev-parse --git-path info/exclude` prints — so it cannot be
+committed by accident. Earlier revisions live in the deltas you report.
 
 Use Mermaid. Every view must be readable at a glance. A view with nothing to
 show is one line saying why. Draw only blocks that change, that the change
@@ -145,10 +148,24 @@ marks.
 **Strategy** — the touched blocks with their marks.
 - Use `flowchart TB`. Group blocks in `subgraph`s by Compass container or
   package.
-- When a view passes about a dozen nodes, split it by container — one view per
-  container plus one overview of containers — never at an arbitrary node.
-- Edges carry dependencies or data only. Label each node `ID name «mark»`, and
-  add `⚠` when the block depends on an open yes-but.
+- Set the grain by the change's scale. A top-level block is a Compass container,
+  or a top-level package or service when there is no chart. When the change
+  stays inside one, draw its blocks directly: placement inside it is where a
+  change drifts. When it crosses two or more, the strategy view is an overview
+  of the touched top-level blocks, and one view per touched top-level block
+  holds its blocks in the file until the developer names one.
+- A view inside one top-level block that passes about a dozen nodes splits by
+  that block's own parts, never at an arbitrary node.
+- Edges carry dependencies or data only. Label each block `ID name «mark»`, and
+  add `⚠` when the block depends on an open yes-but. Label an overview node for
+  an existing top-level block with its name and Compass address or path; it
+  takes no ID and no mark, because it groups the change's blocks and is not one
+  of them. A new top-level block is a Ghost block like any other, with its ID
+  and mark. Label a dependency the change adds between top-level blocks `+`, and
+  one it removes `−`. Each `+` gets an Assumptions line naming the alternative.
+  When a chart or document governs those dependencies and does not declare this
+  one, draw it as a Document block and say so on that line; the chart stays its
+  owner's.
 - Style marks and verdicts with these classes:
 
 ```
