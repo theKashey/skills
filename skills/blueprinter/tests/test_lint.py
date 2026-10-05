@@ -79,6 +79,30 @@ class LintTest(unittest.TestCase):
             self.evidence, *rows,
             assumptions="B1: C1's candidate lacks retries")).returncode, 0)
 
+    def test_upgrade_on_usable_capability_needs_assumption(self):
+        rows = ("| C1 | send it | use | `src/a.py:1` |\n"
+                "| C2 | sort it | extend | `src/a.py:2` |",
+                "| B1 | Upgrade | planned | `src/a.py` | add a flag for C1 |\n"
+                "| B2 | Upgrade | planned | `src/a.py` | widen C2 |")
+        result = self.lint(blueprint(self.evidence, *rows))
+        self.assertEqual(result.stdout, "candidate B1 C1\n")
+        self.assertEqual(self.lint(blueprint(
+            self.evidence, *rows,
+            assumptions="B1: C1 holds the concept but not per item")
+        ).returncode, 0)
+
+    def test_upgrade_passing_a_usable_capability_along_is_silent(self):
+        text = blueprint(
+            self.evidence, "| C1 | send it | use | `src/a.py:1` |", "")
+        text = text.replace(
+            "| ID | Mark | Status | Location | Amendment |\n"
+            "| --- | --- | --- | --- | --- |\n",
+            "| ID | Mark | Status | Location | Capability | Amendment |\n"
+            "| --- | --- | --- | --- | --- | --- |\n"
+            "| B1 | Upgrade | planned | `src/a.py` | C2 | route C1 on |\n"
+            "| B2 | Upgrade | planned | `src/a.py` | C1 | add a flag |\n")
+        self.assertEqual(self.lint(text).stdout, "candidate B2 C1\n")
+
     def test_landed_needs_every_check_yes(self):
         cards = ("| C1 | send it | none | - |",
                  "| B1 | Upgrade | landed | `src/a.py` | change it |")

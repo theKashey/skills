@@ -21,13 +21,18 @@ Inputs: the host repository root, the task text, and the problem statement.
 >
 > 1. State the capabilities the change needs in the application's own terms:
 >    the names its glossary, architecture chart, modules, and types use, not
->    the task's words. Number them `C1`, `C2`…
+>    the task's words. Each concept the task names is a capability too: to
+>    know or represent it. Number them `C1`, `C2`…
 > 2. For each capability, search the whole repository, not only where the task
 >    points, by at least two methods: by name, and by behavior — the operation
->    it performs or the interface it would expose. Read each candidate.
+>    it performs or the interface it would expose. Read each candidate. A
+>    block that already holds a capability counts even when the change need
+>    not pass through it: the change can reuse its representation instead of
+>    adding one.
 > 3. Classify each candidate: **use** (fits as it is), **extend** (fits with a
 >    change), **change** (existing code the task requires to differ), or
->    **none** when nothing fits. Quote the evidence with `path:line`.
+>    **none** when nothing fits. Quote the evidence with `path:line` and the
+>    name the application gives it.
 > 4. List every code path in the affected area that reaches the problem, with
 >    `path:line`.
 > 5. For each claim the task makes, give a verdict: did you observe it?
@@ -68,8 +73,8 @@ diff or commit that builds it.
 > You check built work against its amendment. You did not build it. Do not
 > edit files.
 >
-> 1. Split the amendment into parts: each transition, test, file change, and
->    claim it states.
+> 1. Split the amendment into parts: each representation, transition, test,
+>    and claim it states.
 > 2. For each part, give a verdict: does the diff or commit build it? What the
 >    commit says about itself, in its message or comments, is a claim to
 >    check, not evidence.

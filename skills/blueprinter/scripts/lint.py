@@ -13,8 +13,11 @@ Reports one line per problem:
                            not exist
   ghost <ID>               a Ghost or Acquire that names no capability from
                            the discovery table
-  candidate <ID> <C>       that capability's discovery found something to use,
-                           extend, or change, and no Assumptions line names it
+  candidate <ID> <C>       a Ghost or Acquire whose capability's discovery
+                           found something to use, extend, or change, or an
+                           Upgrade whose Capability cell (or row, without that
+                           column) names one found fit to use as it is, and no
+                           Assumptions line names it
   verdict <ID> <verdict>   a Checks row whose verdict is not yes, no, or
                            misframed
   landed <ID>              a landed block whose Checks rows are missing or not
@@ -119,7 +122,7 @@ def lint(text: str) -> tuple[list[str], bool]:
     header, rows = cards
     ii, im, il = column(header, "id"), column(header, "mark"), \
         column(header, "location")
-    ist = column(header, "status")
+    ist, icap = column(header, "status"), column(header, "capability")
     seen = set()
     for row in rows:
         if ii >= len(row):
@@ -146,12 +149,19 @@ def lint(text: str) -> tuple[list[str], bool]:
                 path = re.sub(r":\d+(-\d+)?$", "", token.strip())
                 if FILE_LIKE.match(path) and not Path(path).exists():
                     problems.append(f"location {bid} {path}")
+        named = [c for c in CAPABILITY.findall(" ".join(row)) if c in found]
+        serves = named if icap is None or icap >= len(row) else \
+            [c for c in CAPABILITY.findall(row[icap]) if c in found]
         if mark in {"ghost", "acquire"}:
-            named = [c for c in CAPABILITY.findall(" ".join(row)) if c in found]
             if not named:
                 problems.append(f"ghost {bid}")
             for c in named:
                 if not found[c].startswith("none") and \
+                        not re.search(rf"\b{c}\b", assumptions):
+                    problems.append(f"candidate {bid} {c}")
+        if mark == "upgrade":
+            for c in serves:
+                if found[c].startswith("use") and \
                         not re.search(rf"\b{c}\b", assumptions):
                     problems.append(f"candidate {bid} {c}")
     return problems, True

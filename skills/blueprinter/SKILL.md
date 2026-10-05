@@ -36,13 +36,13 @@ rendered from it, and its exclude entry are the only things you write.
 **First, state the problem the change solves**, apart from the solution the
 task proposes; when the task names only a solution, infer it and list the
 inference under Assumptions. The problem is the layer above strategy. While
-orienting and while drawing, question your own change at every layer, not only
-the code: going down asks how the layer above is achieved; going up asks what
-this answer solves there. When an answer at any layer changes or ends in
-yes-but, go up and re-ask whether each layer above still holds, up to the
-problem, then back down, redrawing what changes as §5's steps 1 and 2 do. If
-the problem itself changes, keep planning the task as asked and list the
-revised problem under Assumptions.
+orienting and while drawing, question your own change at every layer: going
+down asks how the layer above is achieved; going up asks what this answer
+solves there. When an answer at any layer changes or ends in yes-but, go up
+and re-ask whether each layer above still holds, up to the problem, then back
+down, redrawing what changes as §5's steps 1 and 2 do. If the problem itself
+changes, keep planning the task as asked and list the revised problem under
+Assumptions.
 
 **Then check the task's claims against the code.** A task description is often
 older than the code. For each claim, requirement, or "done when" item, read the
@@ -56,11 +56,15 @@ Existing block is the reason to read that block's logic; this is how a defect in
 **Then find what already does the job, before proposing anything.** Give a
 discovery subagent the discovery brief, the task text, and the problem as you
 stated it. It restates the task as capabilities in the application's own
-terms, numbered `C1`, `C2`…, and returns for each one what to use, extend, or
-change, or none, with `path:line` and the searches behind it, and a verdict
-on each claim of the task. Read each result it cites before you rely on it; a
-cited result you have not read is a yes-but. Its paths feed the questions
-below; a claim you record differently from its verdict is a yes-but.
+terms, each concept the task names among them, numbered `C1`, `C2`…, and
+returns for each one what to use, extend, or change, or none, with the name
+the application gives it, `path:line`, and the searches behind it, and a
+verdict on each claim of the task. A block that holds a capability counts as
+a result whether or not the change passes through it: the change reuses its
+representation instead of adding one. Read each result it cites before you
+rely on it; a cited result you have not read is a yes-but. Its paths feed the
+questions below, and its names are the words the blueprint uses for the
+change; a claim you record differently from its verdict is a yes-but.
 
 **Then ask the questions this task raises.** They are not a fixed list. Factor
 them from the task, drawing on four directions:
@@ -148,7 +152,8 @@ result, not a mark.
 extend or change result is an Upgrade or an Extract. A Ghost or Acquire names
 the capability it serves. When that capability's discovery found a candidate
 and you build or bring in anyway, an Assumptions line names the capability and
-why its candidate does not fit.
+why its candidate does not fit. An Upgrade on a capability discovery found
+fit to use as it is takes the same line: it adds to what already serves.
 
 An Extract's amendment includes the origin's switch to calling it. Mark the
 origin Upgrade only when it also changes for another reason.
@@ -190,9 +195,10 @@ the next free ID.
 ## 3. Draw the blueprint
 
 Write one blueprint per change to `.blueprints/<change-slug>.md` in the host
-repository. In the conversation, show the stands table, the discovery table, and
-the strategy view on the first draw, and the strategy view and the delta after
-each correction; the other views stay in the file. Revise that file in place.
+repository. In the conversation, show the direction, the stands table, the
+discovery table, and the strategy view on the first draw, and the direction,
+the strategy view, and the delta after each correction; the other views stay
+in the file. Revise that file in place.
 Start it with the commit the evidence was read at and an `evidence` fence: one
 line per file you cite or locate a block in, printed by `python3 "<this skill's
 directory>/scripts/evidence.py" record <path>...` from the host root; a path not
@@ -236,6 +242,16 @@ marks.
   search could miss, each match left out and why, and why more reading could
   not change the surgery, so the developer can say "go further here".
 
+**Direction** — the change in the application's concepts, before the surgery
+views: the cards' amendment sentences for the blocks whose amendment changes
+what a concept is, does, or where it is held — a representation or a
+transition added, changed, or removed, or a block moved or shared — each
+naming the concept in the words discovery found for it; then one line naming
+the blocks whose amendment only carries the change through. Existing and
+Document blocks are not listed. No paths, code names, or diffs. This is what
+the developer corrects with a sentence; a correction here redraws the layers
+under it.
+
 **Strategy** — the touched blocks with their marks.
 - Use `flowchart TB`. Group blocks in `subgraph`s by Compass container or
   package.
@@ -276,8 +292,8 @@ Extract blocks and refactoring first. While the change is built, name the next
 block: the first one not landed whose dependencies have landed.
 
 **Block cards** — one table row per block: ID, mark, status, location, the
-capability it serves, the amendment in one sentence, the open yes-but
-questions it depends on.
+capability it serves, the amendment in one sentence in the application's
+concepts, the open yes-but questions it depends on.
 
 **Checks** — the §6 check's rows, one table for all blocks: ID, part, verdict
 (yes / no / misframed), evidence with `path:line` or the command and result.
@@ -305,7 +321,8 @@ Before you show a draw as ready, and after each correction:
    `path:line` missing from the evidence fence or past its file's end, each
    reused block ID, each unknown mark, each Existing, Upgrade, or Deconstruct
    file that does not exist, each Ghost or Acquire with no capability or
-   with a found candidate that no Assumptions line answers, each unknown
+   with a found candidate that no Assumptions line answers, each Upgrade on
+   a capability found fit to use that no Assumptions line answers, each unknown
    verdict in the Checks table, and each landed block whose check rows are
    missing or not all yes. Exit 1: fix each line and run it again. Exit 2:
    say so and go on.
@@ -320,9 +337,13 @@ Before you show a draw as ready, and after each correction:
 The developer corrects by naming a question, block, or layer: "go further at
 Q4", "stop at Q7", "yes, but Q2 is owned by another team", "B3 already exists",
 "put it in B2, not B5", "split B4", "extract B1 first", "buy, don't build
-B6". What building finds is a correction too: a block that cannot land as
-amended, or a landed block that shows a layer above was wrong. For each
-correction:
+B6". Or by naming a concept, with no ID: "use what already holds this",
+"that is not what the term means here", "almost: this part, not that". Find
+the layer such a correction lands on — a discovery result, an orientation
+answer, or a block — and take it there; a partial acceptance corrects the
+part named and nothing else. What building finds is a correction too: a
+block that cannot land as amended, or a landed block that shows a layer above
+was wrong. For each correction:
 
 1. Redraw every layer the correction lands on. A correction to orientation
    redraws the orientation first, then every surgery view it changes.
@@ -339,21 +360,28 @@ or placement and leave it under Assumptions. Do not stop to wait.
 When the task asks for the change, not only a plan, start building once the
 first checked draw is shown; do not wait for approval. A correction that
 arrives meanwhile is taken first. When the developer asks only for a plan or
-for one block's amendment, write the amendment and stop there.
+for one block's amendment, write the amendment and its diff and stop
+there.
 
 Take blocks in build order. For each, write its amendment as a section of the
 blueprint:
 
+- **Representations** of a concept it adds, changes, or removes — a field, a
+  type, a stored attribute — each in the name discovery found for it, or "no
+  representations change".
 - **Transitions** it adds, changes, or removes. When the block holds logic
   but no transition changes — an extraction, a move — say "no transitions
   change" and name the callers that change.
 - **Tests** that verify the block. They belong to the block's amendment, not
   to a block of their own.
-- **Diff** as a unified patch. Apply it to the host tree when building, or to
-  a scratch copy or worktree when only writing the amendment, and run the
-  affected tests and the type check the host has: the patch must apply, and
-  results must be no worse than before. Report what you ran, and name each
-  check the host lacks.
+
+Then write the **diff** as a unified patch, apart from the amendment: the
+amendment is the direction, the diff is what carries it out, and the check
+judges one against the other. Apply it to the host tree when building, or to
+a scratch copy or worktree when only writing the amendment, and run the
+affected tests and the type check the host has: the patch must apply, and
+results must be no worse than before. Report what you ran, and name each
+check the host lacks.
 
 Then give a check subagent the check brief, the block's card and amendment,
 and the diff or commit, and copy its rows into the Checks table, replacing

@@ -8,10 +8,11 @@ the vertical slices the task touches, traced as far as the task needs.
 places every part of the change on one block map: what already exists and
 stays, what must be modified, what must be built because nothing supports it,
 what must be brought in from outside, what must be removed, and which existing
-documents govern it. Each amendment is one block and its diff. The developer
-corrects that structure one block at a time while the whole block map stays in
-view, and the same map then tracks the change as it is built, block by block,
-until every block has landed.
+documents govern it. Each amendment is one block's direction, stated in the
+application's concepts; the diff that carries it out is checked against it.
+The developer corrects that structure one block at a time while the whole
+block map stays in view, and the same map then tracks the change as it is
+built, block by block, until every block has landed.
 
 It pays most on work that crosses several parts of a system: a new
 capability, a rule that touches more than one owner, a change whose right
@@ -115,12 +116,17 @@ above, or the problem itself, was stated wrongly, so the agent goes back up
 and redraws before the developer has to correct it.
 
 Before any block is proposed, discovery restates the task as capabilities in
-the application's own vocabulary and searches the whole codebase for each one,
-classifying what it finds as something to use, extend, or change, or nothing.
-A searcher that already knows the intended solution looks where that solution
-would go; one that knows only the task looks everywhere. Discovery's results
-set the starting marks, and a block built from scratch must name the
-capability it serves and answer whatever discovery found for it.
+the application's own vocabulary, each concept the task names among them, and
+searches the whole codebase for each one, classifying what it finds as
+something to use, extend, or change, or nothing. A block that already holds a
+concept counts whether or not the change passes through it: that is where the
+change's representation of the concept comes from, and the name it goes by
+there is the name the blueprint uses. A searcher that already knows the
+intended solution looks where that solution would go; one that knows only the
+task looks everywhere. Discovery's results set the starting marks, and a block
+built from scratch, or one that adds to a block found fit to use as it is,
+must name the capability it serves and answer whatever discovery found for
+it.
 
 It then checks the task's claims against the code. A task description is
 often older than the code it describes: part of the work may already exist,
@@ -293,9 +299,10 @@ work installed alone.
   separates a false item from one whose question is wrong, which must be
   corrected in the layer above it, not patched at the block.
 - **Scripted checks first**, instead of review by reading alone. Citations,
-  IDs, marks, locations, the link from each new block to discovery, and each
-  landed block's check verdicts are checked by a script before a reviewer
-  reads the blueprint.
+  IDs, marks, locations, the link to what discovery found from each new block
+  and from each block that adds to what already serves, and each landed
+  block's check verdicts are checked by a script before a reviewer reads the
+  blueprint.
 - **No gate between the phases.** One blueprint holds orientation and
   surgery; a correction to orientation redraws the surgery instead of waiting
   for a separate approval.
