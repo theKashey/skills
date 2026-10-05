@@ -76,8 +76,10 @@ Orientation then asks the questions this task raises, not a fixed list: what
 the agent must know, need, or do; how it reaches, proves, or deploys the
 result; whom it must read or inform; and where the data, state, or
 information comes from. The task sets the depth. A change that alters what
-other services see sends the agent to read those services; a change that
-only uses input a block already receives needs no tracing at all.
+others read — another service, a published name or interface, a document or
+test that quotes it — sends the agent to read those readers, including for a
+fallback it proposes; a change that only uses input a block already receives
+needs no tracing at all.
 Tracing stops where more reading could not change the surgery, and the
 blueprint shows where it stopped, so the developer can send the agent
 further. The agent may also research online, for example a vendor API, and
@@ -108,7 +110,7 @@ before robots build it.
 | **Ghost** | The block does not exist; the change builds it because nothing supports this part of the change. |
 | **Acquire** | The block does not exist in the codebase; the change brings in an external library, service, or vendor instead of building it. |
 | **Deconstruct** | The block exists and the change removes it. |
-| **Document** | An existing document, decision, or specification governs this part of the change. |
+| **Document** | An existing document, decision, or specification governs this part of the change and stays unchanged. A document the change edits is an Upgrade. |
 
 Each block names where it lives. An Existing, Upgrade, or Deconstruct block
 names its source path, or its Compass address when the host project keeps a

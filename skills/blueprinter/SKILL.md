@@ -15,12 +15,14 @@ its exclude entry are the only things you write.
 
 ## 1. Orient
 
-**First, check the task's claims against the code.** A task description is
-often older than the code. For each claim, requirement, or "done when" item,
-read the code that would satisfy it — including its logic, not only its
-signature — and record one of: met, partly met, not met, contradicted. Plan
-only what remains. A claim that reaches an Existing block is the reason to read
-that block's logic; this is how a defect in "unchanged" code is found.
+**First, check the task's claims against the code.** A task description is often
+older than the code. For each claim, requirement, or "done when" item, read the
+code that would satisfy it — including its logic, not only its signature — and
+record one of: met, partly met, not met, contradicted. Plan only what remains.
+When nothing remains, or only a check that it holds, the blueprint is the stands
+table, the orientation behind it, and that check. A claim that reaches an
+Existing block is the reason to read that block's logic; this is how a defect in
+"unchanged" code is found.
 
 **Then ask the questions this task raises.** They are not a fixed list. Factor
 them from the task, drawing on four directions:
@@ -34,10 +36,11 @@ Give each question a permanent ID (`Q1`, `Q2`…) under the same rule as block
 IDs, so the developer can say "go further at Q4".
 
 Answer each question by reading. Start from the project's own map: a Compass
-chart (`.compass/`, `// compass:` markers) when present, then docs, then
-source. For a system outside the codebase — a vendor API, a public service, a
-library you might bring in — you may research online; cite the URL on the
-answer it informs. Research reads outside sources; it never changes them.
+chart (`.compass/`, `// compass:` markers) when present, then docs, then source.
+For a system outside the codebase — a vendor API, a public service, a library
+you might bring in — you may research online; cite the URL you read on the
+answer it informs. A source you did not read is a yes-but, not a citation.
+Research reads outside sources; it never changes them.
 
 While reading, look for:
 
@@ -63,10 +66,13 @@ While reading, look for:
   the obstacle, or ask why until the requirement behind it is clear. Then take
   the way around and record it. A yes-but never stops the work.
 
-**Trace what the task needs, as far as it needs.** If the task changes what
-other services see, read those services. If it only uses input the block
-already receives, there is nothing to trace. Stop following a question when more
-reading cannot change the surgery, and record where you stopped.
+**Trace what the task needs, as far as it needs.** If an amendment, including a
+fallback, changes what something else reads — another service, a published name
+or interface, a document or test that quotes it — find and read those readers.
+If it only uses input the block already receives, there is nothing to trace.
+Stop following a question when more reading cannot change the surgery, and
+record where you stopped and how you searched, so the developer can judge what
+the search could have missed.
 
 Orient draws the system as it is. The only marks it sets are Existing and
 Document; change marks belong to Operate.
@@ -84,7 +90,7 @@ touches carries one mark.
 | Ghost | built, because nothing supports it | where it will be placed |
 | Acquire | brought in instead of built | package, service, or vendor |
 | Deconstruct | removed | source path or Compass address |
-| Document | governs this part of the change | document path |
+| Document | governs this part of the change and stays unchanged; a document the change edits is Upgrade | document path |
 
 Whether existing code already does what the task asks is a claims-check
 result, not a mark.
@@ -103,21 +109,25 @@ An Existing, Upgrade, Extract, or Deconstruct block you cannot locate, or an
 Acquire whose source you cannot confirm, is a **guess**: draw it with `?` and
 say what would confirm it. Never draw a confident block you have not located.
 
-**IDs are permanent.** Give blocks short IDs (`B1`, `D1`…). Never renumber or
-reuse one: a split keeps the ID on the part that stays and gives the new part
-the next free ID; a dropped block's ID is retired. The developer's earlier
-references must keep pointing at the same thing.
+**IDs are permanent.** Number blocks `B1`, `B2`… whatever their mark. Never
+renumber or reuse one: a split keeps the ID on the part that stays and gives the
+new part the next free ID; a dropped block's ID is retired. The developer's
+earlier references must keep pointing at the same thing.
 
 ## 3. Draw the blueprint
 
 Write one blueprint per change to `.blueprints/<change-slug>.md` in the host
-repository, and show its views in the conversation. Revise that file in
-place. It is a working file, never committed: before the first write, make
-sure `.blueprints/` is listed in the clone's exclude file — the path
-`git rev-parse --git-path info/exclude` prints — so it cannot be committed by
-accident. Earlier revisions live in the deltas you report.
+repository. In the conversation, show the stands table and the strategy view on
+the first draw, and the strategy view and the delta after each correction; the
+other views stay in the file. Revise that file in place. It is a working file,
+never committed: before the first write, make sure `.blueprints/` is listed in
+the clone's exclude file — the path `git rev-parse --git-path info/exclude`
+prints — so it cannot be committed by accident. Earlier revisions live in the
+deltas you report.
 
-Use Mermaid. Every view must be readable at a glance.
+Use Mermaid. Every view must be readable at a glance. A view with nothing to
+show is one line saying why. Draw only blocks that change, that the change
+path runs through, or that govern it.
 
 **Where the task stands** — a table: claim, state (met / partly / not met /
 contradicted), evidence with `path:line`.
@@ -128,8 +138,9 @@ marks.
   `ID short label`, styled `ok` or `yesbut`.
 - A table under it: ID, question, answer with `path:line` or URL, verdict. A
   yes-but names the obstacle and the way around.
-- **Stopped at** — where tracing stopped and why more reading could not change
-  the surgery, so the developer can say "go further here".
+- **Stopped at** — where tracing stopped, how you searched and what that
+  search could miss, and why more reading could not change the surgery, so the
+  developer can say "go further here".
 
 **Strategy** — the touched blocks with their marks.
 - Use `flowchart TB`. Group blocks in `subgraph`s by Compass container or
@@ -159,7 +170,7 @@ Extract blocks and refactoring first.
 in one sentence, the open yes-but questions it depends on.
 
 **Logistics** — one `sequenceDiagram` per flow the change adds or alters.
-Prefix new or changed messages with `+`.
+Start the text of each new or changed message with `+`.
 
 **Tactics** — one `stateDiagram-v2` per Upgrade, Extract, or Ghost block that
 holds logic. Show the existing states; label added transitions `+`, removed
