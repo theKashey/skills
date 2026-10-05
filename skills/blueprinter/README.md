@@ -9,7 +9,8 @@ stays, what must be modified, what must be built because nothing supports it,
 what must be brought in from outside, what must be removed, and which existing
 documents govern it. Each amendment is one block and its diff. The developer
 corrects that structure one block at a time while the whole block map stays in
-view.
+view, and the same map then tracks the change as it is built, block by block,
+until every block has landed.
 
 It pays most on work that crosses several parts of a system: a new
 capability, a rule that touches more than one owner, a change whose right
@@ -43,11 +44,14 @@ still one sentence of correction, not after it is a diff across many files.
 A small, clean task is weak evidence for that effect. It has no hidden
 existing system to miss and no competing places for the change to land.
 Evaluation needs representative multi-part changes in real codebases, where
-the agent's first placement is plausible and wrong. Read the evidence at each
-change's own scale: a change inside one top-level part is judged by where it
-lands inside that part, and a change across parts by the dependencies it adds
-or removes between them. Pooling both hides the rare change that rewires the
-system.
+the agent's first placement is plausible and wrong, and it must exercise
+corrections: whether the first blueprint exposed the consequential mistake,
+and whether one correction repaired it through the other layers while IDs and
+unaffected decisions stayed put. Producing every view is not that evidence.
+Read the evidence at each change's own scale: a change inside one top-level
+part is judged by where it lands inside that part, and a change across parts
+by the dependencies it adds or removes between them. Pooling both hides the
+rare change that rewires the system.
 
 ## Three layers: strategy, logistics, tactics
 
@@ -92,8 +96,11 @@ result; whom it must read or inform; and where the data, state, or
 information comes from. The task sets the depth. A change that alters what
 others read — another service, a published name or interface, a document or
 test that quotes it — sends the agent to read those readers, including for a
-fallback it proposes; a change that only uses input a block already receives
-needs no tracing at all.
+fallback it proposes. An input a block already receives is traced only until
+its meaning and provenance are known, because receiving a value does not show
+who set it or what it may be trusted for; a change that makes the input decide
+access or trust, or moves what established that trust, needs the guarantee
+shown, not assumed.
 Tracing stops where more reading could not change the surgery, and the
 blueprint shows where it stopped, so the developer can send the agent
 further. When a claim covers every instance of something, an instance that
@@ -138,6 +145,32 @@ Deconstruct block that the agent cannot locate, or an Acquire whose source it
 cannot confirm, is drawn as a guess, so a confident diagram cannot hide a
 block that does not exist.
 
+## From ghost to built
+
+In Factorio a ghost becomes a built entity on the same map. Blueprinter keeps
+its map through the build for the same reason: a plan that ends at the first
+draw leaves the developer comparing a diff against memory, and what building
+reveals — an amendment that does not fit, a landed block that shows a layer
+above was wrong — has nowhere to go. Each block carries a status beside its
+mark, and each finding returns through the same per-block corrections, so the
+map stays true while the work moves, one block at a time.
+
+A mark is intent; a status is an observation. The agent reads the host tree
+for each status instead of declaring it: a block is landed only when a commit
+holds it and the agent has read it against the amendment, with the check that
+passed. A declared status cannot fail, and a tracker that cannot fail reports
+progress that may not exist. For the same reason the blueprint fingerprints
+every file it cites, so a file edited again while it is already uncommitted
+still sends the agent back to re-read it. A landed block is history: correcting
+landed work adds a new block rather than rewriting one the developer already
+accepted.
+
+Tracking reads progress; it does not drive it. The build order names the next
+block whose dependencies have landed, but how an increment is shaped, limited,
+or declared done belongs to whoever builds it. The blueprint stays out of
+version control, so the team sees progress through views pasted into a pull
+request, not through a shared board.
+
 ## Why state machines carry the tactics
 
 State machines make complex logic visible, traceable, observable, and, as a
@@ -171,9 +204,12 @@ sequence chart reads it as activation.
 blueprint as one offline page — Markdown, the views drawn as SVG, a legend of
 marks and verdicts, and each block's card on hover — using only the Python
 standard library. Its layout is plainer than GitHub's and draws a subset of
-Mermaid; the Markdown stays the source. Bundling a JavaScript renderer would
-give a closer picture at the cost of megabytes of vendored code, and loading
-one from a network would break a skill that must work installed alone.
+Mermaid. A view it cannot draw whole, with every word of its source visible,
+stays as source on the page: a dropped note can carry the very constraint the
+developer needed to correct. The Markdown stays the source. Bundling a
+JavaScript renderer would give a closer picture at the cost of megabytes of
+vendored code, and loading one from a network would break a skill that must
+work installed alone.
 
 ## Design decisions and rejected alternatives
 
@@ -228,12 +264,13 @@ one from a network would break a skill that must work installed alone.
   separately, Read the Terrain owns the next move when a cause is unclear,
   Boundary Fit judges whether a separation fits its relationships, Carry the
   Load shapes the accepted change into one increment, and Helix keeps state
-  across cycles of uncertain work. Blueprinter places one change; it does not
-  hold a checkpoint across cycles or reproduce those procedures.
+  across cycles of uncertain work. Blueprinter places one change and tracks its
+  blocks until they land; it does not choose among branches of uncertain work,
+  keep verdicts past the change, or reproduce those procedures.
 - **A blueprint belongs to one change.** It is a working file, excluded from
   version control by the clone's own exclude file and deleted, with its
-  rendered page, when the change lands. It never enters history, so nothing
-  has to remember to remove it and a blueprint never becomes a standing
-  specification that the code must stay consistent with.
+  rendered page, when every block has landed or been dropped. It never enters
+  history, so nothing has to remember to remove it and a blueprint never
+  becomes a standing specification that the code must stay consistent with.
 - **A blueprint is not proof.** It shows where a change lands and what it
   touches. It does not prove that the change is correct, valuable, or complete.

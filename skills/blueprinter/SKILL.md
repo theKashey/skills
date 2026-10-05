@@ -1,14 +1,15 @@
 ---
 name: blueprinter
-description: Use when planning, scoping, or placing a change in an existing codebase, before code — a blueprint of marked blocks the developer corrects one at a time; not for shaping the accepted increment or creating an architecture chart.
+description: Use when planning, scoping, or placing a change in an existing codebase, before code — a blueprint of marked blocks the developer corrects one at a time and tracks until each lands; not for shaping the accepted increment or creating an architecture chart.
 ---
 
 # Blueprinter
 
 Lay out a change in two phases before writing code. **Orient** traces the
 existing system as far as the task needs. **Operate** proposes the surgery on
-what Orient traced, as marked blocks. The developer judges and corrects
-structure; prose and diffs appear only for the block under discussion.
+what Orient traced, as marked blocks. The blueprint then tracks the change
+while it is built, until every block has landed. The developer judges and
+corrects structure; prose and diffs appear only for the block under discussion.
 
 Do not edit host code while orienting or operating. The blueprint file, the
 page rendered from it, and its exclude entry are the only things you write.
@@ -80,7 +81,13 @@ While reading, look for:
 **Trace what the task needs, as far as it needs.** If an amendment, including a
 fallback, changes what something else reads — another service, a published name
 or interface, a document or test that quotes it — find and read those readers.
-If it only uses input the block already receives, there is nothing to trace.
+An input the block already receives needs tracing upstream only until its
+meaning and provenance are established: who sets it, whether it was validated,
+and what it identifies. Stop there when the change relies on nothing more. When
+the change makes the input carry a decision it did not carry before, such as
+an access or trust decision, trace until the guarantee that decision needs is
+shown, or record it as a yes-but. The same holds when the change moves or
+removes what establishes a guarantee the block relies on.
 When a claim or amendment applies to every instance of something, find them
 all: each instance widens the amendment and the claim's coverage, even when it
 takes the same fix. A search over written text misses instances whose content
@@ -132,18 +139,34 @@ renumber or reuse one: a split keeps the ID on the part that stays and gives the
 new part the next free ID; a dropped block's ID is retired. The developer's
 earlier references must keep pointing at the same thing.
 
+**Marks are intent; status is observed.** Every block also carries a status:
+planned, in progress, landed, or dropped. Never set one by declaring it. In
+progress means a file at the block's location changed since the evidence record.
+Landed means a commit holds the block's location and you read it against the
+amendment; cite the commit and the check that passed. Dropped means the
+developer removed the block. When built code differs from its amendment, that
+is a yes-but on the block's card, corrected under §4. A landed block is
+history: a correction to landed work adds a new block at the landed code under
+the next free ID.
+
 ## 3. Draw the blueprint
 
 Write one blueprint per change to `.blueprints/<change-slug>.md` in the host
 repository. In the conversation, show the stands table and the strategy view on
 the first draw, and the strategy view and the delta after each correction; the
 other views stay in the file. Revise that file in place. Start it with the
-commit the evidence was read at and the paths that were uncommitted then; when a
-redraw finds either changed, re-read the evidence on changed paths, update that
-record, and say so in the delta. It is a working file, never committed: before
-the first write, make sure `.blueprints/` is listed in the clone's exclude file
-— the path `git rev-parse --git-path info/exclude` prints — so it cannot be
-committed by accident. Earlier revisions live in the deltas you report.
+commit the evidence was read at and an `evidence` fence: one line per file you
+cite or locate a block in, printed by `python3 "<this skill's
+directory>/scripts/evidence.py" record <path>...` from the host root; a path not
+yet created is recorded as absent. Before each redraw, run `evidence.py check
+.blueprints/<change-slug>.md`; it lists each of those files whose content
+changed, including one edited again while already uncommitted; when it exits 2,
+treat every cited file as changed. Re-read them, update the status of blocks
+located there, refresh their lines, and say so in the delta. It is a working
+file, never committed: before the first write, make sure `.blueprints/` is
+listed in the clone's exclude file — the path `git rev-parse --git-path
+info/exclude` prints — so it cannot be committed by accident. Earlier revisions
+live in the deltas you report.
 
 Use Mermaid in ` ```mermaid ` fences, so a view pasted into a pull request or
 issue renders on GitHub. Every view must be readable at a glance. A view with
@@ -207,10 +230,11 @@ classDef yesbut fill:#fef3c7,stroke:#d97706,color:#78350f
 ```
 
 **Build order** — a numbered list under the strategy view, never on edges.
-Extract blocks and refactoring first.
+Extract blocks and refactoring first. While the change is built, name the next
+block: the first one not landed whose dependencies have landed.
 
-**Block cards** — one table row per block: ID, mark, location, the amendment
-in one sentence, the open yes-but questions it depends on.
+**Block cards** — one table row per block: ID, mark, status, location, the
+amendment in one sentence, the open yes-but questions it depends on.
 
 **Logistics** — one `sequenceDiagram` per flow the change adds or alters.
 Start the text of each new or changed message with `+`.
@@ -231,14 +255,16 @@ keeps its `⚠`.
 The developer corrects by naming a question, block, or layer: "go further at
 Q4", "stop at Q7", "yes, but Q2 is owned by another team", "B3 already exists",
 "put it in B2, not B5", "split B4", "extract B1 first", "buy, don't build
-B6". For each correction:
+B6". What building finds is a correction too: a block that cannot land as
+amended, or a landed block that shows a layer above was wrong. For each
+correction:
 
 1. Redraw every layer the correction lands on. A correction to orientation
    redraws the orientation first, then every surgery view it changes.
 2. Check what it breaks in the other layers and redraw those parts.
 3. Report the delta in a few lines: questions added or stopped; blocks added,
    removed, re-marked, moved, and re-scoped (same mark, narrower or wider
-   amendment).
+   amendment); statuses changed.
 
 If the developer does not answer about a question or block, keep your answer
 or placement and leave it under Assumptions. Do not stop to wait.
@@ -261,6 +287,6 @@ only, as a section of the blueprint:
 
 ## 6. Close the change
 
-The blueprint lives only as long as its change. When the last block has
-landed, delete the file and its rendered page. For the change's own work,
+The blueprint lives only as long as its change. When every block is landed or
+dropped, delete the file and its rendered page. For the change's own work,
 follow the host repository's commit rules; do not commit on your own.
