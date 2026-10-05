@@ -142,10 +142,16 @@ earlier references must keep pointing at the same thing.
 **Marks are intent; status is observed.** Every block also carries a status:
 planned, in progress, landed, or dropped. Never set one by declaring it. In
 progress means a file at the block's location changed since the evidence record.
-Landed means a commit holds the block's location and you read it against the
-amendment; cite the commit and the check that passed. Dropped means the
-developer removed the block. When built code differs from its amendment, that
-is a yes-but on the block's card, corrected under §4. A landed block is
+Landed means a commit holds the block's whole amendment, its tests included,
+and you read it against the amendment; cite the commit and the check that
+passed. Until every part has landed, the block stays in progress and its card
+names each part still open. A check counts only if you ran it and it observes
+what the status or claim states; cite its command and result. A test that does
+not assert a claim's stated symptom does not pin that claim. What a commit says
+about itself, in its message or comments, is a claim to check, not evidence.
+Dropped means the developer removed the block. When built code differs from its
+amendment, that is a yes-but on the block's card, corrected under §4; never
+rewrite the amendment yourself to match what was built. A landed block is
 history: a correction to landed work adds a new block at the landed code under
 the next free ID.
 

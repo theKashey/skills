@@ -157,13 +157,15 @@ map stays true while the work moves, one block at a time.
 
 A mark is intent; a status is an observation. The agent reads the host tree
 for each status instead of declaring it: a block is landed only when a commit
-holds it and the agent has read it against the amendment, with the check that
-passed. A declared status cannot fail, and a tracker that cannot fail reports
-progress that may not exist. For the same reason the blueprint fingerprints
-every file it cites, so a file edited again while it is already uncommitted
-still sends the agent back to re-read it. A landed block is history: correcting
-landed work adds a new block rather than rewriting one the developer already
-accepted.
+holds its whole amendment, tests included, and the agent has read it against
+that amendment, with a check it ran that observes what the status states. A
+declared status cannot fail, and a tracker that cannot fail reports progress
+that may not exist. For the same reason the blueprint fingerprints every file
+it cites, so a file edited again while it is already uncommitted still sends
+the agent back to re-read it. A landed block is history: correcting landed
+work adds a new block rather than rewriting one the developer already
+accepted, and the agent never rewrites an amendment to match what was built,
+because that would erase the difference the developer needs to see.
 
 Tracking reads progress; it does not drive it. The build order names the next
 block whose dependencies have landed, but how an increment is shaped, limited,
