@@ -20,13 +20,27 @@ different procedure.
 
 ## Why the skill exists
 
+A change lives at a level of the system, and the task names that level. In
+the application's own vocabulary, a request for a new capability is about
+which parts take part and what passes between them; a request to alter one
+rule is about the states and transitions of the blocks that hold it. The
+agent reasons at the level the task names, in that level's language — blocks,
+flows, transitions — and not in code. What passes below that level is
+direction: what a block must do differently, which the developer can correct
+in one sentence. The code that carries the direction out is produced by the
+build and checked against the direction; it is not what the developer judges
+the change by. The next section's three layers, the grain rule among the
+design decisions, and the scale rule for evaluation are this principle
+applied.
+
 An agent given a non-local task reports its understanding as prose and its
-result as a diff spread across many files. The decisions that matter are
-inside both and visible in neither: which existing system it reused or missed,
-where the change lands, whether one new thing should be two, and what must be
-extracted before anything is built. The developer is left asking why this
-file, which assumption, and how the agent decided, and can answer only by
-reading the diff after the work is done.
+result as a diff spread across many files, neither of them at the level where
+the change lives. The decisions that matter are inside both and visible in
+neither: which existing system it reused or missed, where the change lands,
+whether one new thing should be two, and what must be extracted before
+anything is built. The developer is left asking why this file, which
+assumption, and how the agent decided, and can answer only by reading the
+diff after the work is done.
 
 Two common answers move the cost without removing it. A long specification
 written before the work has the detail but not the structure, and adds another
