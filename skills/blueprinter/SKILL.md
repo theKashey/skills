@@ -15,12 +15,16 @@ page rendered from it, and its exclude entry are the only things you write.
 
 ## 1. Orient
 
-**First, ask yourself what problem the change solves**, apart from the solution
-the task proposes, and state it in one sentence. When the task names only a
-solution, infer the problem and record the inference under Assumptions, marked
-"problem", with the other reading. A claim that serves no part of the problem,
-or a problem the code already solves another way, is noted in that claim's
-evidence and under Assumptions; keep planning the task as asked.
+**First, state the problem the change solves**, apart from the solution the
+task proposes; when the task names only a solution, infer it and list the
+inference under Assumptions. The problem is the layer above strategy. While
+orienting and while drawing, question your own change at every layer, not only
+the code: going down asks how the layer above is achieved; going up asks what
+this answer solves there. When an answer at any layer changes or ends in
+yes-but, go up and re-ask whether each layer above still holds, up to the
+problem, then back down, redrawing what changes as §4's steps 1 and 2 do. If
+the problem itself changes, keep planning the task as asked and list the
+revised problem under Assumptions.
 
 **Then check the task's claims against the code.** A task description is often
 older than the code. For each claim, requirement, or "done when" item, read the
@@ -115,8 +119,9 @@ amendments, they are two blocks. Two files that change together for one reason
 are one block, unless one block would hide an ownership, trust, or persistence
 boundary, or a different lifecycle.
 
-**Every block traces to a claim.** A block that serves no claim in the task is
-a scope expansion: list it under Assumptions with the do-nothing alternative.
+**Every block traces to a claim, and every claim to the problem.** A block
+that serves no claim, or a claim that serves no part of the problem, is a
+scope expansion: list it under Assumptions with the do-nothing alternative.
 
 An Existing, Upgrade, Extract, or Deconstruct block you cannot locate, or an
 Acquire whose source you cannot confirm, is a **guess**: draw it with `?` and

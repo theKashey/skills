@@ -71,9 +71,14 @@ Tactics are drawn only for blocks that hold logic and change or are new.
 ## Orientation before surgery
 
 A task often names a solution rather than the problem it answers, and a
-blueprint can place that solution faithfully and still solve the wrong
-problem. Orientation therefore starts by stating the problem in one sentence,
-so a wrong one is corrected while it is still one sentence.
+premise carried only downward gets placed faithfully and still solves the
+wrong problem. Orientation therefore states the problem first and treats it
+as the layer above strategy. The agent questions its own change at every
+layer, down to ask how the layer above is achieved and up to ask what an
+answer solves there. A finding low down — a state machine that cannot take
+the transition, a flow that crosses an owner — is often evidence that a layer
+above, or the problem itself, was stated wrongly, so the agent goes back up
+and redraws before the developer has to correct it.
 
 It then checks the task's claims against the code. A task description is
 often older than the code it describes: part of the work may already exist,
@@ -196,6 +201,9 @@ one from a network would break a skill that must work installed alone.
 - **Questions factored per task**, instead of a fixed checklist. A fixed list
   asks the same things of a local change and a cross-service change, and
   misses what only this task raises.
+- **Questions that move between layers**, instead of a problem statement
+  asked once at the start. A premise checked only on the way down is never
+  tested by what the lower layers find.
 - **No gate between the phases.** One blueprint holds orientation and
   surgery; a correction to orientation redraws the surgery instead of waiting
   for a separate approval.
