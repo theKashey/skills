@@ -34,6 +34,25 @@ the change by. The next section's three layers, the grain rule among the
 design decisions, and the scale rule for evaluation are this principle
 applied.
 
+Four moves carry it, and the sections below say where each one runs:
+
+- **Verification by simplification.** Whatever is judged is first reduced to
+  a form that can be found true or false: a block with a mark, an amendment
+  in one sentence, a verdict of yes, no, or misframed with one piece of
+  evidence. A small claim can be checked and a verdict counted; a diff or a
+  page of findings can only be read.
+- **Context isolation by separating the steps.** Discovery, review, and the
+  check of each built block run in fresh contexts that receive only their
+  inputs, so no context judges its own proposal.
+- **Five whys and fishbone, as questions rather than diagrams.** The agent
+  asks why up the layers until it reaches the problem, and sorts what stands
+  in the way of an answer — a wrong premise, a source it cannot read, a
+  convention, a system nobody knows yet — before it chooses a way around, so
+  a decision is clarified by its causes instead of patched at the block.
+- **Explanation in plain words.** The change is stated in the application's
+  concepts, so everyone involved — the developer who corrects it and the team
+  that reads the pull request — can follow it.
+
 An agent given a non-local task reports its understanding as prose and its
 result as a diff spread across many files, neither of them at the level where
 the change lives. The decisions that matter are inside both and visible in
