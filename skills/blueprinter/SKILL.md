@@ -29,7 +29,8 @@ inputs cannot decide it: correct the layer the block rests on under §5, then
 judge the block again. A verdict can be wrong and be caught; prose cannot.
 
 Do not edit host code before §6. Until then, the blueprint file, the page
-rendered from it, and its exclude entry are the only things you write.
+rendered from it, its exclude entry, and the worktree §1 names for a change
+that already exists are the only things you write.
 
 ## 1. Orient
 
@@ -43,6 +44,15 @@ and re-ask whether each layer above still holds, up to the problem, then back
 down, redrawing what changes as §5's steps 1 and 2 do. If the problem itself
 changes, keep planning the task as asked and list the revised problem under
 Assumptions.
+
+**A change that already exists, wholly or in part, is built work, not
+evidence.** Orient and draw against the task's starting commit — the parent
+of the change's first commit, a branch's merge base with its target, a pull
+request's declared base, or HEAD for uncommitted work — in a worktree at that
+commit, and list the commit you chose under Assumptions. Record the evidence
+there, and do not read the diff from that commit until the first checked draw
+is shown: a tree without the change cannot be read to confirm it. From then
+on the diff is built work, judged as §6 judges it.
 
 **Then check the task's claims against the code.** A task description is often
 older than the code. For each claim, requirement, or "done when" item, read the
@@ -178,7 +188,9 @@ earlier references must keep pointing at the same thing.
 
 **Marks are intent; status is observed.** Every block also carries a status:
 planned, in progress, landed, or dropped. Never set one by declaring it. In
-progress means a file at the block's location changed since the evidence record.
+progress means a file at the block's location changed since the evidence
+record, so a change that already existed when the record was taken at its
+starting commit reads as in progress, never as landed.
 Landed means a commit holds the block's whole amendment, its tests included, and
 every row of the block's §6 check is yes; cite the commit. Until every part
 has landed, the block stays in progress and its card names each part still
@@ -199,14 +211,22 @@ repository. In the conversation, show the direction, the stands table, the
 discovery table, and the strategy view on the first draw, and the direction,
 the strategy view, and the delta after each correction; the other views stay
 in the file. Revise that file in place.
-Start it with the commit the evidence was read at and an `evidence` fence: one
+Start it with the commit the evidence was read at — the starting commit, for
+a change that already exists — and an `evidence` fence: one
 line per file you cite or locate a block in, printed by `python3 "<this skill's
-directory>/scripts/evidence.py" record <path>...` from the host root; a path not
-yet created is recorded as absent. Before each redraw, run `evidence.py check
-.blueprints/<change-slug>.md`; it lists each of those files whose content
-changed, including one edited again while already uncommitted; when it exits 2,
-treat every cited file as changed. Re-read them, update the status of blocks
-located there, refresh their lines, and say so in the delta. It is a working
+directory>/scripts/evidence.py" record <path>...` from the root of the tree the
+evidence was read in: the host root, or the worktree root for a change that
+already exists; a path not yet created is recorded as absent. Before each
+redraw, run `evidence.py check .blueprints/<change-slug>.md` from the host
+root, whatever tree the record came from, so the files the change touched
+report as changed; it lists each of those files whose content changed,
+including one edited again while already uncommitted; when it exits 2, treat
+every cited file as changed. Re-read them, update the status of blocks
+located there, refresh their lines, and say so in the delta. For a change that
+already exists, the first host-root check comes after the first checked draw
+is shown; redraws before it re-read the worktree, and from then on a changed
+file sets the status of the blocks located there while the citations keep
+pointing at the worktree, the tree the record and the lint read. It is a working
 file, never committed: before the first write, make sure `.blueprints/` is
 listed in the clone's exclude file — the path `git rev-parse --git-path
 info/exclude` prints — so it cannot be committed by accident. Earlier revisions
@@ -317,7 +337,10 @@ keeps its `⚠`.
 Before you show a draw as ready, and after each correction:
 
 1. Run `python3 "<this skill's directory>/scripts/lint.py"
-   .blueprints/<change-slug>.md` from the host root. It reports each cited
+   .blueprints/<change-slug>.md` from the root of the tree the evidence was
+   read in — for a change that already exists, from the worktree root, with
+   the blueprint's path in the host checkout, so locations and line counts are
+   judged against the tree the citations came from. It reports each cited
    `path:line` missing from the evidence fence or past its file's end, each
    reused block ID, each unknown mark, each Existing, Upgrade, or Deconstruct
    file that does not exist, each Ghost or Acquire with no capability or
@@ -381,7 +404,11 @@ judges one against the other. Apply it to the host tree when building, or to
 a scratch copy or worktree when only writing the amendment, and run the
 affected tests and the type check the host has: the patch must apply, and
 results must be no worse than before. Report what you ran, and name each
-check the host lacks.
+check the host lacks. When the block's diff already exists, take the part of
+the built work at the block's location instead of writing one. A hunk at a
+location no block names is a site with no covering block: take it under §5 as
+a block added under the next free ID that traces to a claim, or as a scope
+expansion under Assumptions, and name the diff as its source in the delta.
 
 Then give a check subagent the check brief, the block's card and amendment,
 and the diff or commit, and copy its rows into the Checks table, replacing

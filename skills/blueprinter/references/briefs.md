@@ -14,7 +14,8 @@ evidence — a `path:line`, or a command and its result — not an explanation:
 
 ## Discovery
 
-Inputs: the host repository root, the task text, and the problem statement.
+Inputs: the root of the tree the evidence is read in — the worktree, for a
+change that already exists — the task text, and the problem statement.
 
 > You find what already exists. You do not design or propose a change, and you
 > do not edit files.
@@ -43,7 +44,8 @@ Inputs: the host repository root, the task text, and the problem statement.
 
 ## Review
 
-Inputs: the host repository root, the block cards, the build order, and the
+Inputs: the root of the tree the evidence is read in — the worktree, for a
+change that already exists — the block cards, the build order, and the
 strategy view.
 
 > You check a proposed change you did not write. Do not edit the host tree;

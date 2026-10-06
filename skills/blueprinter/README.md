@@ -230,6 +230,20 @@ work adds a new block rather than rewriting one the developer already
 accepted, and the agent never rewrites an amendment to match what was built,
 because that would erase the difference the developer needs to see.
 
+The same map serves a change that already exists, whether as uncommitted
+work, a branch, or a pull request. The blueprint is drawn against the state
+before the change, in a worktree at the task's starting commit, because a
+tree that already contains the change makes the proposal part of the
+evidence: discovery would find the change's own new block as something to
+use, and orientation would mark what the change built as existing. The
+agent does not read the diff until the first checked blueprint is shown; a
+tree without the change cannot be read to confirm it. The diff is then built
+work: every block it touches reads as in progress, never as landed, until the
+same check that lands any block has run, and a hunk no block names becomes a
+correction, a block the blueprint missed or a scope expansion, with the diff
+as its source. The disagreement between the blueprint drawn blind and the
+change as made is what the developer judges.
+
 When the task asks for the change, the agent builds it in build order once
 the first checked blueprint is shown, without waiting for approval; a
 correction that arrives meanwhile is taken first, and nothing is committed on
@@ -347,10 +361,13 @@ work installed alone.
   separately, Read the Terrain owns the next move when a cause is unclear,
   Boundary Fit judges whether a separation fits its relationships, Carry the
   Load shapes the accepted change into one increment, and Helix keeps state
-  across cycles of uncertain work. Blueprinter places one change, builds it,
-  and tracks its blocks until they land; it does not choose among branches of
-  uncertain work, keep verdicts past the change, or reproduce those
-  procedures.
+  across cycles of uncertain work. Retrospective interrogates whether a
+  finished solution answers the right problem for the right beneficiary.
+  Blueprinter places one change, builds it, and tracks its blocks until they
+  land; for a change already made it judges where the change landed and
+  whether each block matches its amendment, not whether the solution was the
+  right one. It does not choose among branches of uncertain work, keep
+  verdicts past the change, or reproduce those procedures.
 - **A blueprint belongs to one change.** It is a working file, excluded from
   version control by the clone's own exclude file and deleted, with its
   rendered page, when every block has landed or been dropped. It never enters
