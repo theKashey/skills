@@ -44,6 +44,9 @@ task.
   hook or installed checks, or named-abstraction definitions and claims. Maintenance, remapping,
   retirement, and completion verification are Create work. Read
   [references/create.md](references/create.md). Do not load the Consume guide.
+  Installing Compass in a host, or verifying that installation, is Create
+  work too; read [references/installation.md](references/installation.md) for
+  that and nothing else.
 - **Consume** — the task reads and applies an existing chart without changing
   Compass-owned or Compass-installed state. Read
   [references/consume.md](references/consume.md). Do not load Create references.

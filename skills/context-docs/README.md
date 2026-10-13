@@ -277,6 +277,7 @@ preferred document, or create an unauthorized fallback.
 | [public contracts](references/public-contracts.md) | Public-contract inventory workflow and checklist, and example framing and integrity. | A change affects API or configuration reference semantics or snippets. |
 | [code comments](references/code-comments.md) | What a comment that passed the gate must do: placement, ownership, the invisible-reef-to-visible-cliff disposition, worked examples, and the Chesterton's Fence test. | A change affects how code-local rationale is written, placed, or retired. |
 | [review at wrap-up](references/review-documentation-at-wrap-up.md) | One-time minimum completion checks, the compact end-state gate, and the condition for loading the full scorecard. | A change affects routine non-inline completion. |
+| [installation](references/installation.md) | The agent-instructions rule and review check a repository adopts when it installs Context Docs, and the check that they landed where its instructions deliver them. Nothing else loads it. | A change affects what an installing repository adopts or how reviewers catch over-documentation. |
 | [quality and maintenance](references/quality-maintenance.md) | Audit workflow and evidence, change triggers, the historical-surface contract for changelogs and migration guides, and release and drift checks. | A change affects audits, releases, or how documentation quality is assessed or maintained. |
 
 Keep each behavior in one canonical owner. Link to it from other files rather

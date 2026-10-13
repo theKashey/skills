@@ -149,6 +149,20 @@ generation. A README holding handoff material (authoring narrative, validation
 records, pending work, environment deixis) is repaired by relocating that
 content, never by deleting the file.
 
+Demand wording stays out of the description, but a consuming repository may
+choose it. A package may ship one optional installation reference, recommended
+at `references/installation.md`, reached only through a skill-body pointer
+conditioned on installing the skill or verifying its installation, and read for
+nothing else. It taps the skill into the repository's processes so it runs at
+full power: the agent-instructions rule that names the skill and when to use
+it, plus any process wiring the skill's own references define, pointed to
+rather than copied. It also carries the review checks that catch, in finished
+work, the gains a sloppy agent drops—*only the non-obvious facts were
+documented*. The installer verifies that each item landed where the
+repository's own instructions deliver it—review checks go to the review file
+the root instructions point to—never a fixed destination. An absent reference
+is never a finding.
+
 ## Complete the review
 
 Complete with an evidence-backed advisory report, audit verdict, or behavioral

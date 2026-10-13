@@ -260,7 +260,8 @@ rather than a disclaimer: reasons that survive a rewrite may be Compass-owned,
 reasons that die with the implementation are not, and neither side duplicates
 the other. Completion is measured by the verification gates, not by prose
 confidence. The skill puts the chart on the path of work — a human-approved
-usage hook in the host's agent instructions, installed at Phase B — but whether
+usage hook in the host's agent instructions, installed at Phase B, and review
+checks in the host's review file — but whether
 agents then follow it is outside the skill's evaluation boundary.
 
 ## Runtime architecture
@@ -277,6 +278,7 @@ agents then follow it is outside the skill's evaluation boundary.
 | [scripts/compass_search.py](scripts/compass_search.py) | Live, read-only structured lookup over a host-declared chart root, with deterministic address, exact, heading, and literal tiers and optional BM25-related candidates |
 | [scripts/compass_lex.py](scripts/compass_lex.py) | The lexicon's only writer and reader: `resolve` a sentence in any language to concepts, stems, and scopes with the expansion disclosed; `reverse` a symbol, path, or address to what people call it; `add` gated batches; `check` for the host suite; `sort` and `list` |
 | [references/lexicon.md](references/lexicon.md) | The lexicon: why three languages need a database of forms, the row schema, the gap gate, admission as its own Create task, the installed check, and how Consume reads it |
+| [references/installation.md](references/installation.md) | Installing Compass in a host or verifying that installation: points to the usage hook and Phase B, and owns the review checks the host adopts |
 | [references/agent-hook.md](references/agent-hook.md) | Canonical four-line search-and-consult block copied into host agent instructions after human approval |
 | [references/structural-signals.md](references/structural-signals.md) | Shared read-only warning signs for level contamination and overreach; both flows may consult it without importing the other's procedure |
 | [references/exploration.md](references/exploration.md) | The orient→scan→probe→adjust loop, triangulation and evidence sources, per-state procedures and exits, level calibration, scratchpad format |
