@@ -26,9 +26,12 @@ Skills inside nested folders are found too.
 
 ## Route one task
 
-1. Write a one- to three-sentence brief: the change, the surfaces it touches,
-   and any named product, tool, or file. The user's raw message is often too
-   short or too chatty to route.
+1. Write the brief as a search query: the task in a few words, then its
+   sibling meanings, such as synonyms, the other names the same thing goes by,
+   and related terms a skill author might have used instead of yours. The
+   router matches words, not sentences: full sentences pull in near-miss
+   skills, and the user's raw message is often too short or too chatty to
+   route. Write it from the task, not from earlier router output.
 2. Run the router; it prints absolute `load:` paths:
 
    ```bash
@@ -45,14 +48,24 @@ Skills inside nested folders are found too.
      applies to this task. Treat every `mind the boundary:` line as a reason
      that skill may not fit.
    - `CHOOSE`: no skill clearly leads. The closer the scores, the more cards
-     (two to five). Read the cards (what each skill is
-     about, why it matched, the boundary that may rule it out) and decide: load
-     one, several, or none. Load a skill only when its card describes this
-     task; a listed card is a candidate, not a recommendation.
-   - `ABSTAIN`: proceed without a library skill. Small work stays small.
+     (up to eight). Decide from the cards alone; opening each `SKILL.md` to
+     compare costs more than the choice is worth. Most tasks need no skill or
+     one, a few need two. Load a skill only when its card describes the work
+     this task asks for. A shared topic or tool name is not enough. Leave a
+     skill out when its `mind the boundary:` line describes this task. A
+     listed card is a candidate, not a recommendation, so choosing none is a
+     normal outcome.
+   - A `matched:` line, on any card, quotes the line of that skill's own text
+     that best matches the brief's distinctive words. It shows where
+     the words matched; judge from it whether the skill does this work, not
+     only names the same thing.
+   - `ABSTAIN`: no skill shares enough words with the brief. Proceed without a
+     library skill; small work stays small. A skill already in your context
+     still applies if it describes this situation in other words.
    - `set aside`: do not load these. The line says why: its don't-use boundary
-     matched, only generic words matched, or it scored well behind the first
-     pick or did not fit in the list.
+     matched, only generic words or one distinctive word matched, its score was
+     too low, the rerank stage did not name it, or it scored well behind the
+     first pick or did not fit in the list.
 4. Route again when the work reaches a new surface: a new module, owner,
    product, or risk. The router keeps no memory between calls, so pass
    `--seen name,name` with the skills whose cards or `SKILL.md` are already in
@@ -68,7 +81,7 @@ apply, drop it and say so; do not stretch the task to fit the skill.
 
 - `python3 <this-skill-dir>/scripts/skill_router.py table --from <work location>` prints the
   extended skill table: use-when and don't-use lines pulled from each
-  description and body. Routing reads nothing else.
+  description and body. Routing reads only the `SKILL.md` files.
 - `python3 <this-skill-dir>/scripts/skill_router.py eval --from <work location> -v` replays every
   skill's shipped `evals/eval_queries.jsonl` against the router. The queries
   only measure routing; they never steer it. The output lists the skill pairs

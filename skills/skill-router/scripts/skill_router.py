@@ -5,7 +5,7 @@ Standard library only. No network. Three subcommands:
 
   table  Build the extended skill table (name, description, use_when,
          dont_use, headings) from one or more skill roots.
-  route  Rank skills for a task brief; abstain when nothing fits.
+  route  Rank skills for a task brief; abstain when nothing matches.
   eval   Replay every skill's shipped evals/eval_queries.jsonl ({query,
          should_trigger}) and report routing accuracy.
 
@@ -15,7 +15,8 @@ folder at PATH and each folder above it, up to the home folder, plus the home
 folder's own, after any --skills roots; the first copy of a name wins, so the
 nearest one does.
 
-Routing reads only each SKILL.md. Shipped queries measure the router in eval;
+Routing reads only each SKILL.md: the card (name, description, use/don't-use
+lines, headings) and, at lower weight, the rest of its body. Shipped queries measure the router in eval;
 they never steer a route.
 
 Second stage: set --rerank CMD (or SKILL_ROUTER_RERANK) to any local command.
@@ -143,9 +144,19 @@ def split_description(desc: str) -> tuple[str, list[str]]:
     return desc[: match.start()].strip(), [desc[match.start():].lstrip(";. ").strip()]
 
 
-def body_sections(body: str) -> tuple[list[str], list[str], list[str]]:
-    """Return (use_when lines, dont_use lines, headings) from a SKILL.md body."""
-    use_when, dont_use, headings = [], [], []
+HEADING_RE = re.compile(r"^#{1,6}\s+(.*)$")
+ITEM_RE = re.compile(r"^[-*]\s+|^\d+\.\s+")
+MARKUP_RE = re.compile(r"^[>*+\-\d.\s]+|\*\*|`")
+
+
+def body_sections(body: str) -> tuple[list[str], list[str], list[str], list[str]]:
+    """Return (use_when lines, dont_use lines, headings, prose lines) from a SKILL.md body.
+
+    Prose is every other line long enough to say something, code and table rows included,
+    minus don't-use lines and sections, so a boundary never counts as evidence for the skill
+    it rules out.
+    """
+    use_when, dont_use, headings, prose = [], [], [], []
     mode = None
     in_fence = False
     paragraph: list[str] = []
@@ -160,8 +171,10 @@ def body_sections(body: str) -> tuple[list[str], list[str], list[str]]:
             in_fence = not in_fence
             continue
         if in_fence:
+            if mode != "dont" and len(line.strip()) > 25:
+                prose.append(line.strip())
             continue
-        heading = re.match(r"^#{1,6}\s+(.*)$", line)
+        heading = HEADING_RE.match(line)
         if heading:
             flush()
             title = heading.group(1).strip()
@@ -175,15 +188,19 @@ def body_sections(body: str) -> tuple[list[str], list[str], list[str]]:
             continue
         if not stripped or stripped.startswith("|"):
             flush()
+            if stripped.startswith("|") and mode != "dont" and len(stripped) > 25 and not set(stripped) <= set("|-: "):
+                prose.append(" ".join(stripped.replace("|", " ").split()))
             continue
+        if mode != "dont" and len(stripped) > 25:
+            prose.append(MARKUP_RE.sub("", stripped).strip())
         if mode:
-            if re.match(r"^[-*]\s+|^\d+\.\s+", stripped):
+            if ITEM_RE.match(stripped):
                 flush()
-                paragraph.append(re.sub(r"^[-*]\s+|^\d+\.\s+", "", stripped))
+                paragraph.append(ITEM_RE.sub("", stripped))
             else:
                 paragraph.append(stripped)
     flush()
-    return use_when, dont_use, headings
+    return use_when, dont_use, headings, prose
 
 
 def load_queries(skill_md: str) -> tuple[list[str], list[str]]:
@@ -206,7 +223,7 @@ def read_skill(skill_dir: Path) -> dict | None:
     fields, body = parse_frontmatter(text)
     description = fields.get("description", "")
     use_part, dont_desc = split_description(description)
-    use_body, dont_body, headings = body_sections(body)
+    use_body, dont_body, headings, prose = body_sections(body)
     return {
         "name": fields.get("name") or skill_dir.name,
         "path": str(skill_md),
@@ -214,6 +231,7 @@ def read_skill(skill_dir: Path) -> dict | None:
         "use_when": [use_part] + use_body if use_part else use_body,
         "dont_use": dont_desc + dont_body,
         "headings": headings,
+        "body": prose,
         "source_hash": hashlib.sha256(text.encode()).hexdigest()[:12],
     }
 
@@ -257,7 +275,7 @@ def is_dir(path) -> bool:
 def libraries_from(start: Path) -> list[Path]:
     """Skill folders at the work location and each folder above it, nearest first, ending with the home folder."""
     start = start.expanduser().resolve()
-    if not start.exists():  # a typo must not look like "no skill fits"
+    if not start.exists():  # a typo must not look like ABSTAIN
         sys.exit(f"skill_router: work location {start} does not exist")
     if not start.is_dir():
         start = start.parent
@@ -289,7 +307,7 @@ def build_table(roots: list[Path], found: list[Path] = (), origin: Path | None =
         root = Path(os.path.abspath(root.expanduser()))  # printed load: paths work from any folder
         seen_before = bool(dirs_key(root) & visited) if explicit else False
         dirs = skill_dirs(root, visited)
-        if explicit and not dirs and not seen_before:  # a typo must not look like "no skill fits"
+        if explicit and not dirs and not seen_before:  # a typo must not look like ABSTAIN
             sys.exit(f"skill_router: no SKILL.md found under {root}")
         for skill_dir in dirs:
             entry = read_skill(skill_dir)
@@ -317,6 +335,14 @@ MIN_IDF = 1.0
 # (the product's own name, "src", "package") and is not evidence.
 GENERIC_SHARE = 0.35
 DONT_WEIGHT = 0.8
+# The rest of the body (prose, tables, code) is a second BM25 document with its own
+# word rarity, weighted below the card: authors put the commands, file patterns and
+# package names a task mentions there, not in the card.
+BODY_WEIGHT = 0.8
+# A word in more than this share of bodies is not evidence on its own.
+BODY_SHARE = 0.2
+# A matched body line needs this many distinctive words and this score.
+MATCH_MIN, MATCH_SCORE = 2, 1.0
 
 
 def field_text(entry: dict, field: str) -> list[str]:
@@ -337,7 +363,7 @@ def counts(text: str) -> dict[str, int]:
 class Router:
     def __init__(self, table: list[dict]):
         self.table = table
-        self.cards, self.dont = [], []
+        self.cards, self.dont, self.body = [], [], []
         for entry in table:
             card = {}
             for field, weight in CARD_FIELDS.items():
@@ -346,6 +372,7 @@ class Router:
                         card[tok] = card.get(tok, 0.0) + weight
             self.cards.append(card)
             self.dont.append(counts(" ".join(field_text(entry, "dont_use"))))
+            self.body.append(counts("\n".join(entry.get("body", []))))
         units = self.cards + self.dont
         n = max(len(units), 1)
         df: dict[str, int] = {}
@@ -359,17 +386,40 @@ class Router:
                 card_df[tok] = card_df.get(tok, 0) + 1
         self.boilerplate = {t for t, d in card_df.items() if d > max(GENERIC_SHARE * len(self.cards), 5)}
         self.avg_card = sum(sum(c.values()) for c in self.cards) / max(len(self.cards), 1) or 1.0
+        nb = max(len(self.body), 1); body_df: dict[str, int] = {}
+        for bag in self.body:
+            for tok in bag:
+                body_df[tok] = body_df.get(tok, 0) + 1
+        self.body_idf = {t: math.log(1 + (nb - d + 0.5) / (d + 0.5)) for t, d in body_df.items()}
+        self.body_common = {t for t, d in body_df.items() if d > max(BODY_SHARE * nb, 5)}
+        self.avg_body = sum(sum(b.values()) for b in self.body) / nb or 1.0
         self.avg_dont = sum(sum(d.values()) for d in self.dont) / max(len(self.dont), 1) or 1.0
 
-    def bm25(self, query: set[str], bag: dict, avg: float) -> tuple[float, list[str]]:
+    def bm25(self, query: set[str], bag: dict, avg: float, idf: dict | None = None) -> tuple[float, list[str]]:
+        idf = self.idf if idf is None else idf
         length = sum(bag.values())
         score, hits = 0.0, []
         for tok in query:
             tf = bag.get(tok)
             if tf:
-                score += self.idf.get(tok, 0.0) * tf * (K1 + 1) / (tf + K1 * (1 - B + B * length / avg))
+                score += idf.get(tok, 0.0) * tf * (K1 + 1) / (tf + K1 * (1 - B + B * length / avg))
                 hits.append(tok)
         return score, hits
+
+    def matched(self, r: dict, task: str) -> str:
+        """The body line most about this task: distinctive shared words, short lines preferred."""
+        want = {t for t in counts(task) if t not in GENERIC and self.body_idf.get(t, 0) > MIN_IDF}
+        best, best_line = 0.0, ""
+        for line in r["entry"].get("body", []):
+            toks = tokens(line)
+            shared = want & set(toks)
+            words = {t for t in shared if " " not in t}
+            if len(words) < MATCH_MIN or not words - self.body_common:
+                continue
+            score = sum(self.body_idf[t] for t in shared) / math.sqrt(len(toks))
+            if score > best:
+                best, best_line = score, line
+        return shorten(best_line) if best >= MATCH_SCORE else ""
 
     def rank(self, task: str, keep_all: bool = False) -> list[dict]:
         query = set(counts(task))
@@ -377,6 +427,8 @@ class Router:
         for i, entry in enumerate(self.table):
             use, hits = self.bm25(query, self.cards[i], self.avg_card)
             dont, dont_hits = self.bm25(query, self.dont[i], self.avg_dont) if self.dont[i] else (0.0, [])
+            body, body_hits = self.bm25(query, self.body[i], self.avg_body, self.body_idf) if self.body[i] else (0.0, [])
+            use += BODY_WEIGHT * body
             against = DONT_WEIGHT * dont
             if use <= 0 and not keep_all:
                 continue
@@ -384,6 +436,10 @@ class Router:
                 t for t in hits
                 if t not in GENERIC and t not in self.boilerplate and self.idf.get(t, 0) > MIN_IDF
             )
+            evidence = sorted(set(evidence) | {
+                t for t in body_hits
+                if t not in GENERIC and t not in self.body_common and t not in self.boilerplate and self.body_idf.get(t, 0) > MIN_IDF
+            })
             # One distinctive shared word is chance in a large library: not enough to
             # route on, but kept so a CHOOSE list can show the skill after better cards.
             single = evidence if len(evidence) == 1 else []
@@ -434,7 +490,7 @@ def decide(results: list[dict], min_score: float, margin: float, lexical: bool =
         elif not lexical:
             picks.append(r)
         elif not r["evidence"]:
-            r["why_not"] = "only generic words matched"
+            r["why_not"] = "only one distinctive word matched" if r.get("single") else "only generic words matched"
             aside.append(r)
         elif r["score"] < min_score:
             r["why_not"] = "score below threshold"
@@ -472,8 +528,11 @@ def rerank(command: str, task: str, results: list[dict], timeout: float) -> tupl
         for r in results
     ]
     try:
+        argv = shlex.split(command)
+        if not argv:
+            return results, "rerank failed (empty command); BM25 order kept"
         proc = subprocess.run(
-            shlex.split(command),
+            argv,
             input=json.dumps({"task": task, "candidates": candidates}),
             capture_output=True, text=True, timeout=timeout, check=True,
         )
@@ -554,7 +613,7 @@ def route(table: list[dict], task: str, args, router: "Router | None" = None) ->
         # set aside by a boundary or by the score floor stay out. A skill resting on one
         # distinctive word may fill a card, after every better-supported one.
         behind = [r for r in aside if r["why_not"] == "well behind the top pick"]
-        thin = [r for r in aside if r["why_not"] == "only generic words matched" and r["single"]]
+        thin = [r for r in aside if r["why_not"] == "only one distinctive word matched"]
         picks = picks + behind + thin
         # The less the scores separate, the more cards: keep every card within
         # --ratio of the top score, at least two, at most --shortlist.
@@ -564,6 +623,8 @@ def route(table: list[dict], task: str, args, router: "Router | None" = None) ->
         aside = [r for r in behind + thin if r not in picks] + aside
         verdict, limit = "CHOOSE", args.shortlist
     aside = aside + picks[limit:]
+    for r in picks[:limit]:
+        r["matched"] = router.matched(r, task)
     seen = {name for names in args.seen or [] for name in names.split(",") if name}
     return {
         "verdict": verdict,
@@ -586,6 +647,8 @@ def card(r: dict, verdict: str, seen: bool) -> dict:
         "because": reasons(entry, r["evidence"], "use_when") or [shorten(entry["description"])],
         "mind": reasons(entry, r["evidence"] + r["dont_hits"], "dont_use", 1),
     }
+    if r.get("matched") and r["matched"].rstrip("…") not in " ".join(out["because"]):
+        out["matched"] = r["matched"]
     if seen:
         out["seen"] = True
         return out
@@ -593,10 +656,14 @@ def card(r: dict, verdict: str, seen: bool) -> dict:
     if verdict == "CHOOSE":
         # The caller decides here, so it gets the description and, failing a matched boundary,
         # the description's own "not for" part: the line that separates near neighbours.
-        about = shorten(entry["description"], 240)
-        if about not in out["because"]:
-            out["description"] = about
-        out["mind"] = out["mind"] or [shorten(x) for x in split_description(entry["description"])[1]]
+        # Cards stay short so the list can be wide: at about the same cost, a deciding model
+        # found the owner more often among more, shorter cards than among fewer, fuller ones.
+        description = " ".join(entry["description"].split())
+        out["description"] = shorten(description, 140)
+        out["because"] = [x for x in reasons(entry, r["evidence"], "use_when", 6) if x.rstrip("…") not in description][:1]
+        out["mind"] = out["mind"] or [shorten(x) for x in split_description(entry["description"])[1]][:1]
+        if out.get("matched", "").rstrip("…") in description + " ".join(out["because"]):
+            out.pop("matched", None)
     return out
 
 
@@ -604,7 +671,7 @@ def print_brief(task: str, result: dict) -> None:
     print(f"task: {shorten(task, 120)}")
     print(f"verdict: {result['verdict']}  (stage: {result['stage']})")
     if not result["picks"]:
-        print("no skill fits; proceed without one")
+        print("no skill shares enough words with this task; proceed without one")
     if result["verdict"] == "CHOOSE":
         print("no clear pick; choose one, several, or none of these")
     for i, pick in enumerate(result["picks"], 1):
@@ -616,6 +683,8 @@ def print_brief(task: str, result: dict) -> None:
             print(f"   load: {pick['path']}")
         for line in pick["because"]:
             print(f"   because: {line}")
+        if pick.get("matched"):
+            print(f"   matched: {pick['matched']}")
         for line in pick["mind"]:
             print(f"   mind the boundary: {line}")
     if result["set_aside"]:
@@ -628,7 +697,7 @@ def print_brief(task: str, result: dict) -> None:
 def cmd_table(args) -> int:
     table = load_table(args)
     if args.format == "json":
-        json.dump(table, sys.stdout, indent=2, ensure_ascii=False)
+        json.dump([{k: v for k, v in e.items() if k != "body"} for e in table], sys.stdout, indent=2, ensure_ascii=False)
         print()
         return 0
     print("| skill | use when | don't use |")
@@ -710,8 +779,8 @@ def main() -> int:
 
     def tuning(p):
         p.add_argument("--top", type=int, default=3, help="max skills to return when one clearly leads")
-        p.add_argument("--shortlist", type=int, default=5, help="max cards to return when no skill clearly leads")
-        p.add_argument("--ratio", type=float, default=0.6,
+        p.add_argument("--shortlist", type=int, default=8, help="max cards to return when no skill clearly leads")
+        p.add_argument("--ratio", type=float, default=0.5,
                        help="when no skill clearly leads, list cards scoring at least this share of the top (at least two)")
         p.add_argument("--seen", action="append",
                        help="comma-separated skills already in the caller's context; listed without their details")

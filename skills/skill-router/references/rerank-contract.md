@@ -2,8 +2,9 @@
 
 The second stage is any local command. The router calls it only when the
 lexical stage lacks one clear pick, unless `--rerank-when always` is set. If
-the command fails, times out, prints invalid JSON, or names an unknown skill,
-the router keeps the BM25 result and reports the failure in `stage`.
+the command fails, times out, prints invalid JSON, picks an unknown skill, or
+ranks no skill it was sent, the router keeps the BM25 result and reports the
+failure in `stage`.
 
 ## Input on stdin
 
@@ -34,7 +35,7 @@ Print one of:
 - `{"pick": "skill-name"}`: this skill first.
 - `{"pick": null}`: no skill fits; the verdict becomes `ABSTAIN`.
 - `{"ranking": [{"name": "skill-name", "score": 0.91}, ...]}`: higher scores
-  come first.
+  come first. Names that were not sent are ignored.
 
 After a pick or ranking, a skill the reply did not name is listed only if the
 lexical stage picked it too.
@@ -47,15 +48,20 @@ not override a skill's boundary: a candidate whose don't-use evidence reaches
 
 ## Shape the question
 
-Ask about each candidate on its own, in random order and without its BM25
-rank: does the task need this skill, need only part of it, or not need it? Then
-rank by the "needs it" probability. A single "which one of these?" question is
-the weaker design: a small model tends to settle on a label it has learned to
-like instead of reading the candidates.
+For a small local model, ask about each candidate on its own, in random order
+and without its BM25 rank: does the task need this skill, need only part of it,
+or not need it? Then rank by the "needs it" probability. Asked "which one of
+these, or none?", the 4B models tried so far failed in one of two ways. A base
+model settled on a label it had learned to like and almost never answered
+none. An instruction-tuned one answered none but chose the owner no better than
+BM25. A capable instruction-following model does answer that question well,
+which is why the router already leaves the `CHOOSE` decision to the calling
+agent. A rerank command earns its place only if it beats that agent's own
+choice.
 
-Pass `use_when` and `dont_use` to the model together. The don't-use lines are
-what separates near-identical skills, and a short description cannot carry
-them.
+Pass `use_when` and `dont_use` to the model together. Don't-use lines mostly
+make a model more cautious: it adds fewer wrong extra picks, and finds the
+owner about as often.
 
 ## Keep it fast
 
