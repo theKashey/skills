@@ -48,6 +48,15 @@ the router has nothing to choose by, which is the pressure description
 poisoning exploits. Pushy wording to cure an undertrigger is the rejected
 shortcut.
 
+Pushiness is legitimate only when the user adopts it at installation: wiring
+that taps the skill into the repository's processes at full power—an
+agent-instructions rule that names the skill, plus any setup its own references
+define—and review checks that catch, in finished work, the gains agents drop
+through sloppiness. Skill Guidance recommends carrying both in one optional
+reference reached only from the skill body, whose placement the consuming
+repository owns; adding one by default and hardcoding a destination file are
+the rejected shortcuts.
+
 Lower context cost matters only while the agent can still choose reliably.
 Equivalent prose and a table can impose different retrieval costs; a local cue
 can prevent a wrong turn even when the complete rule lives elsewhere. Likewise,
@@ -95,6 +104,7 @@ revising a skill, or to audit and evaluate an existing skill. It reviews:
   maintainer documentation, or a deterministic gate;
 - routing and progressive disclosure inside a skill package;
 - standalone package isolation;
+- whether a package needs an optional installation reference;
 - behavioral evaluation and completion criteria.
 
 Do not use it as a substitute for the domain workflow the target skill teaches,

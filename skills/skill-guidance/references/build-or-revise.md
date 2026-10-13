@@ -116,6 +116,9 @@ word such as "playbook" or "workflow" in the name or description; a label does
 not stop automatic selection. When the host has no such control, record that
 the risk remains.
 
+Recommend the optional installation reference described in `SKILL.md` only when representative evidence shows the skill's intent is lost
+before it activates or in finished work; default to none.
+
 Check that all skill-level activation conditions are in the frontmatter
 description, every-run choices and invariants are inline, and branch-specific
 procedures sit behind a pointer whose wording names the condition that requires
