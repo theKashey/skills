@@ -116,6 +116,15 @@ DONT_HEADING_RE = re.compile(
 DONT_LINE_RE = re.compile(
     r"^\s*(?:[-*]\s*)?\**(?:do not use|don'?t use|(?:do not|don'?t) (?:load|invoke|trigger) (?:this|me)\b|not for|never use)\b", re.I
 )
+# A line that is only a label, such as "Use when:" or "**Do not use:**", sets the mode of the list right after it.
+# The colon is required: a wrapped line that ends in a word such as "trigger." switches nothing.
+LABEL_RE = re.compile(r"^(?P<em>[*_]{0,2})(?P<label>[^*_:]+?)(?::(?P=em)|(?P=em):)$")
+USE_LABEL_RE = re.compile(
+    r"use when|when to use|use (?:this|me) (?:when|for)|applies when|when this skill (?:applies|helps|activates)"
+    r"|(?:skill )?triggers?(?: phrases| conditions)?",
+    re.I,
+)
+DONT_LABEL_RE = re.compile(r"do not use|don'?t use|when not to use|not for|never use|anti-?triggers?", re.I)
 # Splits a description into its "use" part and its "not for" part.
 DESC_NOT_RE = re.compile(r"[;.]\s*(?:but\s+)?(?:not (?:for|when|to)|do not use|don'?t use)\b", re.I)
 
@@ -149,15 +158,27 @@ ITEM_RE = re.compile(r"^[-*]\s+|^\d+\.\s+")
 MARKUP_RE = re.compile(r"^[>*+\-\d.\s]+|\*\*|`")
 
 
+def label_mode(line: str) -> str | None:
+    match = LABEL_RE.match(line)
+    if not match:
+        return None
+    label = match.group("label").strip()
+    return "dont" if DONT_LABEL_RE.fullmatch(label) else "use" if USE_LABEL_RE.fullmatch(label) else None
+
+
 def body_sections(body: str) -> tuple[list[str], list[str], list[str], list[str]]:
     """Return (use_when lines, dont_use lines, headings, prose lines) from a SKILL.md body.
 
+    A use-when or don't-use heading opens its section until the next heading. A label line such
+    as "Do not use:" opens only the list right after it; the next line outside that list returns
+    to the heading's mode, so a label inside a procedure does not capture the steps that follow.
     Prose is every other line long enough to say something, code and table rows included,
     minus don't-use lines and sections, so a boundary never counts as evidence for the skill
     it rules out.
     """
     use_when, dont_use, headings, prose = [], [], [], []
-    mode = None
+    mode = section = None
+    label = None  # "open" after a label line, "list" once its first item is read
     in_fence = False
     paragraph: list[str] = []
 
@@ -167,6 +188,13 @@ def body_sections(body: str) -> tuple[list[str], list[str], list[str], list[str]
         paragraph.clear()
 
     for line in body.splitlines():
+        stripped = line.strip()
+        if label and not in_fence and stripped:
+            if ITEM_RE.match(stripped):
+                label = "list"
+            elif not (label == "list" and line[:1].isspace()):
+                flush()
+                mode, label = section, None
         if line.lstrip().startswith("```"):
             in_fence = not in_fence
             continue
@@ -179,9 +207,14 @@ def body_sections(body: str) -> tuple[list[str], list[str], list[str], list[str]
             flush()
             title = heading.group(1).strip()
             headings.append(title)
-            mode = "dont" if DONT_HEADING_RE.search(title) else "use" if USE_HEADING_RE.match(title) else None
+            mode = section = "dont" if DONT_HEADING_RE.search(title) else "use" if USE_HEADING_RE.match(title) else None
+            label = None
             continue
-        stripped = line.strip()
+        opened = label_mode(stripped)
+        if opened:
+            flush()
+            mode, label = opened, "open"
+            continue
         if DONT_LINE_RE.match(stripped):
             flush()
             dont_use.append(stripped.lstrip("-* ").strip("*"))

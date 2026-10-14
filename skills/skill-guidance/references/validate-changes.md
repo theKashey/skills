@@ -57,7 +57,14 @@ here. Verify:
 - the description meets the parent activation boundary contract and covers
   every intended activation;
 - the body and runtime references begin after activation and contain only
-  execution content or behavior-improving causal rationale;
+  execution content, behavior-improving causal rationale, or the parent's
+  [boundary section](../SKILL.md#review-the-activation-boundary);
+- a boundary section is present only when the parent condition for one holds;
+  it opens the body, its `Use when` and `Do not use` lists sit under their own
+  headings, its `Do not use` lines name neighboring tasks rather than skills,
+  and it does not restate the description; recommend removing one from a skill
+  whose boundary fits its description, and moving a description's overflowing
+  `not for` clauses into one;
 - README support and design reasons are not required by any runtime route;
 - a maintainer README, when present or requested, meets the parent reader
   contract in `SKILL.md`;
@@ -111,20 +118,36 @@ set plus `none`, and the evaluator model: the floor, the least capable model the
 skill must support, as the maintainer or consumer names it. A result transfers
 to neither another set nor another model; without a named floor, routing is
 `UNVALIDATED`. A floor change is a reason to rerun, and a prompt it loses is the
-measured misroute that permits rewording. The target's
+measured misroute that permits rewording. A description set does not show a
+boundary section, so its routing effect stays `UNVALIDATED` unless the frozen
+harness routes from skill bodies. The target's
 `evals/eval_queries.jsonl` is its must-not-lose baseline: one object per line
 with `query`, `should_trigger`, and an optional `note`, speaking only for the
 target and naming no other skill. Recommend appended lines to the host skill
 creator; only a frozen observed misroute or a fresh author adds one, never the
 proposer after seeing results. When the target has no such file, recommend
-creating it from this check's prompts. A fresh author who is not the proposer
-writes the prompts: positives as user requests and as post-inspection task
-states; near-misses owned by a co-installed skill that carry the target's
-trigger words; and routine tasks, or tasks with an artifact merely in view, that
-no contract claims. Each evaluator sees only the whole frozen set plus `none`
-and one `query`, never its `note`, and returns up to three ranked candidates
-with scores, marking which it would load; run each query three times. The proposer neither
-evaluates nor revises prompts after results. Classify the target per query:
+creating it from this check's prompts. When its file leaves a trigger, case,
+`not for` clause, `Do not use` line, or claimed moment without a query,
+recommend that a fresh author append one. A fresh author who is not the
+proposer writes the prompts:
+
+- positives as user requests and as post-inspection task states that cover
+  every trigger and case the description and any boundary section claim;
+- each positive case at every moment the contract claims: at code time, as
+  intent before or during the work (*I need to add a migration for the new
+  column*), and at review time, as an observation about a finished change
+  (*this change adds a migration that drops a column without a backfill*); a
+  moment the contract does not claim supplies near-misses instead;
+- near-misses owned by a co-installed skill that carry the target's trigger
+  words, at least one for each `not for` clause and `Do not use` line;
+- routine tasks, or tasks with an artifact merely in view, that no contract
+  claims.
+
+A `note` may name the case and moment its query covers. Each evaluator sees
+only the whole frozen set plus `none` and one `query`, never its `note`, and
+returns up to three ranked candidates with scores, marking which it would load;
+run each query three times. The proposer neither evaluates nor revises prompts
+after results. Classify the target per query:
 
 | Target across runs | `should_trigger: true` | `should_trigger: false` |
 | --- | --- | --- |
