@@ -28,21 +28,43 @@ agent can plan the required reads.
 Descriptions carry a separate, shared cost: every installed skill's
 description loads in every session, so long ones crowd other skills out of one
 bounded listing. The 240-character target is a working budget; exceeding it
-is allowed only for a clause that separates the skill from a neighbor or
-matches an intended task, and dropping the skill's distinguishing outcome to
-meet the number is the rejected shortcut. 500 characters is a hard ceiling,
-well below the platform's 1,024, because at the platform size a few
-descriptions would consume the whole listing.
+is allowed only for a clause that states the outcome separating the skill from
+a same-trigger neighbor or matches an intended task, and dropping the skill's
+distinguishing outcome to meet the number is the rejected shortcut. 500
+characters is a hard ceiling, well below the platform's 1,024, because at the
+platform size a few descriptions would consume the whole listing.
+
+Some skills cannot hold their boundary in that budget: telling them apart from
+neighboring tasks takes several cases and exclusions—*use for A and B, not for
+C*. A longer description does not fix this. Harnesses shorten or drop
+descriptions when the listing overflows, so the separating words are lost
+first, and routers that read skill bodies look for the boundary there.
+Labeled don't-use lines let such a router count them against the skill they
+rule out; a router that only matches words counts them as evidence for it,
+which a near-miss query for each exclusion exposes. For such a skill only,
+Skill Guidance recommends one boundary section at the top of the body, with
+`Use when` and `Do not use` lists under their own headings; it also lets an
+agent that loaded the skill for an excluded task stop before acting. A skill
+whose boundary fits its description carries none, because the section costs
+context on every activation and repeats why the skill loaded. Adding the
+section by default and lengthening the description to hold the boundary are
+the rejected shortcuts.
 
 A description is read by a router model, not a person, and the least capable
 model a consumer supports moves over time. Terse wording is acceptable when
 that floor model routes correctly on it, so Skill Guidance recommends that a
 skill ship the queries it should answer in `evals/eval_queries.jsonl`, letting
-whoever installs it rerun them when their floor changes. A skill installed alone carries only its own
-directory, so queries kept elsewhere do not ship at all; an agent that acts on
-an unlinked file it was never pointed at is the agent's defect. The skill
-wakes among unknown neighbors, so its queries speak only for it and name no
-other skill; relations between skills belong wherever a set is assembled.
+whoever installs it rerun them when their floor changes. Routers that train on
+shipped queries, or quote them as examples, read them as boundary evidence, so
+the queries cover every trigger and case the skill claims and give each
+exclusion a near-miss. A request made while writing a change (*I need to…*)
+and an observation about a finished one (*this change…*) use different words,
+so the queries phrase each case at every moment the skill claims. A skill
+installed alone carries only its own directory, so queries kept elsewhere do
+not ship at all; an agent that acts on an unlinked file it was never pointed at
+is the agent's defect. The skill wakes among unknown neighbors, so its queries
+speak only for it and name no other skill; relations between skills belong
+wherever a set is assembled.
 Descriptions never demand selection: if every skill insists on being used,
 the router has nothing to choose by, which is the pressure description
 poisoning exploits. Pushy wording to cure an undertrigger is the rejected
