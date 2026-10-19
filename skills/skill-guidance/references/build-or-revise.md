@@ -120,11 +120,11 @@ Recommend the optional installation reference described in `SKILL.md` only when 
 before it activates or in finished work; default to none.
 
 Check that all skill-level activation conditions are in the frontmatter
-description, every-run choices and invariants are inline, and branch-specific
-procedures sit behind a pointer whose wording names the condition that requires
-the material. Treat the pointer as behavioral: if must-have guidance loads
-unreliably, recommend sharpening the condition before recommending inline
-guidance.
+description, refined in the body only by an earned boundary section, every-run
+choices and invariants are inline, and branch-specific procedures sit behind a
+pointer whose wording names the condition that requires the material. Treat the
+pointer as behavioral: if must-have guidance loads unreliably, recommend
+sharpening the condition before recommending inline guidance.
 
 Trace representative activated flows through every transitively required
 reference and judge each split by the splitting clause of
@@ -146,12 +146,14 @@ benefits, and reasons unless a detail distinguishes activation. Before
 recommending any description change, apply the
 [description routing check](validate-changes.md#check-description-routing).
 Skill-level "when to use" and "when not to use" guidance belongs outside the
-body.
+body, except in the parent's
+[boundary section](../SKILL.md#review-the-activation-boundary) for a boundary
+the description cannot hold.
 
-The body should open at the first post-trigger decision or action, use
-imperative language for actions and declarative language for execution facts
-and decision criteria, and preserve conditions that select an internal route
-after activation.
+The body should open at an earned boundary section, otherwise at the first
+post-trigger decision or action, use imperative language for actions and
+declarative language for execution facts and decision criteria, and preserve
+conditions that select an internal route after activation.
 
 For every procedure, check:
 

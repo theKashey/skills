@@ -48,10 +48,10 @@ for each failure. Also check that:
 
 - every named Law maps to an observable target-skill choice and evidence, and
   no named-Law list is presented as an exemption from the remaining Laws;
-- the description meets the activation boundary contract in the parent
-  `SKILL.md`;
-- the body and runtime references contain no skill-level triggers, support,
-  explanations, or excuses;
+- the description and any boundary section meet the activation boundary
+  contract in the parent `SKILL.md`;
+- the body and runtime references contain no skill-level triggers outside that
+  boundary section, and no support, explanations, or excuses;
 - retained causal rationale improves behavior;
 - a sequenced route reports a finding that bears on a pending user decision
   when found, not at a later step, and a skill ending in a handover artifact

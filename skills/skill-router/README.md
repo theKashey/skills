@@ -17,9 +17,12 @@ go. A skill nobody picks never builds the usage that would keep its
 description.
 
 Making descriptions longer does not fix this, and neither does making them
-shorter. The rule that separates two similar skills is usually a pair of
-lists — use me when, don't use me when — and that pair lives in the skill
-body, where no listing reads it. Even with perfect descriptions, a long list of
+shorter. The rule that separates two similar skills is usually in the
+description itself: what the skill does, when it applies, and what it is not
+for. Those are the words a shortened listing cuts first, and the router reads
+them in full. A boundary that takes more cases than a description can hold
+moves into the body as a pair of lists — use me when, don't use me when —
+where no listing reads it. Even with perfect descriptions, a long list of
 options that all say "use me" makes the choice itself worse.
 
 The way out is the one tool search took for MCP: keep most skills out of the
@@ -114,20 +117,16 @@ only what this task needs. Skill Router is that router, and nothing more.
 
 Lexical routing works when the task and the skill share words, which is the
 usual case when a task names a product, a tool, or an artifact and a skill is
-about that thing. On a 102-skill product monorepo library that ships 2,245
-trigger and non-trigger queries, routed on the skill files alone, the owning
-skill came first for 71% of trigger queries, was among the cards for 93%, and
-was kept off them for 65% of non-trigger queries, with 4.2 cards per query on
-average. Scoring the card alone, without the body, gave 54%, 80%, and 74%
-with 3.9 cards: the body finds owners whose tasks use words the card lacks,
-and also lists the near-miss skill more often. Almost every query ends as a
-short list; a clear single pick is rare. When the owner is missing from the
-cards, more than half the time the list already holds five or more without
+about that thing. On a separate, much larger library of product skills,
+routed on the skill files alone, scoring the body as well as the card puts the owner first and on the
+cards more often than the card alone: the body finds owners whose tasks use words
+the card lacks, and also lists the near-miss skill more often. Almost every
+query ends as a short list; a clear single pick is rare. When the owner is
+missing from the cards, the list usually already holds several skills without
 it. Most of those are pairs of skills whose texts overlap; `eval -v` lists
 them as collisions, which tells the library owner which skills to separate,
-merge, or split. The router abstains on about 1% of these queries, against 6%
-for the card alone, so a library this size rarely says "nothing matches" to a
-task written for it.
+merge, or split. The body also makes the router abstain less often, so a large
+library rarely says "nothing matches" to a task written for it.
 
 Process skills are the hard case. Their triggers describe a
 situation, such as "inherited work spanning several moves", while real tasks
@@ -137,42 +136,38 @@ general-purpose skills, the owning skill came first for 5 of 18 positive
 queries, was listed for 11, and was kept out for 17 of 20 non-trigger queries
 (`eval --skills <library> -v`); the card alone gave 3, 5, and 19.
 
-Those numbers grade the list, not the choice made from it. A capable but fast
-model (Claude Haiku) chose from the cards, with only the decision rules in
-`SKILL.md`, on a held-out sample of 100 trigger and 100 non-trigger queries
-from the larger library. The owner came first for 79% of trigger queries, was
-loaded for 87%, and the near-miss skill stayed out for 95% of non-trigger
-queries. The same model reading the whole catalog of 102 descriptions instead
-scored 79%, 88%, and 94%, and loaded a wrong extra skill on 47% of trigger
-queries against 29% from the cards. The cards cost about 230 tokens per task;
-the catalog costs about 5,000. Choosing from cards scored on the card alone
-gave 72%, 74%, and 98%: the body text is what closes the gap. On the 11-skill
-library the owner came first for 73% of trigger queries against 48% from
-card-only scoring, with the near-miss skill kept out for every non-trigger
-query in both; there, a model reading all 11 descriptions still does better,
-because process skills rarely reach the cards.
+Those numbers grade the list, not the choice made from it. On the larger
+library, a capable but fast model (Claude Haiku) chose from the cards, with
+only the decision rules in `SKILL.md`. It put the owner first and loaded it
+about as often as the same model reading the whole catalog of descriptions,
+and kept the near-miss skill out about as often. It loaded a wrong extra skill
+less often than from the catalog, for a small fraction of the catalog's
+tokens. Choosing from cards scored on the card alone found and loaded the
+owner less often, though it kept the near-miss skill out slightly more often:
+the body text is what closes the gap. On the 11-skill library the owner came first for 73%
+of trigger queries against 48% from card-only scoring, with the near-miss
+skill kept out for every non-trigger query in both; there, a model reading all
+11 descriptions still does better, because process skills rarely reach the
+cards.
 
 How often does routing need meaning rather than words? On the larger library,
-BM25 alone settles about one trigger query in four. About seven in ten have
-the owner among the top ten candidates, but not clearly first: that is
-judgment among a few cards, which the agent supplies. About one in
-twenty-five has the owner outside the top ten, where only reading meaning
-would find it; in the 11-skill library, the same gap shows up as process
-skills whose tasks share no scoring word with them at all.
+BM25 alone settles some trigger queries. Most have the owner among the top ten
+candidates, but not clearly first: that is judgment among a few cards, which
+the agent supplies. A few have the owner outside the top ten, where only
+reading meaning would find it; in the 11-skill library, the same gap shows up
+as process skills whose tasks share no scoring word with them at all.
 
 The agent can close part of that gap before routing, the way a model writes a
 query for a tool search: the task in a few words, then synonyms and the other
 names the same thing goes by, from its own vocabulary, without seeing any
-skill. A fast model (Claude Haiku) wrote such queries for the larger library's
-held-out and development samples. Against the raw task, across 248 trigger
-queries, the owner moved into first place on 34 and out of it on 19, and onto
-the cards on 11 and off them on 3, with slightly fewer cards and near-miss
-listings. A
-one- to three-sentence prose brief tied it on the held-out sample but put the
-owner first less often on the development sample, with more cards and more
-near-miss listings: whole sentences add words that score for neighbours. These
-numbers grade the list only; the choice from cards built on expanded queries,
-and the 11-skill library, were not measured.
+skill. A fast model (Claude Haiku) wrote such queries for a sample of the
+larger library's trigger queries. Against the raw task, the owner moved into first
+place, and onto the cards, more often than it moved out, with slightly fewer
+cards and near-miss listings. A one- to three-sentence prose brief did no
+better: it sometimes put the owner first less often, with more cards and more
+near-miss listings, because whole sentences add words that score for
+neighbours. These findings grade the list only; the choice from cards built on
+expanded queries, and the 11-skill library, were not measured.
 
 ## Boundaries
 
@@ -201,12 +196,14 @@ and the 11-skill library, were not measured.
 - **No enrichment pass.** The table uses only what the skill author wrote.
   Some routers have a model write extra keywords for each skill; that would
   need a model at build time, and the keywords would go stale. A skill that
-  routes badly here needs better use-when lines, and that fix also helps every
-  other harness. Adding to each card about five words that its own tasks use,
-  and the card lacked, moved the owner first for about four more trigger
-  queries in a hundred on the larger library. It also let the skill reach a
-  few more non-trigger queries, so the words have to describe the work, not
-  just repeat the tasks.
+  routes badly here needs a sharper statement, in its description, of what it
+  does or when it applies, and that fix also helps every other harness. When
+  its boundary does not fit in a description, the rest goes into `Use when`
+  and `Do not use` lists at the top of the body, under their own headings or
+  label lines. Adding to each card a few words that its own tasks use, and
+  the card lacked, moved the owner first a little more often. It also let the
+  skill reach a few more non-trigger queries, so the words have to describe
+  the work, not just repeat the tasks.
 - **A wider list.** `CHOOSE` lists up to eight short cards rather than five
   full ones, so the owner is on the list more often. The near-miss skill is
   listed more often too; that is safe only because the agent, not the list,
@@ -216,22 +213,19 @@ and the 11-skill library, were not measured.
   rather than its own words, reads files whose format each harness defines
   differently, and makes `eval` grade the router on its own answer key.
 - **Body text widens the net.** Reading the whole body finds owners the card
-  misses, and lists the near-miss skill more often: kept off the cards fell
-  from 74% to 65% on the larger library. The `matched:` line lets the agent
+  misses, and lists the near-miss skill more often: fewer non-trigger queries
+  are kept off the cards. The `matched:` line lets the agent
   see that a skill only names the same thing, and in the check above the
   agent kept the near-miss skill out about as often as it did from a whole
   catalog. A library whose bodies repeat each other's commands and file
   names pays more for this.
-- **Rebuild on every call.** A call over about 100 skills takes about 170 ms
-  on a laptop with warm disk caches, about 30 ms of it Python start-up.
-  Starting from a package inside a large monorepo, with the home folder, that
-  is about 140 skills in about 230 ms. Reading and tokenizing the bodies is
-  most of it. A cache could save only that, so it would add a stale-state bug
-  for about a tenth of a second.
+- **Rebuild on every call.** A call over about a hundred skills takes a
+  fraction of a second on a laptop with warm disk caches, and reading and
+  tokenizing the bodies is most of it. A cache could save only that, so it
+  would add a stale-state bug for little saving.
 - **Fixed weights.** The field weights, the body weight, and the thresholds
-  were tuned on one product library of about 100 skills and checked on a
-  small one. `eval` exists so a team can check them against its own library
-  before trusting them.
+  were tuned on one larger library and checked on a small one. `eval` exists
+  so a team can check them against its own library before trusting them.
 
 ## Rejected shortcuts
 
@@ -241,7 +235,7 @@ and the 11-skill library, were not measured.
   express "don't use me for this", and that is the rule that separates
   near-identical skills.
 - **Embeddings.** A small sentence-embedding model found the owner less often
-  than BM25. Mixed with BM25, it added about two points to the top-ten list,
+  than BM25. Mixed with BM25, it added a little to the top-ten list,
   at the cost of a large machine-learning dependency. Its similarity score was
   the same for tasks that need a skill and tasks that only share its topic, so
   it cannot make the choice either.
@@ -252,7 +246,7 @@ and the 11-skill library, were not measured.
   library.
 - **Expanding the task with the top skills' words.** Feeding the first
   results' distinctive words back into the query amplifies the first guess: the
-  owner was listed for 11 points fewer trigger queries.
+  owner was listed for fewer trigger queries.
 - **Hard enforcement.** Blocking edits until a routed skill loads produces
   workarounds when the route is wrong. Being wrong on a recommendation costs
   one line.

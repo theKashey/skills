@@ -30,12 +30,26 @@ with a sharper *what* or *when*, or Law X. Terse wording that leans on shared
 priors is fine when the floor model—the least capable model the skill must
 support—routes correctly on it. Aim for at most 240 characters, because every
 installed description shares one listing budget; exceed that only when a needed
-*what*, *when*, or `not for` clause cannot fit once the excluded content is
-gone, and never beyond 500. The validator warns on any description over 240 or
-with demanding wording and rejects one over 500. The body must start after
-activation and retain only post-trigger decisions, actions, resources,
-boundaries, and completion checks. Internal branch conditions remain execution
-logic.
+*what* or *when* clause cannot fit once the excluded content is gone, and never
+beyond 500. The validator warns on any description over 240 or with demanding
+wording and rejects one over 500. The body must start after activation and
+retain only post-trigger decisions, actions, resources, boundaries, and
+completion checks. Internal branch conditions remain execution logic.
+
+**Boundary section — Only for a boundary the description cannot hold.** When
+the cases and `not for` exclusions that separate the skill from neighboring
+tasks do not fit within 240 characters beside its *what* and *when*, and Law X
+does not apply, keep the description's *what* and *when*, plus the most
+consequential `not for` that still fits. Move the rest into one section that
+opens the body, with a `Use when` list and a `Do not use` list, each under its
+own heading. It is the only skill-level activation content a body may hold.
+List only cases inside the description's *what* and *when*, and exclusions for
+a neighboring task that would otherwise load the skill. Name the task, never
+another skill, and demand nothing. The headings let a router that reads skill
+bodies count `Do not use` lines against the skill instead of as matching words,
+and let an agent that loaded it for a listed exclusion stop at the top. A skill
+whose boundary fits its description carries no such section, because the
+section would repeat the description on every activation.
 
 ## Apply the decision laws
 
