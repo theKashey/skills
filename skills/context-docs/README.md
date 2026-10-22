@@ -70,6 +70,30 @@ complexity, or a genuinely non-local influence. An explanation protects the
 decision now and may expose an opportunity to make the constraint visible
 later.
 
+Length is a different signal, and it needs a ceiling. Every surface on the
+locality ladder has a content-line budget—15 for a file overview, 5 for a
+block, 10 for a public docblock, a 15-line lead for anything broader—and a
+surface over its budget has a placement problem, never a quality grade. The
+budget exists because the admission gate passes each verified fact on its own:
+where a project's rules send every "why" to the docstring and ban history from
+its documents, headers grow one appended section per change until file
+overviews run past a screen, while the same facts drift apart from their
+copies in READMEs. A heading inside a comment, a measurement, a past tense, or
+an export's contract predicts that overflow before anyone counts. Overflow
+moves to the owner the ladder names, or becomes a proposal when that owner
+cannot be updated; the over-budget surface is never the fallback, and the
+remedy is never to delete the cause or compress it past recognition. The
+numbers live both in the prose, so the writer sees them before the harm, and
+in `scripts/comment_budget.py`, which a host installs so a code comment or
+docblock that grows past its budget fails a build; the lead of a Markdown document is held
+only by the installed review check, because where a lead ends is a judgment
+the script cannot make. A baseline makes the check adoptable on an existing
+tree and only moves down without a recorded reason. Rejected shortcuts:
+reviewing every comment by hand or model, which the wrap-up exclusion of line,
+block, and file comments forbids; numbers that live only in prose, which
+no one enforces; and deletion as the remedy, which recreates the invisible
+reef.
+
 Context Docs is also a filesystem-level context-engineering practice. Code and
 domain structure should expose what they can—[“If your code-base doesn’t scream
 its domain, AI will whisper
@@ -227,7 +251,9 @@ Source evidence supports documentation while it is authored, but documentation
 review and deterministic completion checks happen once at wrap-up. Line, block,
 and file comments are admitted and written from evidence but never enter
 documentation review; JSDoc on an established public-contract symbol remains a
-public contract.
+public contract. The installed comment-budget check is not that review: it
+counts lines deterministically in the host's test suite and reads none of
+them, so it observes the frequent path without taxing it.
 
 The package does not assume that adding JSDoc improves an agentic workflow by
 itself. JSDoc is useful here as a delivery surface: a host can extract it with
@@ -277,7 +303,8 @@ preferred document, or create an unauthorized fallback.
 | [public contracts](references/public-contracts.md) | Public-contract inventory workflow and checklist, and example framing and integrity. | A change affects API or configuration reference semantics or snippets. |
 | [code comments](references/code-comments.md) | What a comment that passed the gate must do: placement, ownership, the invisible-reef-to-visible-cliff disposition, worked examples, and the Chesterton's Fence test. | A change affects how code-local rationale is written, placed, or retired. |
 | [review at wrap-up](references/review-documentation-at-wrap-up.md) | One-time minimum completion checks, the compact end-state gate, and the condition for loading the full scorecard. | A change affects routine non-inline completion. |
-| [installation](references/installation.md) | The agent-instructions rule and review check a repository adopts when it installs Context Docs, and the check that they landed where its instructions deliver them. Nothing else loads it. | A change affects what an installing repository adopts or how reviewers catch over-documentation. |
+| [installation](references/installation.md) | The agent-instructions rule, review checks, and installed budget check a repository adopts when it installs Context Docs, and the check that they landed where its instructions deliver them. Nothing else loads it. | A change affects what an installing repository adopts or how reviewers and builds catch over-documentation. |
+| [comment budget check](scripts/comment_budget.py) | The deterministic content-line count per surface kind, the default budgets, and the baseline that a host adopts and may only lower without a recorded reason; [tests](tests/test_comment_budget.py) pin its classification and ratchet. | A budget, a counted syntax, or what the baseline accepts changes. Keep its defaults equal to the numbers the ladder and SKILL.md state. |
 | [quality and maintenance](references/quality-maintenance.md) | Audit workflow and evidence, change triggers, the historical-surface contract for changelogs and migration guides, and release and drift checks. | A change affects audits, releases, or how documentation quality is assessed or maintained. |
 
 Keep each behavior in one canonical owner. Link to it from other files rather
@@ -363,6 +390,11 @@ The skill's durable principles are:
   first, then notice when code, types, an API, or structure could expose it
   directly. Keep the explanation when the significance remains non-local; do
   not treat every documented reef as a mandatory refactor.
+- **Give every surface a budget; move overflow to its owner.** A comment,
+  docblock, or lead over its content-line budget has outgrown its scope. Move
+  the overflow down to the site it governs, up to the owner that orients, or
+  into the historical record, or return a proposal when that owner cannot be
+  updated. Never copy it, never pad to fit, and never delete the cause.
 - **Treat product documentation as a completed-system claim.** Use present artifacts to
   implement and verify the authorized finished contract, not to promote a
   temporary checkout, delivery, or publication mismatch into reader-facing

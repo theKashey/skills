@@ -145,28 +145,65 @@ that priority.
 Use the narrowest existing or authorized surface encountered by every affected
 reader before the governed decision.
 
-| Scope | Use it when the missing fact governs |
-| --- | --- |
-| Line | One expression, argument, branch, or assignment. |
-| Block | One guard, transformation, loop, or sequence. |
-| File | The implementation unit's responsibility, lifecycle, or non-local relationship. |
-| Folder | An implementation area's ownership, organization, boundary, or local route. |
-| Package or module | A reusable unit's contract, integration conditions, failures, or compatibility boundary. |
-| Domain or service | Cross-unit responsibility, flow, lifecycle, operations, or escalation boundary. |
-| Top level | System or repository scope, major boundaries, and routes to canonical detail. |
+| Scope | Use it when the missing fact governs | Budget |
+| --- | --- | --- |
+| Line | One expression, argument, branch, or assignment. | One line; two adjacent lines are a block. |
+| Block | One guard, transformation, loop, or sequence. | 5 content lines. |
+| File | The implementation unit's responsibility, lifecycle, or non-local relationship. | 15 content lines. |
+| Folder | An implementation area's ownership, organization, boundary, or local route. | A lead of 15 content lines before the first heading or route. |
+| Package or module | A reusable unit's contract, integration conditions, failures, or compatibility boundary. | A lead of 15 content lines before the first heading or route. |
+| Domain or service | Cross-unit responsibility, flow, lifecycle, operations, or escalation boundary. | A lead of 15 content lines before the first heading or route. |
+| Top level | System or repository scope, major boundaries, and routes to canonical detail. | A lead of 15 content lines before the first heading or route; nothing above it, so overflow only moves down or into the historical record. |
 
 Broader scopes orient and route; narrower scopes preserve the local
 consequence. Keep detailed truth with one canonical owner. JSDoc on an
 established public-contract symbol is a public-contract overlay, not another
-scope. Implementation altitude is also not a scope: low-level, business, and
-orchestration code can each contain a Chesterton's Fence or a verified invisible
-reef, but any explanation belongs at the scope that owns the decision.
+scope. By default a file overview carries at most
+15 content lines, a block comment 5, and a public docblock 10; a project's
+installed check may set other limits. Implementation altitude is also not a
+scope: low-level, business, and orchestration code can each contain a
+Chesterton's Fence or a verified invisible reef, but any explanation belongs at
+the scope that owns the decision.
 
 Physical layout may overlap logical scope: a module can be a file and a package
 can be a folder. Co-locate scopes only when they genuinely coincide, and do not
 manufacture files to mirror the ladder. When the distinction among a technical
 README, documentation home, and public presentation page is unresolved, load
 [content architecture](content-architecture.md#classify-technical-documents-and-public-sites).
+
+## Move overflow to its owner
+
+A surface over its budget has a placement problem, not a length problem: the
+count never grades a comment, and it never licenses deleting a verified cause.
+Count content lines—what the reader reads—not delimiters, blank lines, or
+machine-read tags. An addition to an existing comment is authored against the
+whole comment's budget. Classify each over-budget passage, then move or
+propose it; never copy it, and never shorten it into something that no longer
+states the cause:
+
+- Narration of the code, or a fact the reader already holds, is removed under
+  the Chesterton's Fence rule: with its recovered reason, or kept with a `TODO`
+  while the reason is unknown.
+- A consequence that governs one function, branch, or guard moves down to that
+  site.
+- Orientation, boundary, ownership, or a route moves up to the folder,
+  package, or domain owner the affected reader encounters.
+- History, measurements, and the choice among alternatives move to the host's
+  established historical or decision record, where this skill's time-domain
+  rule already places them.
+- An export's contract moves to that symbol's docblock. The move does not make
+  the symbol a public-contract surface; without supplied membership it remains
+  a code comment under SKILL.md's gate, and an installed check still holds any
+  attached docblock to the docblock budget.
+- A passage stays when it is one rule whose cases depend on each other, the
+  usage of a script with no package surface, or a docblock that is itself a
+  format contract. Record that reason where the installed check reads it.
+
+Top level has no owner above it: its overflow moves down or into the historical
+record. Move when the owner exists and the task's authorized scope includes it;
+otherwise return a placement proposal and leave the content in place with the
+uncertainty recorded. The over-budget surface is never the fallback for content
+it cannot carry.
 
 ## Form the result
 

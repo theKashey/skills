@@ -86,6 +86,21 @@ A **Finding** must never become visible until its source
 
 is a Compass-owned invariant. The mechanism enforcing it can change; the rule cannot, without a semantic change.
 
+## Overflow that finds no chart above it
+
+A file-level comment or docblock that has outgrown its scope sends its
+orientation, boundary, and responsibility upward. Apply the classifier to each
+passage that would move: a reason that survives the rewrite test has the chart
+as its owner. When no block, component, or coordinate covers that file, the
+owner is missing from the chart; that is not a reason to leave the passage in
+the header or to invent a folder document for it. Record the gap as a
+placement proposal — the file, the reason, and the nearest chart address — in
+the PR, issue, or task record, where `SKILL.md` puts every finding. A Create
+task then decides which case it is, per `growth-and-drift.md` §Classifying
+Disagreement: a new logical responsibility is a missing chart entry, a file
+inside an existing one is a missing coordinate. One proposal is a lead;
+repeated proposals for one area outrank a single one.
+
 ## Compass as an owner during investigation
 
 Compass answers one of Context Docs' own questions: *where is the established owner of this reason?*
