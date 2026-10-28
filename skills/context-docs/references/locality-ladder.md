@@ -159,8 +159,8 @@ Broader scopes orient and route; narrower scopes preserve the local
 consequence. Keep detailed truth with one canonical owner. JSDoc on an
 established public-contract symbol is a public-contract overlay, not another
 scope. By default a file overview carries at most
-15 content lines, a block comment 5, and a public docblock 10; a project's
-installed check may set other limits. Implementation altitude is also not a
+15 content lines, a block comment 5, and a declaration's docblock 10, public
+or not; a project may set other limits. Implementation altitude is also not a
 scope: low-level, business, and orchestration code can each contain a
 Chesterton's Fence or a verified invisible reef, but any explanation belongs at
 the scope that owns the decision.
@@ -176,10 +176,12 @@ README, documentation home, and public presentation page is unresolved, load
 A surface over its budget has a placement problem, not a length problem: the
 count never grades a comment, and it never licenses deleting a verified cause.
 Count content lines—what the reader reads—not delimiters, blank lines, or
-machine-read tags. An addition to an existing comment is authored against the
-whole comment's budget. Classify each over-budget passage, then move or
-propose it; never copy it, and never shorten it into something that no longer
-states the cause:
+machine-read tags or pragmas. An addition to an existing comment is authored
+against the whole comment's budget. A breach collapses the whole surface to
+about half its budget, apart from a passage that stays below, so the next edit
+does not trip it; shaving lines to just pass is not a fix. Classify each
+over-budget passage, then move or propose it; never copy it, and never shorten
+it into something that no longer states the cause:
 
 - Narration of the code, or a fact the reader already holds, is removed under
   the Chesterton's Fence rule: with its recovered reason, or kept with a `TODO`
@@ -193,11 +195,11 @@ states the cause:
   rule already places them.
 - An export's contract moves to that symbol's docblock. The move does not make
   the symbol a public-contract surface; without supplied membership it remains
-  a code comment under SKILL.md's gate, and an installed check still holds any
-  attached docblock to the docblock budget.
+  a code comment under SKILL.md's gate, still held to the docblock budget.
 - A passage stays when it is one rule whose cases depend on each other, the
   usage of a script with no package surface, or a docblock that is itself a
-  format contract. Record that reason where the installed check reads it.
+  format contract. Record that reason in the task record, or where the host
+  records its exceptions.
 
 Top level has no owner above it: its overflow moves down or into the historical
 record. Move when the owner exists and the task's authorized scope includes it;

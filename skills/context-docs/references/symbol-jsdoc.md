@@ -30,14 +30,14 @@ cannot encode reliably—runtime defaults, failures, lifecycle, ownership,
 security boundaries, and important interactions—plus a resolvable route to the
 page that owns the rest. Omit type narration, implementation history, and a
 reference page restated here instead of linked; extractability alone does not
-justify low-value prose. A public docblock carries at most 10 content lines by
-default; machine-read tags and the `@see` line itself are not content, and
-overflow is the placement question this paragraph ends with, never a longer
-docblock. When the signature and the
-existing docblock already expose every fact safely, change nothing. When no
-page owns what the docblock cannot carry, that is a placement question for
-[public contracts](public-contracts.md), not a reason to write the page into
-the docblock.
+justify low-value prose. A docblock carries at most 10 content lines by
+default, public or not; machine-read tags and the `@see` line itself are not
+content, and overflow is the placement question this paragraph ends with,
+never a longer docblock. When the signature and the existing docblock
+already expose every fact safely, change nothing. When no page owns what the
+docblock cannot carry, that is a placement question for [public
+contracts](public-contracts.md), not a reason to write the page into the
+docblock.
 
 ## Route an entry-point symbol to its owner
 

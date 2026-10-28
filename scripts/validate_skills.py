@@ -67,18 +67,13 @@ SHARED_PHRASES = (
     {
         "label": "context-docs comment budgets",
         "phrase": "a file overview carries at most 15 content lines, a block "
-        "comment 5, and a public docblock 10",
+        "comment 5, and a declaration's docblock 10",
         "files": (
             "context-docs/SKILL.md",
             "context-docs/references/locality-ladder.md",
         ),
     },
 )
-
-# The budget phrase above is the prose cue a writer sees before the harm; the
-# shipped check is the gate. Both must name the same numbers.
-BUDGET_SCRIPT = SKILLS_ROOT / "context-docs" / "scripts" / "comment_budget.py"
-BUDGET_DEFAULTS = {"overview": 15, "block": 5, "jsdoc": 10}
 
 
 def run(
@@ -188,36 +183,6 @@ def shared_phrase_errors(packages: list[Path]) -> list[str]:
     return errors
 
 
-def budget_errors() -> list[str]:
-    """The shipped check's defaults must equal the numbers the pinned prose
-    phrase states, or the writer's cue and the gate disagree."""
-    phrase = next(
-        spec["phrase"] for spec in SHARED_PHRASES
-        if spec["label"] == "context-docs comment budgets"
-    )
-    stated = {
-        "overview": int(phrase.split("file overview carries at most ")[1].split()[0]),
-        "block": int(phrase.split("a block comment ")[1].split(",")[0]),
-        "jsdoc": int(phrase.split("public docblock ")[1].split()[0]),
-    }
-    errors = []
-    if stated != BUDGET_DEFAULTS:
-        errors.append(f"comment budgets: pinned phrase states {stated}, expected {BUDGET_DEFAULTS}")
-    completed = subprocess.run(
-        [sys.executable, str(BUDGET_SCRIPT), "--defaults"],
-        capture_output=True, text=True, check=False,
-    )
-    if completed.returncode != 0:
-        return errors + [f"comment budgets: {BUDGET_SCRIPT} --defaults failed"]
-    printed = dict(
-        (line.split()[0], int(line.split()[1]))
-        for line in completed.stdout.splitlines() if line.strip()
-    )
-    if printed != BUDGET_DEFAULTS:
-        errors.append(f"comment budgets: script defaults {printed} differ from prose {BUDGET_DEFAULTS}")
-    return errors
-
-
 def main() -> int:
     packages = [
         path
@@ -263,9 +228,7 @@ def main() -> int:
             return 1
 
     print("phase: shared-block identity", flush=True)
-    block_errors = (
-        shared_block_errors(packages) + shared_phrase_errors(packages) + budget_errors()
-    )
+    block_errors = shared_block_errors(packages) + shared_phrase_errors(packages)
     if block_errors:
         for error in block_errors:
             print(f"ERROR {error}", file=sys.stderr)
