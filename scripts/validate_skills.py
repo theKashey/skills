@@ -64,6 +64,15 @@ SHARED_PHRASES = (
             "context-docs/references/review-documentation-at-wrap-up.md",
         ),
     },
+    {
+        "label": "context-docs comment budgets",
+        "phrase": "a file overview carries at most 15 content lines, a block "
+        "comment 5, and a declaration's docblock 10",
+        "files": (
+            "context-docs/SKILL.md",
+            "context-docs/references/locality-ladder.md",
+        ),
+    },
 )
 
 

@@ -32,8 +32,15 @@ unresolved:
 | Locality | Document | Omit |
 | --- | --- | --- |
 | Line | Which non-locally-visible cause makes a selectable, apparently reasonable local alternative unsafe. | A paraphrase of the expression, an inevitable effect of the selected operation, or remote mechanics with no material consequence here. |
-| Block | Why a parallel process, lifecycle state, or other non-local invariant rules out an apparently reasonable reordering, omission, algorithm, or guard. | A translation of the statements or an imagined alternative that current interfaces do not permit. |
-| File | Why the file exists, the boundary it owns, and a non-obvious relationship to another subsystem. | A tour of declarations or imports. |
+| Block | Why a parallel process, lifecycle state, or other non-local invariant rules out an apparently reasonable reordering, omission, algorithm, or guard. | A translation of the statements, an imagined alternative that current interfaces do not permit, or a measurement and its history. |
+| File | Why the file exists, the boundary it owns, and a non-obvious relationship to another subsystem. | A tour of declarations or imports; headings that section the comment; measurements; the history of earlier forms; an export's contract. Each has an owner on the ladder. |
+
+The unit of a comment is the cause, not the line. Five adjacent one-line
+comments that preserve one cause are one block comment on that cause; five
+causes are five comments, each beside the line it governs rather than stacked
+into one run. The budgets and the overflow rule in the [locality
+ladder](locality-ladder.md#move-overflow-to-its-owner) bind every result,
+including a sentence appended to an existing comment.
 
 ## Selective-context authoring decision
 
