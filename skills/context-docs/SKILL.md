@@ -199,9 +199,9 @@ By default a file overview carries at most 15 content lines, a block comment
 addition to an existing comment is measured against the whole. A result over
 that budget, or one carrying a heading, a measurement, history, or an export's
 contract, leaves placement unresolved: load the [locality
-ladder](references/locality-ladder.md#move-overflow-to-its-owner) and move or
-propose the overflow. Never pad the comment to fit, never shave it to just
-pass, and never drop the cause.
+ladder](references/locality-ladder.md#move-overflow-to-its-owner) and move the
+overflow. Never pad the comment to fit, never shave it to just pass, and never
+drop the cause.
 
 ## Complete the selected route
 

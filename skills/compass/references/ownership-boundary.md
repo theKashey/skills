@@ -93,13 +93,15 @@ orientation, boundary, and responsibility upward. Apply the classifier to each
 passage that would move: a reason that survives the rewrite test has the chart
 as its owner. When no block, component, or coordinate covers that file, the
 owner is missing from the chart; that is not a reason to leave the passage in
-the header or to invent a folder document for it. Record the gap as a
-placement proposal — the file, the reason, and the nearest chart address — in
-the PR, issue, or task record, where `SKILL.md` puts every finding. A Create
-task then decides which case it is, per `growth-and-drift.md` §Classifying
-Disagreement: a new logical responsibility is a missing chart entry, a file
-inside an existing one is a missing coordinate. One proposal is a lead;
-repeated proposals for one area outrank a single one.
+the header or to invent a folder document for it. Close the gap in the same
+change, as Create work under its own rules, deciding the case per
+`growth-and-drift.md` §Classifying Disagreement: a file inside an existing
+responsibility is a missing coordinate, and a `compass:` marker is ask-first
+(`create.md` §Boundaries); a new logical responsibility is a missing chart
+entry, ratified where its level requires. What the change cannot finish — a
+declined ask, a pending ratification — the PR, issue, or task record names as
+unfinished work, with the file, the reason, and the nearest chart address. One
+such record is a lead; repeated records for one area outrank a single one.
 
 ## Compass as an owner during investigation
 

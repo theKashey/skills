@@ -72,23 +72,26 @@ later.
 
 Length is a different signal, and it needs a ceiling. Every surface on the
 locality ladder has a content-line budget—15 for a file overview, 5 for a
-block, 10 for a declaration's docblock, a 15-line lead for anything
-broader—and a surface over its budget has a placement problem, never a
-quality grade. The budget exists because the admission gate passes each
-verified fact on its own: where a project's rules send every "why" to the
-docstring and ban history from its documents, headers grow one appended
-section per change until file overviews run past a screen, while the same
-facts drift apart from their copies in READMEs. A heading inside a comment, a
-measurement, a past tense, or an export's contract predicts that overflow
-before anyone counts. Overflow moves to the owner the ladder names, or
-becomes a proposal when that owner cannot be updated; the over-budget surface is never the fallback, and the
-remedy is never to delete the cause or compress it past recognition. A breach
-collapses the surface to about half its budget, because a surface shaved to
-the limit trips again on the next edit. The numbers live in the prose so the
-writer sees them before the harm. Rejected shortcuts: deletion as the remedy,
-which recreates the invisible reef, and a counter shipped with this skill—a
-hand lexer cannot see what a comment is attached to, so a host that wants a
-build gate writes its own on its own parser.
+block, 10 for a declaration's docblock, a 15-line lead for anything broader—and
+a surface over its budget has a placement problem, never a quality grade. The
+budget exists because the admission gate passes each verified fact on its own:
+where a project's rules send every "why" to the docstring and ban history from
+its documents, headers grow one appended section per change until file
+overviews run past a screen, while the same facts drift apart from their copies
+in READMEs. A heading inside a comment, a measurement, a past tense, or an
+export's contract predicts that overflow before anyone counts. The agent that
+finds overflow moves it to the owner the ladder names, creating that owner,
+held to its own budget, when none exists. A proposal left beside an over-budget
+surface makes that surface the fallback, so a proposal survives only for
+content outside the task's scope or an owner the task cannot update, named as
+unfinished work. The over-budget surface is never the fallback, and the remedy
+is never to delete the cause or compress it past recognition. A breach
+collapses the surface to about half its budget, because a surface shaved to the
+limit trips again on the next edit. The numbers live in the prose so the writer
+sees them before the harm. Rejected shortcuts: deletion as the remedy, which
+recreates the invisible reef, and a counter shipped with this skill—a hand
+lexer cannot see what a comment is attached to, so a host that wants a build
+gate writes its own on its own parser.
 
 Context Docs is also a filesystem-level context-engineering practice. Code and
 domain structure should expose what they can—[“If your code-base doesn’t scream
@@ -385,9 +388,11 @@ The skill's durable principles are:
   not treat every documented reef as a mandatory refactor.
 - **Give every surface a budget; move overflow to its owner.** A comment,
   docblock, or lead over its content-line budget has outgrown its scope. Move
-  the overflow down to the site it governs, up to the owner that orients, or
-  into the historical record, or return a proposal when that owner cannot be
-  updated. Never copy it, never pad to fit, and never delete the cause.
+  the overflow down to the site it governs, up to the owner that orients, into
+  the historical record, or to the export's docblock, and create a missing
+  owner held to its own budget. Propose only content outside the task's scope
+  or an owner the task cannot update, named as unfinished work. Never copy it,
+  never pad to fit, and never delete the cause.
 - **Treat product documentation as a completed-system claim.** Use present artifacts to
   implement and verify the authorized finished contract, not to promote a
   temporary checkout, delivery, or publication mismatch into reader-facing

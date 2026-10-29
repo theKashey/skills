@@ -171,9 +171,11 @@ carried, and not pointed into.
   comment outgrows its scope and nothing above it owns the orientation: in a
   repository where four files in five had no coordinate, "move it up" had
   nowhere to go and headers became the default sink. A rewrite-surviving
-  reason with no chart over its file is a Phase E trigger — a missing entry or
-  a missing coordinate, decided like every other disagreement — not a reason
-  to keep the header or invent a folder document.
+  reason with no chart over its file is a missing entry or a missing
+  coordinate, decided like every other disagreement and closed in the same
+  change under Create's own asks; only what that change cannot finish is a
+  Phase E trigger. It is never a reason to keep the header or invent a folder
+  document.
 - **One checklist owner** (`references/verification.md`), instead of per-file
   checklists: duplicated checklists diverge, and the divergent copy is the one
   an agent finds.

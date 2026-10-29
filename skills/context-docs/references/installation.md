@@ -22,16 +22,17 @@ none is named, ask where they belong:
   removed without its recovered reason; one whose reason stays unknown keeps
   its form, with the uncertainty recorded as a `TODO` or `FIXME` in code, never
   an invented rationale.
-- A comment, docblock, or document lead over its content-line budget, or one
-  that gained a heading, a measurement, history, or an export's contract,
-  moved that content to the surface that owns it and kept a one-line route,
-  leaving the surface well under budget rather than shaved to it; nothing was
-  copied, and no cause was dropped to fit.
+- A comment, docblock, or document lead over its content-line budget—15 for a
+  file overview, 5 for a block, 10 for a docblock, a 15-line lead for a
+  document—or one that gained a heading, a measurement, history, or an export's
+  contract, moved that content to the surface that owns it and kept a one-line
+  route, leaving the surface well under budget rather than shaved to it;
+  nothing was copied, and no cause was dropped to fit. Overflow outside the
+  change's scope, or bound for an owner the change cannot update, is named in
+  the PR as unfinished work.
 
-Where the host's instructions authorize moving overflow to an existing owner
-during a code change, say so in the rule above; otherwise the agent returns a
-placement proposal. A host that wants these budgets enforced in its build
-writes that gate with its own tooling.
+A host that wants a build gate writes it in its own linter, with these numbers
+and the ladder's counting rules, keying any recorded debt by file and kind.
 
 Verify that the rule, the cast, and each review check sit where the
 repository's own instructions deliver them to the agents that write and review
