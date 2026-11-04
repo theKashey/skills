@@ -94,6 +94,13 @@ Triggered by events, not by schedule:
 - A Consume task recorded a classified finding in its PR, issue, or task record
   (`SKILL.md` §Choose exactly one flow) → that record is this Create task's
   entry; respond per the class, never inside the Consume task that found it
+- Documentation work named, in its PR, issue, or task record, unfinished
+  overflow: a reason that survives the rewrite test but has no block,
+  component, or coordinate covering its file (`ownership-boundary.md`
+  §Overflow that finds no chart above it) → decide which: a new logical
+  responsibility is a missing chart entry, a file inside an existing one is a
+  missing coordinate (§Classifying Disagreement); repeated records for one
+  area outrank a single one
 - The installed chart check failed → classify each failure before repairing it
   (§Classifying Disagreement); a marker at an absent address is handled by
   `verification.md` §Staleness, not deleted to turn the build green. A failure
