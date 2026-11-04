@@ -26,10 +26,13 @@ none is named, ask where they belong:
   file overview, 5 for a block, 10 for a docblock, a 15-line lead for a
   document—or one that gained a heading, a measurement, history, or an export's
   contract, moved that content to the surface that owns it and kept a one-line
-  route, leaving the surface well under budget rather than shaved to it;
-  nothing was copied, and no cause was dropped to fit. Overflow outside the
-  change's scope, or bound for an owner the change cannot update, is named in
-  the PR as unfinished work.
+  route, leaving the surface well under budget rather than shaved to it. A
+  passage may stay over budget when its cases form one interdependent rule,
+  it gives usage for a script with no package surface, or its docblock is itself
+  a format contract; the reason is recorded in the task record or where the
+  host records exceptions. Nothing was copied, and no cause was dropped to fit.
+  Overflow outside the change's scope, or bound for an owner the change cannot
+  update, is named in the PR as unfinished work.
 
 A host that wants a build gate writes it in its own linter, with these numbers
 and the ladder's counting rules, keying any recorded debt by file and kind.
