@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
+import io
 import math
 import os
 import re
@@ -12,6 +14,8 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
+
+from compass_batch import run_batch
 
 
 HEADING_RE = re.compile(r"^(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$")
@@ -545,7 +549,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="exclude BM25-only related sections (direct matches remain BM25-ranked)",
     )
-    parser.add_argument("query", nargs="+", help="words or exact identifier to find")
+    parser.add_argument("--stdin", action="store_true", help="read JSONL query requests, loading the chart once")
+    parser.add_argument("query", nargs="*", help="words or exact identifier to find")
     return parser.parse_args(argv)
 
 
@@ -558,12 +563,28 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     root = root.resolve()
     kinds = set(args.kind or ["all"])
+    sections = load_sections(root, kinds)
     query = " ".join(args.query).strip()
+    if args.stdin:
+        if query:
+            print("error: pass a positional query or --stdin, not both", file=sys.stderr)
+            return 2
+        return run_batch(sys.stdin, {"query"}, "query", lambda record: batch_result(root, sections, record["query"], args))
     if not query:
         print("error: query must not be empty", file=sys.stderr)
         return 2
+    return print_query(root, sections, query, args)
 
-    sections = load_sections(root, kinds)
+
+def batch_result(root: Path, sections: Sequence[Section], query: str, args: argparse.Namespace) -> dict:
+    output = io.StringIO()
+    with contextlib.redirect_stdout(output), contextlib.redirect_stderr(output):
+        code = print_query(root, sections, query, args)
+    return {"status": "hit" if code == 0 else "miss", "query": query,
+            "output": output.getvalue(), "limit": args.limit, "max_lines": args.max_lines}
+
+
+def print_query(root: Path, sections: Sequence[Section], query: str, args: argparse.Namespace) -> int:
     for address in query_addresses(query):
         if not (root / address_document(address)).is_file():
             print(

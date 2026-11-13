@@ -169,9 +169,9 @@ Skill Guidance owns the Laws of Agent Instruction that govern instruction
 wording and placement. The behavior-principle procedure deliberately restates
 several of those Laws in procedural form so the package works when installed
 alone; this is a recorded divergence, not an accidental paraphrase, and
-skill-guidance's `LAWS.md` remains the canonical statement. The procedure's
-validation step checks its own principle's effect; it is self-validation, not
-the advisory review Skill Guidance provides.
+skill-guidance's `SKILL.md` remains the canonical statement of the Laws. The
+procedure's validation step checks its own principle's effect; it is
+self-validation, not the advisory review Skill Guidance provides.
 
 These are conditional runtime compositions among separately installed skills,
 not package dependencies. Carry the Load keeps an explicit unavailable path
@@ -186,8 +186,7 @@ divergence; an accidental paraphrase between them is a defect.
 
 | File | Owns |
 | --- | --- |
-| [SKILL.md](SKILL.md) | Activation boundary, load card, flow, containment, protection audit, learning harvest, and completion |
-| [STAYING-PUT.md](STAYING-PUT.md) | The moorings: compact drift-and-hold rules for keeping the executor on the frozen scope, loaded under mid-flow scope pressure |
+| [SKILL.md](SKILL.md) | Activation boundary, load card, flow, frozen-scope safeguards, containment, protection audit, learning harvest, and completion |
 | [Behavior principles](references/behavior-principles.md) | Conditional admission, placement, wording, and validation of learned agent behavior |
 | [Lean development](references/lean-development.md) | Expanded doctrine: what Lean is, why it works, and its mapping to AI-assisted development; maintainer support only |
 | [Antifragility](references/antifragility.md) | Expanded doctrine: the triad, why convexity works, and its software mapping; maintainer support only |
@@ -204,7 +203,10 @@ a rule, silently weaken safety boundaries, or edit `AGENTS.md` without authority
 ## Runtime contract
 
 [SKILL.md](SKILL.md) is the package's only runtime entry point; it contains the
-load card, flow, containment, protection audit, learning harvest, and terminal
-statuses, and conditionally loads the behavior-principle procedure and the
-staying-put moorings. The rationale above and the doctrine references are
-maintainer support and are not required to run the skill.
+load card, flow, frozen-scope safeguards, containment, protection audit,
+learning harvest, and terminal statuses. Frozen-scope safeguards govern every
+mutating action and every exit: an attractive improvement still needs scope
+authority, and work set aside still needs a recorded disposition. Only the
+behavior-principle procedure loads conditionally. The rationale above and the
+doctrine references are maintainer support and are not required to run the
+skill.

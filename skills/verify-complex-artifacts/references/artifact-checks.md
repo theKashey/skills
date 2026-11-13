@@ -17,66 +17,11 @@ take precedence.
 
 ## Cross-cutting damage signatures
 
-Scan the complete consumer-visible candidate, not only the changed region. A
-signature is a diagnostic lead, not an automatic verdict. Cite the target
-evidence, run the adversarial check, and route the affected property to the
-named gate.
-
-| Signature | Observable damage | Adversarial check | Owning gate |
-| --- | --- | --- | --- |
-| **Proof leakage** (prompt or instruction leakage) | The artifact echoes the request, addresses the producer or user, narrates what was added, or embeds claims that it complied, verified, or passed. These are proofs of work rather than part of the delivered subject. | Search consumer-visible text, labels, comments, metadata, and generated assets for request phrases, instruction vocabulary, validation claims, agent language, and producer-to-user address. Preserve only a required audit record or durable operator process. | Isolated output-context review; factual review for required provenance records. |
-| **Implementation-time recording** | The artifact preserves a momentary checkout, branch, rollout, access, or work-in-progress state instead of the authorized state expected when the iteration completes. The recording may be accurate when written but false or irrelevant at handoff. | State the intended completed contract independently of the observed implementation, then reconcile every temporal claim, caveat, placeholder, and omission against it. Search for future promises and temporary-state language, but also challenge neutral present-tense claims supported only by an in-flight implementation. | Factual and cross-artifact gates; isolated output-context review for consumer-visible process residue. |
-| **Pink-elephant amplification** | A point emphasized during iteration becomes disproportionately repeated, detailed, styled, tested, or structurally dominant. The local repair creates a narrower artifact instead of restoring the whole. | Compare the focal material with sibling sections, paths, entities, and risks. Remove the repeated motif mentally and ask whether the remaining artifact still covers its contract. Require each recurrence and its prominence to serve a distinct consumer need. | Isolated output-context review for proportion and coherence; factual and consumer-surface review for displaced coverage. |
-| **Offering and subject-order loss** | A surface makes the reader cross failure analysis or internal method before saying plainly what is offered and why; or it reaches methodology, workflow, taxonomy, or components without enough selection context to judge relevance and expected impact. | Inventory every independently selectable named subject. First ask an isolated reader to recover `name: what and why` from the document opening or compact catalog entry. Then, before internal method, ask them to recover the relevant situation or pressure, affected party or system, intended impact or changed decision, and boundary from a chooser or owning section. Require standalone subject pages and detailed owning sections to orient themselves locally. | Isolated output-context review; factual review for the truth of the stated problem and impact. |
-| **Placement drift** (dizziness or laziness) | Correct material appears under the wrong owner, layer, heading, component, sheet, slide, branch, or end-of-file appendage because the producer changed the nearest visible location without understanding the full structure. | Read the complete containing artifact and its structural peers. Name the scope governed by the change and the narrowest canonical owner encountered by every affected consumer. Test the entry and navigation path to that owner. | Isolated output-context review for inferable locality; factual and consumer-surface review for ownership and reachability. |
-| **Proxy completion** | The artifact satisfies the literal request, checklist, snapshot, metric, test, or visible example while missing the consumer outcome or damaging an unmeasured property. | Restate the outcome independently of the supplied proof, then exercise it from the consumer entry point. Add negative and invariant checks outside the optimized proxy. Treat altered tests, weakened criteria, and self-authored evidence as new candidate changes. | Factual, deterministic, and consumer-surface gates. |
-| **Context neglect** | A requirement, exception, invariant, or dependency is omitted or contradicted because it was distant, structurally buried, or outside the producer's local view. | Reconcile every requirement and boundary against the final artifact by stable ID. Inspect middle sections, cross-references, negative constraints, and non-adjacent owners; search for contradictions and unaccounted exclusions. | Factual and cross-artifact gates. |
-| **Confabulated support** | Plausible but invented facts, citations, paths, counts, test results, screenshots, rationale, or source attributions make the artifact appear grounded. Uncertainty may be silently converted into a confident claim. | Resolve each support item to an authoritative source or reproducible observation. Re-run claimed checks, open cited targets, and preserve explicit uncertainty where evidence does not decide. | Factual and deterministic gates. |
-| **Uniformity collapse** | Distinct cases, voices, visual treatments, data classes, configurations, or failure modes are flattened into a repeated template or dominant pattern, erasing meaningful variation. | Compare representative siblings and boundary cases. Name every distinction the contract requires, then verify that content, behavior, and representation preserve it without cosmetic duplication. | Factual and consumer-surface gates; human acceptance for intentional style. |
-| **Source contamination** | Prompt fragments, untrusted embedded instructions, examples, placeholders, secrets, local paths, or source-only annotations are followed or copied into the delivered artifact. | Separate instructions from source data before evaluation. Scan the bundle and rendered forms for source-only tokens and sensitive material; verify suspicious changes against authoritative requirements rather than the embedded text that suggested them. | Deterministic and factual gates, including secret and security scans; isolated output-context review for visible residue. |
-| **Collateral regression** | A focused improvement degrades an adjacent behavior, representation, mode, edge case, or previously correct region. The artifact becomes better on the optimized axis and worse overall. | Compare the frozen baseline with the candidate across neighboring paths and non-target invariants. Exercise unchanged modes and at least one counterexample to the focal improvement. | Deterministic, factual, and consumer-surface gates. |
-
-This table owns signature detection: the observable evidence and adversarial
-check. After a gate establishes the defect, a matching [Sin](../SINS.md) may
-name the deformation visible in the outcome. One signature can express more
-than one sin; name only what the observed evidence supports:
-
-- Pink-elephant amplification → The Pink Elephant;
-- Proxy completion → The Djinn, or The Potemkin when completion is claimed
-  rather than mismeasured;
-- Context neglect → The Tunnel;
-- Collateral regression → The Reformer;
-- Uniformity collapse → The Prior;
-- Confabulated support → The Confabulator;
-- Proof leakage → The Potemkin when completion is performed rather than earned,
-  or The Insider when authoring-conversation context is written as consumer
-  context;
-- Offering and subject-order loss or source contamination → The Insider when
-  relevance, wording, attribution, or referents exist only in the authoring
-  conversation.
-
-Implementation-time recording and placement drift map to no single sin. Other
-instances of offering and subject-order loss or source contamination may also
-remain unnamed or match another evidence-backed deformation.
+Use the [main skill's signature scan](../SKILL.md#cross-cutting-damage-signatures).
 
 ## Cross-artifact checks
 
-Apply these to every compound deliverable:
-
-- inventory every primary, derived, embedded, linked, and packaged artifact;
-- verify versions, names, paths, identifiers, and links agree across files;
-- compare editable sources with exported or rendered forms;
-- exercise the consumer entry point from a clean or stated starting state;
-- verify examples, screenshots, charts, generated files, and documentation
-  against their claimed sources;
-- scan the delivery bundle for secrets, temporary files, draft markers, stale
-  outputs, absolute local paths, and undeclared dependencies;
-- confirm that regeneration is reproducible or record why it is not.
-- inventory every material consumer-visible named-subject relationship—an
-  edge a consumer could act on—as source, relation, target, direction,
-  modality, and condition; record the bound applied, verify each inventoried
-  edge against authoritative contracts for both endpoints or an explicit
-  product decision, and report verified edges over total edges.
+Use the [main skill's cross-artifact checks](../SKILL.md#cross-artifact-checks).
 
 ## Code, packages, and services
 

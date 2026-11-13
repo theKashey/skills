@@ -14,10 +14,11 @@ appear only for the block under discussion.
 
 **The context that proposes never judges its own proposal.** Discovery (§1),
 review of the blueprint (§4), and the check of each built block (§6) each run
-in a fresh subagent that receives only the inputs its brief in
-[references/briefs.md](references/briefs.md) lists — never your proposal or
-reasoning. A context that has settled on a solution reads the code to confirm
-it and checks its own work against its own intent. When the host offers no
+in a fresh subagent that receives only the quoted brief beside that step
+and the inputs it lists — never your proposal, plan, orientation, assumptions,
+or reasoning. Send only the selected brief, not the surrounding producer
+instructions. A context that has settled on a solution reads the code to
+confirm it and checks its own work against its own intent. When the host offers no
 subagents, run each step as a separate pass before the work it judges, and
 record "not isolated" as a yes-but on what it informs.
 
@@ -64,17 +65,48 @@ Existing block is the reason to read that block's logic; this is how a defect in
 "unchanged" code is found.
 
 **Then find what already does the job, before proposing anything.** Give a
-discovery subagent the discovery brief, the task text, and the problem as you
-stated it. It restates the task as capabilities in the application's own
-terms, each concept the task names among them, numbered `C1`, `C2`…, and
-returns for each one what to use, extend, or change, or none, with the name
-the application gives it, `path:line`, and the searches behind it, and a
-verdict on each claim of the task. A block that holds a capability counts as
-a result whether or not the change passes through it: the change reuses its
-representation instead of adding one. Read each result it cites before you
-rely on it; a cited result you have not read is a yes-but. Its paths feed the
-questions below, and its names are the words the blueprint uses for the
-change; a claim you record differently from its verdict is a yes-but.
+fresh discovery subagent only these inputs and this quoted brief.
+
+Inputs: the root of the tree the evidence is read in — the worktree, for a
+change that already exists — the task text, and the problem statement.
+
+> Each item a brief asks you to judge gets one verdict and one piece of
+> evidence — a `path:line`, or a command and its result — not an explanation:
+>
+> - **yes** — it holds as stated;
+> - **no** — it is well posed and does not hold;
+> - **misframed** — what it presumes is false or contradictory, or your inputs
+>   cannot decide it.
+>
+> You find what already exists. You do not design or propose a change, and you
+> do not edit files.
+>
+> 1. State the capabilities the change needs in the application's own terms:
+>    the names its glossary, architecture chart, modules, and types use, not
+>    the task's words. Each concept the task names is a capability too: to
+>    know or represent it. Number them `C1`, `C2`…
+> 2. For each capability, search the whole repository, not only where the task
+>    points, by at least two methods: by name, and by behavior — the operation
+>    it performs or the interface it would expose. Read each candidate. A
+>    block that already holds a capability counts even when the change need
+>    not pass through it: the change can reuse its representation instead of
+>    adding one.
+> 3. Classify each candidate: **use** (fits as it is), **extend** (fits with a
+>    change), **change** (existing code the task requires to differ), or
+>    **none** when nothing fits. Quote the evidence with `path:line` and the
+>    name the application gives it.
+> 4. List every code path in the affected area that reaches the problem, with
+>    `path:line`.
+> 5. For each claim the task makes, give a verdict: did you observe it?
+>
+> Return: a table of ID, capability, result, `path:line`, and evidence; the
+> paths; a table of claim, verdict, and evidence; every search you ran; and
+> what those searches could miss.
+
+Read each result it cites before you rely on it; a cited result you have not
+read is a yes-but. Its paths feed the questions below, and its names are the
+words the blueprint uses for the change. A claim you record differently from
+its verdict is a yes-but.
 
 **Then ask the questions this task raises.** They are not a fixed list. Factor
 them from the task, drawing on four directions:
@@ -350,10 +382,41 @@ Before you show a draw as ready, and after each correction:
    missing or not all yes. Exit 1: fix each line and run it again. Exit 2:
    say so and go on.
 2. On the first draw, and after a correction that adds or re-marks blocks,
-   give a review subagent the review brief, the block cards, the build order,
-   and the strategy view. Each site it finds that no block covers, and each
-   verdict it returns that is not yes, is a correction: take it under §5 at
-   once and name the review as its source in the delta.
+   give a fresh review subagent only the inputs and quoted brief below. Each
+   site it finds that no block covers, and each verdict it returns that is
+   not yes, is a correction: take it under §5 at once and name the review as
+   its source in the delta.
+
+Inputs: the root of the tree the evidence is read in — the worktree, for a
+change that already exists — the block cards, the build order, and the
+strategy view.
+
+> Each item a brief asks you to judge gets one verdict and one piece of
+> evidence — a `path:line`, or a command and its result — not an explanation:
+>
+> - **yes** — it holds as stated;
+> - **no** — it is well posed and does not hold;
+> - **misframed** — what it presumes is false or contradictory, or your inputs
+>   cannot decide it.
+>
+> You check a proposed change you did not write. Do not edit the host tree;
+> you may work in a scratch copy.
+>
+> 1. For each amendment that changes what others read, or that applies to
+>    every instance of something, enumerate every affected reader and instance
+>    by two independent methods: run the affected tests before and after
+>    applying the amendment in a scratch copy where you can, and search. Mark
+>    each site with the method or methods that found it.
+> 2. For each site, give the block that covers it, or none.
+> 3. For each Ghost and Acquire, give a verdict: is it needed — does no
+>    existing code already do its job or nearly do it?
+> 4. For each test an amendment names, give a verdict: would it fail without
+>    what it was written for?
+> 5. For each block, give a verdict: does its amendment fit its card, its
+>    location, and the capability it serves?
+>
+> Return: a table of site, methods, and covering block; a table of ID,
+> question, verdict, and evidence; your methods; and what they could miss.
 
 ## 5. Take corrections
 
@@ -410,11 +473,39 @@ location no block names is a site with no covering block: take it under §5 as
 a block added under the next free ID that traces to a claim, or as a scope
 expansion under Assumptions, and name the diff as its source in the delta.
 
-Then give a check subagent the check brief, the block's card and amendment,
-and the diff or commit, and copy its rows into the Checks table, replacing
-that block's earlier rows. They set the block's status under §2; each row
-that is not yes is a yes-but on the card, corrected under §5 at the block
-when no, one layer up when misframed.
+Then give a fresh check subagent only the inputs and quoted brief below.
+Copy its rows into the Checks table, replacing that block's earlier rows.
+They set the block's status under §2; each row that is not yes is a yes-but
+on the card, corrected under §5 at the block when no, one layer up when
+misframed.
+
+Inputs: the host repository root, one block's card and amendment, and the
+diff or commit that builds it.
+
+> Each item a brief asks you to judge gets one verdict and one piece of
+> evidence — a `path:line`, or a command and its result — not an explanation:
+>
+> - **yes** — it holds as stated;
+> - **no** — it is well posed and does not hold;
+> - **misframed** — what it presumes is false or contradictory, or your inputs
+>   cannot decide it.
+>
+> You check built work against its amendment. You did not build it. Do not
+> edit files.
+>
+> 1. Split the amendment into parts: each representation, transition, test,
+>    and claim it states.
+> 2. For each part, give a verdict: does the diff or commit build it? What the
+>    commit says about itself, in its message or comments, is a claim to
+>    check, not evidence.
+> 3. For each claim, run a check that observes it — a test that asserts the
+>    stated symptom, or a reproduction — and give its verdict with the command
+>    and result. A test that does not assert the symptom does not count.
+> 4. Add a part for each thing the diff does that the amendment does not
+>    name, and give a verdict: does a part the amendment names require it?
+>
+> Return: a table with the columns ID (the block's), part, verdict, and
+> evidence.
 
 ## 7. Close the change
 

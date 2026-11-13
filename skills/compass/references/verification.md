@@ -43,7 +43,7 @@ cannot pass.
 | every block `README.md` carries a component table | §L2 |
 | every viewport in `VIEWPORTS.md` carries `### Type`, `### Question`, `### Participants`, `### Diagram`, and `### Seams`, and its type is `runtime`, `domain`, `boundary`, or `lifecycle` | §Markdown and Navigation |
 | no forbidden filename (`SCOPE.md`, `CONTEXT.md`, `BLOCK.md`, `COMPONENT.md`) exists under the chart root | §Markdown and Navigation |
-| every lexicon row is in tool order, unique per root, bridges a lexical gap, resolves its address or scope, and keeps every code stem in some identifier; every `### Lexicon` link names a row whose first speech form is the heading; no glossary carries `### Implementation aliases` — `compass_lex.py check`, a separate installed check | §Lexicon Verification |
+| every lexicon row is in tool order, unique within `(root, context)`, bridges a lexical gap or distinguishes a contextual collision, resolves its address or scope and declared context, and keeps every code stem in some identifier; every `### Lexicon` link names a row whose first speech form is the heading; no glossary carries `### Implementation aliases` — `compass_lex.py check`, a separate installed check | §Lexicon Verification |
 
 ````python
 # chart_check.py — decidable chart invariants. Adapt CHART, SRC_SUFFIXES, FIXTURES, and MINIMUM; run it in CI.
@@ -477,7 +477,8 @@ check); a lexicon without the installed check is unproven from the next rename
 onward.
 
 - [ ] The host test suite runs `python3 {compass-skill}/scripts/compass_lex.py --chart-root … --repo-root … check` and it exits 0
-- [ ] Every row's admission is a Create task of its own whose record holds the candidate it came from; a row with no such record is retired
+- [ ] Every row's admission is a Create task of its own whose record holds the candidate, observed usage, contextual same-concept evidence, and the applicable expert decision; a row with no such record is retired
+- [ ] No provider, dependency, or implementation mechanism is recorded as an alias merely because the concept uses it; contextual meanings remain distinct within a root
 - [ ] Every glossary term with a lexicon row links it with `### Lexicon`; the heading being that row's first speech form is the script's to prove
 - [ ] No `note` carries meaning — a note that restates the glossary is the glossary's, and the row loses it
 - [ ] A `where` row points outside the repository and nothing inside it, and its code stems are optional; a row for something the repository holds uses `chart` or `scope`
@@ -535,7 +536,7 @@ Run periodically (after any significant code change, or at state 3 maintenance c
 2. Pick 3 random component documents — do their implementation coordinates still exist on disk? Classify every miss as remapping before touching anything semantic.
 3. Pick 1 block document — do current imports, events, or other interactions realize its semantic communicates-with relationships? Investigate disagreement; a semantic edge need not be an import edge.
 4. Pick 2 rules or invariants the chart records and check them against the product's current behaviour. This is the only check that finds a semantic change, and no structural comparison substitutes for it.
-5. Pick 3 glossary terms — is each still the word humans use, and does `compass_lex.py resolve` with that word still land on the row it links to?
+5. Pick 3 glossary terms — does current human and source usage still support each contextual meaning, and does `compass_lex.py resolve` with a linked form still find its row? Verify any evidenced terminology deprecation and contextual distinction with the domain expert. A term with no lexicon row still needs its meaning checked.
 6. Check `VIEWPORTS.md` — at most 3–4 active viewports, each still answering its named question with a diagram that describes reality. A chart that skipped L4 has no `VIEWPORTS.md` and no link to one; that passes.
 7. Check document sizes against the level budgets in `create.md` §Quick Reference: Levels — oversize means scope creep within the level; split the content down a level, don't raise the budget. L0 and L4 budgets are per unit (context, viewport): an oversize unit is doing too much — split or retire the unit, since there is no level below to push it into.
 

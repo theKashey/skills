@@ -25,7 +25,7 @@ Record:
 - representative tasks, including one unseen case when rationale should
   generalize;
 - the open-world choices and observed or plausible wrong defaults;
-- the exact [Agent Instruction Law](../LAWS.md) identifier and title that
+- the exact [Agent Instruction Law](../SKILL.md#the-laws-of-agent-instruction) identifier and title that
   materially constrain each target-skill choice, with their supporting
   evidence;
 - intended users, target harnesses, and invocation boundary;
@@ -93,7 +93,7 @@ Apply the [obligation tests](../SKILL.md#test-each-obligation), then recommend:
   invocation, and a material behavioral delta.
 - `Split or merge` when current boundaries hide a required route or duplicate
   one owner; apply
-  [Law X](../LAWS.md#law-x--restructure-overlap-do-not-reword-it).
+  [Law X](../SKILL.md#law-x--restructure-overlap-do-not-reword-it).
 
 Keep the recommendation within the user's authorized mutation scope. The host
 skill creator owns package mechanics and any file changes. If authority is
@@ -128,7 +128,7 @@ sharpening the condition before recommending inline guidance.
 
 Trace representative activated flows through every transitively required
 reference and judge each split by the splitting clause of
-[Law II — Spend the instruction budget](../LAWS.md#law-ii--spend-the-instruction-budget).
+[Law II — Spend the instruction budget](../SKILL.md#law-ii--spend-the-instruction-budget).
 When a split fails it, recommend the nearest every-run owner unless a separate
 ownership constraint justifies the file boundary. When it calls for exposing a
 read journey, recommend marking required and conditional steps so independent
@@ -158,7 +158,7 @@ conditions that select an internal route after activation.
 For every procedure, check:
 
 1. State its internal branch condition and authorized scope.
-2. Apply each [Agent Instruction Law](../LAWS.md) whose condition arises.
+2. Apply each [Agent Instruction Law](../SKILL.md#the-laws-of-agent-instruction) whose condition arises.
 3. Put warnings immediately before the action they govern.
 4. End each meaningful step with a checkable completion condition. When the
    skill ends in a handover artifact, make that artifact its only skill-level
@@ -186,7 +186,7 @@ contract in `SKILL.md`.
 ## 5. Form the recommendation and validation record
 
 Apply
-[Law II — Spend the instruction budget](../LAWS.md#law-ii--spend-the-instruction-budget)
+[Law II — Spend the instruction budget](../SKILL.md#law-ii--spend-the-instruction-budget)
 sentence by sentence: if deletion changes no invocation, choice, scope,
 execution, or completion, recommend deleting the sentence. Leave each surviving
 meaning with one canonical owner.
@@ -196,9 +196,9 @@ behavior-improving causal rationale, or README support. Identify anything
 without a valid surface for the host creator to move or delete.
 
 Apply
-[Law VIII — Keep every claim falsifiable](../LAWS.md#law-viii--keep-every-claim-falsifiable)
+[Law VIII — Keep every claim falsifiable](../SKILL.md#law-viii--keep-every-claim-falsifiable)
 and
-[Law VII — Enforce or delete mechanical rules](../LAWS.md#law-vii--enforce-or-delete-mechanical-rules)
+[Law VII — Enforce or delete mechanical rules](../SKILL.md#law-vii--enforce-or-delete-mechanical-rules)
 to every retained repository-specific claim.
 
 Apply the validation selected by the parent router to an existing candidate.

@@ -122,11 +122,23 @@ The registry is the first artifact worth having: one page from which every root,
 
 Each root owns `{root}/GLOSSARY.md`, the canonical owner of that root's ubiquitous language. Every local product or domain term used architecturally appears there. Do not fill it with implementation terminology unless humans genuinely use that terminology as part of the domain.
 
+Collect observed words and recurring phrases from the project's product
+surfaces, documentation, domain conversations, and source usage available to
+the task. Look for unfamiliar terms and familiar words with local meanings.
+Draft concise definitions from those uses, then have the domain expert review
+the meanings and contexts at the human checkpoint. Preserve names people use;
+do not invent replacements merely to make the chart sound architectural.
+
 When a glossary-defined term is used semantically in chart prose, render it in **bold**: "A **Matter** contains **Documents** and may produce **Findings**." Never bold filenames, paths, source identifiers, code, or Mermaid syntax.
 
 Terms need not be globally unique. When one word means different things in different bounded contexts, record each meaning with its context explicitly.
 
 Where product language and implementation language differ, the product or domain term is canonical. A form identifier-split search cannot reach from it — the spoken abbreviation, a renamed code stem — is a row in the lexicon, `{chart-root}/LEXICON.jsonl`, linked from the term's `### Lexicon` section; a form the search already reaches (`MatterRecord` for **Matter**) is recorded nowhere. Source naming never silently wins, and the glossary never carries the forms itself: one owner per form. Admission is its own Create task with a gate ([`lexicon.md`](lexicon.md) §Admission).
+
+Admit an alias only when usage evidence establishes that it names the same
+concept in the stated context. A provider, tool, or mechanism used by a concept
+is a relationship, not an alias. Keep admission evidence in the task record;
+lexical separation and a live identifier cannot prove shared meaning.
 
 `GLOSSARY.md` owns terminology. `DOMAIN.md` owns relationships, contexts, aggregates, events, and invariants.
 

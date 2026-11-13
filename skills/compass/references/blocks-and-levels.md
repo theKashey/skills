@@ -314,14 +314,29 @@ Appears as a matter in the matter list and workspace.
 
 **Context-specific meaning.** Do not force globally unique definitions. When the same word means different things in different bounded contexts, give the term one `##` heading with one `### Meaning` / `### Bounded context` pair per context, each labelled — the collision is a fact about the domain, and hiding it behind one blended definition loses it.
 
-**`### Lexicon`** names the term's row in `{chart-root}/LEXICON.jsonl`, the one owner of every form the concept takes — what people say, the stems code uses, where it lives. The product or domain term is canonical and is the row's first speech form; the code term is a stem in that row, never the reverse, and never a second heading. Only a form identifier-split search cannot reach gets a row — `tenant` for **Workspace**, not `MatterRecord` for **Matter**. When exploration finds such a difference, record it as a candidate row for the admission task rather than resolving it silently:
+Define observed domain vocabulary even when the same spelling already appears
+in code; a lexical match does not explain a specialized meaning. Draft from
+actual usage and obtain domain-expert review at the human checkpoint. When
+evidence establishes deprecated or disallowed terminology, an optional
+`### Terminology` section states the applicable context, preferred term, and
+effective period when one exists. Do not expose internal terminology as a
+customer-facing recommendation merely because both name the same concept.
+
+**`### Lexicon`** names the term's concept slug in `{chart-root}/LEXICON.jsonl`,
+the owner of recorded human forms, source stems, and locators. The glossary
+heading is the row's first speech form. Different senses use rows with the
+corresponding `root` and `context`, while the glossary preserves their separate
+meanings. A code form must name the same concept; a tool or provider used by it
+is a relationship. Only a lexical gap or a contextual collision needs a row.
+When exploration finds a gap, record the candidate and usage evidence in the
+task record for separate admission:
 
 ```text
-Product/domain language: **Workspace**
-Implementation language: `Tenant`
+Product/domain language: **Shipment**
+Implementation language: `Consignment`
 
-Canonical Compass language: **Workspace**
-Candidate row: {"concept":"workspace","speech":["Workspace"],"code":["tenant"],"chart":"…"}
+Canonical Compass language: **Shipment**
+Candidate row: {"concept":"shipment","speech":["Shipment"],"code":["consignment"],"chart":"shipping.dispatch"}
 ```
 
 A glossary with no lexicon links to nothing; the section appears with the first admitted row ([`lexicon.md`](lexicon.md)).

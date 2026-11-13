@@ -42,7 +42,7 @@ TSDoc, or a standalone public API, configuration, or code example.
    example](#prepare-a-non-trivial-example). During authoring, record each
    explicit, justified exclusion when it is identified.
 6. After implementation and non-inline documentation are complete, follow
-   [Review documentation at wrap-up](review-documentation-at-wrap-up.md). At
+   [Review documentation at wrap-up](../SKILL.md#review-documentation-at-wrap-up). At
    that point, reconcile the inventory, verify public JSDoc on the actual
    in-scope consumer surface, classify examples, and run supported deterministic
    checks.

@@ -292,14 +292,14 @@ preferred document, or create an unauthorized fallback.
 
 | File | Owns | Change it when |
 | --- | --- | --- |
-| [SKILL.md](SKILL.md) | Cross-route contract, grouped into the rules every route keeps and the rules only non-inline surfaces keep; the compact established-document path; the code-comment gate that decides whether a comment is owed at all; and direct conditional workflow pointers. | A change affects every activation, the routine path, or which deeper workflow loads. |
+| [SKILL.md](SKILL.md) | Cross-route contract, common entry and prose rules, routine authoring and completion, the code-comment admission gate, budgets and overflow remedies, and direct conditional workflow pointers. | A change affects common decisions, routine work, or which deeper workflow loads. |
 | [casting](references/casting.md) | Reader discovery, goal scaffolding, class-frequency evidence, top-`N` service priority, casting outcomes, assumed priors and the representation contract, and durable cast boundaries. | A change affects how a reader, goal, subject, surface, service priority, or assumed base level is challenged before drafting. |
-| [content architecture](references/content-architecture.md) | Deep alignment for authorial intent, story contracts, reader paths, document roles, procedure structure, and progressive disclosure; the prior-and-speciality admission gate, the working-document and handoff contract, the reconstructable decision trace, and the published prose register. | A change affects a new or challenged story, surface role, scan path, multi-reader alignment decision, what admission keeps before density is chosen, or the published prose register. |
+| [content architecture](references/content-architecture.md) | Deep alignment for authorial intent, story contracts, reader paths, document roles, procedure structure, and progressive disclosure; the prior-and-speciality admission gate, the working-document and handoff contract, and the reconstructable decision trace. | A change affects a new or challenged story, surface role, scan path, multi-reader alignment decision, or what admission keeps before density is chosen. |
 | [locality ladder](references/locality-ladder.md) | Compact existence, ownership, scope, and placement reasoning from a line comment to top-level documentation; product evidence and topology decisions; the delivered-versus-reachable, external-consumer, and effective-root definitions. | A change affects unresolved existence, ownership, scope, or placement without overriding an established owner, or how product evidence and decision-driven topology changes are handled. |
 | [symbol JSDoc](references/symbol-jsdoc.md) | Public-contract membership as an input, what a symbol's docblock says that its signature cannot, the entry-point route to the page that owns the rest, and the consumer-surface check that completes a docblock-only change. | A change affects how a public symbol's documentation is written, routed, or verified. |
 | [public contracts](references/public-contracts.md) | Public-contract inventory workflow and checklist, and example framing and integrity. | A change affects API or configuration reference semantics or snippets. |
 | [code comments](references/code-comments.md) | What a comment that passed the gate must do: placement, ownership, the invisible-reef-to-visible-cliff disposition, worked examples, and the Chesterton's Fence test. | A change affects how code-local rationale is written, placed, or retired. |
-| [review at wrap-up](references/review-documentation-at-wrap-up.md) | One-time minimum completion checks, the compact end-state gate, and the condition for loading the full scorecard. | A change affects routine non-inline completion. |
+| [Wrap-up routes](references/review-documentation-at-wrap-up.md) | Stable links to routine completion and the end-state gate in the main skill. | Existing callers need those named routes. |
 | [installation](references/installation.md) | The agent-instructions rule and review check a repository adopts when it installs Context Docs, and the check that they landed where its instructions deliver them. Nothing else loads it. | A change affects what an installing repository adopts or how reviewers catch over-documentation. |
 | [quality and maintenance](references/quality-maintenance.md) | Audit workflow and evidence, change triggers, the historical-surface contract for changelogs and migration guides, and release and drift checks. | A change affects audits, releases, or how documentation quality is assessed or maintained. |
 
@@ -366,11 +366,11 @@ The skill's durable principles are:
 - **Treat every published page as an entry point.** Readers arrive at any
   page from search, links, and agent citations, so a page links each concept
   the project defines at first use to its owner; the [published prose
-  register](references/content-architecture.md#published-prose-register) owns
+  register](SKILL.md#published-prose-register) owns
   the rule.
 - **Keep unpublished records off the reader path.** A record the reader
   cannot open is not delivered context; the [published prose
-  register](references/content-architecture.md#published-prose-register) owns
+  register](SKILL.md#published-prose-register) owns
   the rule and its exceptions.
 - **Write published prose for a second-language reader.** Many technical
   readers read English as a second language, and a word that fits any
@@ -410,14 +410,15 @@ reader-path and document-role alignment after the cast survives; [symbol
 JSDoc](references/symbol-jsdoc.md) owns a public symbol's docblock and its
 route while [public contracts](references/public-contracts.md) owns
 reference-page and example detail, and [code
-comments](references/code-comments.md) owns code-local rationale; [review at
-wrap-up](references/review-documentation-at-wrap-up.md) owns routine completion;
-and [quality and maintenance](references/quality-maintenance.md) owns audits,
+comments](references/code-comments.md) owns admitted code-local rationale.
+The [main skill](SKILL.md) owns common prose, entry, budget, and completion
+rules; [quality and maintenance](references/quality-maintenance.md) owns audits,
 release evidence, and drift checks.
 
-This split keeps an established-document edit, and a handoff whose resume
-reader is explicit, on the compact runtime and wrap-up path. It exposes content
-architecture, locality, casting, specialist contract guidance, and
+Common entry, prose, budget, and completion rules stay in the runtime file:
+ordinary work needs them before acting, so a mandatory reference would add
+traversal without avoiding content. Conditional references expose deeper
+content architecture, unresolved locality, casting, specialist contracts, and
 comprehensive audit doctrine only when the choice they own becomes live.
 Public-contract work and code-comment work are separated for the same reason: a
 comment decision reaches its gate without the reference, and a reference task
