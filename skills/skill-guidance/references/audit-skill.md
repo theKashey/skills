@@ -42,7 +42,7 @@ unavailable.
 
 ## 3. Apply the laws
 
-Apply every [Agent Instruction Law](../LAWS.md) and the admission requirements
+Apply every [Agent Instruction Law](../SKILL.md#the-laws-of-agent-instruction) and the admission requirements
 in the parent `SKILL.md`. Cite the exact canonical Law identifier and title
 for each failure. Also check that:
 

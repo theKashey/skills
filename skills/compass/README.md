@@ -1,5 +1,12 @@
 # Compass
 
+Compass gives a coding agent working across system boundaries a persistent map
+of responsibilities and domain meaning. Ratified decisions stay on the path
+from a task to its implementation, so the agent can find the relevant boundaries
+without reconstructing them from repository layout.
+
+## Chart and representation
+
 The compass skill governs a semantic architecture chart under a chart root the
 host project declares: one or more human-ratified logical roots, a scoped L0–L4
 level stack, a per-root glossary, a tiered registry, viewports, and
@@ -131,17 +138,27 @@ carried, and not pointed into.
   signal that may open, evidence that must close — keeps the lead usable
   without letting it sentence.
 - **A glossary per root**, instead of vocabulary scattered through domain
-  prose. Terminology needs one canonical owner to be checkable at all, and
-  keeping every other form of a word — the code stems, the spoken
-  abbreviation, the place it lives — in one tool-written lexicon is what stops
-  source naming from quietly becoming the domain language. `DOMAIN.md` keeps
+  prose. Observed domain words, recurring phrases, and familiar words with
+  local meanings need definitions that domain experts recognize. This follows
+  [Fowler's Generated Glossary](https://martinfowler.com/bliki/GeneratedGlossary.html):
+  different contexts can need different meanings, and standardizing them into
+  one vocabulary would erase useful distinctions. `DOMAIN.md` keeps
   relationships, contexts, aggregates, events, and invariants; `GLOSSARY.md`
-  keeps meaning; `LEXICON.jsonl` keeps forms, and a row is admitted only when
-  identifier-split search could not have made the hop on its own. Consume
-  reads the glossary one term at a time through `compass_search.py --kind
-  glossary`, never as a level of the traversal: a glossary grows with every
-  term the system names, a task touches a handful, and the search already
-  returns a term's section with its contexts attached.
+  keeps meaning; `LEXICON.jsonl` keeps forms and locators. A tool or provider
+  used by a concept is not an alias for that concept. Token gaps and live stems
+  justify and check lookup mechanics; only usage evidence and expert review
+  establish same-concept meaning. Admission evidence stays in the task record.
+  A definition can matter without any alias row. Consume reads complete
+  relevant term sections through search, never the whole glossary as a zoom
+  level; batch queries reuse one parsed chart without making another owner.
+- **Contextual query rewriting preserves the question.** Domain terms and
+  source forms need different search candidates, while qualifiers such as a
+  failing operation remain part of the task. Rewriting discloses those
+  candidates, keeps different senses separate, and leaves their selection to
+  task evidence. An undifferentiated bag of synonyms would hide ambiguity and
+  could require unrelated alternatives to match together. Bulk lookup reduces
+  repeated loading while retaining each input's identity, miss, and ambiguity;
+  it never grants chart-write authority.
 - **`README.md` is every architectural directory's identity document**,
   instead of `SCOPE.md`/`CONTEXT.md`/`BLOCK.md`/`COMPONENT.md`. The layout was
   already directory-as-zoom; naming the landing file `README.md` completes it,
@@ -185,10 +202,12 @@ carried, and not pointed into.
   includes maintenance and remapping because all three mutate Compass-owned or
   Compass-installed state and require the same ownership and verification gates.
 - **A compact search-and-consult hook**, instead of a route catalog copied into
-  every host. The host entry instruction starts live chart search and preserves
-  the local-work exclusion; the Consume router reveals task-specific detail only
-  after the query identifies a path. This keeps semantic context on the path of
-  non-local work without loading every navigation pattern on every activation.
+  every host. The host entry instruction starts live chart search and lexicon
+  rewriting and preserves the local-work exclusion. The main skill holds the
+  routine Consume procedure and directly names its conditional investigation
+  paths. A consumer can execute the common procedure without retrieving
+  another instruction file; substantial Create and specialist detail remains
+  conditional.
 - **Diagrams are mandatory only on the zoom chain**, not on every file: L0 is
   domain prose by design, and a forced diagram there would restate the context
   map without adding structure.
@@ -261,7 +280,7 @@ it from its nearest non-example. It does not explain why a particular owner
 uses that design. Implementation guidance, mechanism-specific rationale,
 performance, test strategy, deployment topology, business requirements, and how
 the repository happens to be arranged are out of scope (§What the Chart Does
-NOT Answer in [the Consume guide](references/consume.md#what-the-chart-does-not-answer)). Reader-facing documentation — READMEs,
+NOT Answer in [the main skill](SKILL.md#what-the-chart-does-not-answer)). Reader-facing documentation — READMEs,
 references, tutorials — is a different craft with a different owner; compass
 claims only the chart. The boundary with Context Docs is a stated contract
 rather than a disclaimer: reasons that survive a rewrite may be Compass-owned,
@@ -276,18 +295,17 @@ agents then follow it is outside the skill's evaluation boundary.
 
 | File | Owns |
 | --- | --- |
-| [SKILL.md](SKILL.md) | Activation, the minimal shared interpretation contract, and the exclusive Create/Consume route decision |
+| [SKILL.md](SKILL.md) | Activation, shared interpretation, exclusive Create/Consume selection, and the complete routine read-only search, contextual rewrite, batch lookup, glossary, and zoom procedure with direct conditional routes |
 | [references/create.md](references/create.md) | Create and maintenance entry: rewrite and invariance tests, root admission, level tables, L1 guardrails, file layout, authoring boundaries, and conditional routes to production references |
-| [references/consume.md](references/consume.md) | Compact read-only search-and-consult contract and conditional router |
-| [references/consume-search.md](references/consume-search.md) | Conditional lookup options, result interpretation, and glossary use |
 | [references/consume-investigation.md](references/consume-investigation.md) | Conditional code-rationale, component, and cross-block investigation paths |
 | [references/consume-change.md](references/consume-change.md) | Conditional estimation, review, refactor, overreach, and architectural-pull paths |
 | [references/consume-named-abstractions.md](references/consume-named-abstractions.md) | Read-only interpretation of existing named-abstraction definitions and claims |
-| [scripts/compass_search.py](scripts/compass_search.py) | Live, read-only structured lookup over a host-declared chart root, with deterministic address, exact, heading, and literal tiers and optional BM25-related candidates |
-| [scripts/compass_lex.py](scripts/compass_lex.py) | The lexicon's only writer and reader: `resolve` a sentence in any language to concepts, stems, and scopes with the expansion disclosed; `reverse` a symbol, path, or address to what people call it; `add` gated batches; `check` for the host suite; `sort` and `list` |
-| [references/lexicon.md](references/lexicon.md) | The lexicon: why three languages need a database of forms, the row schema, the gap gate, admission as its own Create task, the installed check, and how Consume reads it |
-| [references/installation.md](references/installation.md) | Installing Compass in a host or verifying that installation: points to the usage hook and Phase B, and owns the review checks the host adopts |
-| [references/agent-hook.md](references/agent-hook.md) | Canonical four-line search-and-consult block copied into host agent instructions after human approval |
+| [scripts/compass_search.py](scripts/compass_search.py) | Live, read-only single and batch lookup over a host-declared chart root, with deterministic address, exact, heading, and literal tiers and optional BM25-related candidates |
+| [scripts/compass_lex.py](scripts/compass_lex.py) | Contextual `resolve`, `rewrite`, and `reverse` lookups, individually or in attributed batches; atomic `add`; `check` for the host suite; `sort` and `list` |
+| [scripts/compass_batch.py](scripts/compass_batch.py) | Ordered JSONL request parsing, input attribution, per-record status, and aggregate exit behavior shared by the read-only lookup commands |
+| [references/lexicon.md](references/lexicon.md) | Row schema, semantic and mechanical admission, and the installed check; forms remain separate from glossary meaning |
+| [references/installation.md](references/installation.md) | Host installation and verification: usage hook, single and batch query rewriting, checks, review routes, and vocabulary-review cadence |
+| [references/agent-hook.md](references/agent-hook.md) | Canonical search, contextual rewrite, and consultation block copied into host agent instructions after human approval |
 | [references/structural-signals.md](references/structural-signals.md) | Shared read-only warning signs for level contamination and overreach; both flows may consult it without importing the other's procedure |
 | [references/exploration.md](references/exploration.md) | The orient→scan→probe→adjust loop, triangulation and evidence sources, per-state procedures and exits, level calibration, scratchpad format |
 | [references/blocks-and-levels.md](references/blocks-and-levels.md) | Roots in practice, the contents of every chart document, the registry and glossary templates, Markdown conventions, promotion criteria with contrast examples; placement stays with `references/create.md` §File Layout |
@@ -297,9 +315,9 @@ agents then follow it is outside the skill's evaluation boundary.
 | [references/ownership-boundary.md](references/ownership-boundary.md) | The Compass/Context Docs ownership contract in both directions, and the coordinate-first investigation flow |
 | [references/verification.md](references/verification.md) | Every completion checklist that exists — root, L0, L1, L2, calibration, L3, coordinates, ownership, named abstractions, navigation, the blind semantic read; other files point there |
 
-Each fact has one canonical owner. `SKILL.md` carries only the facts needed to
-choose safely before either route loads: non-local applicability, declared chart
-root, code-versus-semantics authority, coordinate meaning, disagreement classes,
-and the no-mixing boundary. Create and Consume then leave one another's
-procedure unloaded. Completion checklists are deliberately not mirrored: a
-condensed checklist diverges, and the divergent copy is the one an agent finds.
+Each fact has one canonical owner. `SKILL.md` carries shared interpretation and
+routine consumption directly; Create-only production, admission, and
+installation remain conditional. Specialist Consume references carry only
+their task-specific procedures. Completion checklists are deliberately not
+mirrored: a condensed checklist diverges, and the divergent copy is the one an
+agent finds.

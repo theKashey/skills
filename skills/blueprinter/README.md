@@ -326,8 +326,11 @@ work installed alone.
   that receive only their inputs, and their findings return as corrections
   the agent takes, not as gates that wait for the developer. Without
   subagents the steps still run as separate passes, and the blueprint says
-  they were not isolated. The steps classify rather than write: each judged
-  item is yes, no, or misframed, with one line of evidence. A verdict can be
+  they were not isolated. Each worker brief sits beside its invocation in
+  `SKILL.md`; the producer sends only that brief and its listed inputs, so
+  direct execution does not expose workers to the producer's reasoning.
+  The steps classify rather than write: each judged item is yes, no, or
+  misframed, with one line of evidence. A verdict can be
   wrong, compared, and counted by a script; findings prose cannot. Misframed
   separates a false item from one whose question is wrong, which must be
   corrected in the layer above it, not patched at the block.

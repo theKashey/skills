@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Resolve, reverse, admit, and check the chart's lexicon: `{chart-root}/LEXICON.jsonl`.
+"""Resolve, rewrite, reverse, admit, and check vocabulary in `{chart-root}/LEXICON.jsonl`.
 
 The lexicon is a database, one JSON object per line, one row per concept. Each row
 carries the concept's forms in three languages that share no vocabulary by default —
@@ -11,17 +11,20 @@ the repository) — so a lookup can start in any language and end in the other t
 from __future__ import annotations
 
 import argparse
+import functools
+import itertools
 import json
+import math
 import re
 import sys
 from pathlib import Path
 from typing import Iterable, Sequence
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from compass_search import STOP_WORDS, TOKEN_RE, singular  # noqa: E402
+from compass_search import STOP_WORDS, TOKEN_RE, markdown_headings, singular  # noqa: E402
+from compass_batch import run_batch  # noqa: E402
 
-# The search splits `workItem`; the lexicon also splits `WIVService` into `wiv service`,
-# because an all-caps prefix is exactly the kind of form a row exists to carry.
+# Keep abbreviation prefixes separate from the next identifier word.
 CAMEL_BOUNDARY_RE = re.compile(r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])")
 
 
@@ -38,12 +41,11 @@ SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 # `root`, `root.block`, `root.block.component` — coordinate-system.md §Addresses.
 ADDRESS_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*(?:\.[a-z0-9]+(?:-[a-z0-9]+)*){0,2}$")
 LOCATORS = ("chart", "scope", "where")
-KNOWN_FIELDS = {"concept", "root", "speech", "code", "note", *LOCATORS}
+KNOWN_FIELDS = {"concept", "root", "context", "speech", "code", "note", *LOCATORS}
 NOTE_BUDGET = 25
 # Path segments too common to bridge anything: their overlap with a form is not evidence.
 PATH_NOISE = {"src", "app", "lib", "packages", "apps", "index", "main", "internal", "pkg"}
-# A word with two capitals or a camel hump: `WIV`, `PTSController`, `quickAction`. Nothing to
-# split it on says what it stands for; only a lexicon row can.
+# Capitalized abbreviations and compound identifiers can expose missing vocabulary.
 SHORTHAND_RE = re.compile(r"^(?:(?=(?:.*[A-Z]){2})[A-Za-z0-9]+|[a-z0-9]+[A-Z][A-Za-z0-9]*)$")
 MARKER_RE = re.compile(r"compass(?:-abstraction)?:")
 
@@ -61,8 +63,8 @@ def stems(text: str) -> tuple[str, ...]:
     return tuple(tokenize(text))
 
 
-def row_key(row: dict) -> tuple[str, str]:
-    return (row.get("root") or "", row["concept"])
+def row_key(row: dict) -> tuple[str, str, str]:
+    return (row.get("root") or "", row.get("context") or "", row["concept"])
 
 
 def locator_of(row: dict) -> str | None:
@@ -99,12 +101,8 @@ def code_tokens(row: dict) -> set[str]:
 def bridges_a_gap(row: dict) -> bool:
     """The admission gate: some single form cannot reach some other language lexically.
 
-    Identifier-split lexical search already carries `work item` to `WorkItemService`
-    and to `tracker.work-item`. A row earns its place only when at least one of its
-    forms shares no token with one of the other two languages — `WIV` against the
-    chart address, `action-dropdown` against every speech form — because that is the
-    hop nothing else makes. A row whose every form reaches every language restates
-    the baseline and is rejected, so the lexicon measures incremental recall.
+    Token separation identifies potential retrieval gain, never shared meaning.
+    Semantic admission is reviewed separately from this mechanical predicate.
     """
 
     if locator_of(row) == "where":
@@ -120,13 +118,13 @@ def bridges_a_gap(row: dict) -> bool:
 
 
 def collides_across_roots(row: dict, rows: Sequence[dict]) -> bool:
-    """A form that means something else in another root is admitted for that reason."""
+    """A shared form in distinct declared roots or contexts has disambiguation value."""
 
     if not row.get("root"):
         return False
     forms = {form.casefold() for form in row["speech"]}
     return any(
-        other.get("root") and other.get("root") != row["root"]
+        other.get("root") and (other.get("root"), other.get("context")) != (row.get("root"), row.get("context"))
         and forms & {form.casefold() for form in other["speech"]}
         for other in rows
     )
@@ -146,6 +144,12 @@ def validate_row(row: object, line_number: int | None = None) -> list[str]:
     root = row.get("root")
     if root is not None and (not isinstance(root, str) or not SLUG_RE.match(root)):
         fail.append(f"{where}{label}: root must be a lowercase-hyphen slug")
+    context = row.get("context")
+    if context is not None:
+        if not isinstance(context, str) or not SLUG_RE.match(context):
+            fail.append(f"{where}{label}: context must be a lowercase-hyphen slug")
+        if not root:
+            fail.append(f"{where}{label}: context requires its owning root")
     for field in ("speech", "code"):
         values = row.get(field)
         may_be_empty = field == "code" and "where" in row
@@ -159,7 +163,7 @@ def validate_row(row: object, line_number: int | None = None) -> list[str]:
                 if not SLUG_RE.match(stem):
                     fail.append(
                         f"{where}{label}: code stem '{stem}' is not lowercase-hyphen — "
-                        "write the split stem (`wiv`, `action-dropdown`), never the symbol"
+                        "write the split stem (`consignment`, `purchase-order`), never the symbol"
                     )
     kind = locator_of(row)
     if kind is None:
@@ -229,6 +233,7 @@ def address_document(chart_root: Path, address: str) -> Path:
     return chart_root.joinpath(*address.split(".")) / "README.md"
 
 
+@functools.lru_cache(maxsize=None)
 def coordinates_of(chart_root: Path, address: str) -> list[str]:
     """Repository paths the addressed document names under `## Implementation coordinates`."""
 
@@ -283,14 +288,13 @@ def source_identifier_tokens(repo_root: Path, scopes: Sequence[str]) -> set[tupl
         for file in files:
             text = file.read_text(encoding="utf-8", errors="ignore")
             for identifier in set(IDENTIFIER_RE.findall(text)):
-                seen.add(tuple(singular(t) for t in stems(identifier)))
+                seen.add(tuple(singular(t) for t, _, _ in token_spans(identifier)))
     _SCAN_CACHE[key] = seen
     return seen
 
 
 def stem_in_source(stem: str, identifiers: set[tuple[str, ...]]) -> bool:
-    needle = [singular(t) for t in stems(stem)]
-    return any(contiguous(needle, identifier) is not None for identifier in identifiers)
+    return any(matching_spans(stem, identifier, compact=True) for identifier in identifiers)
 
 
 def stale_stems(repo_root: Path, row: dict, scopes: Sequence[str]) -> list[str]:
@@ -306,37 +310,62 @@ def stale_stems(repo_root: Path, row: dict, scopes: Sequence[str]) -> list[str]:
 # --- resolve ------------------------------------------------------------------------
 
 
-def contiguous(needle: Sequence[str], haystack: Sequence[str]) -> int | None:
-    if not needle or len(needle) > len(haystack):
-        return None
-    for start in range(len(haystack) - len(needle) + 1):
-        if tuple(haystack[start : start + len(needle)]) == tuple(needle):
-            return start
-    return None
+def token_spans(text: str) -> list[tuple[str, int, int]]:
+    """Keep original offsets and stop words so rewrites cannot swallow qualifiers."""
+
+    result = []
+    for word in TOKEN_RE.finditer(text):
+        boundaries = [0, *(m.start() for m in CAMEL_BOUNDARY_RE.finditer(word.group())), len(word.group())]
+        for start, end in zip(boundaries, boundaries[1:]):
+            result.append((word.group()[start:end].casefold(), word.start() + start, word.start() + end))
+    return result
+
+
+def matching_spans(form: str, query_tokens: Sequence[str], compact: bool = False) -> list[tuple[int, int]]:
+    needle = [singular(t) for t, _, _ in token_spans(form)]
+    folded = [singular(t) for t in query_tokens]
+    found = []
+    for start in range(len(folded)):
+        if needle and folded[start:start + len(needle)] == needle:
+            found.append((start, len(needle)))
+        elif compact and needle:
+            # Only recorded code forms earn case/word-boundary normalization.
+            target = "".join(needle)
+            joined = ""
+            for end in range(start, len(folded)):
+                joined += folded[end]
+                if joined == target:
+                    found.append((start, end - start + 1))
+                    break
+                if len(joined) >= len(target):
+                    break
+    return found
 
 
 def form_matches(row: dict, query_tokens: Sequence[str]) -> list[tuple[str, str, int, int]]:
     """(language, form, start, length) for every speech form or code stem inside the query."""
 
     found: list[tuple[str, str, int, int]] = []
-    folded = [singular(token) for token in query_tokens]
     for language, forms in (("speech", row["speech"]), ("code", row["code"])):
         for form in forms:
-            needle = [singular(token) for token in stems(form)]
-            start = contiguous(needle, folded)
-            if start is not None:
-                found.append((language, form, start, len(needle)))
+            for start, length in matching_spans(form, query_tokens, compact=language == "code"):
+                found.append((language, form, start, length))
     return found
 
 
-def resolve(rows: Sequence[dict], chart_root: Path, sentence: str, root: str | None) -> tuple[list[dict], list[str], list[str]]:
+def selected_rows(rows: Sequence[dict], root: str | None, context: str | None) -> list[dict]:
+    return [row for row in rows
+            if (not root or row.get("root") in (None, root))
+            and (not context or row.get("context") in (None, context))]
+
+
+def resolve(rows: Sequence[dict], chart_root: Path, sentence: str, root: str | None,
+            context: str | None = None) -> tuple[list[dict], list[str], list[str]]:
     raw_tokens = [t for t in re.findall(r"[^\s,;:()\[\]{}\"']+", sentence)]
-    query_tokens = stems(sentence)
+    query_tokens = [t for t, _, _ in token_spans(sentence)]
     hits: list[dict] = []
     covered: set[int] = set()
-    for row in rows:
-        if root and row.get("root") not in (None, root):
-            continue
+    for row in selected_rows(rows, root, context):
         matches = form_matches(row, query_tokens)
         if not matches:
             continue
@@ -345,7 +374,7 @@ def resolve(rows: Sequence[dict], chart_root: Path, sentence: str, root: str | N
         hits.append({"row": row, "matches": matches, "scopes": row_scopes(chart_root, row)})
     unmatched = [
         token for index, token in enumerate(query_tokens)
-        if index not in covered and token not in STOP_WORDS
+        if index not in covered and token not in STOP_WORDS and len(token) > 1
     ]
     shorthand = [
         token for token in dict.fromkeys(raw_tokens)
@@ -354,15 +383,84 @@ def resolve(rows: Sequence[dict], chart_root: Path, sentence: str, root: str | N
     return hits, unmatched, shorthand
 
 
+MAX_REWRITES = 32
+
+
+def rewrite_queries(hits: Sequence[dict], sentence: str) -> tuple[list[dict], list[dict], int]:
+    """Separate contextual interpretations; substitute spans without editing other text."""
+
+    tokens = token_spans(sentence)
+    by_span: dict[tuple[int, int], dict[tuple[str, str, str], dict]] = {}
+    for hit in hits:
+        for _, _, start, length in hit["matches"]:
+            span = (tokens[start][1], tokens[start + length - 1][2])
+            by_span.setdefault(span, {})[row_key(hit["row"])] = hit
+    # An explicitly named longer phrase takes precedence over its fragments.
+    chosen: list[tuple[int, int]] = []
+    for span in sorted(by_span, key=lambda s: (-(s[1] - s[0]), s[0])):
+        if not any(span[0] < end and start < span[1] for start, end in chosen):
+            chosen.append(span)
+    chosen.sort()
+    if not chosen:
+        return [], [], 0
+
+    def substitute(replacements: Sequence[str]) -> str:
+        text = sentence
+        for (start, end), replacement in reversed(list(zip(chosen, replacements))):
+            text = text[:start] + replacement + text[end:]
+        return text
+
+    choices = [list(by_span[span].values()) for span in chosen]
+    collisions = [{"text": sentence[start:end], "senses": [identity(hit["row"]) for hit in by_span[(start, end)].values()]}
+                  for start, end in chosen if len(by_span[(start, end)]) > 1]
+    candidates = []
+    for selection in itertools.islice(itertools.product(*choices), MAX_REWRITES):
+        code_choices = [hit["row"]["code"] or [sentence[start:end]]
+                        for hit, (start, end) in zip(selection, chosen)]
+        code_queries = list(dict.fromkeys(substitute(values) for values in
+                                         itertools.islice(itertools.product(*code_choices), MAX_REWRITES)))
+        candidates.append({
+            "concepts": [identity(hit["row"]) for hit in selection],
+            "chart_query": substitute([hit["row"]["speech"][0] for hit in selection]),
+            "code_queries": code_queries,
+            "code_queries_omitted": max(0, math.prod(map(len, code_choices)) - MAX_REWRITES),
+            "scopes": list(dict.fromkeys(scope for hit in selection for scope in hit["scopes"])),
+            "external": list(dict.fromkeys(hit["row"]["where"] for hit in selection if "where" in hit["row"])),
+        })
+    return candidates, collisions, max(0, math.prod(map(len, choices)) - MAX_REWRITES)
+
+
+def identity(row: dict) -> dict:
+    return {key: row[key] for key in ("concept", "root", "context") if key in row}
+
+
+def query_result(rows: Sequence[dict], chart_root: Path, sentence: str,
+                 root: str | None = None, context: str | None = None) -> dict:
+    hits, unmatched, shorthand = resolve(rows, chart_root, sentence, root, context)
+    candidates, collisions, omitted = rewrite_queries(hits, sentence)
+    return {
+        "status": "ambiguous" if collisions else "hit" if hits else "miss",
+        "query": sentence, "strict": " ".join(stems(sentence)),
+        "matches": [{**identity(hit["row"]), "speech": hit["row"]["speech"], "code": hit["row"]["code"],
+                     locator_of(hit["row"]): hit["row"][locator_of(hit["row"])],
+                     "scopes": hit["scopes"],
+                     "matched": [{"language": lang, "form": form, "start_token": start, "length": length}
+                                 for lang, form, start, length in hit["matches"]]} for hit in hits],
+        "unmatched": list(dict.fromkeys(unmatched)), "shorthand": shorthand,
+        "collisions": collisions, "candidates": candidates, "candidates_omitted": omitted,
+    }
+
+
 def render_resolve(hits: Sequence[dict], unmatched: Sequence[str], shorthand: Sequence[str], sentence: str) -> str:
-    out = [f"strict: {' '.join(stems(sentence))}"]
+    out = [f"original: {sentence}", f"strict: {' '.join(stems(sentence))}"]
     if hits:
         out.append("matched:")
     for hit in hits:
         row = hit["row"]
-        by = ", ".join(f"{form} [{language}]" for language, form, _, _ in hit["matches"])
+        by = ", ".join(dict.fromkeys(f"{form} [{language}]" for language, form, _, _ in hit["matches"]))
         root = f" root={row['root']}" if row.get("root") else ""
-        out.append(f"  {by} → {row['concept']}{root}")
+        context = f" context={row['context']}" if row.get("context") else ""
+        out.append(f"  {by} → {row['concept']}{root}{context}")
         out.append(f"    speech: {', '.join(row['speech'])}")
         out.append(f"    code: {', '.join(row['code'])}")
         kind = locator_of(row)
@@ -379,40 +477,41 @@ def render_resolve(hits: Sequence[dict], unmatched: Sequence[str], shorthand: Se
             )
         if row.get("note"):
             out.append(f"    note: {row['note']}")
-    roots_by_form: dict[str, set[str]] = {}
-    for hit in hits:
-        for _, form, _, _ in hit["matches"]:
-            roots_by_form.setdefault(form.casefold(), set()).add(hit["row"].get("root") or "")
-    collisions = sorted(form for form, roots in roots_by_form.items() if len(roots) > 1)
+    candidates, collisions, omitted = rewrite_queries(hits, sentence)
     if collisions:
-        out.append("collision: " + ", ".join(collisions) + " — one form, several roots; pass --root to pick one")
+        out.append("collision: " + ", ".join(c["text"] for c in collisions)
+                   + " — several meanings; consult the glossary or pass --root and --context")
     if unmatched:
         out.append("unmatched: " + " ".join(dict.fromkeys(unmatched)) + "  (no lexicon row; not expanded)")
     if shorthand:
         out.append("looks like shorthand with no row: " + ", ".join(shorthand) + " — ask, or capture for admission")
-    if hits:
-        expansion = list(dict.fromkeys(
-            stem for hit in hits for stem in (hit["row"]["code"] + [f.casefold() for f in hit["row"]["speech"]])
-        ))
-        scopes = list(dict.fromkeys(scope for hit in hits for scope in hit["scopes"]))
-        out.append("expanded: " + " ".join(expansion) + "  (disclosed; strict tokens above came first)")
-        if scopes:
-            out.append("search in: " + " ".join(scopes))
+    for index, candidate in enumerate(candidates, 1):
+        out.append(f"alternative {index}: " + ", ".join("/".join(identity.values()) for identity in candidate["concepts"]))
+        out.append("  chart query: " + candidate["chart_query"])
+        out.extend("  code query: " + query for query in candidate["code_queries"])
+        if candidate["scopes"]:
+            out.append("  search in: " + " ".join(candidate["scopes"]))
+        if candidate["code_queries_omitted"]:
+            out.append(f"  {candidate['code_queries_omitted']} code query alternatives omitted; narrow the query")
+    if omitted:
+        out.append(f"{omitted} interpretations omitted; narrow with --root/--context or a shorter query")
     return "\n".join(out)
 
 
 # --- reverse ------------------------------------------------------------------------
 
 
-def reverse(rows: Sequence[dict], chart_root: Path, target: str, as_kind: str) -> list[tuple[dict, str]]:
+def reverse(rows: Sequence[dict], chart_root: Path, target: str, as_kind: str,
+            root: str | None = None, context: str | None = None) -> list[tuple[dict, str]]:
     found: list[tuple[dict, str]] = []
+    rows = selected_rows(rows, root, context)
     if as_kind == "auto":
         as_kind = "path" if "/" in target else "chart" if "." in target and ADDRESS_RE.match(target) else "code"
     if as_kind == "code":
-        tokens = [singular(t) for t in stems(target)]
+        tokens = [t for t, _, _ in token_spans(target)]
         for row in rows:
             for stem in row["code"]:
-                if contiguous([singular(t) for t in stems(stem)], tokens) is not None:
+                if matching_spans(stem, tokens, compact=True):
                     found.append((row, f"code stem {stem}"))
                     break
     elif as_kind == "chart":
@@ -434,7 +533,8 @@ def render_reverse(found: Sequence[tuple[dict, str]]) -> str:
     out = []
     for row, via in found:
         root = f" root={row['root']}" if row.get("root") else ""
-        out.append(f"{row['concept']}{root}  (via {via})")
+        context = f" context={row['context']}" if row.get("context") else ""
+        out.append(f"{row['concept']}{root}{context}  (via {via})")
         out.append(f"  say: {', '.join(row['speech'])}")
         out.append(f"  code: {', '.join(row['code'])}")
         kind = locator_of(row)
@@ -466,19 +566,28 @@ def row_failures(rows: Sequence[dict], chart_root: Path, repo_root: Path) -> lis
     fail: list[str] = []
     keys = [row_key(r) for r in rows]
     for key in sorted({k for k in keys if keys.count(k) > 1}):
-        fail.append(f"duplicate concept {key[1]!r}" + (f" in root {key[0]}" if key[0] else ""))
-    forms: dict[tuple[str, str, str], str] = {}
+        fail.append(f"duplicate concept {key[2]!r} in root/context {key[:2]}")
+    forms: dict[tuple[str, str, str, str], str] = {}
     for row in rows:
         for language, values in (("speech", row["speech"]), ("code", row["code"])):
             for value in values:
-                key = (row.get("root") or "", language, " ".join(stems(value)))
+                tokens = [singular(token) for token, _, _ in token_spans(value)]
+                form_key = "".join(tokens) if language == "code" else " ".join(tokens)
+                key = (row.get("root") or "", row.get("context") or "", language, form_key)
                 if key in forms and forms[key] != row["concept"]:
                     fail.append(
                         f"{language} form {value!r} belongs to both {forms[key]!r} and {row['concept']!r}"
-                        + (f" in root {key[0]}" if key[0] else "") + " — give each row a root, or merge them"
+                        + f" in root/context {key[:2]} — distinguish their actual bounded contexts or correct the forms"
                     )
                 forms.setdefault(key, row["concept"])
     for row in rows:
+        if row.get("context"):
+            domain = chart_root / row["root"] / "DOMAIN.md"
+            body = domain.read_text(encoding="utf-8") if domain.is_file() else ""
+            headings = [title for _, level, title in markdown_headings(body.splitlines()) if level == 2]
+            anchors = {re.sub(r"[^\w-]", "", heading.casefold().replace(" ", "-")) for heading in headings}
+            if row["context"] not in anchors:
+                fail.append(f"{row['concept']}: context {row['context']!r} is not a bounded-context heading in {row['root']}/DOMAIN.md")
         kind = locator_of(row)
         if kind == "chart":
             if not address_document(chart_root, row["chart"]).is_file():
@@ -502,12 +611,11 @@ def row_failures(rows: Sequence[dict], chart_root: Path, repo_root: Path) -> lis
     return fail
 
 
-def check(chart_root: Path, repo_root: Path) -> tuple[list[str], dict[str, int]]:
-    path = chart_root / LEXICON_NAME
-    rows, fail = load_rows(path)
+def check_rows(rows: Sequence[dict], chart_root: Path, repo_root: Path) -> tuple[list[str], dict[str, int]]:
+    fail: list[str] = []
     seen = {"rows": len(rows), "chart": 0, "scope": 0, "where": 0, "glossary_links": 0}
     if rows and [row_key(r) for r in rows] != sorted(row_key(r) for r in rows):
-        fail.append(f"{LEXICON_NAME}: rows are not in the tool's order (root, concept) — run `sort`")
+        fail.append(f"{LEXICON_NAME}: rows are not in the tool's order (root, context, concept) — run `sort`")
     fail.extend(f"{LEXICON_NAME}: {problem}" for problem in row_failures(rows, chart_root, repo_root))
     for row in rows:
         seen[locator_of(row)] += 1
@@ -518,11 +626,12 @@ def check(chart_root: Path, repo_root: Path) -> tuple[list[str], dict[str, int]]
         if not linked:
             fail.append(f"{glossary.relative_to(chart_root)}: {term}: ### Lexicon names {slug!r}, no such row")
             continue
-        if " ".join(stems(term)) != " ".join(stems(linked[0]["speech"][0])):
-            fail.append(
-                f"{glossary.relative_to(chart_root)}: {term}: the glossary term is not row {slug}'s first speech "
-                f"form ({linked[0]['speech'][0]!r}) — the product term is canonical and comes first"
-            )
+        for row in linked:
+            if " ".join(stems(term)) != " ".join(stems(row["speech"][0])):
+                fail.append(
+                    f"{glossary.relative_to(chart_root)}: {term}: the glossary term is not row {slug}'s first speech "
+                    f"form ({row['speech'][0]!r}) — the product term is canonical and comes first"
+                )
     for glossary in sorted(chart_root.glob("*/GLOSSARY.md")):
         if re.search(r"^### Implementation aliases", glossary.read_text(encoding="utf-8", errors="ignore"), re.M):
             fail.append(
@@ -530,6 +639,12 @@ def check(chart_root: Path, repo_root: Path) -> tuple[list[str], dict[str, int]]
                 "admit the alias as a row and replace the section with ### Lexicon"
             )
     return fail, seen
+
+
+def check(chart_root: Path, repo_root: Path) -> tuple[list[str], dict[str, int]]:
+    rows, errors = load_rows(chart_root / LEXICON_NAME)
+    fail, seen = check_rows(rows, chart_root, repo_root)
+    return errors + fail, seen
 
 
 # --- add ----------------------------------------------------------------------------
@@ -544,8 +659,8 @@ def add(chart_root: Path, repo_root: Path, new_rows: Sequence[dict], dry_run: bo
         fail.extend(validate_row(row))
     if fail:
         return fail, []
-    merged = list(existing) + list(new_rows)
-    fail = row_failures(merged, chart_root, repo_root)
+    merged = sorted([*existing, *new_rows], key=row_key)
+    fail, _ = check_rows(merged, chart_root, repo_root)
     if fail:
         return fail, []
     if not dry_run:
@@ -556,15 +671,13 @@ def add(chart_root: Path, repo_root: Path, new_rows: Sequence[dict], dry_run: bo
 # --- list ---------------------------------------------------------------------------
 
 
-def render_list(rows: Sequence[dict], root: str | None) -> str:
-    out = ["| root | concept | speech | code | locator |", "| --- | --- | --- | --- | --- |"]
-    for row in sorted(rows, key=row_key):
-        if root and row.get("root") not in (None, root):
-            continue
+def render_list(rows: Sequence[dict], root: str | None, context: str | None = None) -> str:
+    out = ["| root | context | concept | speech | code | locator |", "| --- | --- | --- | --- | --- | --- |"]
+    for row in sorted(selected_rows(rows, root, context), key=row_key):
         kind = locator_of(row)
         locator = f"{kind}: " + (", ".join(row["scope"]) if kind == "scope" else row[kind])
         out.append(
-            f"| {row.get('root') or ''} | {row['concept']} | {', '.join(row['speech'])} | "
+            f"| {row.get('root') or ''} | {row.get('context') or ''} | {row['concept']} | {', '.join(row['speech'])} | "
             f"{', '.join(row['code'])} | {locator} |"
         )
     return "\n".join(out)
@@ -596,13 +709,21 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--repo-root", type=Path, default=Path("."), help="repository root that scope paths are relative to (default: cwd)")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p = sub.add_parser("resolve", help="sentence in any language → concepts, expansions, scopes, honest misses")
-    p.add_argument("--root", help="answer for one root only; collisions are otherwise all listed")
-    p.add_argument("sentence", nargs="+")
-
-    p = sub.add_parser("reverse", help="code symbol, repository path, or chart address → concept and speech forms")
-    p.add_argument("--as", dest="as_kind", choices=("auto", "code", "path", "chart"), default="auto")
-    p.add_argument("target")
+    for command in ("resolve", "rewrite", "reverse"):
+        p = sub.add_parser(command, help={
+            "resolve": "recorded forms → contextual concepts, query alternatives, scopes, honest misses",
+            "rewrite": "preserve query qualifiers while proposing separate chart/source alternatives",
+            "reverse": "code symbol, path, or chart address → concepts and speech forms",
+        }[command])
+        p.add_argument("--root", help="select a known logical root")
+        p.add_argument("--context", help="select a known bounded-context anchor")
+        p.add_argument("--json", action="store_true", help="structured single result (bulk is always JSONL)")
+        p.add_argument("--stdin", action="store_true", help="read JSONL requests, keeping one result per input")
+        if command == "reverse":
+            p.add_argument("--as", dest="as_kind", choices=("auto", "code", "path", "chart"), default="auto")
+            p.add_argument("target", nargs="?")
+        else:
+            p.add_argument("sentence", nargs="*")
 
     p = sub.add_parser("add", help="admit rows: validate, run the gap gate, insert in tool order")
     p.add_argument("--row", action="append", help="one JSON row; repeatable")
@@ -610,11 +731,26 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     p.add_argument("--dry-run", action="store_true")
 
     sub.add_parser("check", help="every invariant a script can decide; install this in the host's test suite")
-    sub.add_parser("sort", help="rewrite a hand-edited lexicon in the tool's order (root, concept)")
+    sub.add_parser("sort", help="rewrite rows in (root, context, concept) order")
 
     p = sub.add_parser("list", help="render the lexicon as a table")
     p.add_argument("--root")
+    p.add_argument("--context")
     return parser.parse_args(argv)
+
+
+def lookup_result(args: argparse.Namespace, rows: Sequence[dict], chart_root: Path, record: dict) -> dict:
+    root = record.get("root", args.root)
+    context = record.get("context", args.context)
+    for name, value in (("root", root), ("context", context)):
+        if value is not None and (not isinstance(value, str) or not SLUG_RE.fullmatch(value)):
+            raise ValueError(f"{name} must be a lowercase-hyphen slug")
+    if args.command != "reverse":
+        return query_result(rows, chart_root, record["query"], root, context)
+    found = reverse(rows, chart_root, record["target"], args.as_kind, root, context)
+    return {"status": "ambiguous" if len(found) > 1 else "hit" if found else "miss",
+            "target": record["target"],
+            "matches": [{**row, "via": via, "scopes": row_scopes(chart_root, row)} for row, via in found]}
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -662,22 +798,41 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"error: {LEXICON_NAME} is not clean; run check", file=sys.stderr)
         print("\n".join(fail), file=sys.stderr)
         return 2
+    if args.command == "list":
+        print(render_list(rows, args.root, args.context))
+        return 0 if rows else 1
+    field = "target" if args.command == "reverse" else "query"
+    value = args.target if field == "target" else " ".join(args.sentence)
+    if args.stdin:
+        if value:
+            print("error: pass a positional input or --stdin, not both", file=sys.stderr)
+            return 2
+        return run_batch(sys.stdin, {field, "root", "context"}, field,
+                         lambda record: lookup_result(args, rows, chart_root, record))
+    if not value or not value.strip():
+        print(f"error: pass a non-empty {field} or --stdin", file=sys.stderr)
+        return 2
+    try:
+        result = lookup_result(args, rows, chart_root, {field: value})
+    except ValueError as error:
+        print(f"error: {error}", file=sys.stderr)
+        return 2
+    if args.json:
+        print(json.dumps(result, ensure_ascii=False))
+        return 1 if result["status"] == "miss" else 0
     if not rows:
         print(f"No lexicon at {lexicon.relative_to(chart_root.parent) if lexicon.is_relative_to(chart_root.parent) else lexicon}: nothing to translate; the strict query stands.", file=sys.stderr)
         return 1
 
-    if args.command == "list":
-        print(render_list(rows, args.root))
-        return 0
     if args.command == "reverse":
-        found = reverse(rows, chart_root, args.target, args.as_kind)
+        found = reverse(rows, chart_root, args.target, args.as_kind, args.root, args.context)
         if not found:
             print(f"No lexicon row names {args.target}", file=sys.stderr)
             return 1
         print(render_reverse(found))
         return 0
-    sentence = " ".join(args.sentence)
-    hits, unmatched, shorthand = resolve(rows, chart_root, sentence, args.root)
+    sentence = value
+    hits, unmatched, shorthand = resolve(rows, chart_root, sentence, args.root, args.context)
     print(render_resolve(hits, unmatched, shorthand, sentence))
     return 0 if hits else 1
 

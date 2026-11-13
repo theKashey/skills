@@ -32,8 +32,8 @@ page that owns the rest. Omit type narration, implementation history, and a
 reference page restated here instead of linked; extractability alone does not
 justify low-value prose. A docblock carries at most 10 content lines by
 default, public or not; machine-read tags and the `@see` line itself are not
-content. For overflow, follow the [locality ladder's overflow
-policy](locality-ladder.md#move-overflow-to-its-owner), which permits a docblock
+content. For overflow, follow the [main skill's overflow
+policy](../SKILL.md#comment-budgets-and-overflow), which permits a docblock
 that is itself a format contract to stay when its reason is recorded.
 When the signature and the existing docblock
 already expose every fact safely, change nothing. When no page owns what the
@@ -80,5 +80,5 @@ emitted declarations rather than the working tree, and keep it inside the unit
 that ships together: a relative link crossing a published package boundary
 resolves in the repository and breaks for an installed consumer. For a change
 that touched only symbol docblocks, this check is the wrap-up review; load
-[Review documentation at wrap-up](review-documentation-at-wrap-up.md) only when
+[Review documentation at wrap-up](../SKILL.md#review-documentation-at-wrap-up) only when
 a page or example changed as well.

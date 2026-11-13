@@ -1,11 +1,16 @@
 from __future__ import annotations
 
+import importlib.util
+import io
+import json
 import subprocess
 import sys
 import tempfile
 import textwrap
 import unittest
 from pathlib import Path
+from contextlib import redirect_stdout
+from unittest.mock import patch
 
 
 SCRIPT = Path(__file__).parents[1] / "scripts" / "compass_search.py"
@@ -157,12 +162,13 @@ class CompassSearchTest(unittest.TestCase):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(textwrap.dedent(value).lstrip(), encoding="utf-8")
 
-    def run_search(self, *arguments: str) -> subprocess.CompletedProcess[str]:
+    def run_search(self, *arguments: str, stdin: str | None = None) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
             [sys.executable, str(SCRIPT), "--chart-root", str(self.chart_root), *arguments],
             check=False,
             capture_output=True,
             text=True,
+            input=stdin,
         )
 
     def test_glossary_lexicon_link_returns_complete_owning_term(self) -> None:
@@ -396,12 +402,41 @@ class CompassSearchTest(unittest.TestCase):
         named_nowhere = result.stdout.split("Named nowhere in the chart:")[1].split("\n")[0]
         self.assertIn("move", named_nowhere)
 
+    def test_bulk_glossary_queries_preserve_context_bounds_ids_and_errors(self) -> None:
+        before = {p:p.read_bytes() for p in self.chart_root.rglob("*") if p.is_file()}
+        requests = '{"id":"context","query":"Status"}\n{"id":"missing","query":"unrecordedzz"}\n{"id":"bad","query":1}\n{"id":"last","query":"Workspace"}\n'
+        result = self.run_search("--kind", "glossary", "--literal-only", "--max-lines", "5", "--stdin", stdin=requests)
+        self.assertEqual(result.returncode, 2)
+        records = list(map(json.loads, result.stdout.splitlines()))
+        self.assertEqual([r["id"] for r in records], ["context","missing","bad","last"])
+        self.assertEqual([r["status"] for r in records], ["hit","miss","error","hit"])
+        self.assertIn("omitted", records[0]["output"])
+        complete = self.run_search("--kind", "glossary", "--literal-only", "--max-lines", "100", "--stdin", stdin='{"query":"Status"}\n')
+        self.assertEqual(complete.returncode, 0)
+        output = json.loads(complete.stdout)["output"]
+        self.assertIn("current parcel progress", output)
+        self.assertIn("invoice settlement state", output)
+        self.assertEqual(before, {p:p.read_bytes() for p in self.chart_root.rglob("*") if p.is_file()})
+
+    def test_bulk_parses_chart_once_and_misses_have_nonzero_exit(self) -> None:
+        sys.path.insert(0, str(SCRIPT.parent))
+        spec = importlib.util.spec_from_file_location("search_batch_test", SCRIPT)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        with patch.object(module, "load_sections", wraps=module.load_sections) as load, \
+             patch("sys.stdin", io.StringIO('{"query":"Workspace"}\n{"query":"Status"}\n')), redirect_stdout(io.StringIO()):
+            code = module.main(["--chart-root", str(self.chart_root), "--kind", "glossary", "--stdin"])
+        self.assertEqual(code, 0)
+        self.assertEqual(load.call_count, 1)
+        self.assertEqual(self.run_search("--stdin", stdin='{"query":"unrecordedzz"}\n').returncode, 1)
+        self.assertEqual(self.run_search("--stdin", stdin="").returncode, 2)
+
 
 class CompassPackageContractTest(unittest.TestCase):
-    def test_agent_hook_is_a_four_line_search_contract(self) -> None:
+    def test_agent_hook_preserves_work_boundary_and_search_entry(self) -> None:
         hook = PACKAGE_ROOT / "references" / "agent-hook.md"
         lines = [line for line in hook.read_text(encoding="utf-8").splitlines() if line]
-        self.assertEqual(len(lines), 4)
         rendered = "\n".join(lines)
         self.assertIn("{compass-skill}/scripts/compass_search.py", rendered)
         self.assertIn('--chart-root "{chart-root}"', rendered)

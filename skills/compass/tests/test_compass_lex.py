@@ -1,48 +1,46 @@
 from __future__ import annotations
 
+import importlib.util
+import io
 import json
 import subprocess
 import sys
 import tempfile
 import textwrap
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 
 SCRIPT = Path(__file__).parents[1] / "scripts" / "compass_lex.py"
-
-WORK_ITEM_VIEW = {
-    "concept": "work-item-view",
-    "speech": ["Work Item", "WIV", "work item view"],
-    "code": ["wiv", "work-item"],
-    "chart": "tracker.work-item-view",
+SHIPMENT = {
+    "concept": "shipment", "speech": ["Shipment", "SHP"],
+    "code": ["consignment", "shp"], "chart": "logistics.dispatch",
 }
-QUICK_ACTION = {
-    "concept": "quick-action",
-    "speech": ["QuickAction", "quick action"],
-    "code": ["action-dropdown"],
-    "scope": ["src/work-item/menu/"],
-    "note": "a controller composing activities",
+RESERVATION = {
+    "concept": "reservation", "speech": ["Reservation"], "code": ["booking"],
+    "scope": ["src/bookings/"], "note": "delivery scheduling only",
 }
-GATEWAY = {
-    "concept": "atlassian-graphql-gateway",
-    "speech": ["AGG", "Atlassian GraphQL Gateway"],
-    "code": ["agg", "relay"],
-    "where": "relay schema at https://example.test/schema; federation in repo-xyz",
+FORECAST = {
+    "concept": "forecast", "speech": ["Weather Forecast"], "code": [],
+    "where": "weather provider API in a separate repository",
 }
-SENSE_VARIANCE = {
-    "concept": "sense",
-    "root": "variance-authority",
-    "speech": ["sense"],
-    "code": ["sense"],
-    "chart": "variance-authority.sense",
+SHOP_ACCOUNT = {
+    "concept": "account", "root": "shop", "speech": ["Account"],
+    "code": ["account"], "chart": "shop.account",
 }
-SENSE_SHADOW = {
-    "concept": "sense",
-    "root": "shadow",
-    "speech": ["sense"],
-    "code": ["shadow-sense"],
-    "chart": "shadow.shadow-sense",
+COMMUNITY_ACCOUNT = {
+    "concept": "account", "root": "community", "speech": ["Account"],
+    "code": ["member-account"], "chart": "community.member-account",
+}
+BILLING_ACCOUNT = {
+    "concept": "billing-account", "root": "logistics", "context": "billing",
+    "speech": ["Account"], "code": ["ledger-account"], "chart": "logistics.billing",
+}
+IDENTITY_ACCOUNT = {
+    "concept": "login-account", "root": "logistics", "context": "identity",
+    "speech": ["Account"], "code": ["login-account"], "chart": "logistics.identity",
 }
 
 
@@ -51,41 +49,31 @@ class CompassLexTest(unittest.TestCase):
         self.temporary_directory = tempfile.TemporaryDirectory(prefix="compass lexicon ")
         self.repo_root = Path(self.temporary_directory.name)
         self.chart_root = self.repo_root / ".compass"
-        self.write(
-            ".compass/tracker/work-item-view/README.md",
-            """
-            # Work Item View
+        self.write(".compass/logistics/dispatch/README.md", """
+            # Dispatch
 
             ## Implementation coordinates
 
-            `src/wiv/WIVService.ts` covers `src/wiv/`
+            `src/dispatch/SHPService.ts` covers `src/dispatch/`
 
-            `src/work-item/`
-            """,
-        )
-        self.write(
-            ".compass/tracker/GLOSSARY.md",
-            """
-            # Glossary — tracker
+            `src/consignments/`
+            """)
+        self.write(".compass/logistics/GLOSSARY.md", """
+            # Glossary — logistics
 
-            ## **Work Item**
+            ## **Shipment**
 
             ### Meaning
 
-            A unit of tracked work.
-
-            ### Lexicon
-
-            `work-item-view`
-            """,
-        )
-        self.write(".compass/variance-authority/sense/README.md", "# Sense\n")
-        self.write(".compass/shadow/shadow-sense/README.md", "# Shadow sense\n")
-        self.write("src/wiv/WIVService.ts", "export class WIVService {}\nconst workItem = 1;\n")
-        self.write("src/work-item/menu/ActionDropdown.tsx", "export const ActionDropdown = () => null;\n")
-        self.write("src/work-item/index.ts", "import { relay } from 'agg';\nconst aggClient = 1;\n")
-        self.write("src/sense/senseModel.ts", "export const sense = 1;\n")
-        self.write("src/shadow/ShadowSense.ts", "export class ShadowSense {}\n")
+            Goods sent together to a destination.
+            """)
+        self.write(".compass/logistics/DOMAIN.md", "# Logistics\n\n## Billing\n\n## Identity\n")
+        for address in ("shop/account", "community/member-account", "logistics/billing", "logistics/identity"):
+            self.write(f".compass/{address}/README.md", "# Account\n")
+        self.write("src/dispatch/SHPService.ts", "export class SHPService {}\nconst consignment = 1;\n")
+        self.write("src/consignments/index.ts", "const consignment = 1;\n")
+        self.write("src/bookings/Booking.ts", "export class Booking {}\n")
+        self.write("src/accounts.ts", "const account = 1; const memberAccount = 2;\nconst ledgerAccount = 3; const loginAccount = 4;\n")
 
     def tearDown(self) -> None:
         self.temporary_directory.cleanup()
@@ -97,276 +85,305 @@ class CompassLexTest(unittest.TestCase):
 
     def run_lex(self, *arguments: str, stdin: str | None = None) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
-            [
-                sys.executable,
-                str(SCRIPT),
-                "--chart-root",
-                str(self.chart_root),
-                "--repo-root",
-                str(self.repo_root),
-                *arguments,
-            ],
-            check=False,
-            capture_output=True,
-            text=True,
-            input=stdin,
+            [sys.executable, str(SCRIPT), "--chart-root", str(self.chart_root),
+             "--repo-root", str(self.repo_root), *arguments],
+            check=False, capture_output=True, text=True, input=stdin,
         )
 
-    def admit(self, *rows: dict) -> subprocess.CompletedProcess[str]:
-        return self.run_lex("add", "--stdin", stdin="\n".join(json.dumps(r) for r in rows) + "\n")
+    def admit(self, *rows: dict, dry_run: bool = False) -> subprocess.CompletedProcess[str]:
+        return self.run_lex("add", "--stdin", *(["--dry-run"] if dry_run else []),
+                            stdin="\n".join(json.dumps(r) for r in rows) + "\n")
 
-    def lexicon(self) -> str:
-        return (self.chart_root / "LEXICON.jsonl").read_text(encoding="utf-8")
+    def lexicon(self) -> Path:
+        return self.chart_root / "LEXICON.jsonl"
 
-    # --- admission -------------------------------------------------------------------
+    def link_shipment(self) -> None:
+        glossary = self.chart_root / "logistics/GLOSSARY.md"
+        glossary.write_text(glossary.read_text() + "\n### Lexicon\n\n`shipment`\n")
 
-    def test_add_admits_a_batch_and_writes_it_in_tool_order(self) -> None:
-        result = self.admit(WORK_ITEM_VIEW, QUICK_ACTION, GATEWAY, SENSE_VARIANCE, SENSE_SHADOW)
+    def result(self, *arguments: str) -> dict:
+        result = self.run_lex(*arguments, "--json")
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("admitted 5 row(s)", result.stdout)
-        concepts = [json.loads(line)["concept"] for line in self.lexicon().splitlines()]
-        self.assertEqual(
-            concepts, ["atlassian-graphql-gateway", "quick-action", "work-item-view", "sense", "sense"]
-        )
+        return json.loads(result.stdout)
+
+    def test_add_admits_atomic_batch_in_order_and_passes_full_check(self) -> None:
+        self.link_shipment()
+        result = self.admit(SHIPMENT, RESERVATION, FORECAST, SHOP_ACCOUNT, COMMUNITY_ACCOUNT)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        rows = [json.loads(line) for line in self.lexicon().read_text().splitlines()]
+        self.assertEqual([r["concept"] for r in rows], ["forecast", "reservation", "shipment", "account", "account"])
         self.assertEqual(self.run_lex("check").returncode, 0)
 
-    def test_add_rejects_a_row_lexical_search_already_bridges(self) -> None:
-        row = {"concept": "work-item", "speech": ["work item"], "code": ["work-item"], "chart": "tracker.work-item-view"}
-        result = self.admit(row)
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("share vocabulary", result.stderr)
-        self.assertFalse((self.chart_root / "LEXICON.jsonl").exists())
-
-    def test_add_admits_a_shared_form_only_when_another_root_claims_it(self) -> None:
-        alone = self.admit(SENSE_VARIANCE)
-        self.assertEqual(alone.returncode, 1, alone.stdout)
+    def test_add_rejects_redundant_gap_and_accepts_root_collision(self) -> None:
+        alone = self.admit(SHOP_ACCOUNT)
+        self.assertEqual(alone.returncode, 1)
         self.assertIn("share vocabulary", alone.stderr)
-        both = self.admit(SENSE_VARIANCE, SENSE_SHADOW)
+        self.assertFalse(self.lexicon().exists())
+        both = self.admit(SHOP_ACCOUNT, COMMUNITY_ACCOUNT)
         self.assertEqual(both.returncode, 0, both.stderr)
 
-    def test_add_rejects_a_batch_as_one_unit(self) -> None:
-        bad = {"concept": "Bad Slug", "speech": ["x"], "code": ["x"], "chart": "tracker.work-item-view"}
-        result = self.admit(WORK_ITEM_VIEW, bad)
+    def test_add_rejects_invalid_batch_without_partial_write(self) -> None:
+        result = self.admit(SHIPMENT, dict(RESERVATION, concept="Bad Slug"))
         self.assertEqual(result.returncode, 1)
-        self.assertIn("concept must be a lowercase-hyphen slug", result.stderr)
-        self.assertFalse((self.chart_root / "LEXICON.jsonl").exists())
+        self.assertIn("lowercase-hyphen slug", result.stderr)
+        self.assertFalse(self.lexicon().exists())
 
-    def test_add_rejects_a_symbol_written_as_a_stem(self) -> None:
-        row = dict(WORK_ITEM_VIEW, code=["WIVService"])
-        result = self.admit(row)
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("never the symbol", result.stderr)
+    def test_add_rejects_symbols_unknown_fields_and_marker_literals(self) -> None:
+        for row, message in (
+            (dict(SHIPMENT, code=["ShipmentService"]), "never the symbol"),
+            (dict(SHIPMENT, provider="carrier"), "unknown field"),
+            (dict(SHIPMENT, note="see compass: logistics.dispatch"), "marker literal"),
+        ):
+            with self.subTest(message=message):
+                result = self.admit(row)
+                self.assertEqual(result.returncode, 1)
+                self.assertIn(message, result.stderr)
 
-    def test_add_rejects_a_dangling_chart_address_and_a_missing_scope(self) -> None:
-        dangling = dict(WORK_ITEM_VIEW, chart="tracker.nowhere")
-        result = self.admit(dangling)
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("resolves to no document", result.stderr)
-        missing = dict(QUICK_ACTION, scope=["src/nowhere/"])
-        result = self.admit(missing)
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("is not on disk", result.stderr)
+    def test_add_rejects_dangling_address_missing_scope_and_outside_root(self) -> None:
+        for row, message in (
+            (dict(SHIPMENT, chart="logistics.nowhere"), "resolves to no document"),
+            (dict(RESERVATION, scope=["src/nowhere/"]), "not on disk"),
+            (dict(SHIPMENT, root="shop"), "not under root"),
+        ):
+            with self.subTest(message=message):
+                result = self.admit(row)
+                self.assertEqual(result.returncode, 1)
+                self.assertIn(message, result.stderr)
 
-    def test_add_rejects_a_stem_no_identifier_carries(self) -> None:
-        row = dict(WORK_ITEM_VIEW, code=["wiv", "work-item", "legacy-panel"])
-        result = self.admit(row)
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("'legacy-panel' occurs in no identifier", result.stderr)
+    def test_stale_and_generated_only_stems_are_rejected(self) -> None:
+        self.write("dist/bundle.js", "const legacyParcel = 1;\n")
+        for stem in ("legacy-parcel", "vanished-name"):
+            result = self.admit(dict(SHIPMENT, code=["consignment", stem]))
+            self.assertEqual(result.returncode, 1)
+            self.assertIn(f"'{stem}' occurs in no identifier", result.stderr)
 
-    def test_add_rejects_a_marker_literal_inside_a_row(self) -> None:
-        row = dict(QUICK_ACTION, note="see compass: tracker.work-item-view")
-        result = self.admit(row)
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("marker literal", result.stderr)
-
-    def test_add_dry_run_writes_nothing(self) -> None:
-        result = self.run_lex("add", "--dry-run", "--row", json.dumps(WORK_ITEM_VIEW))
+    def test_dry_run_changes_nothing(self) -> None:
+        result = self.admit(SHIPMENT, dry_run=True)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("would admit 1 row(s)", result.stdout)
-        self.assertFalse((self.chart_root / "LEXICON.jsonl").exists())
+        self.assertIn("would admit", result.stdout)
+        self.assertFalse(self.lexicon().exists())
 
-    # --- check -----------------------------------------------------------------------
+    def test_add_checks_glossary_links_and_canonical_forms_before_writing(self) -> None:
+        self.link_shipment()
+        wrong = self.admit(dict(SHIPMENT, speech=["SHP", "Shipment"]))
+        self.assertEqual(wrong.returncode, 1)
+        self.assertIn("first speech form", wrong.stderr)
+        self.assertFalse(self.lexicon().exists())
+        missing = self.admit(RESERVATION)
+        self.assertEqual(missing.returncode, 1)
+        self.assertIn("no such row", missing.stderr)
+        self.assertFalse(self.lexicon().exists())
 
-    def test_check_fails_a_glossary_link_to_no_row(self) -> None:
-        self.admit(QUICK_ACTION, GATEWAY)
+    def test_check_detects_handwritten_bad_canonical_link_and_old_alias_section(self) -> None:
+        self.link_shipment()
+        self.lexicon().write_text(json.dumps(dict(SHIPMENT, speech=["SHP", "Shipment"])) + "\n")
         result = self.run_lex("check")
         self.assertEqual(result.returncode, 1)
-        self.assertIn("### Lexicon names 'work-item-view', no such row", result.stdout)
+        self.assertIn("first speech form", result.stdout)
+        self.write(".compass/logistics/GLOSSARY.md", "# Glossary\n\n## **Shipment**\n\n### Implementation aliases\n\n`SHPService`\n")
+        self.assertIn("carries ### Implementation aliases", self.run_lex("check").stdout)
+        before = self.lexicon().read_bytes()
+        self.assertEqual(self.admit(RESERVATION).returncode, 1)
+        self.assertEqual(self.lexicon().read_bytes(), before)
 
-    def test_check_fails_when_the_glossary_term_is_not_the_first_speech_form(self) -> None:
-        self.admit(dict(WORK_ITEM_VIEW, speech=["WIV", "Work Item", "work item view"]))
-        result = self.run_lex("check")
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("not row work-item-view's first speech form ('WIV')", result.stdout)
-
-    def test_where_row_needs_no_code_stem_and_is_never_stem_checked(self) -> None:
-        row = {"concept": "ledger", "speech": ["Ledger", "PL"], "code": [], "where": "ledger service repository"}
-        result = self.admit(WORK_ITEM_VIEW, row)
-        self.assertEqual(result.returncode, 0, result.stderr)
+    def test_external_pointer_needs_no_local_code_stem(self) -> None:
+        self.assertEqual(self.admit(FORECAST).returncode, 0)
         self.assertEqual(self.run_lex("check").returncode, 0)
-        resolved = self.run_lex("resolve", "PL is down")
-        self.assertEqual(resolved.stdout.count("ledger service repository"), 1)
+        result = self.result("resolve", "Weather Forecast timeout")
+        self.assertEqual(result["candidates"][0]["external"], [FORECAST["where"]])
+        self.assertEqual(result["candidates"][0]["scopes"], [])
 
-    def test_add_rejects_a_stem_found_only_in_a_build_tree(self) -> None:
-        self.write("dist/bundle.js", "var legacyPanel = 1;\n")
-        row = dict(WORK_ITEM_VIEW, code=["wiv", "legacy-panel"])
-        result = self.admit(row)
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("'legacy-panel' occurs in no identifier", result.stderr)
-
-    def test_resolve_never_flags_a_stop_word_as_shorthand(self) -> None:
-        self.admit(WORK_ITEM_VIEW)
-        result = self.run_lex("resolve", "WIV AND the ID")
-        self.assertIn("looks like shorthand with no row: ID", result.stdout)
-        self.assertNotIn("AND", result.stdout.split("looks like")[1])
-
-    def test_check_fails_a_glossary_that_still_carries_implementation_aliases(self) -> None:
-        self.write(
-            ".compass/tracker/GLOSSARY.md",
-            """
-            # Glossary — tracker
-
-            ## **Work Item**
-
-            ### Implementation aliases
-
-            `WIVService`
-            """,
-        )
-        result = self.run_lex("check")
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("carries ### Implementation aliases", result.stdout)
-
-    def test_check_fails_a_hand_edited_order_and_sort_repairs_it(self) -> None:
-        self.admit(WORK_ITEM_VIEW, QUICK_ACTION)
-        lines = self.lexicon().splitlines()
-        (self.chart_root / "LEXICON.jsonl").write_text("\n".join(reversed(lines)) + "\n", encoding="utf-8")
-        result = self.run_lex("check")
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("not in the tool's order", result.stdout)
+    def test_order_and_stale_stems_remain_checked(self) -> None:
+        self.admit(SHIPMENT, RESERVATION)
+        lines = self.lexicon().read_text().splitlines()
+        self.lexicon().write_text("\n".join(reversed(lines)) + "\n")
+        self.assertIn("not in the tool's order", self.run_lex("check").stdout)
         self.assertEqual(self.run_lex("sort").returncode, 0)
         self.assertEqual(self.run_lex("check").returncode, 0)
+        self.write("src/dispatch/SHPService.ts", "export class ShipmentService {}\n")
+        failure = self.run_lex("check")
+        self.assertEqual(failure.returncode, 1)
+        self.assertIn("code stem 'shp'", failure.stdout)
+        self.assertIn("implementation remapping", failure.stdout)
 
-    def test_check_fails_a_stale_stem_after_source_renames(self) -> None:
-        self.admit(WORK_ITEM_VIEW)
-        self.write("src/wiv/WIVService.ts", "export class WorkItemViewService {}\n")
-        result = self.run_lex("check")
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("code stem 'wiv' occurs in no identifier", result.stdout)
-        self.assertIn("implementation remapping", result.stdout)
-
-    def test_add_and_check_share_the_duplicate_form_rule(self) -> None:
-        self.admit(WORK_ITEM_VIEW)
-        second = {"concept": "board", "speech": ["WIV"], "code": ["work-item"], "chart": "tracker.work-item-view"}
-        result = self.admit(second)
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("belongs to both", result.stderr)
-        lines = self.lexicon().splitlines()
-        (self.chart_root / "LEXICON.jsonl").write_text("\n".join(lines + [json.dumps(second)]) + "\n", encoding="utf-8")
-        result = self.run_lex("check")
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("belongs to both", result.stdout)
-
-    def test_add_rejects_an_address_outside_the_row_root(self) -> None:
-        result = self.admit(dict(SENSE_SHADOW, chart="tracker.work-item-view"), SENSE_VARIANCE)
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("is not under root shadow", result.stderr)
-
-    def test_check_accepts_hand_written_key_order_when_row_order_holds(self) -> None:
-        self.admit(WORK_ITEM_VIEW, QUICK_ACTION)
-        rows = [json.loads(line) for line in self.lexicon().splitlines()]
-        text = "\n".join(json.dumps({k: row[k] for k in reversed(list(row))}) for row in rows) + "\n"
-        (self.chart_root / "LEXICON.jsonl").write_text(text, encoding="utf-8")
+    def test_key_order_is_not_a_contract_and_duplicate_forms_are(self) -> None:
+        self.admit(SHIPMENT)
+        self.lexicon().write_text(json.dumps(dict(reversed(list(SHIPMENT.items())))) + "\n")
         self.assertEqual(self.run_lex("check").returncode, 0)
+        other = dict(RESERVATION, speech=["SHP"])
+        self.assertIn("belongs to both", self.admit(other).stderr)
+        with self.lexicon().open("a") as stream:
+            stream.write(json.dumps(other) + "\n")
+        self.assertIn("belongs to both", self.run_lex("check").stdout)
 
-    # --- resolve ---------------------------------------------------------------------
-
-    def test_resolve_discloses_strict_tokens_before_the_expansion(self) -> None:
-        self.admit(WORK_ITEM_VIEW, QUICK_ACTION, GATEWAY)
-        result = self.run_lex("resolve", "There is a problem in WIV QuickAction around AGG")
+    def test_resolve_exposes_original_strict_and_scopes_before_alternatives(self) -> None:
+        self.admit(SHIPMENT, RESERVATION)
+        result = self.run_lex("resolve", "SHP booking timeout after cancellation")
         self.assertEqual(result.returncode, 0, result.stderr)
-        lines = result.stdout.splitlines()
-        self.assertTrue(lines[0].startswith("strict: "), lines[0])
-        self.assertIn("WIV [speech], wiv [code] → work-item-view", result.stdout)
-        self.assertIn("scope: src/wiv/WIVService.ts, src/wiv/, src/work-item/", result.stdout)
-        self.assertIn("code: action-dropdown", result.stdout)
-        self.assertIn("where: outside this repository — relay schema", result.stdout)
-        self.assertIn("unmatched: there problem around", result.stdout)
-        self.assertLess(result.stdout.index("strict:"), result.stdout.index("expanded:"))
-        self.assertIn("search in: src/work-item/menu/ src/wiv/WIVService.ts", result.stdout)
+        self.assertIn("original: SHP booking timeout after cancellation", result.stdout)
+        self.assertLess(result.stdout.index("strict:"), result.stdout.index("alternative 1:"))
+        self.assertIn("chart query: Shipment Reservation timeout after cancellation", result.stdout)
+        self.assertIn("code query: consignment booking timeout after cancellation", result.stdout)
+        self.assertIn("src/dispatch/SHPService.ts, src/dispatch/, src/consignments/", result.stdout)
+        self.assertIn("unmatched: timeout after cancellation", result.stdout)
 
-    def test_resolve_lists_every_root_on_a_collision_and_narrows_with_root(self) -> None:
-        self.admit(SENSE_VARIANCE, dict(SENSE_SHADOW, concept="shadow-sense"))
-        result = self.run_lex("resolve", "sense is wrong")
+    def test_rewrite_preserves_punctuation_qualifiers_and_repeated_occurrences(self) -> None:
+        self.admit(SHIPMENT)
+        query = "consignment: timeout, after cancellation; consignment retries fail."
+        result = self.result("rewrite", query)
+        self.assertEqual(result["query"], query)
+        self.assertEqual(result["candidates"][0]["chart_query"], "Shipment: timeout, after cancellation; Shipment retries fail.")
+        self.assertIn("timeout", result["unmatched"])
+
+    def test_recorded_compact_spaced_hyphen_and_identifier_forms_match(self) -> None:
+        self.write("src/checks.ts", "class HealthCheckRunner {}\n")
+        row = {"concept": "readiness", "speech": ["Readiness"], "code": ["healthcheck"], "scope": ["src/checks.ts"]}
+        self.assertEqual(self.admit(row).returncode, 0)
+        for query in ("healthcheck", "HealthCheck", "health-check", "health check", "HealthCheckRunner"):
+            with self.subTest(query=query):
+                result = self.result("rewrite", query)
+                self.assertEqual(result["matches"][0]["concept"], "readiness")
+        for query in ("healthchecker", "health to check", "unhealthy checker"):
+            with self.subTest(query=query):
+                self.assertEqual(self.run_lex("resolve", query).returncode, 1)
+        self.assertIn("readiness", self.run_lex("reverse", "HealthCheckRunner").stdout)
+
+    def test_unrecorded_shorthand_is_not_guessed_and_stop_words_are_not_shorthand(self) -> None:
+        self.admit(SHIPMENT)
+        result = self.run_lex("resolve", "SHP AND the ID")
+        shorthand = next(line for line in result.stdout.splitlines() if line.startswith("looks like shorthand"))
+        self.assertIn("ID", shorthand)
+        self.assertNotIn("AND", shorthand)
+        unknown = self.run_lex("resolve", "XYZController is slow")
+        self.assertEqual(unknown.returncode, 1)
+        self.assertIn("looks like shorthand with no row: XYZController", unknown.stdout)
+
+    def test_missing_lexicon_has_honest_single_and_bulk_misses(self) -> None:
+        single = self.run_lex("resolve", "SHP")
+        self.assertEqual(single.returncode, 1)
+        self.assertIn("strict query stands", single.stderr)
+        bulk = self.run_lex("rewrite", "--stdin", stdin='{"id":"missing","query":"SHP timeout"}\n')
+        self.assertEqual(bulk.returncode, 1)
+        record = json.loads(bulk.stdout)
+        self.assertEqual(record["status"], "miss")
+        self.assertEqual(record["query"], "SHP timeout")
+        self.assertEqual(record["candidates"], [])
+
+    def test_root_collisions_remain_separate_and_filterable(self) -> None:
+        self.admit(SHOP_ACCOUNT, COMMUNITY_ACCOUNT)
+        result = self.result("rewrite", "Account locked")
+        self.assertEqual(result["status"], "ambiguous")
+        self.assertEqual(len(result["candidates"]), 2)
+        self.assertEqual({c["concepts"][0]["root"] for c in result["candidates"]}, {"shop", "community"})
+        narrowed = self.result("rewrite", "--root", "community", "Account locked")
+        self.assertEqual(narrowed["status"], "hit")
+        self.assertEqual(len(narrowed["candidates"]), 1)
+        self.assertEqual(narrowed["candidates"][0]["code_queries"], ["member-account locked"])
+
+    def test_context_senses_in_one_root_are_admitted_and_selectable(self) -> None:
+        admitted = self.admit(BILLING_ACCOUNT, IDENTITY_ACCOUNT)
+        self.assertEqual(admitted.returncode, 0, admitted.stderr)
+        self.assertEqual(self.run_lex("check").returncode, 0)
+        result = self.result("rewrite", "--root", "logistics", "Account closed after cancellation")
+        self.assertEqual(result["status"], "ambiguous")
+        self.assertEqual({c["concepts"][0]["context"] for c in result["candidates"]}, {"billing", "identity"})
+        narrowed = self.result("rewrite", "--root", "logistics", "--context", "billing", "Account closed")
+        self.assertEqual(narrowed["status"], "hit")
+        self.assertEqual(narrowed["candidates"][0]["code_queries"], ["ledger-account closed"])
+        duplicate = dict(BILLING_ACCOUNT, concept="another-billing-account")
+        self.assertIn("belongs to both", self.admit(duplicate).stderr)
+        self.assertIn("context=identity", self.run_lex("reverse", "--context", "identity", "LoginAccountService").stdout)
+        self.assertNotIn("billing-account", self.run_lex("list", "--context", "identity").stdout)
+
+    def test_context_requires_actual_domain_heading_and_root(self) -> None:
+        result = self.admit(dict(RESERVATION, context="invented"))
+        self.assertIn("context requires its owning root", result.stderr)
+        result = self.admit(dict(BILLING_ACCOUNT, context="invented"))
+        self.assertIn("not a bounded-context heading", result.stderr)
+        self.assertFalse(self.lexicon().exists())
+        self.write(".compass/logistics/DOMAIN.md", "# Domain\n\n```markdown\n## Invented\n```\n")
+        self.assertIn("not a bounded-context heading", self.admit(dict(BILLING_ACCOUNT, context="invented")).stderr)
+
+    def test_same_concept_slug_can_have_two_contextual_senses(self) -> None:
+        billing = dict(BILLING_ACCOUNT, concept="account")
+        identity = dict(IDENTITY_ACCOUNT, concept="account")
+        self.write(".compass/logistics/GLOSSARY.md", "# Glossary\n\n## **Account**\n\n### Lexicon\n\n`account`\n")
+        result = self.admit(billing, identity)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("collision: sense — one form, several roots", result.stdout)
-        self.assertIn("root=shadow", result.stdout)
-        self.assertIn("root=variance-authority", result.stdout)
-        narrowed = self.run_lex("resolve", "--root", "shadow", "sense is wrong")
-        self.assertNotIn("collision:", narrowed.stdout)
-        self.assertNotIn("variance-authority", narrowed.stdout)
+        lookup = self.result("resolve", "Account")
+        self.assertEqual(lookup["status"], "ambiguous")
+        self.assertEqual({c["concepts"][0]["context"] for c in lookup["candidates"]}, {"billing", "identity"})
 
-    def test_resolve_names_unrowed_shorthand_and_exits_one(self) -> None:
-        self.admit(WORK_ITEM_VIEW)
-        result = self.run_lex("resolve", "PTSController is flaky")
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("looks like shorthand with no row: PTSController", result.stdout)
-        self.assertIn("unmatched: pts controller flaky", result.stdout)
+    def test_reverse_symbol_path_address_and_bare_root(self) -> None:
+        self.admit(SHIPMENT, RESERVATION, SHOP_ACCOUNT, COMMUNITY_ACCOUNT)
+        self.assertIn("shipment  (via code stem shp)", self.run_lex("reverse", "SHPService").stdout)
+        self.assertIn("reservation  (via scope src/bookings/)", self.run_lex("reverse", "src/bookings/Booking.ts").stdout)
+        self.assertIn("shipment  (via chart logistics.dispatch)", self.run_lex("reverse", "--as", "chart", "logistics.dispatch").stdout)
+        self.assertIn("root=shop", self.run_lex("reverse", "--as", "chart", "shop").stdout)
+        self.assertEqual(self.run_lex("reverse", "UnrecordedSymbol").returncode, 1)
 
-    def test_resolve_without_a_lexicon_keeps_the_strict_query(self) -> None:
-        result = self.run_lex("resolve", "WIV")
-        self.assertEqual(result.returncode, 1)
-        self.assertIn("nothing to translate; the strict query stands", result.stderr)
+    def test_bulk_preserves_order_ids_errors_misses_and_context_overrides(self) -> None:
+        self.admit(SHIPMENT, BILLING_ACCOUNT, IDENTITY_ACCOUNT)
+        before = {p: p.read_bytes() for p in self.repo_root.rglob("*") if p.is_file()}
+        lines = [
+            {"id":"s", "query":"consignment timeout"},
+            {"id":"a", "query":"Account locked", "root":"logistics"},
+            {"id":"b", "query":"Account locked", "root":"logistics", "context":"billing"},
+            {"id":"m", "query":"unrecorded"},
+            {"id":"bad", "query":123},
+            {"id":"typo", "query":"Shipment", "contex":"billing"},
+            {"id":"last", "query":"SHP retry"},
+        ]
+        result = self.run_lex("rewrite", "--stdin", stdin="\n".join(map(json.dumps, lines)) + "\n")
+        self.assertEqual(result.returncode, 2)
+        records = list(map(json.loads, result.stdout.splitlines()))
+        self.assertEqual([r["id"] for r in records], [r["id"] for r in lines])
+        self.assertEqual([r["status"] for r in records], ["hit","ambiguous","hit","miss","error","error","hit"])
+        self.assertEqual([r["line"] for r in records], list(range(1,8)))
+        self.assertEqual(before, {p:p.read_bytes() for p in self.repo_root.rglob("*") if p.is_file()})
+        reverse = self.run_lex("reverse", "--stdin", stdin='{"id":1,"target":"SHPService"}\n{"id":2,"target":"Nothing"}\n')
+        self.assertEqual(reverse.returncode, 0)
+        self.assertEqual([r["status"] for r in map(json.loads, reverse.stdout.splitlines())], ["hit","miss"])
 
-    # --- reverse ---------------------------------------------------------------------
+    def test_bulk_loads_rows_and_coordinates_once(self) -> None:
+        self.admit(SHIPMENT)
+        spec = importlib.util.spec_from_file_location("lexicon_batch_test", SCRIPT)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with patch.object(module, "load_rows", wraps=module.load_rows) as load, \
+             patch.object(module, "coordinates_of", wraps=module.coordinates_of) as coords, \
+             patch("sys.stdin", io.StringIO('{"query":"Shipment"}\n{"query":"SHP"}\n')), redirect_stdout(io.StringIO()):
+            code = module.main(["--chart-root", str(self.chart_root), "resolve", "--stdin"])
+        self.assertEqual(code, 0)
+        self.assertEqual(load.call_count, 1)
+        self.assertEqual(module.coordinates_of.cache_info().misses, 1)
 
-    def test_reverse_from_symbol_path_and_address(self) -> None:
-        self.admit(WORK_ITEM_VIEW, QUICK_ACTION)
-        symbol = self.run_lex("reverse", "WIVService")
-        self.assertEqual(symbol.returncode, 0, symbol.stderr)
-        self.assertIn("work-item-view  (via code stem wiv)", symbol.stdout)
-        self.assertIn("say: Work Item, WIV, work item view", symbol.stdout)
-        path = self.run_lex("reverse", "src/work-item/menu/ActionDropdown.tsx")
-        self.assertIn("quick-action  (via scope src/work-item/menu/)", path.stdout)
-        self.assertIn("work-item-view  (via scope src/work-item/)", path.stdout)
-        address = self.run_lex("reverse", "--as", "chart", "tracker.work-item-view")
-        self.assertIn("work-item-view  (via chart tracker.work-item-view)", address.stdout)
-        miss = self.run_lex("reverse", "NothingHere")
-        self.assertEqual(miss.returncode, 1)
+    def test_rewrite_caps_interpretations_and_source_variants_visibly(self) -> None:
+        self.admit(SHIPMENT, BILLING_ACCOUNT, IDENTITY_ACCOUNT)
+        ambiguous = self.result("rewrite", " ".join(["Account"] * 6))
+        self.assertEqual(len(ambiguous["candidates"]), 32)
+        self.assertEqual(ambiguous["candidates_omitted"], 32)
+        variants = self.result("rewrite", " ".join(["SHP"] * 6))
+        self.assertEqual(len(variants["candidates"][0]["code_queries"]), 32)
+        self.assertEqual(variants["candidates"][0]["code_queries_omitted"], 32)
 
-    def test_reverse_bare_root_returns_every_row_of_that_root(self) -> None:
-        self.admit(WORK_ITEM_VIEW, SENSE_VARIANCE, SENSE_SHADOW)
-        result = self.run_lex("reverse", "--as", "chart", "shadow")
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("sense root=shadow  (via root shadow)", result.stdout)
-        self.assertNotIn("variance-authority", result.stdout)
+    def test_batch_empty_malformed_and_missing_inputs_are_explicit(self) -> None:
+        for stdin in ("", "\n", "not-json\n", '[]\n', '{"query":""}\n'):
+            with self.subTest(stdin=stdin):
+                result = self.run_lex("resolve", "--stdin", stdin=stdin)
+                self.assertEqual(result.returncode, 2)
+                self.assertEqual(json.loads(result.stdout)["status"], "error")
+        self.assertEqual(self.run_lex("resolve").returncode, 2)
+        self.assertEqual(self.run_lex("resolve", "input", "--stdin", stdin="").returncode, 2)
+        self.assertEqual(self.run_lex("resolve", "--root", "Bad Root", "anything").returncode, 2)
 
-    def test_add_and_check_refuse_a_repo_root_outside_the_chart(self) -> None:
-        self.admit(WORK_ITEM_VIEW)
-        result = subprocess.run(
-            [sys.executable, str(SCRIPT), "--chart-root", str(self.chart_root),
-             "--repo-root", str(self.repo_root / "src"), "check"],
-            check=False, capture_output=True, text=True,
-        )
-        self.assertEqual(result.returncode, 2, result.stdout)
-        self.assertIn("is not under repo root", result.stderr)
-
-    # --- cli -------------------------------------------------------------------------
-
-    def test_list_renders_a_table_and_root_narrows_it(self) -> None:
-        self.admit(WORK_ITEM_VIEW, SENSE_VARIANCE, SENSE_SHADOW)
-        result = self.run_lex("list", "--root", "shadow")
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("| shadow | sense |", result.stdout)
-        self.assertNotIn("variance-authority", result.stdout)
-
-    def test_invalid_chart_root_exits_two(self) -> None:
-        result = subprocess.run(
-            [sys.executable, str(SCRIPT), "--chart-root", str(self.repo_root / "missing"), "check"],
-            check=False,
-            capture_output=True,
-            text=True,
-        )
+    def test_add_and_check_reject_a_repo_outside_chart_and_invalid_chart(self) -> None:
+        for command in ("add", "check"):
+            result = subprocess.run([sys.executable,str(SCRIPT),"--chart-root",str(self.chart_root),
+                                     "--repo-root",str(self.repo_root/"src"),command], capture_output=True,text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("not under repo root", result.stderr)
+        result = subprocess.run([sys.executable,str(SCRIPT),"--chart-root",str(self.repo_root/"missing"),"list"],capture_output=True,text=True)
         self.assertEqual(result.returncode, 2)
 
 

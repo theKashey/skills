@@ -158,9 +158,8 @@ reader before the governed decision.
 Broader scopes orient and route; narrower scopes preserve the local
 consequence. Keep detailed truth with one canonical owner. JSDoc on an
 established public-contract symbol is a public-contract overlay, not another
-scope. By default a file overview carries at most
-15 content lines, a block comment 5, and a declaration's docblock 10, public
-or not; a project may set other limits. Implementation altitude is also not a
+scope. The [main skill](../SKILL.md#comment-budgets-and-overflow) owns the
+budgets and their counting rules. Implementation altitude is also not a
 scope: low-level, business, and orchestration code can each contain a
 Chesterton's Fence or a verified invisible reef, but any explanation belongs at
 the scope that owns the decision.
@@ -173,50 +172,8 @@ README, documentation home, and public presentation page is unresolved, load
 
 ## Move overflow to its owner
 
-A surface over its budget has a placement problem, not a length problem: the
-count never grades a comment, and it never licenses deleting a verified cause.
-Count content lines—what the reader reads—not delimiters, blank lines,
-machine-read tags, or pragmas such as `compass:`, linter and `@ts-` directives,
-and `/// <reference`. A comment is a docblock or a file overview by attachment,
-not position: a docblock sits directly on its declaration, and a blank line
-separates an overview from the code below it. Imports and re-exports that
-declare nothing are not the first statement. A document's lead stops at its
-first `##` outside a code fence. An addition to an existing comment is authored
-against the whole comment's budget. A breach collapses the whole surface to
-about half its budget, apart from a passage that stays below, so the next edit
-does not trip it; shaving lines to just pass is not a fix. Classify each
-over-budget passage, then move it; never copy it, and never shorten it into
-something that no longer states the cause:
-
-- Narration of the code, or a fact the reader already holds, is removed under
-  the Chesterton's Fence rule: with its recovered reason, or kept with a `TODO`
-  while the reason is unknown.
-- A consequence that governs one function, branch, or guard moves down to that
-  site.
-- Orientation, boundary, ownership, or a route moves up to the folder,
-  package, or domain owner the affected reader encounters.
-- History, measurements, and the choice among alternatives move to the host's
-  established historical or decision record, where this skill's time-domain
-  rule already places them.
-- An export's contract moves to that symbol's docblock. The move does not make
-  the symbol a public-contract surface; without supplied membership it remains
-  a code comment under SKILL.md's gate, still held to the docblock budget.
-- A passage stays when it is one rule whose cases depend on each other, the
-  usage of a script with no package surface, or a docblock that is itself a
-  format contract. Record that reason in the task record, or where the host
-  records its exceptions.
-
-Top level has no owner above it: its overflow moves down or into the historical
-record. The agent that finds the overflow moves it in the same change. When the
-owner the ladder names does not exist and the change's authorized scope reaches
-it, create it through the host's established route, held to its own budget;
-that creates the owner, not a fallback beside an established one or a file that
-only mirrors the ladder. Where the host keeps an architecture chart, the
-missing chart entry or coordinate is part of the same change, under the chart's
-own rules. A proposal survives only for content outside the task's authorized
-scope, or for an owner the task cannot update, and the change names it as
-unfinished work, not a finished placement. The over-budget surface is never the
-fallback for content it cannot carry.
+Apply the [main skill's budgets, counting rules, exceptions, and overflow
+remedy](../SKILL.md#comment-budgets-and-overflow).
 
 ## Form the result
 
