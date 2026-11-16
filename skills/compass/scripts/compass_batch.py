@@ -7,10 +7,14 @@ from typing import Callable, TextIO
 
 
 def run_batch(stream: TextIO, fields: set[str], required: str, operation: Callable[[dict], dict]) -> int:
-    count = 0
+    records = 0
     invalid = False
     hit = False
     for count, line in enumerate(stream, 1):
+        # Blank lines carry no request, as in `compass_lex.py add --stdin`; `line` stays physical.
+        if not line.strip():
+            continue
+        records += 1
         record = None
         try:
             record = json.loads(line)
@@ -30,7 +34,7 @@ def run_batch(stream: TextIO, fields: set[str], required: str, operation: Callab
             result["id"] = record["id"]
         hit = hit or result["status"] in ("hit", "ambiguous")
         print(json.dumps(result, ensure_ascii=False))
-    if not count:
+    if not records:
         print(json.dumps({"status": "error", "error": "empty batch", "line": 0}))
         return 2
     return 2 if invalid else 0 if hit else 1

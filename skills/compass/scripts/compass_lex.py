@@ -322,22 +322,26 @@ def token_spans(text: str) -> list[tuple[str, int, int]]:
 
 
 def matching_spans(form: str, query_tokens: Sequence[str], compact: bool = False) -> list[tuple[int, int]]:
-    needle = [singular(t) for t, _, _ in token_spans(form)]
+    raw = [t for t, _, _ in token_spans(form)]
+    needle = [singular(t) for t in raw]
     folded = [singular(t) for t in query_tokens]
+    # Fold plurals on the joined spelling as well as per word: `sales-tax` names `salestax`,
+    # whose single token keeps the inner `s` that per-word folding removes.
+    targets = {"".join(needle), singular("".join(raw))}
+    longest = max(map(len, targets), default=0)
     found = []
     for start in range(len(folded)):
         if needle and folded[start:start + len(needle)] == needle:
             found.append((start, len(needle)))
         elif compact and needle:
             # Only recorded code forms earn case/word-boundary normalization.
-            target = "".join(needle)
             joined = ""
             for end in range(start, len(folded)):
-                joined += folded[end]
-                if joined == target:
+                joined += query_tokens[end]
+                if singular(joined) in targets or "".join(folded[start:end + 1]) in targets:
                     found.append((start, end - start + 1))
                     break
-                if len(joined) >= len(target):
+                if len(joined) > longest + 2:
                     break
     return found
 
@@ -501,12 +505,17 @@ def render_resolve(hits: Sequence[dict], unmatched: Sequence[str], shorthand: Se
 # --- reverse ------------------------------------------------------------------------
 
 
+def reverse_kind(target: str, as_kind: str) -> str:
+    if as_kind != "auto":
+        return as_kind
+    return "path" if "/" in target else "chart" if "." in target and ADDRESS_RE.match(target) else "code"
+
+
 def reverse(rows: Sequence[dict], chart_root: Path, target: str, as_kind: str,
             root: str | None = None, context: str | None = None) -> list[tuple[dict, str]]:
     found: list[tuple[dict, str]] = []
     rows = selected_rows(rows, root, context)
-    if as_kind == "auto":
-        as_kind = "path" if "/" in target else "chart" if "." in target and ADDRESS_RE.match(target) else "code"
+    as_kind = reverse_kind(target, as_kind)
     if as_kind == "code":
         tokens = [t for t, _, _ in token_spans(target)]
         for row in rows:
@@ -748,7 +757,11 @@ def lookup_result(args: argparse.Namespace, rows: Sequence[dict], chart_root: Pa
     if args.command != "reverse":
         return query_result(rows, chart_root, record["query"], root, context)
     found = reverse(rows, chart_root, record["target"], args.as_kind, root, context)
-    return {"status": "ambiguous" if len(found) > 1 else "hit" if found else "miss",
+    # A chart address or path lists every row it owns; only a code stem recorded in
+    # several roots or contexts leaves competing meanings.
+    meanings = {(row.get("root"), row.get("context")) for row, _ in found}
+    ambiguous = reverse_kind(record["target"], args.as_kind) == "code" and len(meanings) > 1
+    return {"status": "ambiguous" if ambiguous else "hit" if found else "miss",
             "target": record["target"],
             "matches": [{**row, "via": via, "scopes": row_scopes(chart_root, row)} for row, via in found]}
 

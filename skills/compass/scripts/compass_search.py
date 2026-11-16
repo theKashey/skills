@@ -15,7 +15,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
 
-from compass_batch import run_batch
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from compass_batch import run_batch  # noqa: E402
 
 
 HEADING_RE = re.compile(r"^(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$")

@@ -248,6 +248,17 @@ class CompassLexTest(unittest.TestCase):
                 self.assertEqual(self.run_lex("resolve", query).returncode, 1)
         self.assertIn("readiness", self.run_lex("reverse", "HealthCheckRunner").stdout)
 
+    def test_plural_compound_stem_matches_its_unbroken_spelling(self) -> None:
+        self.write("src/tax.ts", "const salestax = 1;\n")
+        row = {"concept": "levy", "speech": ["Levy"], "code": ["sales-tax"], "scope": ["src/tax.ts"]}
+        self.assertEqual(self.admit(row).returncode, 0)
+        self.assertEqual(self.run_lex("check").returncode, 0)
+        for query in ("salestax", "SalesTax", "sales tax"):
+            with self.subTest(query=query):
+                self.assertEqual(self.result("rewrite", query)["matches"][0]["concept"], "levy")
+        self.assertIn("levy", self.run_lex("reverse", "salestax").stdout)
+        self.assertEqual(self.run_lex("resolve", "salestaxer").returncode, 1)
+
     def test_unrecorded_shorthand_is_not_guessed_and_stop_words_are_not_shorthand(self) -> None:
         self.admit(SHIPMENT)
         result = self.run_lex("resolve", "SHP AND the ID")
@@ -314,6 +325,15 @@ class CompassLexTest(unittest.TestCase):
         self.assertEqual(lookup["status"], "ambiguous")
         self.assertEqual({c["concepts"][0]["context"] for c in lookup["candidates"]}, {"billing", "identity"})
 
+    def test_reverse_lists_owned_rows_and_flags_only_competing_code_meanings(self) -> None:
+        self.assertEqual(self.admit(BILLING_ACCOUNT, IDENTITY_ACCOUNT).returncode, 0)
+        listed = self.result("reverse", "--as", "chart", "logistics")
+        self.assertEqual((listed["status"], len(listed["matches"])), ("hit", 2))
+        shared = dict(IDENTITY_ACCOUNT, code=["ledger-account"])
+        self.lexicon().write_text("")
+        self.assertEqual(self.admit(BILLING_ACCOUNT, shared).returncode, 0)
+        self.assertEqual(self.result("reverse", "LedgerAccount")["status"], "ambiguous")
+
     def test_reverse_symbol_path_address_and_bare_root(self) -> None:
         self.admit(SHIPMENT, RESERVATION, SHOP_ACCOUNT, COMMUNITY_ACCOUNT)
         self.assertIn("shipment  (via code stem shp)", self.run_lex("reverse", "SHPService").stdout)
@@ -375,6 +395,10 @@ class CompassLexTest(unittest.TestCase):
                 self.assertEqual(json.loads(result.stdout)["status"], "error")
         self.assertEqual(self.run_lex("resolve").returncode, 2)
         self.assertEqual(self.run_lex("resolve", "input", "--stdin", stdin="").returncode, 2)
+        self.admit(SHIPMENT)
+        spaced = self.run_lex("resolve", "--stdin", stdin='{"query":"SHP"}\n\n{"query":"Shipment"}\n\n')
+        self.assertEqual(spaced.returncode, 0, spaced.stdout)
+        self.assertEqual([json.loads(r)["line"] for r in spaced.stdout.splitlines()], [1, 3])
         self.assertEqual(self.run_lex("resolve", "--root", "Bad Root", "anything").returncode, 2)
 
     def test_add_and_check_reject_a_repo_outside_chart_and_invalid_chart(self) -> None:

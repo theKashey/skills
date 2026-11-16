@@ -432,6 +432,13 @@ class CompassSearchTest(unittest.TestCase):
         self.assertEqual(self.run_search("--stdin", stdin='{"query":"unrecordedzz"}\n').returncode, 1)
         self.assertEqual(self.run_search("--stdin", stdin="").returncode, 2)
 
+    def test_isolated_interpreter_finds_sibling_batch_module(self) -> None:
+        result = subprocess.run(
+            [sys.executable, "-I", str(SCRIPT), "--chart-root", str(self.chart_root), "--kind", "glossary", "Workspace"],
+            check=False, capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+
 
 class CompassPackageContractTest(unittest.TestCase):
     def test_agent_hook_preserves_work_boundary_and_search_entry(self) -> None:
