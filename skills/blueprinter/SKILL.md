@@ -385,7 +385,11 @@ Before you show a draw as ready, and after each correction:
    give a fresh review subagent only the inputs and quoted brief below. Each
    site it finds that no block covers, and each verdict it returns that is
    not yes, is a correction: take it under §5 at once and name the review as
-   its source in the delta.
+   its source in the delta. The one exception is a `no` on a Ghost or Acquire
+   whose evidence is the candidate its Assumptions line already answers: that
+   choice is already recorded, so keep the block and the line for the
+   developer to correct, and cite the review's verdict on that line. Classify
+   it here; never add the line to the review's inputs.
 
 Inputs: the root of the tree the evidence is read in — the worktree, for a
 change that already exists — the block cards, the build order, and the
@@ -410,9 +414,7 @@ strategy view.
 > 2. For each site, give the block that covers it, or none.
 > 3. For each Ghost and Acquire, give a verdict: is it needed — does no
 >    existing code already do its job or nearly do it?
-> 4. For each test an amendment names, give a verdict: would it fail without
->    what it was written for?
-> 5. For each block, give a verdict: does its amendment fit its card, its
+> 4. For each block, give a verdict: does its amendment fit its card, its
 >    location, and the capability it serves?
 >
 > Return: a table of site, methods, and covering block; a table of ID,
@@ -491,7 +493,7 @@ diff or commit that builds it.
 >   cannot decide it.
 >
 > You check built work against its amendment. You did not build it. Do not
-> edit files.
+> edit the host tree; you may work in a scratch copy.
 >
 > 1. Split the amendment into parts: each representation, transition, test,
 >    and claim it states.
@@ -500,7 +502,10 @@ diff or commit that builds it.
 >    check, not evidence.
 > 3. For each claim, run a check that observes it — a test that asserts the
 >    stated symptom, or a reproduction — and give its verdict with the command
->    and result. A test that does not assert the symptom does not count.
+>    and result. A test that does not assert the symptom does not count, and
+>    neither does one that also passes without the change it tests: in a
+>    scratch copy, run each named test with the rest of the diff reverted, and
+>    cite both results.
 > 4. Add a part for each thing the diff does that the amendment does not
 >    name, and give a verdict: does a part the amendment names require it?
 >
