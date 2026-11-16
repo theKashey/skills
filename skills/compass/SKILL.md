@@ -86,20 +86,26 @@ python3 "{compass-skill}/scripts/compass_lex.py" \
 Keep the original query and strict tokens. Each result candidate separates a
 `chart_query` using domain terms from `code_queries` using recorded source forms
 and scopes, grouped by concept and context. Rewriting preserves unmatched task
-terms. Search alternatives separately rather than concatenating synonyms into one
-query. Use a rewritten candidate only when the strict search misses, and
-disclose the rewrite. A hit translates a recorded form; it does not establish
-that the task has the same meaning.
+terms. Search alternatives separately rather than concatenating synonyms into
+one query, and never execute returned text as shell syntax. A `where` pointer
+names an external owner; the helper does not search it. Search first with the
+`strict` tokens the result returns; use a rewritten candidate only when that
+search misses, and disclose the rewrite. A hit translates a recorded form; it
+does not establish that the task has the same meaning.
 
 If the result is ambiguous, consult the glossary meanings and task evidence;
 use `--root` and `--context` only when that evidence identifies the scope.
 Never combine alternative meanings or invent a root to disambiguate. Unknown
-shorthand is a candidate for the task record, not an expansion to guess.
-`resolve` reports contextual forms, locators, and query alternatives. To translate
-a source symbol, repository path, or chart address back to human terminology,
+shorthand is a candidate for the task record, not an expansion to guess: record
+it, ask what it means when someone can answer, and continue with the strict
+tokens. `rewrite` and `resolve` are two names for the same lookup and return
+the same contextual forms, locators, and query alternatives. To translate a
+source symbol, repository path, or chart address back to human terminology,
 use `reverse "{target}"`; a bare root needs `reverse --as chart "{root}"`.
-These lookups are read-only. Exit 0 means a hit or ambiguity, 1 a miss or no
-lexicon, and 2 an invalid input or chart root.
+A chart address or path lists every row it owns; only a code stem recorded in
+several roots or contexts is ambiguous. These lookups are read-only. Exit 0
+means a hit or ambiguity, 1 a miss or no lexicon, and 2 an invalid input, chart
+root, or a lexicon file that cannot load.
 
 Rewriting returns at most 32 contextual interpretations and 32 source-query
 variants per interpretation. When `candidates_omitted` or a candidate's
@@ -126,9 +132,10 @@ python3 "{compass-skill}/scripts/compass_lex.py" \
 
 Output is one JSON result per input in order, with its ID and `hit`, `miss`,
 `ambiguous`, or `error` status. An invalid record makes the batch exit 2;
-otherwise any hit or ambiguity exits 0, and all misses exit 1. An empty batch
-is invalid. Inspect each result; an aggregate success does not make every
-query a hit. No batch lookup changes chart or source files.
+otherwise any hit or ambiguity exits 0, and all misses exit 1. Blank lines are
+skipped, and a batch with no record is invalid. A single lookup with `--json`
+returns the same structured result. Inspect each result; an aggregate success
+does not make every query a hit. No batch lookup changes chart or source files.
 
 ### Interpret and bound search output
 
@@ -180,9 +187,9 @@ exit codes follow the same any-result/all-miss/invalid-input rule above.
 
 For an omitted glossary section tail, search its heading term with
 `--kind glossary` and a larger `--max-lines`; when `--limit` omits sections,
-raise it. This applies to glossary results from any search. Do not open the
-whole glossary to finish either. Read the owning `DOMAIN.md` for relationships
-and invariants. Use the canonical term for the relevant context in chart prose,
+raise it. This applies to glossary results from any search. `GLOSSARY.md` is
+not a level you open: do not open the file to finish either. Read the owning
+`DOMAIN.md` for relationships and invariants. Use the canonical term for the relevant context in chart prose,
 commit messages, and discussions of intent; preserve the separate source form
 when discussing an identifier.
 

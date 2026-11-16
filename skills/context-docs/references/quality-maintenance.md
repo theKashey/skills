@@ -53,7 +53,8 @@ or file comments.
 5. Do not edit during a review-only request. If changes are separately
    authorized, route each defect through its authoring workflow, then re-run
    only the affected scorecard gates. This full scorecard owns terminal
-   completion; do not invoke the compact wrap-up guide afterward.
+   completion; do not invoke the main skill's [wrap-up
+   review](../SKILL.md#review-documentation-at-wrap-up) afterward.
 
 ## Evidence scorecard
 

@@ -301,7 +301,7 @@ agents then follow it is outside the skill's evaluation boundary.
 | [references/consume-change.md](references/consume-change.md) | Conditional estimation, review, refactor, overreach, and architectural-pull paths |
 | [references/consume-named-abstractions.md](references/consume-named-abstractions.md) | Read-only interpretation of existing named-abstraction definitions and claims |
 | [scripts/compass_search.py](scripts/compass_search.py) | Live, read-only single and batch lookup over a host-declared chart root, with deterministic address, exact, heading, and literal tiers and optional BM25-related candidates |
-| [scripts/compass_lex.py](scripts/compass_lex.py) | Contextual `resolve`, `rewrite`, and `reverse` lookups, individually or in attributed batches; atomic `add`; `check` for the host suite; `sort` and `list` |
+| [scripts/compass_lex.py](scripts/compass_lex.py) | Contextual `resolve` (alias `rewrite`, the same lookup) and `reverse` lookups, individually or in attributed batches; atomic `add`; `check` for the host suite; `sort` and `list` |
 | [scripts/compass_batch.py](scripts/compass_batch.py) | Ordered JSONL request parsing, input attribution, per-record status, and aggregate exit behavior shared by the read-only lookup commands |
 | [references/lexicon.md](references/lexicon.md) | Row schema, semantic and mechanical admission, and the installed check; forms remain separate from glossary meaning |
 | [references/installation.md](references/installation.md) | Host installation and verification: usage hook, single and batch query rewriting, checks, review routes, and vocabulary-review cadence |
@@ -318,6 +318,10 @@ agents then follow it is outside the skill's evaluation boundary.
 Each fact has one canonical owner. `SKILL.md` carries shared interpretation and
 routine consumption directly; Create-only production, admission, and
 installation remain conditional. Specialist Consume references carry only
-their task-specific procedures. Completion checklists are deliberately not
-mirrored: a condensed checklist diverges, and the divergent copy is the one an
+their task-specific procedures. Consume pays no new traversal for what the old
+Consume reference held, but it now always loads the search-output detail and
+lexicon-reading guidance that used to load only when search, `resolve`, or `reverse`
+output needed interpreting. Create and installation work load the Consume
+procedure they never run, held apart only by the flow selection's "Do not run
+the Consume procedure". Completion checklists are deliberately not mirrored: a condensed checklist diverges, and the divergent copy is the one an
 agent finds.

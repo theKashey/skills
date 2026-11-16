@@ -415,10 +415,20 @@ The [main skill](SKILL.md) owns common prose, entry, budget, and completion
 rules; [quality and maintenance](references/quality-maintenance.md) owns audits,
 release evidence, and drift checks.
 
-Common entry, prose, budget, and completion rules stay in the runtime file:
-ordinary work needs them before acting, so a mandatory reference would add
-traversal without avoiding content. Conditional references expose deeper
-content architecture, unresolved locality, casting, specialist contracts, and
+Common entry, prose, budget, and completion rules stay in the runtime file.
+Published non-inline authoring needs entry, the prose register, and wrap-up
+before it finishes, so a mandatory reference there would add traversal without
+avoiding content. Other routes pay for that choice. Comment work, the most
+frequent event, loads a prose register and wrap-up review it never applies;
+working documents and handoffs load a register bound to published surfaces;
+installation loads all of it to reach a reference it reads alone; symbol JSDoc follows
+its own docblock register; it and audit work end through their own completion
+checks instead of the wrap-up review.
+This knowingly departs from splitting whenever one flow could leave material
+unloaded, trading that load for one fewer traversal on published authoring.
+Split the prose register or wrap-up review back out when traces show a frequent
+route stalling on, misapplying, or being steered by material it does not use.
+Conditional references expose deeper content architecture, unresolved locality, casting, specialist contracts, and
 comprehensive audit doctrine only when the choice they own becomes live.
 Public-contract work and code-comment work are separated for the same reason: a
 comment decision reaches its gate without the reference, and a reference task

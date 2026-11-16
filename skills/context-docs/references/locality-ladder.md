@@ -159,7 +159,8 @@ Broader scopes orient and route; narrower scopes preserve the local
 consequence. Keep detailed truth with one canonical owner. JSDoc on an
 established public-contract symbol is a public-contract overlay, not another
 scope. The [main skill](../SKILL.md#comment-budgets-and-overflow) owns the
-budgets and their counting rules. Implementation altitude is also not a
+budgets, their counting rules, and the overflow moves; the table restates
+only each scope's default budget. Implementation altitude is also not a
 scope: low-level, business, and orchestration code can each contain a
 Chesterton's Fence or a verified invisible reef, but any explanation belongs at
 the scope that owns the decision.

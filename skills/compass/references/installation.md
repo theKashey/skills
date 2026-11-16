@@ -30,19 +30,11 @@ python3 "{compass-skill}/scripts/compass_lex.py" \
   "consignment timeout after cancellation"
 ```
 
-Retain the original query and strict tokens. Each candidate supplies a
-`chart_query` with the canonical domain terms and separate `code_queries` with
-recorded identifier forms and scopes; unmatched qualifiers remain. If the
-strict search misses, search a candidate appropriate to the task and disclose
-the rewrite. Do not concatenate all alternatives or execute returned text as
-shell syntax. `where` pointers identify an external owner; the helper does not
-search it.
-
-When a word such as **Account** has distinct billing and identity meanings,
-consult the complete glossary meanings before selecting `--root` and
-`--context`. A lookup can return `ambiguous` rather than select a meaning.
-Unresolved shorthand stays in the task record for separate Create admission.
-Lookup and rewriting grant no authority to edit chart or host files.
+How a consumer reads the candidates, uses them only after a strict miss,
+resolves a word such as **Account** with distinct billing and identity meanings,
+and records unresolved shorthand is owned by `SKILL.md` §Consume and §Read
+contextual meanings; the hook points there rather than restating it. Lookup and
+rewriting grant no authority to edit chart or host files.
 
 ## Batch independent questions
 
@@ -60,18 +52,9 @@ python3 "{compass-skill}/scripts/compass_lex.py" \
   --chart-root "{chart-root}" rewrite --stdin < queries.jsonl
 ```
 
-Results retain input order and IDs, with per-record `hit`, `miss`, `ambiguous`,
-or `error` status. Exit 2 means at least one invalid record; otherwise any hit
-or ambiguity exits 0, and all misses exit 1. Empty batches are invalid. Inspect
-every record and any omitted-candidate notice, rather than treating aggregate
-success as a successful lookup of every input. Single lookups use `--json` for
-the same structured result.
-
-Batch glossary consultation uses `compass_search.py --kind glossary --stdin`
-with JSONL records containing `query` and optional `id`. Shared `--limit`,
-`--max-lines`, and other search flags apply to every query; the chart is parsed
-once. Inspect omitted-section and line notices in each returned result text;
-finish truncated glossary terms as `SKILL.md` directs.
+Per-record statuses, exit codes, omitted-candidate notices, and batch glossary
+search with `compass_search.py --kind glossary --stdin` follow `SKILL.md`
+§Batch independent lookups and §Read contextual meanings.
 
 ## Verify the host routes
 

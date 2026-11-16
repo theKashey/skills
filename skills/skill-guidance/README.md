@@ -165,7 +165,7 @@ Every route uses all ten laws, so their complete statement belongs in
 `SKILL.md` before route selection. Moving that common contract behind a
 mandatory read would add traversal without reducing the selected flow's load.
 `LAWS.md` retains its per-Law anchors as direct routes to the canonical rules:
-existing maintainer links, including those from Carry the Load, remain valid.
+existing links to the laws, such as the repository README's, remain valid.
 Law identifiers, titles, and meanings stay stable across that route.
 
 ## Law alignment

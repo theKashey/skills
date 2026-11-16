@@ -402,7 +402,8 @@ declare nothing are not the first statement. A document's lead stops at its
 first `##` outside a code fence. An addition to an existing comment is authored
 against the whole comment's budget. A breach collapses the whole surface to
 about half its budget, apart from a passage that stays below, so the next edit
-does not trip it; shaving lines to just pass is not a fix. Classify each
+does not trip it; shaving lines to just pass, or padding the comment to fit, is
+not a fix. Classify each
 over-budget passage, then move it; never copy it, and never shorten it into
 something that no longer states the cause:
 
@@ -464,7 +465,7 @@ For an audit, release, or a material risk requiring a detailed gate—including
 changed cross-surface contracts, ownership, or reader paths—load [quality and
 maintenance](references/quality-maintenance.md) and apply its evidence scorecard. Once
 delegated, return only that workflow's terminal result and do not come back to
-this compact guide. Surface count alone does not require escalation; bounded
+this review. Surface count alone does not require escalation; bounded
 mechanical edits across several surfaces use the applicable minimum:
 
 1. Check documented claims against source, exported types, tests, generated

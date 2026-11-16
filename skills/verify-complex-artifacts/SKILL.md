@@ -176,8 +176,9 @@ Inventory primary files, generated or derived files, cross-file references,
 consumer entry points, and required views. Include enough identity to detect a
 stale check: revision, path, version, checksum, or an equivalent stable marker.
 
-Apply the [damage-signature scan](#cross-cutting-damage-signatures) and
-[cross-artifact checks](#cross-artifact-checks). Add contract-specific checks
+Apply the [damage-signature scan](#cross-cutting-damage-signatures) to the
+manifest and select the applicable [cross-artifact
+checks](#cross-artifact-checks); step 4 runs them. Add contract-specific checks
 before generic ones, and load only the applicable artifact-family sections:
 
 | Artifact family | Conditional checks |

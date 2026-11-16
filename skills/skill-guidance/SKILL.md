@@ -61,9 +61,10 @@ description wording.
 
 ## The Laws of Agent Instruction
 
-These laws govern every Skill Guidance route. Read and apply all of them;
-naming the laws that materially constrain one decision does not exempt the
-rest.
+These laws govern every Skill Guidance route. Read and apply all of them
+before selecting a route, admitting an obligation, or loading a branch
+procedure; naming the laws that materially constrain one decision does not
+exempt the rest.
 
 ## Law I — Point at the delta
 

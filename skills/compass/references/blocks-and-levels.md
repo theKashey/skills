@@ -319,7 +319,8 @@ in code; a lexical match does not explain a specialized meaning. Draft from
 actual usage and obtain domain-expert review at the human checkpoint. When
 evidence establishes deprecated or disallowed terminology, an optional
 `### Terminology` section states the applicable context, preferred term, and
-effective period when one exists. Do not expose internal terminology as a
+effective period when one exists. It records usage status and policy only;
+the term's translation forms keep one owner, its lexicon row. Do not expose internal terminology as a
 customer-facing recommendation merely because both name the same concept.
 
 **`### Lexicon`** names the term's concept slug in `{chart-root}/LEXICON.jsonl`,

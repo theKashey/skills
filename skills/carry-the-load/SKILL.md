@@ -111,14 +111,17 @@ Misfire does not authorize rewriting the card.
 
 Strip a cleanup, rename, refactor, or other improvement made after the freeze
 when its absence would not have failed the readback, and record it as a
-deferral. Improvement already in the diff before the freeze is reported as
+deferral. Its worth is not the question; its membership in the frozen scope
+is. Improvement already in the diff before the freeze is reported as
 pre-freeze work instead of stripped under this rule.
 
 A failed readback does not widen the scope. Repair inside the frozen scope,
 bound an external cause through the side-repair rule, or leave through a
-terminal status. Contradictory evidence and blocked or ambiguous work take a
-terminal status when no authorized repair can establish the frozen contract;
-do not keep mutating by inventing an interpretation or widening authority.
+terminal status. Evidence that contradicts a frozen field takes a terminal
+status, never a self-authorized rewrite of the card. Blocked or ambiguous work
+takes a terminal status when no authorized repair can establish the frozen
+contract; do not keep mutating by inventing an interpretation or widening
+authority.
 
 ## Make wrong cheap
 
