@@ -51,6 +51,14 @@ and let an agent that loaded it for a listed exclusion stop at the top. A skill
 whose boundary fits its description carries no such section, because the
 section would repeat the description on every activation.
 
+Treat applicability as information, not an invocation mandate. Only
+user-controlled `AGENTS.md` instructions can mandate skill use. A transferable
+skill must not auto-trigger itself or mandate another skill's invocation.
+When `AGENTS.md` requires a skill at a particular decision, verify that the
+agent receives that requirement before the decision. Report a missing
+requirement path or a mandate inside a skill; do not compensate with demanding
+description wording.
+
 ## The Laws of Agent Instruction
 
 These laws govern every Skill Guidance route. Read and apply all of them;

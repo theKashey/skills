@@ -79,6 +79,13 @@ reference reached only from the skill body, whose placement the consuming
 repository owns; adding one by default and hardcoding a destination file are
 the rejected shortcuts.
 
+Transferable skills describe capabilities and applicability; the user controls
+their invocation. Only user-controlled `AGENTS.md` instructions can make skill
+use mandatory. A skill that mandates its own invocation or another skill's use
+imports workflow policy into every installation. Required use belongs in
+`AGENTS.md`, where the user can choose its scope and ensure agents receive it
+before the governed decision.
+
 Lower context cost matters only while the agent can still choose reliably.
 Equivalent prose and a table can impose different retrieval costs; a local cue
 can prevent a wrong turn even when the complete rule lives elsewhere. Likewise,

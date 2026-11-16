@@ -108,13 +108,13 @@ without selecting the testing strategy.
 
 ## 3. Assess invocation and disclosure
 
-Recommend model discovery only when an agent or another skill must reach the
-capability without a user naming it. Otherwise recommend explicit invocation
-and avoid permanent description load. When side effects or their timing belong
-to the user, recommend the host's explicit-only invocation control, not a kind
-word such as "playbook" or "workflow" in the name or description; a label does
-not stop automatic selection. When the host has no such control, record that
-the risk remains.
+Keep invocation under user control and apply the parent
+[activation boundary](../SKILL.md#review-the-activation-boundary). A relevant
+description or another skill's need does not mandate invocation. When the user
+chooses explicit invocation, recommend the host's explicit-only invocation
+control and avoid permanent description load. A name such as "playbook" or
+"workflow" does not stop automatic selection. When the host has no such
+control, report that it cannot enforce the user's invocation choice.
 
 Recommend the optional installation reference described in `SKILL.md` only when representative evidence shows the skill's intent is lost
 before it activates or in finished work; default to none.

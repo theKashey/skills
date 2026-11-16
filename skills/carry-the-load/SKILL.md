@@ -171,7 +171,10 @@ evidence that code provides no value.
 
 ## Harvest material learning
 
-After a disconfirming readback, classify what should survive:
+After a disconfirming readback or a material correction during the increment,
+classify what should survive—even when the final readback passes. Use the
+observed failure and correction as evidence; final success alone does not
+establish a reusable lesson.
 
 | Observation | Disposition |
 | --- | --- |
