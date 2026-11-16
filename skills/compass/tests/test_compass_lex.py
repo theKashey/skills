@@ -259,6 +259,15 @@ class CompassLexTest(unittest.TestCase):
         self.assertIn("levy", self.run_lex("reverse", "salestax").stdout)
         self.assertEqual(self.run_lex("resolve", "salestaxer").returncode, 1)
 
+    def test_admission_rejects_two_owners_of_one_unbroken_spelling(self) -> None:
+        self.write("src/tax.ts", "const salestax = 1;\n")
+        levy = {"concept": "levy", "speech": ["Levy"], "code": ["sales-tax"], "scope": ["src/tax.ts"]}
+        duty = {"concept": "duty", "speech": ["Duty"], "code": ["salestax"], "scope": ["src/tax.ts"]}
+        rejected = self.admit(levy, duty)
+        self.assertNotEqual(rejected.returncode, 0)
+        self.assertRegex(rejected.stdout + rejected.stderr, r"belongs to both '(levy|duty)' and '(levy|duty)'")
+        self.assertFalse(self.lexicon().exists() and self.lexicon().read_text().strip())
+
     def test_unrecorded_shorthand_is_not_guessed_and_stop_words_are_not_shorthand(self) -> None:
         self.admit(SHIPMENT)
         result = self.run_lex("resolve", "SHP AND the ID")

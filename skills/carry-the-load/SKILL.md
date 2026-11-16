@@ -110,10 +110,11 @@ side-repair route above. A second goal or a more reassuring assessment of the
 Misfire does not authorize rewriting the card.
 
 Strip a cleanup, rename, refactor, or other improvement made after the freeze
-when its absence would not have failed the readback, and record it as a
-deferral. Its worth is not the question; its membership in the frozen scope
-is. Improvement already in the diff before the freeze is reported as
-pre-freeze work instead of stripped under this rule.
+outside the frozen Increment's maximum scope when its absence would not have
+failed the readback, and record it as a deferral. Its worth is not the
+question; its membership in the frozen scope is. Improvement already in the
+diff before the freeze is reported as pre-freeze work instead of stripped under
+this rule.
 
 A failed readback does not widen the scope. Repair inside the frozen scope,
 bound an external cause through the side-repair rule, or leave through a

@@ -434,7 +434,7 @@ class CompassSearchTest(unittest.TestCase):
 
     def test_isolated_interpreter_finds_sibling_batch_module(self) -> None:
         result = subprocess.run(
-            [sys.executable, "-I", str(SCRIPT), "--chart-root", str(self.chart_root), "--kind", "glossary", "Workspace"],
+            [sys.executable, "-I", "-B", str(SCRIPT), "--chart-root", str(self.chart_root), "--kind", "glossary", "Workspace"],
             check=False, capture_output=True, text=True,
         )
         self.assertEqual(result.returncode, 0, result.stderr)

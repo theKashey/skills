@@ -321,13 +321,20 @@ def token_spans(text: str) -> list[tuple[str, int, int]]:
     return result
 
 
-def matching_spans(form: str, query_tokens: Sequence[str], compact: bool = False) -> list[tuple[int, int]]:
+def compact_forms(form: str) -> set[str]:
+    """Unbroken spellings a code form answers to; admission rejects two owners of one.
+
+    Plurals fold on the joined spelling as well as per word: `sales-tax` names `salestax`,
+    whose single token keeps the inner `s` that per-word folding removes."""
+
     raw = [t for t, _, _ in token_spans(form)]
-    needle = [singular(t) for t in raw]
+    return {"".join(singular(t) for t in raw), singular("".join(raw))} if raw else set()
+
+
+def matching_spans(form: str, query_tokens: Sequence[str], compact: bool = False) -> list[tuple[int, int]]:
+    needle = [singular(t) for t, _, _ in token_spans(form)]
     folded = [singular(t) for t in query_tokens]
-    # Fold plurals on the joined spelling as well as per word: `sales-tax` names `salestax`,
-    # whose single token keeps the inner `s` that per-word folding removes.
-    targets = {"".join(needle), singular("".join(raw))}
+    targets = compact_forms(form)
     longest = max(map(len, targets), default=0)
     found = []
     for start in range(len(folded)):
@@ -580,15 +587,20 @@ def row_failures(rows: Sequence[dict], chart_root: Path, repo_root: Path) -> lis
     for row in rows:
         for language, values in (("speech", row["speech"]), ("code", row["code"])):
             for value in values:
-                tokens = [singular(token) for token, _, _ in token_spans(value)]
-                form_key = "".join(tokens) if language == "code" else " ".join(tokens)
-                key = (row.get("root") or "", row.get("context") or "", language, form_key)
-                if key in forms and forms[key] != row["concept"]:
+                if language == "code":
+                    form_keys = sorted(compact_forms(value))
+                else:
+                    form_keys = [" ".join(singular(token) for token, _, _ in token_spans(value))]
+                owners = {forms[k] for k in ((row.get("root") or "", row.get("context") or "", language, f) for f in form_keys)
+                          if k in forms and forms[k] != row["concept"]}
+                scope = (row.get("root") or "", row.get("context") or "")
+                for owner in sorted(owners):
                     fail.append(
-                        f"{language} form {value!r} belongs to both {forms[key]!r} and {row['concept']!r}"
-                        + f" in root/context {key[:2]} — distinguish their actual bounded contexts or correct the forms"
+                        f"{language} form {value!r} belongs to both {owner!r} and {row['concept']!r}"
+                        + f" in root/context {scope} — distinguish their actual bounded contexts or correct the forms"
                     )
-                forms.setdefault(key, row["concept"])
+                for form_key in form_keys:
+                    forms.setdefault((*scope, language, form_key), row["concept"])
     for row in rows:
         if row.get("context"):
             domain = chart_root / row["root"] / "DOMAIN.md"
