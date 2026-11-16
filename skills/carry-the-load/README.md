@@ -57,6 +57,10 @@ engineering system becomes antifragile only when a material failure improves a
 future response: it sharpens an evaluation, exposes an invariant, changes
 routing, weakens an unjustified claim, or removes a bad assumption.
 
+Recovery can make the final result successful while leaving the cause of
+avoidable rework intact. Material corrections remain candidates for learning,
+but successful completion does not itself justify persistent guidance.
+
 Expecting to be wrong therefore changes the shape of the deliverable. A rule
 fitted to the current examples should misfire locally, degrade to established
 behavior, carry no stronger label than its evidence earns, and be discountable
