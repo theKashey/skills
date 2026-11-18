@@ -28,14 +28,16 @@ Never derive L0/L1 semantics from code shape alone. A codebase can name, group, 
 At early states, run this order — evidence before boundaries, boundaries before coordinates:
 
 1. Establish scope and candidate roots.
-2. Collect product and domain vocabulary.
+2. Collect observed product and domain words, recurring phrases, and familiar
+   words with unfamiliar local meanings. Record their usage and context.
 3. Identify human-recognizable phenomena.
 4. Inspect rules and responsibilities.
 5. Inspect code for evidence.
 6. Propose logical boundaries.
 7. Map them to product appearance.
 8. Map them to implementation coordinates.
-9. Populate or update `GLOSSARY.md`.
+9. Draft concise `GLOSSARY.md` definitions from that usage; distinguish
+   contextual meanings and present them for expert review at the checkpoint.
 10. Record code/product terminology differences as candidate lexicon rows for the admission task (`lexicon.md` §Admission).
 11. Surface uncertainty.
 12. Obtain the required human ratification.
@@ -318,12 +320,14 @@ Exploration is maintenance, triggered by events:
   [modules]. Still one thing after a rewrite? [yes/no]
 
 ## Domain Terms Found
-- [term]: product says [X], code says [Y]. Canonical: [X]. Candidate row: stem [y]
+- [term]: product says [X], code says [Y]. Usage evidence: [source].
+  Same concept in [context]: [claim to validate]. Canonical: [X].
+  Candidate row: stem [y]; a dependency or provider is not an alias.
 - [term]: appears in [locations], seems to mean [definition]
 - CONTEXT-SPECIFIC: [term] means [A] in [context 1] and [B] in
   [context 2]. Record both, do not merge.
-- CONFLICT: [term A] and [term B] appear to mean the same thing.
-  Used in [locations]. Proposed resolution: [pick one]
+- POSSIBLE SYNONYMS: [term A] and [term B] appear to name the same concept in
+  [context]. Used in [locations]. Expert confirmation: [pending / decision].
 
 ## Actors (human-decided — propose candidates, the human confirms or corrects)
 - [name]: [person, organisation, or role]. Uses the system to [what they get out of it]

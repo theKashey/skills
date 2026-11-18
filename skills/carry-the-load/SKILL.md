@@ -104,10 +104,25 @@ Report it against its own boundary rather than as part of the increment's
 scope. A mutating action taken after the freeze, outside the frozen maximum
 scope, that is not a reported side repair is a scope violation, not initiative.
 
-When an intended mutating action is not plainly covered by the frozen
-Increment's maximum scope, or a completion report is about to omit a deferral,
-a side repair, or work already mutated before the freeze, load the moorings in
-[STAYING-PUT.md](STAYING-PUT.md) before proceeding.
+Check each intended mutating action against the frozen Increment's maximum
+scope before acting. An uncovered action needs a new decision or the bounded
+side-repair route above. A second goal or a more reassuring assessment of the
+Misfire does not authorize rewriting the card.
+
+Strip a cleanup, rename, refactor, or other improvement made after the freeze
+outside the frozen Increment's maximum scope when its absence would not have
+failed the readback, and record it as a deferral. Its worth is not the
+question; its membership in the frozen scope is. Improvement already in the
+diff before the freeze is reported as pre-freeze work instead of stripped under
+this rule.
+
+A failed readback does not widen the scope. Repair inside the frozen scope,
+bound an external cause through the side-repair rule, or leave through a
+terminal status. Evidence that contradicts a frozen field takes a terminal
+status, never a self-authorized rewrite of the card. Blocked or ambiguous work
+takes a terminal status when no authorized repair can establish the frozen
+contract; do not keep mutating by inventing an interpretation or widening
+authority.
 
 ## Make wrong cheap
 
@@ -160,7 +175,10 @@ evidence that code provides no value.
 
 ## Harvest material learning
 
-After a disconfirming readback, classify what should survive:
+After a disconfirming readback or a material correction during the increment,
+classify what should survive—even when the final readback passes. Use the
+observed failure and correction as evidence; final success alone does not
+establish a reusable lesson.
 
 | Observation | Disposition |
 | --- | --- |
@@ -185,6 +203,11 @@ established but its effect unproven — report it as such rather than as
 validated.
 
 ## Complete the increment
+
+Before reporting, reconcile the actual diff with the frozen scope, reported
+side repairs, and reported work already mutated before the freeze. Reconcile
+the deferral list with every side problem and stripped improvement set aside.
+Neither an unexplained change nor an omitted deferral is a complete result.
 
 Return one status:
 

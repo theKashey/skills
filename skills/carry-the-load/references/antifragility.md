@@ -1,11 +1,11 @@
 # Antifragility
 
-This reference expands the compact doctrine statement in the package README
-("Antifragility governs learning"). The README statement is the binding
-definition; this file explains why the discipline works and how it
-maps to AI-assisted software development. It is maintainer and reader support,
-never a runtime dependency: the runtime rules derived from it already live in
-[SKILL.md](../SKILL.md).
+Antifragility makes bounded failures improve later engineering decisions.
+Rollback contains a misfire; learning sharpens an evaluation, exposes an
+invariant, or changes a future response so the system benefits from the evidence.
+
+The package README's “Antifragility governs learning” is the binding doctrine
+for Carry the Load; [SKILL.md](../SKILL.md) supplies its execution rules.
 
 ## What it is
 

@@ -35,7 +35,8 @@ none is named, ask where they belong:
   update, is named in the PR as unfinished work.
 
 A host that wants a build gate writes it in its own linter, with these numbers
-and the ladder's counting rules, keying any recorded debt by file and kind.
+and the counting rules in [Move overflow to its
+owner](../SKILL.md#move-overflow-to-its-owner), keying any recorded debt by file and kind.
 
 Verify that the rule, the cast, and each review check sit where the
 repository's own instructions deliver them to the agents that write and review

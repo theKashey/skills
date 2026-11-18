@@ -79,6 +79,13 @@ reference reached only from the skill body, whose placement the consuming
 repository owns; adding one by default and hardcoding a destination file are
 the rejected shortcuts.
 
+Transferable skills describe capabilities and applicability; the user controls
+their invocation. Only user-controlled `AGENTS.md` instructions can make skill
+use mandatory. A skill that mandates its own invocation or another skill's use
+imports workflow policy into every installation. Required use belongs in
+`AGENTS.md`, where the user can choose its scope and ensure agents receive it
+before the governed decision.
+
 Lower context cost matters only while the agent can still choose reliably.
 Equivalent prose and a table can impose different retrieval costs; a local cue
 can prevent a wrong turn even when the complete rule lives elsewhere. Likewise,
@@ -143,8 +150,8 @@ Docs governs the prose of that README, not its ownership boundary.
 
 | File | Owns |
 | --- | --- |
-| [The Laws of Agent Instruction](LAWS.md) | Canonical Law identifiers, titles, and universal decision constraints |
-| [SKILL.md](SKILL.md) | Activation boundary, law-naming record, package isolation, route selection, obligation tests, maintainer-README contract, and completion |
+| [SKILL.md](SKILL.md) | Canonical Law identifiers, titles, and universal decision constraints; activation boundary, law-naming record, package isolation, route selection, obligation tests, maintainer-README contract, and completion |
+| [Law links](LAWS.md) | Stable per-Law routes for consumers using the separate law address |
 | [Advise a skill design](references/build-or-revise.md) | Capability shape and neighbourhood, ownership, activation/runtime separation, pruning recommendations, and required validation |
 | [Audit a skill](references/audit-skill.md) | Evidence-backed shape, route, and obligation review without mutation |
 | [Validate changed choices](references/validate-changes.md) | Frozen behavioral evaluation and verdicts |
@@ -154,17 +161,18 @@ The validator treats `SKILL.md`, `agents/`, `references/`, `scripts/`, and
 everything they link as the runtime set and rejects a package whose runtime
 links reach `README.md` or `evals/`.
 
-`LAWS.md` is loaded by every route, so its separate file is an ownership
-boundary rather than progressive disclosure: Carry the Load, a separately
-installed package, names that file as the canonical statement of the laws, so
-its path, identifiers, and titles must not move or renumber when `SKILL.md`
-changes.
+Every route uses all ten laws, so their complete statement belongs in
+`SKILL.md` before route selection. Moving that common contract behind a
+mandatory read would add traversal without reducing the selected flow's load.
+`LAWS.md` retains its per-Law anchors as direct routes to the canonical rules:
+existing links to the laws, such as the repository README's, remain valid.
+Law identifiers, titles, and meanings stay stable across that route.
 
 ## Law alignment
 
 `SKILL.md` [names the active laws](SKILL.md#name-the-active-laws) by exact
 identifier and title—for example,
-[`Law VII — Enforce or delete mechanical rules`](LAWS.md#law-vii--enforce-or-delete-mechanical-rules).
+[`Law VII — Enforce or delete mechanical rules`](SKILL.md#law-vii--enforce-or-delete-mechanical-rules).
 This gives the host creator a short, reviewable design checklist without
 copying the full law set into every package, and lets an audit point to one
 broken law rather than a vague principle. A bare law or framework label is not

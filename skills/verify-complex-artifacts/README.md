@@ -64,7 +64,7 @@ review gate capable of deciding whether damage is present.
 | **Source contamination** | Prompt fragments, embedded instructions, examples, placeholders, secrets, or source-only annotations leak into the delivered result. |
 | **Collateral regression** | Improving the focal case degrades an adjacent behavior, representation, mode, edge case, or previously correct region. |
 
-The [damage-signature reference](references/artifact-checks.md#cross-cutting-damage-signatures)
+The [runtime damage-signature scan](SKILL.md#cross-cutting-damage-signatures)
 defines the observable evidence, adversarial check, and owning gate for each
 signature.
 
@@ -95,6 +95,10 @@ establishes semantic coherence and absence of unjustified process residue; it
 does not substitute for source truth, requirement coverage, deterministic
 checks including security scans, or human product acceptance.
 
-The [runtime workflow](SKILL.md) owns the complete procedure. The
-[isolated review rules](references/output-context-review.md) own the review
-subagent boundary.
+The [runtime workflow](SKILL.md) owns the complete procedure, universal damage
+scan, and cross-artifact checks: every complete gate needs those rules, so a
+separate mandatory read would add traversal. It directly selects
+[artifact-family checks](references/artifact-checks.md) only for the families in
+the candidate. The [isolated review rules](references/output-context-review.md)
+remain separate because they are passed unchanged to a reviewer who receives
+none of the producer workflow.

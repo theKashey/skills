@@ -32,7 +32,7 @@ evidence; otherwise it does not bear on the delta. Do not repeat its checks
 here. Verify:
 
 - every retained obligation satisfies the parent admission contract;
-- each named [Agent Instruction Law](../LAWS.md) uses the exact identifier and
+- each named [Agent Instruction Law](../SKILL.md#the-laws-of-agent-instruction) uses the exact identifier and
   title, has a target-skill choice and supporting evidence, and does not claim
   that unnamed Laws no longer apply;
 - every claimed shape dimension is supported by the skill's reason, governed
@@ -53,7 +53,7 @@ here. Verify:
   every ownership handoff passes the parent
   [isolation check](../SKILL.md#enforce-package-isolation);
 - every repository-specific claim satisfies
-  [Law VIII — Keep every claim falsifiable](../LAWS.md#law-viii--keep-every-claim-falsifiable);
+  [Law VIII — Keep every claim falsifiable](../SKILL.md#law-viii--keep-every-claim-falsifiable);
 - the description meets the parent activation boundary contract and covers
   every intended activation;
 - the body and runtime references begin after activation and contain only
@@ -74,7 +74,7 @@ here. Verify:
   its transitive references, recording mandatory loads, conditional loads and
   their conditions, serial discovery depth, and each file's size from the
   validator's runtime flow report; every split satisfies the splitting clause
-  of [Law II — Spend the instruction budget](../LAWS.md#law-ii--spend-the-instruction-budget);
+  of [Law II — Spend the instruction budget](../SKILL.md#law-ii--spend-the-instruction-budget);
 - the completed package satisfies the parent reader contract and has a
   publishable end state.
 
@@ -159,7 +159,7 @@ Scores support the ranking; they set no threshold. The candidate passes only
 when every query is a go. A loser means sharpening the target's own *what* or
 *when*. Grey means the same when the inspected contracts show distinct scopes;
 when more than one claims the prompt, report `NEEDS-HUMAN-DECISION` with a
-[Law X](../LAWS.md#law-x--restructure-overlap-do-not-reword-it) recommendation
+[Law X](../SKILL.md#law-x--restructure-overlap-do-not-reword-it) recommendation
 to rescope the competitors instead of rewording. Report `BLOCK` for any other
 query that is not a go, and always when the candidate turns a baseline go into
 any other cell.

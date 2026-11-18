@@ -1,10 +1,11 @@
 # Lean development
 
-This reference expands the compact doctrine statement in the package README
-("Lean governs flow"). The README statement is the binding definition; this file explains why the discipline works and how it maps to
-AI-assisted software development. It is maintainer and reader support, never a
-runtime dependency: the runtime rules derived from it already live in
-[SKILL.md](../SKILL.md).
+Lean keeps verified engineering increments moving through the value stream.
+Small batches and downstream pull constrain unfinished work so generation does
+not outrun review and verification capacity.
+
+The package README's “Lean governs flow” is the binding doctrine for Carry the
+Load; [SKILL.md](../SKILL.md) supplies its execution rules.
 
 ## What it is
 

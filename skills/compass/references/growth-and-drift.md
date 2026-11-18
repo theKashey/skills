@@ -31,7 +31,12 @@ Run the state 0 exploration loop (see [`exploration.md`](exploration.md)). End w
 
 ### Phase A — Establish Domain (L0 + Glossary)
 
-Human-checkpointed, agent-written. The agent collects product and domain vocabulary, proposes bounded contexts with product evidence, and presents them as falsifiable claims. The human draws the actual boundaries; the agent writes `DOMAIN.md` and `GLOSSARY.md` together.
+Human-checkpointed, agent-written. The agent collects observed product and
+domain terms, recurring phrases, and familiar words with local meanings;
+compares human and source usage; and proposes concise definitions and bounded
+contexts as falsifiable claims. The domain expert reviews the meanings and
+the human draws the actual boundaries. The agent writes `DOMAIN.md` and
+`GLOSSARY.md` together; evidence remains in the task record.
 
 L0 is prose only — no technology, no code paths, no coordinates. Every architecturally used term lands in the glossary; where product and code disagree, a code form identifier-split search cannot reach is a candidate lexicon row in the task record; Phase A completes with the candidates recorded, and a separate admission task turns them into rows (`lexicon.md` §Admission). This is the hardest pair of documents to write and the most stable once written.
 
@@ -51,7 +56,7 @@ verified by whoever last read a checklist. Install the chart check from
 [`verification.md` §First](verification.md#first-the-mechanizable-checks-belong-to-the-hosts-test-suite)
 into the host's test suite, ask-first; the `MINIMUM` rule and the recorded
 alternative to installing are the L2 row that checks it (`verification.md`
-§L2). Copy the four-line block from
+§L2). Copy the compact block from
 [agent-hook.md](agent-hook.md) into the host's agent instructions (`AGENTS.md`,
 `CLAUDE.md`, or equivalent—the file that declares the chart root). Substitute
 the installed Compass skill and declared chart-root paths, then let the human
@@ -62,11 +67,11 @@ Principle, Applicability). A hook claiming the chart is worth reading before
 every edit is disbelieved after the third one-line fix, and a reader who learns
 to skip it skips it for the change that needed it.
 
-Keep the hook compact: it starts search and consultation, while the Consume
-router owns task-specific paths. Equivalent host wording is fine when it keeps
-the template's trigger, search command, consultation boundary, and local-work
-exclusion. Phase E maintains the installed copy when a path or the canonical
-template changes.
+Keep the hook compact: it starts search, contextual query rewriting, and
+consultation, while `SKILL.md` owns the Consume procedure and conditional paths.
+Equivalent host wording keeps the template's trigger, search and rewrite
+commands, consultation boundary, and local-work exclusion. Phase E maintains
+the installed copy when a path or the canonical template changes.
 
 ### Phase C — Map Components (L3)
 

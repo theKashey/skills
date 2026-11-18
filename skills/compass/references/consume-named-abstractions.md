@@ -20,7 +20,7 @@ definitions; it does not add, change, or remove definitions or markers.
    ```
 
    The command and its bounds are owned by
-   [the search route](consume-search.md#targeted-lookup).
+   [the main search contract](../SKILL.md#interpret-and-bound-search-output).
 3. Find declared instances with a hidden-aware exact-slug search, replacing
    only the example slug:
 
